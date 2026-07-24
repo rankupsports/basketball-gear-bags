@@ -96,25 +96,53 @@
   /* =========================================================
      LEAD の浮遊アイコン — 画面の縁を不規則に巡回する
      ========================================================= */
-  const leadIcons = $('#leadIcons');
-  if (leadIcons) {
-    leadIcons.innerHTML = ['🏀', '👟', '💧', '🩹', '🧢']
-      .map((g, i) => `<i style="--s:${26 + i * 4}px;--dur:${20 + i * 6}s;--dl:${-i * 3}s">${g}</i>`)
-      .join('');
-  }
+  // 参照サイトの lead__icon と同じ挙動：172px 級のアイコンが画面の縁を
+  // 35s で無限に周回する（leadIcon キーフレーム）。emoji ではなく画像。
+  // ball-icon.svg は暫定。バスケットボールの PNG に差し替える場合はこのパスを変更。
+  const LEAD_ICON = 'assets/ball-icon.svg';
+  const orbit = (host, n) => {
+    if (!host) return;
+    host.innerHTML = Array.from({ length: n }, (_, i) =>
+      `<div class="lead__icon" style="--dl:${-i * (35 / n)}s"><img src="${LEAD_ICON}" alt="" /></div>`).join('');
+  };
+  orbit($('#leadIcons'), 3);   // lead（intro）の周回
+  orbit($('#greyIcons'), 4);   // グレー地(reel+feat)全体を周回
 
   /* =========================================================
-     浮かぶハート（MV / STAFF 共通）
+     ハート — 参照サイトの実装をそのまま採取
+       ・カクカクした独自SVG（viewBox 0 0 42.04 35.49・2本の polyline）
+       ・四隅のフレーム（各45度回転）
+       ・下から昇って途中で消える heart キーフレームを
+         ずらしたディレイで無限ループ
      ========================================================= */
-  const fillHearts = (host, n, glyphs = ['🧡', '💙', '🩷']) => {
+  // 角ばったハート（emoji ではなく参照サイトと同じ形）
+  const HEART_SVG = '<svg class="hsvg" viewBox="0 0 42.04 35.49" aria-hidden="true">'
+    + '<polyline points="21.02 5.14 14.65 0 5.5 0 0 5.5 0 14.8 21.02 35.49"/>'
+    + '<polyline points="21.02 5.14 27.39 0 36.54 0 42.04 5.5 42.04 14.8 21.02 35.49"/></svg>';
+
+  // 四隅のフレーム。参照サイトは 45度回転で内向きに置いている
+  const cornerFrame = (host) => {
     if (!host) return;
-    host.innerHTML = Array.from({ length: n }, () => {
-      const g = glyphs[Math.floor(Math.random() * glyphs.length)];
-      return `<i style="left:${Math.round(Math.random() * 92)}%;--s:${16 + Math.round(Math.random() * 18)}px;--dur:${(5 + Math.random() * 5).toFixed(1)}s;--dl:${(Math.random() * 6).toFixed(1)}s">${g}</i>`;
+    host.innerHTML = [1, 2, 3, 4].map(i => `<span class="frameHeart frameHeart--${i}">${HEART_SVG}</span>`).join('');
+  };
+
+  // 参照サイトの stagger（0/150/300/800/950/1100/1600/1750/1900ms …）を踏襲
+  const FLOAT_DELAYS = [0, 150, 300, 800, 950, 1100, 1600, 1750, 1900, 2200, 2700, 3000, 3300];
+  const fillHearts = (host, n, dur = 3000) => {
+    if (!host) return;
+    host.innerHTML = Array.from({ length: n }, (_, i) => {
+      const left = Math.round(4 + (i * 92 / n) + (Math.random() * 6 - 3));   // 横位置を均等に散らす
+      const size = 20 + Math.round(Math.random() * 20);
+      const dl   = FLOAT_DELAYS[i % FLOAT_DELAYS.length] + Math.round(Math.random() * 400);
+      const d    = dur + Math.round(Math.random() * 900);                    // 2700–4500ms 相当
+      return `<span class="floatHeart" style="left:${left}%;--s:${size}px;--dur:${d}ms;--dl:${dl}ms">${HEART_SVG}</span>`;
     }).join('');
   };
-  fillHearts($('#mvHearts'), 14);
-  fillHearts($('#staffHearts'), 18);
+
+  cornerFrame($('#mvFrame'));
+  cornerFrame($('#staffFrame'));
+  fillHearts($('#mvHearts'), 11, 3000);
+  fillHearts($('#staffHearts'), 14, 3200);
 
   /* =========================================================
      投稿カード
@@ -258,20 +286,96 @@
       const n = parseInt(label.textContent, 10);
       label.textContent = `${on ? n - 1 : n + 1} likes`;
       if (on) return;
+      // popHeart（ぱっと弾けて出る）→ そのまま昇って消える
       pop.innerHTML = Array.from({ length: 5 }, (_, i) =>
-        `<i style="left:${-6 + i * 7}px;--dl:${(i * .08).toFixed(2)}s">🧡</i>`).join('');
-      setTimeout(() => { pop.innerHTML = ''; }, 1500);
+        `<span class="floatHeart floatHeart--pop" style="left:${-8 + i * 8}px;--s:16px;--dur:1100ms;--dl:${i * 80}ms">${HEART_SVG}</span>`).join('');
+      setTimeout(() => { pop.innerHTML = ''; }, 1600);
     });
   });
 
   const bigHeart = $('#likeHeart');
   if (bigHeart) {
     const count = $('#likeCount');
+    // ボタン内にバースト用のレイヤーを差し込む
+    const burst = document.createElement('span');
+    burst.className = 'staff__burst';
+    bigHeart.appendChild(burst);
     bigHeart.addEventListener('click', () => {
       const on = bigHeart.getAttribute('aria-pressed') === 'true';
       bigHeart.setAttribute('aria-pressed', String(!on));
       count.textContent = on ? 0 : 1;
+      if (on) return;
+      burst.innerHTML = Array.from({ length: 7 }, (_, i) =>
+        `<span class="floatHeart floatHeart--pop" style="left:${-24 + i * 8}px;--s:${14 + (i % 3) * 4}px;--dur:1200ms;--dl:${i * 70}ms">${HEART_SVG}</span>`).join('');
+      setTimeout(() => { burst.innerHTML = ''; }, 1700);
     });
+  }
+
+  /* =========================================================
+     REEL — Instagram 投稿風カード（動画埋め込み）
+     ========================================================= */
+  const reelCredits = $('#reelCredits');
+  if (reelCredits) {
+    // 動画の中身に合わせた登場アイテム（ドットリーダー付き行リスト）
+    const keys = ['barrel', 'rope', 'ballBag', 'bottle', 'pouch', 'towel', 'keyring'];
+    reelCredits.innerHTML = keys.map(k => {
+      const it = ITEMS[k];
+      const price = it.soon ? it.soon : it.yen;
+      const cls = it.soon ? ' reel__buy--soon' : '';
+      return `<li class="reel__credit">
+        <span class="reel__cName">${it.name}</span>
+        <span class="reel__leader" aria-hidden="true"></span>
+        <span class="reel__cYen">${price}</span>
+        <a class="reel__buy${cls}" href="#">${it.soon ? '' : 'BUY'}</a>
+      </li>`;
+    }).join('');
+  }
+
+  const reelVideo = $('#reelVideo');
+  const reelPlay = $('#reelPlay');
+  if (reelVideo && reelPlay) {
+    const sync = () => reelPlay.classList.toggle('is-playing', !reelVideo.paused);
+    reelPlay.addEventListener('click', () => {
+      if (reelVideo.paused) reelVideo.play(); else reelVideo.pause();
+    });
+    reelVideo.addEventListener('play', sync);
+    reelVideo.addEventListener('pause', sync);
+    // ビューに入ったら自動再生、外れたら停止（muted なのでポリシー的に可）
+    new IntersectionObserver((es) => {
+      es.forEach(en => { if (en.isIntersecting) reelVideo.play().catch(() => {}); else reelVideo.pause(); });
+    }, { threshold: 0.5 }).observe(reelVideo);
+  }
+
+  const reelLike = $('.reel__like');
+  if (reelLike) {
+    const pop = $('.reel__popHeart');
+    reelLike.addEventListener('click', () => {
+      const on = reelLike.getAttribute('aria-pressed') === 'true';
+      reelLike.setAttribute('aria-pressed', String(!on));
+      reelLike.classList.toggle('is-liked', !on);
+      if (on || !pop) return;
+      pop.innerHTML = Array.from({ length: 5 }, (_, i) =>
+        `<span class="floatHeart floatHeart--pop" style="left:${-8 + i * 8}px;--s:16px;--dur:1100ms;--dl:${i * 80}ms">${HEART_SVG}</span>`).join('');
+      setTimeout(() => { pop.innerHTML = ''; }, 1600);
+    });
+  }
+
+  /* =========================================================
+     HERO — 透明度で写真をクロスフェード
+     data-hero にカンマ区切りで並べた写真を順に表示する。
+     ========================================================= */
+  const heroPh = $('#mvPh');
+  if (heroPh) {
+    const imgs = $$('.mv__phImg', heroPh);
+    if (imgs.length > 1) {
+      let cur = 0;
+      setInterval(() => {
+        const next = (cur + 1) % imgs.length;
+        imgs[cur].classList.remove('is-show');
+        imgs[next].classList.add('is-show');
+        cur = next;
+      }, 3800);
+    }
   }
 
   /* =========================================================

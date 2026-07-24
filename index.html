@@ -59,12 +59,79 @@
   <div class="mv__cont">
     <div class="mv__hearts" id="mvHearts" aria-hidden="true"></div>
     <div class="mv__phBox">
-      <img class="mv__ph" src="assets/cora.png" alt="Rankup sports 2026 SUMMER コレクション" />
+      <!-- hero の写真は透明度で切り替わる。data-hero に候補を並べ、JS が
+           クロスフェードする。写真の差し替えはここと app.js の HERO を編集。 -->
+      <div class="mv__ph" id="mvPh"
+           data-hero="assets/hero-1.png,assets/hero-2.png"
+           role="img" aria-label="Rankup sports 2026 SUMMER コレクション">
+        <img class="mv__phImg is-show" src="assets/hero-1.png" alt="Rankup sports 2026 SUMMER コレクション" />
+        <img class="mv__phImg" src="assets/hero-2.png" alt="" aria-hidden="true" />
+      </div>
+      <div class="mv__frame" id="mvFrame" aria-hidden="true"></div>
     </div>
   </div>
 
   <p class="mv__scroll"><span>SCROLL</span><i></i></p>
 </section>
+
+<!-- ============================================================
+     GREY ZONE — hero の下、Drawstring / Shoe Barrel まではグレー地。
+     バスケットボールのアニメーションがこの範囲を周回する。
+     中に REEL(動画) と FEATURE(丸型カード) を含む。
+     ============================================================ -->
+<div class="greyZone">
+  <div class="greyZone__icons" id="greyIcons" aria-hidden="true"></div>
+
+<!-- ============================================================
+     REEL — Instagram の投稿風の枠に動画を埋め込む。
+     ヘッダー(アバター+名前) → 動画 → アクション(いいね/コメント+
+     ドット+前後矢印) → 商品リスト(ドットリーダー+BUY)。
+     ============================================================ -->
+<section class="reelSec">
+  <article class="reel">
+    <header class="reel__head">
+      <span class="reel__avatar ph" aria-hidden="true"></span>
+      <span class="reel__who"><span class="reel__name">rankup_sports</span></span>
+      <span class="reel__dots" aria-hidden="true">•••</span>
+    </header>
+
+    <div class="reel__media">
+      <video class="reel__video" id="reelVideo" src="assets/story.mp4"
+             muted loop playsinline preload="metadata"></video>
+      <button class="reel__play" id="reelPlay" type="button" aria-label="再生">
+        <svg class="reel__playIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+        <svg class="reel__pauseIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3v14H7zM14 5h3v14h-3z"/></svg>
+      </button>
+    </div>
+
+    <div class="reel__nav">
+      <button class="reel__like" type="button" aria-label="いいね" aria-pressed="false">
+        <svg viewBox="0 0 24 24"><path d="M12 21s-8.6-5.3-11-10.2C-.6 6.9 1.9 3 5.7 3 8 3 10 4.3 11 6.3 12 4.3 14 3 16.3 3c3.8 0 6.3 3.9 6.7 7.8C20.6 15.7 12 21 12 21z"/></svg>
+      </button>
+      <svg class="reel__ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.5-.7L3 21l1.9-5A8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5z"/></svg>
+      <span class="reel__popHeart" aria-hidden="true"></span>
+      <span class="reel__dotsNav" aria-hidden="true"><i class="is-now"></i><i></i></span>
+    </div>
+
+    <ul class="reel__credits" id="reelCredits"></ul>
+  </article>
+</section>
+
+<!-- ============================================================
+     FEATURE — グラデーションリングの丸型プロダクトカード2枚。
+     ============================================================ -->
+<section class="feat">
+  <a class="feat__item reveal" href="#allitems">
+    <span class="feat__ring"><span class="feat__ph ph" style="--bp:38% 60%;--bs:300%" role="img" aria-label="Drawstring Ball Bag"></span></span>
+    <span class="feat__name">Drawstring<br />Ball Bag</span>
+  </a>
+  <span class="feat__div" aria-hidden="true"></span>
+  <a class="feat__item reveal" style="--d:.12s" href="#allitems">
+    <span class="feat__ring"><span class="feat__ph ph" style="--bp:2% 90%;--bs:300%" role="img" aria-label="Shoe Barrel Bag"></span></span>
+    <span class="feat__name">Shoe Barrel<br />Bag</span>
+  </a>
+</section>
+</div><!-- /greyZone -->
 
 <!-- ============================================================
      2) SIDE CONT — 左右に縦組みテキストが sticky で貼りつく
@@ -90,19 +157,6 @@
         それでも寄り道はしたいし、写真だってちゃんと撮りたい。<br />
         Rankup sports の 2026 SUMMER は、その「そのまま」を持ち歩くための道具です。
       </p>
-
-      <div class="cast">
-        <article class="cast__item reveal">
-          <div class="cast__ph ph" role="img" aria-label="MODEL A"></div>
-          <p class="cast__name">MODEL A</p>
-          <p class="cast__role">#3 / GUARD</p>
-        </article>
-        <article class="cast__item reveal" style="--d:.14s">
-          <div class="cast__ph ph" role="img" aria-label="MODEL B"></div>
-          <p class="cast__name">MODEL B</p>
-          <p class="cast__role">#11 / FORWARD</p>
-        </article>
-      </div>
     </div>
   </section>
 
@@ -189,6 +243,7 @@
 <section class="staff" id="staff">
   <div class="staff__fix">
     <div class="staff__phs" id="staffPhs"></div>
+    <div class="staff__frame" id="staffFrame" aria-hidden="true"></div>
     <div class="staff__hearts" id="staffHearts" aria-hidden="true"></div>
     <div class="staff__cap" id="staffCap"></div>
   </div>
