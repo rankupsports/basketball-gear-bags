@@ -94,16 +94,17 @@
   addEventListener('keydown', e => { if (e.key === 'Escape') setNav(false); });
 
   /* =========================================================
-     TICKER — -50% でループさせるため2周ぶん流し込む
+     LEAD の浮遊アイコン — 画面の縁を不規則に巡回する
      ========================================================= */
-  const ticker = $('#ticker1');
-  if (ticker) {
-    const w = ['PACK LIGHT', 'PLAY LOUD', '2026 SUMMER', 'RANKUP SPORTS'];
-    ticker.innerHTML = [...w, ...w].map(t => `<span>${t}</span>`).join('');
+  const leadIcons = $('#leadIcons');
+  if (leadIcons) {
+    leadIcons.innerHTML = ['🏀', '👟', '💧', '🩹', '🧢']
+      .map((g, i) => `<i style="--s:${26 + i * 4}px;--dur:${20 + i * 6}s;--dl:${-i * 3}s">${g}</i>`)
+      .join('');
   }
 
   /* =========================================================
-     浮かぶハート（MV / SEQ 共通）
+     浮かぶハート（MV / STAFF 共通）
      ========================================================= */
   const fillHearts = (host, n, glyphs = ['🧡', '💙', '🩷']) => {
     if (!host) return;
@@ -113,7 +114,7 @@
     }).join('');
   };
   fillHearts($('#mvHearts'), 14);
-  fillHearts($('#seqHearts'), 18);
+  fillHearts($('#staffHearts'), 18);
 
   /* =========================================================
      投稿カード
@@ -193,12 +194,14 @@
   /* =========================================================
      ALL ITEMS
      ========================================================= */
-  $$('.allitems').forEach(sec => {
-    const scope = sec.dataset.look;
+  // グリッドから所有セクションを辿る（.allitems / .sns--shop どちらでも拾えるように）
+  $$('.allitems__grid').forEach(grid => {
+    const scope = grid.closest('[data-look]')?.dataset.look;
+    if (!scope) return;
     const keys = scope === 'all'
       ? Object.keys(ITEMS)
       : [...new Set((LOOKS[scope] || []).flatMap(l => l.items))];
-    $('.allitems__grid', sec).innerHTML = keys.map(k => {
+    grid.innerHTML = keys.map(k => {
       const it = ITEMS[k];
       return `
         <div class="allitems__item">
@@ -272,28 +275,28 @@
   }
 
   /* =========================================================
-     SEQ — sticky ステージ。スクロール量で写真とコピーが切り替わる
+     STAFF — sticky ステージ。スクロール量で写真とコピーが切り替わる
      ========================================================= */
   const SEQ = [
     { crop: '--bp:50% 20%;--bs:190%', cap: '詰めて、' },
     { crop: '--bp:46% 60%;--bs:170%', cap: '担いで、' },
     { crop: '--bp:50% 92%;--bs:210%', cap: 'そのまま寄り道。' }
   ];
-  const seq = $('#seq');
+  const seq = $('#staff');
   if (seq) {
-    $('#seqPhs').innerHTML = SEQ.map((s, i) =>
-      `<div class="seq__ph ph${i === 0 ? ' is-show' : ''}" style="${s.crop}" aria-hidden="true"></div>`).join('');
-    $('#seqCap').innerHTML = SEQ.map((s, i) =>
+    $('#staffPhs').innerHTML = SEQ.map((s, i) =>
+      `<div class="staff__ph ph${i === 0 ? ' is-show' : ''}" style="${s.crop}" aria-hidden="true"></div>`).join('');
+    $('#staffCap').innerHTML = SEQ.map((s, i) =>
       `<span${i === 0 ? ' class="is-show"' : ''}>${s.cap}</span>`).join('');
     // ステップ数 = 写真の枚数。1枚あたり 100vh スクロールさせる
-    $('#seqSteps').innerHTML = SEQ.map(() => '<div class="seq__step"></div>').join('');
+    $('#staffSteps').innerHTML = SEQ.map(() => '<div class="staff__step"></div>').join('');
 
-    const phs  = $$('.seq__ph', seq);
-    const caps = $$('#seqCap span');
+    const phs  = $$('.staff__ph', seq);
+    const caps = $$('#staffCap span');
     let cur = -1;
     const onScroll = () => {
-      const r = seq.getBoundingClientRect();
-      const total = r.height - innerHeight;      // sticky が効いている距離
+      const r = $('.staff__steps', seq).getBoundingClientRect();
+      const total = r.height;                    // sticky が効いている距離
       if (total <= 0) return;
       const p = Math.min(Math.max(-r.top / total, 0), 0.999);
       const i = Math.floor(p * SEQ.length);
@@ -333,14 +336,13 @@
   /* =========================================================
      カラーベッド — セクションごとに背面の色をクロスフェード
      ========================================================= */
-  const sideCont = $('.sideCont');
-  if (sideCont) {
-    const bed = document.createElement('div');
-    bed.className = 'looksBg';
-    sideCont.prepend(bed);
+  const bed = $('#looksBg');
+  if (bed) {
+    // LOOK セクションはビューポートより背が高いので、面積比の閾値では
+    // 一生発火しない。画面中央のラインを跨いだ瞬間で判定する。
     const bedIo = new IntersectionObserver((es) => {
       es.forEach(en => { if (en.isIntersecting) bed.style.background = en.target.dataset.bg; });
-    }, { threshold: 0.3 });
+    }, { threshold: 0, rootMargin: '-50% 0px -50% 0px' });
     $$('[data-bg]').forEach(z => bedIo.observe(z));
   }
 })();
