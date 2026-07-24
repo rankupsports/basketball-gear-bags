@@ -1,0 +1,4 @@
+# hero photos are shipped as compressed JPEGs (hero-1.jpg / hero-2.jpg).
+# the heavy PNG sources are kept locally but not tracked or deployed.
+assets/hero-1.png
+assets/hero-2.png
