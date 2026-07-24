@@ -217,20 +217,18 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .mv__phImg.is-show{opacity:1;position:relative}
 .mv__frame{position:absolute;inset:0;pointer-events:none;color:var(--lime);z-index:3}
 
-/* hero 写真に重ねるタイトル。フォントは上部ヘッダーと同一(.mv__ttl/.mv__brand)。
-   写真の上でも読めるよう、白＋テキストシャドウ＋うっすら暗幕で可読性を確保。 */
-/* scrim(暗幕)は写真とぴったり同じ大きさに。phBox の padding 分だけ内側に置く */
+/* hero 写真の上部に重ねる見出し。参照サイトに合わせ、背景と同じライム色で上寄せ。
+   scrim(暗幕)は使わず、上端だけ軽く暗くしてライム文字の可読性を確保する。
+   ボックスは写真とぴったり同じ大きさ（phBox の padding 分だけ内側）。 */
 .mv__overlay{position:absolute;
   top:clamp(20px,5vw,44px);bottom:clamp(20px,5vw,44px);left:var(--pad);right:var(--pad);
   z-index:4;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;gap:.35em;text-align:center;pointer-events:none;
-  padding:var(--pad);
-  background:radial-gradient(120% 90% at 50% 50%,rgba(0,0,0,.42),rgba(0,0,0,.12) 70%,transparent);}
-.mv__ttl--over{color:#fff;text-shadow:0 2px 18px rgba(0,0,0,.55),0 1px 3px rgba(0,0,0,.6)}
-/* 各文を1行ずつ中央揃えに（ヘッダーと同じ改行） */
+  align-items:center;justify-content:flex-start;gap:.08em;text-align:center;pointer-events:none;
+  padding:clamp(12px,2.6vw,22px) var(--pad) 0;
+  background:linear-gradient(to bottom,rgba(0,0,0,.34),rgba(0,0,0,.08) 32%,transparent 56%);}
+.mv__ttl--over{color:var(--lime);text-shadow:0 2px 14px rgba(0,0,0,.55),0 1px 3px rgba(0,0,0,.65)}
 .mv__ttl--over span{display:block}
-.mv__ttl--over span:last-child{color:var(--lime)}
-.mv__brand--over{color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.55)}
+.mv__brand--over{color:var(--lime);text-shadow:0 2px 12px rgba(0,0,0,.5)}
 
 .mv__scroll{background:var(--lime);margin:0;padding-bottom:clamp(18px,4vw,32px);display:flex;flex-direction:column;align-items:center;gap:8px;font-family:var(--f-rob);font-size:10px;letter-spacing:.3em}
 .mv__scroll i{width:1px;height:52px;background:var(--ink);animation:sc 1.6s ease-in-out infinite}
