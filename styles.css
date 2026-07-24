@@ -470,7 +470,11 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 /* =========================================================
    3/5) SNS ブロック — 全幅の大きなリンク
    ========================================================= */
-.sns{background:var(--white);padding:clamp(40px,9vw,80px) var(--pad)}
+/* looksBg（sticky カラーベッド）は margin-bottom:-100vh の分だけ .looks の
+   下＝この ALL ITEMS 領域へ最大 100vh はみ出す。非配置のままだと配置済みの
+   ベッド(z-index:0)に上書きされ、ピンクでグリッドが隠れてしまうため、
+   セクションを重ね順で前面に出す。 */
+.sns{position:relative;z-index:1;background:var(--white);padding:clamp(40px,9vw,80px) var(--pad)}
 .sns__link{position:relative;display:block;max-width:900px;margin-inline:auto;aspect-ratio:16/9;overflow:hidden;border-radius:var(--radius)}
 .sns__ph{position:absolute;inset:0;--bs:130%;--bp:50% 40%}
 .sns__ph::after{content:"";position:absolute;inset:0;background:rgba(0,0,0,.35)}
