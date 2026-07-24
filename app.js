@@ -340,6 +340,12 @@
     });
     reelVideo.addEventListener('play', sync);
     reelVideo.addEventListener('pause', sync);
+    // ストーリーの進捗バーを再生位置に同期
+    const reelBar = $('#reelBar');
+    if (reelBar) reelVideo.addEventListener('timeupdate', () => {
+      const p = reelVideo.duration ? (reelVideo.currentTime / reelVideo.duration) * 100 : 0;
+      reelBar.style.width = p.toFixed(1) + '%';
+    });
     // ビューに入ったら自動再生、外れたら停止（muted なのでポリシー的に可）
     new IntersectionObserver((es) => {
       es.forEach(en => { if (en.isIntersecting) reelVideo.play().catch(() => {}); else reelVideo.pause(); });
