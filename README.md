@@ -14,6 +14,22 @@ niko and ... の [FISHS EDDY 2024SS 特設ページ](https://www.dot-st.com/niko
 サムネイル・アバター・商品カットは、CSS の `background-position` / `background-size` で
 その 1 枚から必要な部分だけを切り出しています（スプライト方式）。
 
+## リファレンスから採寸した値
+
+参照ページを実測し、以下のメトリクスとモーションを実装に反映しています。
+
+| 項目 | 値 |
+|---|---|
+| 投稿カード | 幅 480px / radius 25px / 下余白 35px |
+| スライダー | 480 × 535（= 96/107） |
+| カード内枠 | 430px（左右 25px） |
+| アクション行 | アイコン 25px / 上マージン 15px |
+| クレジット行 | 上マージン 40px / 各行 38px |
+| チャット | 幅 630px / 顔 35px / 吹き出し radius 50px |
+
+モーションは `ttlPop` / `ttlPopQ` / `shakeMv` / `shake` / `heartFloat` / `leadIcon` /
+`noiseShift` を採取して `styles.css` に再実装しています。
+
 ## 構成
 
 | セクション | 内容 |

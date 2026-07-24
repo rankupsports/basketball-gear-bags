@@ -7,8 +7,8 @@
 <meta name="description" content="部活帰りも、寄り道も。Rankup sports 2026 SUMMER コレクション特設サイト。" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Golos+Text:wght@400;500;600;700;800;900&family=DotGothic16&family=Caveat:wght@600;700&family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=2" />
+<link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css?v=3" />
 </head>
 <body>
 
@@ -37,46 +37,55 @@
     <li><a href="#story" data-n="03">OUR STORY</a></li>
     <li><a href="#look2" data-n="04">LOOK 02</a></li>
     <li><a href="#allitems" data-n="05">ALL ITEMS</a></li>
-    <li><a href="#vote" data-n="06">あり？なし？</a></li>
+    <li><a href="#seq" data-n="06">あり？なし？</a></li>
     <li><a href="#shop" data-n="07">SHOP</a></li>
   </ul>
   <p class="navDrawer__mark">2026<br />SUMMER</p>
 </nav>
 
-<!-- ============ MV ============ -->
+<!-- ============================================================
+     MV — 見出しは ttlPop で1行ずつせり上がり、写真は shakeMv で
+     微振動しつづける。ハートが背面をランダムに昇っていく。
+     ============================================================ -->
 <section class="mv" id="top">
-  <div class="mv__copy">
-    <p class="mv__sub">RANKUP SPORTS 2026 SUMMER COLLECTION</p>
-    <h1 class="mv__title">
-      <span class="mv__line" style="--d:0s">PACK LIGHT,</span>
-      <span class="mv__line mv__line--em" style="--d:.12s">PLAY LOUD.</span>
+  <div class="mv__header">
+    <p class="mv__lead">Born and raised in the gym.</p>
+    <h1 class="mv__ttl">
+      <span class="ttlPop" style="--d:0s">We pack light.</span>
+      <span class="ttlPop" style="--d:.14s">We play loud.</span>
     </h1>
     <p class="mv__brand">rankup sports</p>
   </div>
 
-  <div class="mv__ph"><img src="assets/cora.png" alt="Rankup sports 2026 SUMMER コレクション" /></div>
+  <div class="mv__cont">
+    <div class="mv__hearts" id="mvHearts" aria-hidden="true"></div>
+    <div class="mv__phBox">
+      <img class="mv__ph" src="assets/cora.png" alt="Rankup sports 2026 SUMMER コレクション" />
+      <span class="mv__leadIcon" aria-hidden="true">🏀</span>
+    </div>
+  </div>
 
-  <div class="mv__scroll"><span>SCROLL</span><i></i></div>
+  <p class="mv__scroll"><span>SCROLL</span><i></i></p>
 </section>
 
 <div class="ticker" aria-hidden="true"><div class="ticker__row" id="ticker1"></div></div>
 
-<!-- ============ SIDE-RAIL WRAPPER =============================
-     左右に縦組みのテキストが sticky で貼りつき、中央のコンテンツ
-     だけがスクロールしていく。参照サイトの sideCont と同じ骨格。
-     ========================================================= -->
+<!-- ============================================================
+     SIDE CONT — 左右に縦組みテキストが sticky で貼りつき、背面には
+     セクションごとに色が変わる sticky のカラーベッドが敷かれる。
+     ============================================================ -->
 <div class="sideCont">
-  <p class="side__txt side__txt--l" aria-hidden="true">PACK LIGHT, PLAY LOUD</p>
-  <p class="side__txt side__txt--r" aria-hidden="true">2026 SUMMER COLLECTION</p>
+  <p class="side__txt side__txt--l" aria-hidden="true">pack light, play loud</p>
+  <p class="side__txt side__txt--r" aria-hidden="true">2026 summer collection</p>
 
   <div class="sideCont__main">
 
     <!-- ============ INTRO ============ -->
-    <section class="intro" id="intro">
-      <p class="intro__label reveal">introduction</p>
+    <section class="intro" id="intro" data-bg="#ded3c4">
+      <p class="intro__label">introduction</p>
       <h2 class="intro__head">
-        <span class="pop" style="--d:0s">半分は、部活。</span>
-        <span class="pop" style="--d:.1s">半分は、寄り道。</span>
+        <span class="ttlPopQ" style="--d:0s">半分は、部活。</span>
+        <span class="ttlPopQ" style="--d:.12s">半分は、寄り道。</span>
       </h2>
       <p class="intro__text reveal">
         体育館を出たら、そのまま駅前に集合。<br />
@@ -91,7 +100,7 @@
           <p class="cast__name">MODEL A</p>
           <p class="cast__role">#3 / GUARD</p>
         </article>
-        <article class="cast__item reveal" style="--d:.12s">
+        <article class="cast__item reveal" style="--d:.14s">
           <div class="cast__ph ph" role="img" aria-label="MODEL B"></div>
           <p class="cast__name">MODEL B</p>
           <p class="cast__role">#11 / FORWARD</p>
@@ -104,8 +113,8 @@
       <div class="look__head">
         <p class="look__no">LOOK 01</p>
         <h2 class="look__title">
-          <span class="pop">詰めこみすぎる人の、</span>
-          <span class="pop" style="--d:.1s">放課後の中身。</span>
+          <span class="ttlPop">詰めこみすぎる人の、</span>
+          <span class="ttlPop" style="--d:.12s">放課後の中身。</span>
         </h2>
         <p class="look__lead reveal">
           「とりあえず全部入れとこ」で毎回パンパンになるタイプ。<br />
@@ -115,17 +124,16 @@
       <div class="look__items" data-look="1"></div>
     </section>
 
-    <!-- ============ ALL ITEMS (look1) ============ -->
     <section class="allitems" data-look="1">
-      <h2 class="allitems__title pop">LOOK 01 ITEMS</h2>
+      <h2 class="allitems__title ttlPop">LOOK 01 ITEMS</h2>
       <div class="allitems__grid"></div>
     </section>
 
     <!-- ============ STORY ============ -->
-    <section class="story" id="story">
+    <section class="story" id="story" data-bg="#29b8d4">
       <div class="story__ph ph reveal" role="img" aria-label="Rankup sports のギア"></div>
       <div class="story__body">
-        <h2 class="story__title pop">OUR STORY</h2>
+        <h2 class="story__title ttlPopQ">OUR STORY</h2>
         <p class="story__text reveal">
           はじまりは、部室の床に転がっていたビニール袋でした。<br />
           濡れたシューズを入れる場所がなくて、みんな仕方なくそうしていた。<br /><br />
@@ -144,8 +152,8 @@
       <div class="look__head">
         <p class="look__no">LOOK 02</p>
         <h2 class="look__title">
-          <span class="pop">ストラップの色で、</span>
-          <span class="pop" style="--d:.1s">その日を決める。</span>
+          <span class="ttlPop">ストラップの色で、</span>
+          <span class="ttlPop" style="--d:.12s">その日を決める。</span>
         </h2>
         <p class="look__lead reveal">
           ブルー、ピンク、グレー。付け替えるだけで、同じバッグが別の顔になる。<br />
@@ -155,24 +163,31 @@
       <div class="look__items" data-look="2"></div>
     </section>
 
-    <!-- ============ ALL ITEMS (look2) ============ -->
     <section class="allitems" data-look="2">
-      <h2 class="allitems__title pop">LOOK 02 ITEMS</h2>
+      <h2 class="allitems__title ttlPop">LOOK 02 ITEMS</h2>
       <div class="allitems__grid"></div>
     </section>
 
   </div><!-- /sideCont__main -->
 </div><!-- /sideCont -->
 
-<!-- ============ ALL ITEMS (full) ============ -->
-<section class="allitems allitems--full" id="allitems" data-look="all">
-  <h2 class="allitems__title pop">ALL ITEMS</h2>
-  <div class="allitems__grid"></div>
+<!-- ============================================================
+     SEQ — 高さのあるセクションの中で写真ステージだけが sticky で
+     止まり、スクロール量に応じて写真が入れ替わる。参照サイトの
+     staff セクションと同じ仕掛け。
+     ============================================================ -->
+<section class="seq" id="seq">
+  <div class="seq__fix">
+    <div class="seq__phs" id="seqPhs"></div>
+    <div class="seq__hearts" id="seqHearts" aria-hidden="true"></div>
+    <div class="seq__cap" id="seqCap"></div>
+  </div>
+  <div class="seq__steps" id="seqSteps"></div>
 </section>
 
 <!-- ============ VOTE ============ -->
 <section class="vote" id="vote">
-  <h2 class="vote__title pop">この持ち方、あり？なし？</h2>
+  <h2 class="vote__title ttlPopQ">この持ち方、あり？なし？</h2>
   <div class="vote__ph ph" role="img" aria-label="Rankup sports のコーディネート">
     <button class="vote__heart" id="likeHeart" type="button" aria-label="ありに投票" aria-pressed="false">
       <svg viewBox="0 0 24 24"><path d="M12 21s-8.6-5.3-11-10.2C-.6 6.9 1.9 3 5.7 3 8 3 10 4.3 11 6.3 12 4.3 14 3 16.3 3c3.8 0 6.3 3.9 6.7 7.8C20.6 15.7 12 21 12 21z"/></svg>
@@ -183,6 +198,12 @@
     投げたくなる日も、寄り道したい日もある。<br />
     どっちの日も、この一本で足りますように。
   </p>
+</section>
+
+<!-- ============ ALL ITEMS ============ -->
+<section class="allitems allitems--full" id="allitems" data-look="all">
+  <h2 class="allitems__title ttlPop">ALL ITEMS</h2>
+  <div class="allitems__grid"></div>
 </section>
 
 <!-- ============ CREDIT ============ -->
@@ -237,6 +258,6 @@
   <p class="footer__copy">© RANKUP SPORTS — sample site</p>
 </footer>
 
-<script src="app.js?v=2"></script>
+<script src="app.js?v=3"></script>
 </body>
 </html>
