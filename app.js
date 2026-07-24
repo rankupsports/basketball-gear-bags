@@ -438,15 +438,36 @@
   }, { passive: true });
 
   /* =========================================================
-     カラーベッド — セクションごとに背面の色をクロスフェード
+     カラーベッド — 参照サイトと同じく、スクロール量に応じて背面色を
+     パレット間で「連続補間」する（離散的な切替ではなく滑らかに変化）。
+     パレットは支給されたカラーコード。グレー(#8E909D)を先頭に置くことで
+     直前のグレー地(greyZone/lead)からなめらかに繋がる。
      ========================================================= */
   const bed = $('#looksBg');
-  if (bed) {
-    // LOOK セクションはビューポートより背が高いので、面積比の閾値では
-    // 一生発火しない。画面中央のラインを跨いだ瞬間で判定する。
-    const bedIo = new IntersectionObserver((es) => {
-      es.forEach(en => { if (en.isIntersecting) bed.style.background = en.target.dataset.bg; });
-    }, { threshold: 0, rootMargin: '-50% 0px -50% 0px' });
-    $$('[data-bg]').forEach(z => bedIo.observe(z));
+  const looks = $('.looks');
+  if (bed && looks) {
+    const PALETTE = ['#8E909D', '#CCFF63', '#3BFF65', '#05277A', '#FF0050', '#F99BA2'];
+    const toRGB = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+    const stops = PALETTE.map(toRGB);
+    const mix = (a, b, t) => a.map((v, i) => Math.round(v + (b[i] - v) * t));
+    const easeInOut = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+
+    let raf = 0;
+    const paint = () => {
+      raf = 0;
+      const r = looks.getBoundingClientRect();
+      const total = r.height - innerHeight;
+      if (total <= 0) return;
+      const p = Math.min(Math.max(-r.top / total, 0), 1);
+      // 各区間の境目をなめらかに（イーズ）繋いで、参照サイトの質感に寄せる
+      const seg = p * (stops.length - 1);
+      const i = Math.min(Math.floor(seg), stops.length - 2);
+      const c = mix(stops[i], stops[i + 1], easeInOut(seg - i));
+      bed.style.background = `rgb(${c[0]},${c[1]},${c[2]})`;
+    };
+    const onScrollBed = () => { if (!raf) raf = requestAnimationFrame(paint); };
+    addEventListener('scroll', onScrollBed, { passive: true });
+    addEventListener('resize', onScrollBed, { passive: true });
+    paint();
   }
 })();
