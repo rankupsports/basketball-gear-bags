@@ -36,81 +36,74 @@
   /* ---- look sections -------------------------------------------- */
   const LOOKS = {
     1: [
-      { credit: 'Cora', items: ['barrel','rope','shoes','socks'],
+      { credit: 'MODEL A', items: ['barrel','rope','shoes','socks'],
         chat: [
-          { s:'l', t:'Heyyyyy' },
-          { s:'l', t:"What's this!?" },
-          { s:'l', t:'I packed my whole gym bag!!' },
-          { s:'r', ph:true },
-          { s:'r', t:'Looks so heavy <3' } ] },
-      { credit: 'Cora', items: ['ballBag','bottle','tee','shorts','towel'],
-        chat: [
-          { s:'l', t:"Guess whose water bottle" },
-          { s:'r', t:'Hmmm…whose?' },
-          { s:'r', t:'Looks cold!' },
-          { s:'l', t:'This is the most successful packing!' } ] },
-      { credit: 'Cora', items: ['pouch','towel','keyring'],
-        chat: [
-          { s:'l', t:"It's mine!" },
-          { s:'r', t:'lol' },
-          { s:'r', t:'okay' },
+          { s:'l', t:'今日の荷物、これで全部' },
+          { s:'r', t:'全部って何が入ってるの' },
           { s:'l', ph:true },
-          { s:'l', t:'Always shows up and takes mine' } ] },
-      { credit: 'Cora', items: ['ropeBlue','ropePink','ropeGray','band'],
+          { s:'r', t:'多すぎでは？？' } ] },
+      { credit: 'MODEL A', items: ['ballBag','bottle','tee','shorts','towel'],
         chat: [
-          { s:'l', t:'Three colors??' },
-          { s:'r', t:"What's that?" },
-          { s:'l', t:'Tell u a secret…' },
-          { s:'l', t:'I match them to my shoes' } ] },
-      { credit: 'Cora', items: ['shoes','socks','cap'],
+          { s:'l', t:'水筒、横に寝かせて入るのが good' },
+          { s:'r', t:'たしかに立てると倒れるんだよね' },
+          { s:'l', t:'これは正解だった' } ] },
+      { credit: 'MODEL A', items: ['pouch','towel','keyring'],
         chat: [
-          { s:'r', t:'Coach, you\'re so cool!' },
-          { s:'l', t:'OMG' },
-          { s:'l', t:'OMG!!!' } ] },
-      { credit: 'Cora', items: ['barrel','ballBag','bottle','pouch'],
+          { s:'l', t:'絆創膏どこやった' },
+          { s:'r', t:'外ポケット' },
+          { s:'r', t:'いつもそこ' },
+          { s:'l', t:'あった ありがと' } ] },
+      { credit: 'MODEL A', items: ['ropeBlue','ropePink','ropeGray','band'],
         chat: [
-          { s:'l', t:'Court Court!' },
-          { s:'r', ph:true },
-          { s:'l', t:'Perfect look, right?' },
-          { s:'r', t:'Amazing!' } ] }
+          { s:'l', t:'3色そろえちゃった' },
+          { s:'r', t:'えっ全部買ったの' },
+          { s:'l', t:'シューズに合わせる用' },
+          { s:'r', t:'そこまで考えてるの強い' } ] },
+      { credit: 'MODEL A', items: ['shoes','socks','cap'],
+        chat: [
+          { s:'l', ph:true },
+          { s:'l', t:'新しいシューズおろした' },
+          { s:'r', t:'まだ白い' },
+          { s:'r', t:'来週には終わってる' } ] },
+      { credit: 'MODEL A', items: ['barrel','ballBag','bottle','pouch'],
+        chat: [
+          { s:'l', t:'まとめるとこんな感じ' },
+          { s:'r', t:'意外とすっきりして見える' },
+          { s:'l', t:'中身は詰まってる' } ] }
     ],
     2: [
-      { credit: 'Rio', items: ['ballBag','cap'],
+      { credit: 'MODEL B', items: ['ballBag','cap'],
         chat: [
-          { s:'l', t:'Soo good!' },
-          { s:'r', t:'Wait, I see three straps.' },
-          { s:'r', t:"What's?" },
-          { s:'l', t:'Someone hold the blue one' },
-          { s:'r', t:'OMG!' } ] },
-      { credit: 'Rio', items: ['rope','socks','tee','shorts','keyring','band'],
+          { s:'l', t:'ボール入れ、肩から掛けられるの助かる' },
+          { s:'r', t:'両手あくのでかい' },
+          { s:'l', t:'自転車のときこれ一択' } ] },
+      { credit: 'MODEL B', items: ['rope','socks','tee','shorts','keyring','band'],
         chat: [
-          { s:'l', t:'Some faves♡' },
+          { s:'l', t:'today\'s color はブルー' },
           { s:'r', ph:true },
-          { s:'r', t:'Obseeed!' } ] },
-      { credit: 'Rio', items: ['bottle','towel'],
+          { s:'r', t:'昨日ピンクじゃなかった？' },
+          { s:'l', t:'毎日変えてます' } ] },
+      { credit: 'MODEL B', items: ['bottle','towel'],
         chat: [
-          { s:'l', t:'Cuteeeee!' },
-          { s:'r', t:'What do you use?' },
-          { s:'l', t:'Ice, obviously' },
-          { s:'r', t:"No wonder it's melting." } ] },
-      { credit: 'Rio', items: ['barrel','ropeBlue','ropePink'],
+          { s:'l', t:'氷入れすぎて重い' },
+          { s:'r', t:'夏だししょうがない' },
+          { s:'l', t:'3限で溶けてた' } ] },
+      { credit: 'MODEL B', items: ['barrel','ropeBlue','ropePink'],
         chat: [
-          { s:'l', t:'New' },
-          { s:'r', t:'Show me your selfie!' },
-          { s:'l', t:'OMG' },
-          { s:'r', t:"No, you're good" } ] },
-      { credit: 'Rio', items: ['pouch','keyring','cap','socks'],
+          { s:'l', t:'ストラップ付け替えた' },
+          { s:'r', t:'同じバッグに見えない' },
+          { s:'l', t:'それが狙い' } ] },
+      { credit: 'MODEL B', items: ['pouch','keyring','cap','socks'],
         chat: [
-          { s:'l', t:'A practice or something??' },
+          { s:'l', t:'小物、全部この中' },
           { s:'r', ph:true },
-          { s:'r', t:'Your gym.' },
-          { s:'l', t:'2nd pic' } ] },
-      { credit: 'Rio', items: ['barrel','ballBag','shoes'],
+          { s:'r', t:'鍵もそこ入れてるの？' },
+          { s:'l', t:'なくすので' } ] },
+      { credit: 'MODEL B', items: ['barrel','ballBag','shoes'],
         chat: [
-          { s:'l', t:'Woweee!' },
-          { s:'r', t:"You're an icon" },
-          { s:'l', t:'Who is behind?' },
-          { s:'r', t:'No one' } ] }
+          { s:'l', t:'これで練習も寄り道もいける' },
+          { s:'r', t:'荷物ひとつで済むのはえらい' },
+          { s:'l', t:'そこがいちばん大事' } ] }
     ]
   };
 
@@ -145,7 +138,7 @@
      ========================================================= */
   const ticker = $('#ticker1');
   if (ticker) {
-    const words = ['GEAR UP', 'BASKETBALL & FASHION', '2026 SUMMER', 'RANKUP SPORTS'];
+    const words = ['PACK LIGHT', 'PLAY LOUD', '2026 SUMMER', 'RANKUP SPORTS'];
     // duplicated once so the -50% keyframe loops seamlessly
     ticker.innerHTML = [...words, ...words]
       .map(w => `<span>${w}</span>`).join('');
@@ -294,12 +287,43 @@
   }
 
   /* =========================================================
-     SCROLL REVEAL
+     SCROLL REVEAL — .lookItem / .reveal / .pop all opt in by
+     class; `.pop` staggers its own children via --d.
      ========================================================= */
   const io = new IntersectionObserver((entries) => {
     entries.forEach(en => {
       if (en.isIntersecting) { en.target.classList.add('is-in'); io.unobserve(en.target); }
     });
-  }, { threshold: 0.12 });
-  $$('.lookItem').forEach(el => io.observe(el));
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  $$('.lookItem, .reveal, .pop, .cast__item').forEach(el => io.observe(el));
+
+  /* =========================================================
+     HEADER — hide going down, show coming back up
+     ========================================================= */
+  const head = $('#head');
+  let lastY = 0;
+  addEventListener('scroll', () => {
+    const y = scrollY;
+    head.classList.toggle('is-solid', y > 80);
+    head.classList.toggle('is-hidden', y > 320 && y > lastY && !drawer.classList.contains('is-open'));
+    lastY = y;
+  }, { passive: true });
+
+  /* =========================================================
+     SECTION BACKGROUND — the sticky colour layer behind the
+     look sections cross-fades as each one takes the viewport.
+     ========================================================= */
+  const bgLayer = document.createElement('div');
+  bgLayer.className = 'looksBg';
+  const sideCont = $('.sideCont');
+  if (sideCont) {
+    sideCont.prepend(bgLayer);
+    const zones = $$('[data-bg]');
+    const bgIo = new IntersectionObserver((entries) => {
+      entries.forEach(en => {
+        if (en.isIntersecting) bgLayer.style.background = en.target.dataset.bg;
+      });
+    }, { threshold: 0.35 });
+    zones.forEach(z => bgIo.observe(z));
+  }
 })();

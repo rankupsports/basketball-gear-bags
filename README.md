@@ -1,7 +1,14 @@
 # RANKUP SPORTS 2026 SUMMER — campaign LP
 
-niko and ... の [FISHS EDDY 2024SS 特設ページ](https://www.dot-st.com/nikoand/cp/fishseddy_2024ss/) と
-同じ構成・トーンで組んだ、1ページ完結のキャンペーンサイト。
+niko and ... の [FISHS EDDY 2024SS 特設ページ](https://www.dot-st.com/nikoand/cp/fishseddy_2024ss/) を
+**構成・演出のリファレンス**として組んだ、1ページ完結のキャンペーンサイト。
+
+> **参照範囲について**
+> セクション構成、スクロール演出（sticky の背景ベッド／縦組みサイドレール／inview リビール／
+> タイトルのポップアップ／マーキー／ハートのインタラクション）といった**設計・実装パターン**を
+> 参考にしています。
+> 本文コピー・キャスト名・店舗名・商品名は**すべて本サイト独自のもの**で、
+> 参照元のテキストは使用していません。ブランド名・ロゴも別物です。
 
 素材が 1 枚しかないため、**ページ上のすべての写真は `assets/cora.png`（添付のキービジュアル）** です。
 サムネイル・アバター・商品カットは、CSS の `background-position` / `background-size` で
