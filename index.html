@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=12" />
+<link rel="stylesheet" href="styles.css?v=13" />
 </head>
 <body>
 
@@ -67,9 +67,11 @@
 
       <!-- hero 写真に重ねるライムの手書きコピー＋ドット文字のブランド名。 -->
       <div class="mv__overlay">
+        <!-- 文字ごとの回転・上下オフセットはデザイナー支給 SVG の座標を実測して再現
+             （フォントは特殊フォントが使えないため Permanent Marker のまま）。 -->
         <p class="mv__catch">
           <span class="mv__catch--1">Not Your</span>
-          <span class="mv__catch--2">Typical Sports Bag !</span>
+          <span class="mv__catch--2"><span class="mv__ch" style="--r:-5deg;--dy:.17em">T</span><span class="mv__ch" style="--r:-1deg;--dy:.11em">y</span><span class="mv__ch" style="--r:-6deg;--dy:0em">p</span><span class="mv__ch" style="--r:-1deg;--dy:.07em">i</span><span class="mv__ch" style="--r:2deg;--dy:-.01em">c</span><span class="mv__ch" style="--r:-6deg;--dy:.04em">a</span><span class="mv__ch" style="--r:-1deg;--dy:-.07em">l</span> <span class="mv__ch" style="--r:-7deg;--dy:.04em">S</span><span class="mv__ch" style="--r:-1deg;--dy:-.06em">ports</span> <span class="mv__ch" style="--r:-1deg;--dy:-.02em">B</span><span class="mv__ch" style="--r:-1deg;--dy:-.16em">ag</span> <span class="mv__ch" style="--r:7deg;--dy:-.13em">!</span></span>
         </p>
         <p class="mv__over-brand">RANKUP SPORTS</p>
       </div>
