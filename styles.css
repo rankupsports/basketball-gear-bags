@@ -214,22 +214,22 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 
 .mv__cont{position:relative;background:var(--lime)}
 .mv__hearts{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:2;color:var(--white)}
-.mv__phBox{position:relative;z-index:1;max-width:760px;margin-inline:auto;padding:clamp(20px,5vw,44px) var(--pad)}
+/* hero 写真は画面いっぱい（フルブリード・全幅 × ビューポート高） */
+.mv__phBox{position:relative;z-index:1;width:100%;padding:0}
 /* hero は2枚の写真を重ね、透明度でクロスフェード（揺れなし） */
-.mv__ph{position:relative;width:100%}
-.mv__phImg{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity 1.1s ease}
+.mv__ph{position:relative;width:100%;height:100vh;height:100svh}
+.mv__phImg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.1s ease}
 .mv__phImg.is-show{opacity:1;position:relative}
 .mv__frame{position:absolute;inset:0;pointer-events:none;color:var(--lime);z-index:3}
 
 /* hero 写真の上部に重ねる見出し。参照サイトに合わせ、背景と同じライム色で上寄せ。
    scrim(暗幕)は使わず、上端だけ軽く暗くしてライム文字の可読性を確保する。
    ボックスは写真とぴったり同じ大きさ（phBox の padding 分だけ内側）。 */
-.mv__overlay{position:absolute;
-  top:clamp(20px,5vw,44px);bottom:clamp(20px,5vw,44px);left:var(--pad);right:var(--pad);
+.mv__overlay{position:absolute;inset:0;
   z-index:4;display:flex;flex-direction:column;
   align-items:center;justify-content:flex-start;gap:.08em;text-align:center;pointer-events:none;
-  padding:clamp(12px,2.6vw,22px) var(--pad) 0;
-  background:linear-gradient(to bottom,rgba(0,0,0,.34),rgba(0,0,0,.08) 32%,transparent 56%);}
+  padding:clamp(104px,16vw,150px) var(--pad) 0;
+  background:linear-gradient(to bottom,rgba(0,0,0,.38),rgba(0,0,0,.10) 30%,transparent 52%);}
 .mv__ttl--over{color:var(--lime);text-shadow:0 2px 14px rgba(0,0,0,.55),0 1px 3px rgba(0,0,0,.65)}
 .mv__ttl--over span{display:block}
 .mv__brand--over{color:var(--lime);text-shadow:0 2px 12px rgba(0,0,0,.5)}
