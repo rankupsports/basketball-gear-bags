@@ -7,7 +7,7 @@
 <meta name="description" content="部活帰りも、寄り道も。Rankup sports 2026 SUMMER コレクション特設サイト。" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=League+Spartan:wght@500;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css?v=14" />
 </head>
 <body>
@@ -78,89 +78,65 @@
 </section>
 
 <!-- ============================================================
-     GREY ZONE — hero の下、Drawstring / Shoe Barrel まではグレー地。
-     バスケットボールのアニメーションがこの範囲を周回する。
-     中に REEL(動画) と FEATURE(丸型カード) を含む。
+     INTRO REEL — hero 直下。ポエム(Zen Maru Gothic) → Instagram
+     リール風モックアップ → 商品2点(League Spartan + 下向き矢印)。
+     背景色は指定の #898B98 で固定。
      ============================================================ -->
-<div class="greyZone">
-  <div class="greyZone__icons" id="greyIcons" aria-hidden="true"></div>
+<section class="igIntro">
+  <div class="igIntro__cont">
+    <p class="igIntro__text">
+      ありきたりなスポーツバッグは、もう十分ある。<br />
+      持ちたいと思えるものが、少なすぎる。
+    </p>
+    <p class="igIntro__text">
+      バスケットボールが好きな子は、<br />
+      ボールも、バッシュも、大切にする。
+    </p>
+    <p class="igIntro__text">
+      だから毎日持つバッグも、<br />
+      ただ荷物を運ぶためのものでは、少し物足りない。
+    </p>
+    <p class="igIntro__text">「それ、どこの？」</p>
+    <p class="igIntro__text">そんな何気ない一言が、ちょっとうれしくなる。</p>
+    <p class="igIntro__text">
+      毎日コートへ向かう時間まで、<br />
+      バスケットボールを好きになれるように。
+    </p>
 
-<!-- ============================================================
-     REEL — Instagram の投稿風の枠に動画を埋め込む。
-     ヘッダー(アバター+名前) → 動画 → アクション(いいね/コメント+
-     ドット+前後矢印) → 商品リスト(ドットリーダー+BUY)。
-     ============================================================ -->
-<section class="reelSec">
-  <div class="reel">
-    <!-- Instagram ストーリー風：動画を全面に、その上に UI を重ねる -->
-    <article class="reel__story">
-      <video class="reel__video" id="reelVideo" src="assets/story.mp4"
-             muted loop playsinline preload="metadata"></video>
+    <div class="igCard">
+      <video class="igCard__video" src="assets/story.mp4" muted loop autoplay playsinline preload="metadata"></video>
+      <span class="igCard__scrim" aria-hidden="true"></span>
 
-      <!-- 上下だけ暗くして UI を読みやすくする暗幕 -->
-      <span class="reel__scrim" aria-hidden="true"></span>
-
-      <!-- 進捗バー（app.js が動画の再生位置に同期） -->
-      <div class="reel__bars" aria-hidden="true"><span class="reel__bar"><i id="reelBar"></i></span></div>
-
-      <!-- ヘッダー：アバター＋アカウント名＋メニュー -->
-      <header class="reel__top">
-        <span class="reel__avatar" aria-hidden="true">R<b>U</b></span>
-        <span class="reel__who">
-          <span class="reel__name">rankup_sports</span>
-          <span class="reel__time">2h</span>
-        </span>
-        <span class="reel__dots" aria-hidden="true">•••</span>
+      <header class="igCard__top">
+        <span class="igCard__avatar"><img src="assets/icon-avatar.svg" alt="" /></span>
+        <span class="igCard__dots" aria-hidden="true">•••</span>
+        <span class="igCard__close" aria-hidden="true">&times;</span>
       </header>
 
-      <!-- 動画をタップで再生 / 一時停止（再生中はアイコンを隠す） -->
-      <button class="reel__play" id="reelPlay" type="button" aria-label="再生 / 一時停止">
-        <svg class="reel__playIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-        <svg class="reel__pauseIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3v14H7zM14 5h3v14h-3z"/></svg>
-      </button>
+      <p class="igCard__brand"><b>Rankup</b> sports</p>
 
-      <!-- キャプション（手書き風スクリプト） -->
-      <p class="reel__caption">For those of you who love<br />both basketball and fashion!</p>
-
-      <!-- ブランドロゴ -->
-      <p class="reel__brand"><b>Rankup</b> sports</p>
-
-      <!-- 返信バー：メッセージ入力＋いいね＋シェア -->
-      <div class="reel__reply">
-        <span class="reel__msg">Send message</span>
-        <button class="reel__like" type="button" aria-label="いいね" aria-pressed="false">
-          <svg viewBox="0 0 24 24"><path d="M12 21s-8.6-5.3-11-10.2C-.6 6.9 1.9 3 5.7 3 8 3 10 4.3 11 6.3 12 4.3 14 3 16.3 3c3.8 0 6.3 3.9 6.7 7.8C20.6 15.7 12 21 12 21z"/></svg>
-        </button>
-        <span class="reel__popHeart" aria-hidden="true"></span>
-        <svg class="reel__share" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+      <div class="igCard__reply">
+        <span class="igCard__msg">Send message</span>
+        <img class="igCard__icon" src="assets/icon-heart.svg" alt="いいね" />
+        <img class="igCard__icon" src="assets/icon-share.svg" alt="シェア" />
       </div>
-    </article>
+    </div>
 
-    <!-- 動画に登場するアイテム（ドットリーダー付き / app.js が生成） -->
-    <div class="reel__shop">
-      <p class="reel__shopHead">IN THIS REEL</p>
-      <ul class="reel__credits" id="reelCredits"></ul>
+    <div class="igIntro__products">
+      <a class="igIntro__item reveal" href="#allitems">
+        <span class="igIntro__ring"><span class="igIntro__ph" style="background-image:url('assets/product-ball-bag.png')" role="img" aria-label="Drawstring Ball Bag"></span></span>
+        <span class="igIntro__name">Drawstring<br />Ball Bag</span>
+        <img class="igIntro__arrow" src="assets/icon-arrow-down.svg" alt="" />
+      </a>
+      <span class="igIntro__div" aria-hidden="true"></span>
+      <a class="igIntro__item reveal" style="--d:.12s" href="#allitems">
+        <span class="igIntro__ring"><span class="igIntro__ph" style="background-image:url('assets/product-shoe-bag.png')" role="img" aria-label="ShoeBarrelbag"></span></span>
+        <span class="igIntro__name">ShoeBarrelbag</span>
+        <img class="igIntro__arrow" src="assets/icon-arrow-down.svg" alt="" />
+      </a>
     </div>
   </div>
 </section>
-
-<!-- ============================================================
-     FEATURE — グラデーションリングの丸型プロダクトカード2枚。
-     ============================================================ -->
-<section class="feat">
-  <a class="feat__item reveal" href="#allitems">
-    <span class="feat__ring"><span class="feat__ph ph" style="--bp:38% 60%;--bs:300%" role="img" aria-label="Drawstring Ball Bag"></span></span>
-    <span class="feat__name">Drawstring<br />Ball Bag</span>
-    <svg class="feat__arrow" viewBox="0 0 24 40" aria-hidden="true"><path d="M12 2v32M4 26l8 8 8-8"/></svg>
-  </a>
-  <span class="feat__div" aria-hidden="true"></span>
-  <a class="feat__item reveal" style="--d:.12s" href="#allitems">
-    <span class="feat__ring"><span class="feat__ph ph" style="--bp:2% 90%;--bs:300%" role="img" aria-label="Shoe Barrel Bag"></span></span>
-    <span class="feat__name">Shoe Barrel<br />Bag</span>
-    <svg class="feat__arrow" viewBox="0 0 24 40" aria-hidden="true"><path d="M12 2v32M4 26l8 8 8-8"/></svg>
-  </a>
-</section>
-</div><!-- /greyZone -->
 
 <!-- ============================================================
      2) SIDE CONT — 左右に縦組みテキストが sticky で貼りつく

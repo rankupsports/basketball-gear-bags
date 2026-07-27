@@ -106,7 +106,6 @@
       `<div class="lead__icon" style="--dl:${-i * (35 / n)}s"><img src="${LEAD_ICON}" alt="" /></div>`).join('');
   };
   orbit($('#leadIcons'), 3);   // lead（intro）の周回
-  orbit($('#greyIcons'), 4);   // グレー地(reel+feat)全体を周回
 
   /* =========================================================
      ハート — 参照サイトの実装をそのまま採取
@@ -308,61 +307,6 @@
       burst.innerHTML = Array.from({ length: 7 }, (_, i) =>
         `<span class="floatHeart floatHeart--pop" style="left:${-24 + i * 8}px;--s:${14 + (i % 3) * 4}px;--dur:1200ms;--dl:${i * 70}ms">${HEART_SVG}</span>`).join('');
       setTimeout(() => { burst.innerHTML = ''; }, 1700);
-    });
-  }
-
-  /* =========================================================
-     REEL — Instagram 投稿風カード（動画埋め込み）
-     ========================================================= */
-  const reelCredits = $('#reelCredits');
-  if (reelCredits) {
-    // 動画の中身に合わせた登場アイテム（ドットリーダー付き行リスト）
-    const keys = ['barrel', 'rope', 'ballBag', 'bottle', 'pouch', 'towel', 'keyring'];
-    reelCredits.innerHTML = keys.map(k => {
-      const it = ITEMS[k];
-      const price = it.soon ? it.soon : it.yen;
-      const cls = it.soon ? ' reel__buy--soon' : '';
-      return `<li class="reel__credit">
-        <span class="reel__cName">${it.name}</span>
-        <span class="reel__leader" aria-hidden="true"></span>
-        <span class="reel__cYen">${price}</span>
-        <a class="reel__buy${cls}" href="#">${it.soon ? '' : 'BUY'}</a>
-      </li>`;
-    }).join('');
-  }
-
-  const reelVideo = $('#reelVideo');
-  const reelPlay = $('#reelPlay');
-  if (reelVideo && reelPlay) {
-    const sync = () => reelPlay.classList.toggle('is-playing', !reelVideo.paused);
-    reelPlay.addEventListener('click', () => {
-      if (reelVideo.paused) reelVideo.play(); else reelVideo.pause();
-    });
-    reelVideo.addEventListener('play', sync);
-    reelVideo.addEventListener('pause', sync);
-    // ストーリーの進捗バーを再生位置に同期
-    const reelBar = $('#reelBar');
-    if (reelBar) reelVideo.addEventListener('timeupdate', () => {
-      const p = reelVideo.duration ? (reelVideo.currentTime / reelVideo.duration) * 100 : 0;
-      reelBar.style.width = p.toFixed(1) + '%';
-    });
-    // ビューに入ったら自動再生、外れたら停止（muted なのでポリシー的に可）
-    new IntersectionObserver((es) => {
-      es.forEach(en => { if (en.isIntersecting) reelVideo.play().catch(() => {}); else reelVideo.pause(); });
-    }, { threshold: 0.5 }).observe(reelVideo);
-  }
-
-  const reelLike = $('.reel__like');
-  if (reelLike) {
-    const pop = $('.reel__popHeart');
-    reelLike.addEventListener('click', () => {
-      const on = reelLike.getAttribute('aria-pressed') === 'true';
-      reelLike.setAttribute('aria-pressed', String(!on));
-      reelLike.classList.toggle('is-liked', !on);
-      if (on || !pop) return;
-      pop.innerHTML = Array.from({ length: 5 }, (_, i) =>
-        `<span class="floatHeart floatHeart--pop" style="left:${-8 + i * 8}px;--s:16px;--dur:1100ms;--dl:${i * 80}ms">${HEART_SVG}</span>`).join('');
-      setTimeout(() => { pop.innerHTML = ''; }, 1600);
     });
   }
 
