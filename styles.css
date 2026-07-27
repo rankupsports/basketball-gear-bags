@@ -242,15 +242,10 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   z-index:4;display:flex;flex-direction:column;
   align-items:center;justify-content:center;text-align:center;pointer-events:none;
   padding:var(--pad)}
-/* 手書き（マーカー）のキャッチコピー。暗幕は使わず影だけで写真から分離する。 */
-.mv__catch{margin:0;font-family:var(--f-marker);color:var(--lime);line-height:1.06;
-  text-shadow:0 3px 16px rgba(0,0,0,.45),0 1px 3px rgba(0,0,0,.5)}
-.mv__catch>span{display:block}
-/* 1行目は SVG 実測どおり全体を一様に-3.8°傾ける */
-.mv__catch--1{font-size:clamp(20px,4.4vw,58px);display:inline-block;transform:rotate(-3.8deg)}
-.mv__catch--2{font-size:clamp(28px,6.9vw,92px);margin-top:.1em}
-/* 2行目は文字/かたまりごとに回転・上下位置がバラバラ（SVG の座標を実測して再現） */
-.mv__ch{display:inline-block;transform:rotate(var(--r,0deg)) translateY(var(--dy,0em));transform-origin:50% 100%}
+/* キャッチコピー：デザイナー支給のベクター SVG（Not Your Typical Sports Bag !）。
+   暗幕は使わず、影だけで写真から分離する。viewBox 比率(1327.1x342.6)を維持。 */
+.mv__catch{width:min(92vw,560px);height:auto;
+  filter:drop-shadow(0 3px 14px rgba(0,0,0,.45)) drop-shadow(0 1px 3px rgba(0,0,0,.5))}
 /* 緑のブランド名 */
 .mv__over-brand{margin:.75em 0 0;font-family:var(--f-shoulders);font-weight:800;color:var(--lime);
   font-size:clamp(13px,2.4vw,30px);letter-spacing:.2em;
