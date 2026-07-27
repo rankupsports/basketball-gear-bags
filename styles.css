@@ -253,10 +253,6 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   font-size:clamp(13px,2.4vw,30px);letter-spacing:.2em;
   text-shadow:0 2px 10px rgba(0,0,0,.45)}
 
-.mv__scroll{background:var(--lime);margin:0;padding-bottom:clamp(18px,4vw,32px);display:flex;flex-direction:column;align-items:center;gap:8px;font-family:var(--f-rob);font-size:10px;letter-spacing:.3em}
-.mv__scroll i{width:1px;height:52px;background:var(--ink);animation:sc 1.6s ease-in-out infinite}
-@keyframes sc{0%,100%{transform:scaleY(.3);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}}
-
 /* =========================================================
    INTRO REEL — hero 直下。背景 #898B98 固定。
    ポエム(Zen Maru Gothic) → IG リール風モックアップ → 商品2点。
