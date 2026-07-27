@@ -34,6 +34,9 @@
   --f-rob:"Roboto",sans-serif;
   --f-script:"Dancing Script",cursive;
   --f-marker:"Permanent Marker",cursive;
+  --f-archivo:"Archivo Black",sans-serif;
+  --f-bowlby:"Bowlby One SC",cursive;
+  --f-shoulders:"Big Shoulders",sans-serif;
 
   --pad:clamp(18px,5vw,40px);
   --card:480px;
@@ -214,13 +217,11 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 /* 参照の白帯は 255px・上余白 65px。こちらは固定ヘッダー(92px)の分だけ上を確保しつつ、
    文字サイズと行間を詰めて参照の高さ感に寄せる。 */
 .mv__header{background:var(--white);text-align:center;padding:104px var(--pad) clamp(20px,4vw,34px)}
-/* 大見出しは極太グロテスク（参照の FISHS EDDY 相当）。幅いっぱいに置く。 */
-.mv__ttl{font-family:var(--f-body);font-weight:900;font-size:clamp(26px,6.4vw,84px);
-  line-height:1.04;letter-spacing:.005em;text-transform:uppercase}
-/* Rankup sports ロゴ：Rankup を太いグレー、sports を細いグレーで組む */
-.mv__brand{margin-top:.34em;font-family:var(--f-body);font-weight:400;
-  font-size:clamp(17px,2.9vw,40px);line-height:1.2;color:#9a9aa1;letter-spacing:-.005em}
-.mv__brand b{font-weight:800;color:#75767c}
+/* 大見出しは Archivo Black（極太グロテスク）。幅いっぱいに置く。 */
+.mv__ttl{font-family:var(--f-archivo);font-size:clamp(24px,5.9vw,78px);
+  line-height:1.06;letter-spacing:.005em;text-transform:uppercase}
+/* Rankup sports ロゴ：デザイナー支給の SVG から抽出したベクター画像 */
+.mv__brand{display:inline-block;margin-top:.5em;width:clamp(160px,26vw,360px);height:auto}
 
 .mv__cont{position:relative;background:var(--lime)}
 .mv__hearts{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:2;color:var(--white)}
@@ -247,9 +248,9 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .mv__catch span{display:block}
 .mv__catch--1{font-size:clamp(20px,4.4vw,58px)}
 .mv__catch--2{font-size:clamp(28px,6.9vw,92px);margin-top:.06em}
-/* ドット文字のブランド名 */
-.mv__over-brand{margin:.75em 0 0;font-family:var(--f-dot);color:var(--lime);
-  font-size:clamp(11px,2vw,26px);letter-spacing:.24em;
+/* 緑のブランド名 */
+.mv__over-brand{margin:.75em 0 0;font-family:var(--f-shoulders);font-weight:800;color:var(--lime);
+  font-size:clamp(13px,2.4vw,30px);letter-spacing:.2em;
   text-shadow:0 2px 10px rgba(0,0,0,.45)}
 
 .mv__scroll{background:var(--lime);margin:0;padding-bottom:clamp(18px,4vw,32px);display:flex;flex-direction:column;align-items:center;gap:8px;font-family:var(--f-rob);font-size:10px;letter-spacing:.3em}
