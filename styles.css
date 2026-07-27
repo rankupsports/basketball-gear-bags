@@ -33,6 +33,7 @@
   --f-jac:"Jacquarda Bastarda 9",serif;
   --f-rob:"Roboto",sans-serif;
   --f-script:"Dancing Script",cursive;
+  --f-marker:"Permanent Marker",cursive;
 
   --pad:clamp(18px,5vw,40px);
   --card:480px;
@@ -180,19 +181,23 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 
 /* 参照サイトの header--fixed に合わせる：高さ92px・白背景・z-95、
    隠すときは自身の高さぶん(-100%)だけ上へスライドさせる。 */
-.head{position:fixed;top:0;left:0;right:0;z-index:95;height:92px;display:flex;align-items:center;justify-content:space-between;padding:0 var(--pad);background:var(--white);transition:transform .4s cubic-bezier(.22,.61,.36,1);
+.head{position:fixed;top:0;left:0;right:0;z-index:95;height:92px;display:flex;align-items:center;justify-content:space-between;padding:0 var(--pad);background:transparent;transition:transform .4s cubic-bezier(.22,.61,.36,1),background .3s ease;
   /* 固定ヘッダーを安定した GPU レイヤーに載せ、スクロール中の二重残像を防ぐ */
   will-change:transform;transform:translateZ(0);-webkit-backface-visibility:hidden;backface-visibility:hidden}
+/* 最上部ではハンバーガーだけ（白帯に溶け込む）。スクロールしたら白背景とロゴを出す。 */
+.head.is-solid{background:var(--white)}
 .head.is-hidden{transform:translateY(-100%) translateZ(0)}
-.head__mark{font-family:var(--f-disp);font-size:15px;line-height:1;display:flex;flex-direction:column}
+.head__mark{font-family:var(--f-disp);font-size:15px;line-height:1;display:flex;flex-direction:column;opacity:0;transition:opacity .3s ease}
+.head.is-solid .head__mark{opacity:1}
 .head__mark span{color:var(--blue);font-size:11px}
 
-.navBtn{width:44px;height:44px;border-radius:50%;background:var(--ink);display:grid;align-content:center;justify-items:center;gap:5px}
-.navBtn span{display:block;width:18px;height:2px;background:var(--white);transition:transform .3s,opacity .3s}
-.navBtn[aria-expanded="true"]{background:var(--blue)}
-.navBtn[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+/* 丸背景なしの細い3本線（モックアップに合わせる） */
+.navBtn{width:auto;height:44px;border-radius:0;background:transparent;display:grid;align-content:center;justify-items:end;gap:9px}
+.navBtn span{display:block;width:clamp(34px,9vw,46px);height:2px;background:var(--ink);transition:transform .3s,opacity .3s}
+.navBtn[aria-expanded="true"]{background:transparent}
+.navBtn[aria-expanded="true"] span:nth-child(1){transform:translateY(11px) rotate(45deg)}
 .navBtn[aria-expanded="true"] span:nth-child(2){opacity:0}
-.navBtn[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.navBtn[aria-expanded="true"] span:nth-child(3){transform:translateY(-11px) rotate(-45deg)}
 
 .navDrawer{position:fixed;inset:0;z-index:110;background:var(--lime);color:var(--ink);display:flex;flex-direction:column;justify-content:center;padding:var(--pad);opacity:0;visibility:hidden;transition:opacity .35s ease,visibility .35s ease}
 .navDrawer.is-open{opacity:1;visibility:visible}
@@ -209,17 +214,22 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 /* 参照の白帯は 255px・上余白 65px。こちらは固定ヘッダー(92px)の分だけ上を確保しつつ、
    文字サイズと行間を詰めて参照の高さ感に寄せる。 */
 .mv__header{background:var(--white);text-align:center;padding:104px var(--pad) clamp(20px,4vw,34px)}
-.mv__lead{font-family:var(--f-rob);font-size:clamp(10px,2.6vw,13px);letter-spacing:.22em;text-transform:uppercase}
-.mv__ttl{margin-top:.3em;font-family:var(--f-disp);font-size:clamp(32px,8.2vw,64px);line-height:1.02}
-.mv__ttl span:last-child{color:var(--blue)}
-.mv__brand{margin-top:.28em;font-family:var(--f-jac);font-size:clamp(22px,5.8vw,38px);line-height:1.3}
+/* 大見出しは極太グロテスク（参照の FISHS EDDY 相当）。幅いっぱいに置く。 */
+.mv__ttl{font-family:var(--f-body);font-weight:900;font-size:clamp(26px,6.4vw,84px);
+  line-height:1.04;letter-spacing:.005em;text-transform:uppercase}
+/* Rankup sports ロゴ：Rankup を太いグレー、sports を細いグレーで組む */
+.mv__brand{margin-top:.34em;font-family:var(--f-body);font-weight:400;
+  font-size:clamp(17px,2.9vw,40px);line-height:1.2;color:#9a9aa1;letter-spacing:-.005em}
+.mv__brand b{font-weight:800;color:#75767c}
 
 .mv__cont{position:relative;background:var(--lime)}
 .mv__hearts{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:2;color:var(--white)}
 /* hero 写真は画面いっぱい（フルブリード・全幅 × ビューポート高） */
 .mv__phBox{position:relative;z-index:1;width:100%;padding:0}
 /* hero は2枚の写真を重ね、透明度でクロスフェード（揺れなし） */
-.mv__ph{position:relative;width:100%;height:100vh;height:100svh}
+/* モックアップに合わせ、写真はフル幅・元の比率(1920x1079)のまま見せる。
+   画面が細いときだけ min-height で高さを確保し、cover で寄せる。 */
+.mv__ph{position:relative;width:100%;aspect-ratio:1920/1079;min-height:min(56vh,420px)}
 .mv__phImg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity 1.1s ease}
 .mv__phImg.is-show{opacity:1;position:relative}
 .mv__frame{position:absolute;inset:0;pointer-events:none;color:var(--lime);z-index:3}
@@ -229,12 +239,18 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    ボックスは写真とぴったり同じ大きさ（phBox の padding 分だけ内側）。 */
 .mv__overlay{position:absolute;inset:0;
   z-index:4;display:flex;flex-direction:column;
-  align-items:center;justify-content:flex-start;gap:.08em;text-align:center;pointer-events:none;
-  padding:clamp(104px,16vw,150px) var(--pad) 0;
-  background:linear-gradient(to bottom,rgba(0,0,0,.38),rgba(0,0,0,.10) 30%,transparent 52%);}
-.mv__ttl--over{color:var(--lime);text-shadow:0 2px 14px rgba(0,0,0,.55),0 1px 3px rgba(0,0,0,.65)}
-.mv__ttl--over span{display:block}
-.mv__brand--over{color:var(--lime);text-shadow:0 2px 12px rgba(0,0,0,.5)}
+  align-items:center;justify-content:center;text-align:center;pointer-events:none;
+  padding:var(--pad)}
+/* 手書き（マーカー）のキャッチコピー。暗幕は使わず影だけで写真から分離する。 */
+.mv__catch{margin:0;font-family:var(--f-marker);color:var(--lime);line-height:1.06;
+  text-shadow:0 3px 16px rgba(0,0,0,.45),0 1px 3px rgba(0,0,0,.5)}
+.mv__catch span{display:block}
+.mv__catch--1{font-size:clamp(20px,4.4vw,58px)}
+.mv__catch--2{font-size:clamp(28px,6.9vw,92px);margin-top:.06em}
+/* ドット文字のブランド名 */
+.mv__over-brand{margin:.75em 0 0;font-family:var(--f-dot);color:var(--lime);
+  font-size:clamp(11px,2vw,26px);letter-spacing:.24em;
+  text-shadow:0 2px 10px rgba(0,0,0,.45)}
 
 .mv__scroll{background:var(--lime);margin:0;padding-bottom:clamp(18px,4vw,32px);display:flex;flex-direction:column;align-items:center;gap:8px;font-family:var(--f-rob);font-size:10px;letter-spacing:.3em}
 .mv__scroll i{width:1px;height:52px;background:var(--ink);animation:sc 1.6s ease-in-out infinite}

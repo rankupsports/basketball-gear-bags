@@ -7,8 +7,8 @@
 <meta name="description" content="部活帰りも、寄り道も。Rankup sports 2026 SUMMER コレクション特設サイト。" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=10" />
+<link href="https://fonts.googleapis.com/css2?family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css?v=11" />
 </head>
 <body>
 
@@ -47,13 +47,10 @@
      shakeMv で微振動しつづけ、背面をハートが昇っていく。
      ============================================================ -->
 <section class="mv" id="top">
+  <!-- 白帯：大見出し（極太）＋ Rankup sports ロゴ。参照サイトの mv__header と同構造。 -->
   <div class="mv__header">
-    <p class="mv__lead">Born and raised in the gym.</p>
-    <h1 class="mv__ttl">
-      <span class="ttlPop" style="--d:0s">We pack light.</span>
-      <span class="ttlPop" style="--d:.14s">We play loud.</span>
-    </h1>
-    <p class="mv__brand">rankup sports</p>
+    <h1 class="mv__ttl ttlPop">BASKETBALLGEAR BAGS</h1>
+    <p class="mv__brand"><b>Rankup</b>sports</p>
   </div>
 
   <div class="mv__cont">
@@ -62,18 +59,19 @@
       <!-- hero の写真は透明度で切り替わる。data-hero に候補を並べ、JS が
            クロスフェードする。写真の差し替えはここと app.js の HERO を編集。 -->
       <div class="mv__ph" id="mvPh"
-           data-hero="assets/hero-1.jpg,assets/hero-2.jpg"
+           data-hero="assets/hero-top.jpg"
            role="img" aria-label="Rankup sports 2026 SUMMER コレクション">
-        <img class="mv__phImg is-show" src="assets/hero-1.jpg" alt="Rankup sports 2026 SUMMER コレクション" />
-        <img class="mv__phImg" src="assets/hero-2.jpg" alt="" aria-hidden="true" />
+        <img class="mv__phImg is-show" src="assets/hero-top.jpg" alt="Rankup sports 2026 SUMMER コレクション" />
       </div>
       <div class="mv__frame" id="mvFrame" aria-hidden="true"></div>
 
-      <!-- hero 写真の上部に、背景と同じライム色の見出しを重ねる（参照サイトに合わせ
-           上寄せ・スクリムほぼ無し）。フォントは上部ヘッダーと同一(.mv__ttl/.mv__brand)。 -->
+      <!-- hero 写真に重ねるライムの手書きコピー＋ドット文字のブランド名。 -->
       <div class="mv__overlay">
-        <h2 class="mv__ttl mv__ttl--over"><span>2026 SUMMER</span></h2>
-        <p class="mv__brand mv__brand--over">rankup sports &#9829;</p>
+        <p class="mv__catch">
+          <span class="mv__catch--1">Not Your</span>
+          <span class="mv__catch--2">Typical Sports Bag !</span>
+        </p>
+        <p class="mv__over-brand">RANKUP SPORTS</p>
       </div>
     </div>
   </div>
