@@ -3,7 +3,7 @@
 # 接続がハングしてプレビューが固まる。
 $root = $PSScriptRoot
 if (-not $root) { $root = Split-Path -Parent $MyInvocation.MyCommand.Path }
-$port = 5178
+$port = if ($env:PORT) { [int]$env:PORT } else { 5178 }
 $listener = New-Object System.Net.HttpListener
 $listener.Prefixes.Add("http://localhost:$port/")
 $listener.Start()

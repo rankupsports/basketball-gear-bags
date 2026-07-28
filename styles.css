@@ -41,6 +41,11 @@
   --f-league:"League Spartan",sans-serif;
   --f-mplus:"M PLUS 1p","Hiragino Kaku Gothic ProN",sans-serif;
   --f-grotesk:"Space Grotesk",sans-serif;
+  --f-bodoni:"Libre Bodoni",serif;
+  --f-cormorant:"Cormorant Garamond",serif;
+  --f-geist:"Geist Pixel","Geist",monospace;
+  --f-jersey10:"Jersey 10",sans-serif;
+  --f-jersey20:"Jersey 20",sans-serif;
 
   --pad:clamp(18px,5vw,40px);
   --card:480px;
@@ -795,3 +800,130 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 
 /* ---- 2×2 グリッド（block03 と同じ） ---- */
 .b04__grid{margin:200px auto 0;width:848px;display:grid;grid-template-columns:repeat(2,1fr);column-gap:32px;row-gap:34px}
+
+
+/* ============================================================
+   block05 : ONLINE SHOP （レシート / block05.pdf 準拠）
+   背景 #F4E06D / 文字 #23468B
+   ONLINE SHOP=Libre Bodoni 700 /
+   Select your favorite color too!=Cormorant Garamond 600 italic /
+   商品名=Geist Pixel / Add=Jersey 10 / Continue=Jersey 20
+   ============================================================ */
+.shop{
+  --shop-bg:#F4E06D;
+  --shop-ink:#23468B;
+  --shop-box:#E9E9E9;
+  background:var(--shop-bg);
+  color:var(--shop-ink);
+  padding:clamp(40px,6vw,86px) 20px clamp(48px,7vw,96px);
+  overflow:hidden;
+}
+
+/* ---- レシート本体（上下ギザギザ） ---- */
+.shop__receipt{
+  --th:18px;                       /* ギザギザの高さ */
+  --tw:34px;                       /* ギザギザ1山の幅 */
+  position:relative;
+  max-width:600px;margin:0 auto;
+  background:#fff;
+  filter:drop-shadow(0 24px 46px rgba(35,70,139,.20));
+  -webkit-mask:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='18'%3E%3Cpath d='M0 18 L17 0 L34 18 Z' fill='%23000'/%3E%3C/svg%3E") top center / var(--tw) var(--th) repeat-x,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='18'%3E%3Cpath d='M0 0 L17 18 L34 0 Z' fill='%23000'/%3E%3C/svg%3E") bottom center / var(--tw) var(--th) repeat-x,
+    linear-gradient(#000,#000) center / 100% calc(100% - 2*var(--th) + 2px) no-repeat;
+  mask:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='18'%3E%3Cpath d='M0 18 L17 0 L34 18 Z' fill='%23000'/%3E%3C/svg%3E") top center / var(--tw) var(--th) repeat-x,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='18'%3E%3Cpath d='M0 0 L17 18 L34 0 Z' fill='%23000'/%3E%3C/svg%3E") bottom center / var(--tw) var(--th) repeat-x,
+    linear-gradient(#000,#000) center / 100% calc(100% - 2*var(--th) + 2px) no-repeat;
+}
+.shop__pad{padding:clamp(30px,5vw,52px) clamp(26px,5vw,52px) clamp(26px,4vw,44px)}
+
+/* ---- 見出し ---- */
+.shop__title{
+  margin:0;text-align:center;
+  font-family:var(--f-bodoni);font-weight:700;
+  font-size:clamp(30px,6vw,44px);line-height:1;letter-spacing:.06em;
+  color:var(--shop-ink);
+}
+.shop__sub{
+  margin:clamp(8px,1.4vw,13px) 0 0;text-align:center;
+  font-family:var(--f-cormorant);font-weight:600;font-style:italic;
+  font-size:clamp(16px,2.8vw,22px);line-height:1;color:var(--shop-ink);
+}
+.shop__sub span{position:relative;padding:0 .95em}
+.shop__sub span::before,.shop__sub span::after{content:"-";position:absolute;top:0}
+.shop__sub span::before{left:0}
+.shop__sub span::after{right:0}
+
+/* ---- 商品写真（2枚並び） ---- */
+.shop__gallery{
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2.6vw,26px);
+  margin-top:clamp(22px,3.6vw,40px);
+}
+.shop__prod{margin:0}
+.shop__box{
+  background:var(--shop-box);border-radius:16px;overflow:hidden;
+  aspect-ratio:1.23/1;display:flex;align-items:center;justify-content:center;
+}
+.shop__img{width:100%;height:100%;object-fit:contain;display:block}
+
+/* カラードット（4色 / 写真は3色） */
+.shop__dots{display:flex;justify-content:center;gap:clamp(10px,2vw,17px);margin-top:clamp(12px,2vw,18px)}
+.shop__dot{
+  width:clamp(15px,2.7vw,19px);aspect-ratio:1;border-radius:50%;padding:0;cursor:pointer;
+  background:var(--c);border:0;outline:0;
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.shop__dot:hover,.shop__dot:focus-visible{transform:scale(1.14);box-shadow:0 0 0 2px #fff,0 0 0 4px rgba(35,70,139,.4)}
+.shop__dot.is-on{transform:scale(1.08)}
+
+/* ---- 点線区切り ---- */
+.shop__rule{
+  border:0;height:0;margin:clamp(26px,4vw,42px) 0 clamp(20px,3vw,30px);
+  border-top:2px dotted rgba(35,70,139,.55);
+}
+
+/* ---- 商品リスト（名前 … リーダー … Add） ---- */
+.shop__list{list-style:none;margin:0;padding:0}
+.shop__li{display:flex;align-items:center;gap:12px;padding:clamp(7px,1.2vw,11px) 0}
+.shop__pn{
+  flex:0 0 auto;
+  font-family:var(--f-geist);font-weight:400;
+  font-size:clamp(14px,2.5vw,19px);line-height:1;letter-spacing:.02em;
+  color:var(--shop-ink);white-space:nowrap;
+}
+.shop__leader{flex:1 1 auto;height:0;border-bottom:2px dotted rgba(35,70,139,.5);transform:translateY(-2px)}
+.shop__add{
+  flex:0 0 auto;
+  font-family:var(--f-jersey10);font-weight:400;
+  font-size:clamp(17px,2.6vw,22px);line-height:1;letter-spacing:.03em;
+  color:#fff;background:var(--shop-ink);text-decoration:none;
+  padding:.16em .7em .24em;border-radius:3px;
+  transition:transform .12s ease, opacity .2s ease;
+}
+.shop__add:hover{transform:translateY(-1px);opacity:.9}
+
+/* ---- Continue to checkout ---- */
+.shop__checkoutWrap{display:flex;justify-content:center;margin-top:clamp(30px,5vw,54px)}
+.shop__checkout{
+  display:inline-block;
+  font-family:var(--f-jersey20);font-weight:400;
+  font-size:clamp(19px,3.4vw,27px);line-height:1;letter-spacing:.02em;
+  color:#fff;background:var(--shop-ink);text-decoration:none;
+  padding:.62em 1.9em;border-radius:6px;
+  box-shadow:5px 6px 12px rgba(35,70,139,.35);
+  transition:transform .15s ease, box-shadow .15s ease;
+}
+.shop__checkout:hover{transform:translateY(-2px);box-shadow:5px 9px 16px rgba(35,70,139,.4)}
+
+/* ---- ロゴ + バーコード ---- */
+.shop__logo{
+  display:block;margin:clamp(30px,5vw,52px) auto 0;
+  width:clamp(150px,34vw,210px);height:auto;
+}
+
+/* ---- スマホ ---- */
+@media (max-width:460px){
+  .shop__pn{font-size:12px;letter-spacing:0}
+  .shop__title{letter-spacing:.04em}
+}
