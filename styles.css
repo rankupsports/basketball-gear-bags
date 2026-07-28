@@ -322,52 +322,56 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    ========================================================= */
 .rinaSec{background:#B9FF61;padding:clamp(32px,7vw,64px) var(--pad) clamp(48px,9vw,80px)}
 
-/* ---- ヒーロー写真（ラベル・ロゴ・ハートバッジを重ねる） ---- */
+/* ---- ヒーロー写真（ラベル・ロゴ・ハートバッジを重ねる）
+   縦横比・重ね位置は FIX の実測値（写真 968x1570）に合わせる。 ---- */
 .rinaSec__hero{position:relative;max-width:480px;margin:0 auto;border-radius:var(--radius);overflow:visible}
-.rinaSec__photo{width:100%;aspect-ratio:4/5;object-fit:cover;object-position:50% 20%;
+.rinaSec__photo{width:100%;aspect-ratio:.617;object-fit:cover;object-position:50% 50%;
   border-radius:var(--radius);display:block;box-shadow:0 16px 34px rgba(0,0,0,.18)}
-.rinaSec__label{position:absolute;top:clamp(14px,3vw,22px);left:50%;transform:translateX(-50%);
-  width:min(70%,320px);height:auto;opacity:.9}
-.rinaSec__script{position:absolute;left:clamp(10px,3vw,24px);bottom:clamp(14px,4vw,28px);
-  width:min(58%,300px);height:auto;filter:drop-shadow(0 2px 8px rgba(0,0,0,.25))}
-.rinaSec__heart{position:absolute;bottom:calc(var(--radius) * -0.7);left:50%;transform:translateX(-50%);
-  width:clamp(48px,9vw,64px);height:auto;filter:drop-shadow(0 6px 14px rgba(0,0,0,.25))}
+.rinaSec__label{position:absolute;top:2.4%;left:50%;transform:translateX(-50%);
+  width:63.8%;height:auto;opacity:.9}
+/* スクリプトロゴは中央・大きく（FIX 指示①） */
+.rinaSec__script{position:absolute;left:50%;bottom:5.5%;transform:translateX(-50%);
+  width:82%;height:auto;filter:drop-shadow(0 2px 8px rgba(0,0,0,.25))}
+.rinaSec__heart{position:absolute;bottom:-7.9%;left:50%;transform:translateX(-50%);
+  width:19%;height:auto;filter:drop-shadow(0 6px 14px rgba(0,0,0,.25))}
 
-/* ---- ひとことコメント（Zen Maru Gothic） ---- */
+/* ---- ひとことコメント（Zen Maru Gothic）／行間は FIX 実測の 1.31 ---- */
 .rinaSec__quote{max-width:520px;margin:clamp(48px,9vw,68px) auto clamp(40px,8vw,60px);
   font-family:var(--f-zen);text-align:center;color:#1a1a1a;
-  font-size:clamp(14px,3.2vw,17px);line-height:1.9;letter-spacing:.02em}
+  font-size:clamp(14px,3.56vw,22.8px);line-height:1.31;letter-spacing:0}
 
-/* ---- 全身写真 + プロフィールカード ---- */
-.rinaSec__profile{max-width:720px;margin:0 auto;display:flex;gap:clamp(14px,3vw,28px);align-items:stretch}
-.rinaSec__action{flex:0 0 42%;align-self:flex-end}
+/* ---- 全身写真 + プロフィールカード ----
+   比率・字送りは支給デザイン(Block02_FIX)の実測値。
+   行幅 570px を基準に、余白は % 指定でそのまま縮小する。 */
+.rinaSec__profile{max-width:570px;margin:0 auto;display:flex;gap:8.7%;align-items:flex-start}
+.rinaSec__action{flex:0 0 40.4%}
 .rinaSec__action img{width:100%;height:auto;display:block}
-.rinaSec__info{flex:1;display:flex;flex-direction:column;min-width:0}
-.rinaSec__face{width:100%;aspect-ratio:4/5;border-radius:var(--radius);overflow:hidden;
-  margin:4px 0 20px;transform:rotate(5deg)}
+/* 右カラムは、傾いた写真カードの分だけ下げてから始まる */
+.rinaSec__info{flex:1;min-width:0;padding-top:5.5%}
+.rinaSec__face{width:100%;aspect-ratio:.935;border-radius:18px;overflow:hidden;
+  margin:0 0 11.7%;transform:rotate(3.25deg)}
 .rinaSec__face img{width:100%;height:100%;object-fit:cover;object-position:50% 0%;display:block}
-.rinaSec__name{margin:0 0 10px;padding-top:12px;border-top:1.5px solid rgba(0,0,0,.25);
-  display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;
-  font-family:var(--f-grotesk);font-weight:700;font-size:clamp(14px,2.8vw,18px);letter-spacing:.04em;color:#111}
-.rinaSec__name span{font-family:var(--f-mplus);font-weight:500;font-size:clamp(11px,2.2vw,13px);letter-spacing:.08em;color:#333}
-.rinaSec__bio{margin:0 0 14px;font-family:var(--f-mplus);font-size:clamp(11px,2.2vw,12.5px);
-  line-height:1.9;color:#222}
-.rinaSec__social{display:flex;gap:12px}
-.rinaSec__social img{width:22px;height:22px}
+.rinaSec__name{margin:0;padding-bottom:4.1%;border-bottom:1.5px solid #fff;
+  display:flex;align-items:baseline;gap:6.2%;flex-wrap:wrap;
+  font-family:var(--f-grotesk);font-weight:700;font-size:clamp(13px,3.44vw,22px);letter-spacing:.03em;color:#111}
+.rinaSec__name span{font-family:var(--f-mplus);font-weight:500;font-size:clamp(11px,2.97vw,19px);letter-spacing:.02em;color:#111}
+.rinaSec__bio{margin:6.5% 0 6.3%;font-family:var(--f-mplus);font-size:clamp(9.5px,2.42vw,15.5px);
+  line-height:1.67;color:#1f1f1f}
+.rinaSec__social{display:flex;gap:8.6%}
+.rinaSec__social img{width:clamp(16px,4.2vw,27px);height:auto}
 
 /* ---- Instagram プロフィール風モックアップ ---- */
-.rinaSec__mock{max-width:420px;margin:clamp(40px,8vw,60px) auto 0;background:#fff;
+.rinaSec__mock{max-width:480px;margin:clamp(40px,8vw,60px) auto 0;background:#fff;
   border-radius:var(--radius);box-shadow:0 16px 34px rgba(0,0,0,.18);
   padding:clamp(16px,4vw,22px) clamp(16px,4vw,22px) clamp(20px,4vw,26px);overflow:hidden}
 
 .rinaSec__mockTop{display:flex;align-items:center;justify-content:space-between;gap:10px;
   padding-bottom:14px;margin-bottom:16px;border-bottom:1px solid rgba(0,0,0,.08)}
-.rinaSec__mockAvatar{flex:0 0 auto;width:28px;height:28px;border-radius:50%;overflow:hidden;
-  border:1.5px solid #000;display:grid;place-items:center}
-.rinaSec__mockAvatar img{width:65%;height:65%;object-fit:contain}
+/* 円形の RANKUP SPORTS ロゴとバスケマーク（支給 SVG） */
+.rinaSec__mockLogo{flex:0 0 auto;width:clamp(24px,5.5vw,35px);height:auto}
 .rinaSec__mockTitle{flex:1;text-align:center;font-family:var(--f-grotesk);font-weight:700;
   font-size:clamp(12px,2.6vw,14px);letter-spacing:.06em;line-height:1.25}
-.rinaSec__mockBall{flex:0 0 auto;width:22px;height:22px}
+.rinaSec__mockBall{flex:0 0 auto;width:clamp(18px,3.9vw,25px);height:auto}
 
 .rinaSec__mockProfile{display:flex;align-items:center;gap:14px;margin-bottom:16px}
 .rinaSec__mockPic{flex:0 0 auto;width:56px;height:56px;border-radius:50%;
