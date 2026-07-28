@@ -2,3 +2,7 @@
 # the heavy PNG sources are kept locally but not tracked or deployed.
 assets/hero-1.png
 assets/hero-2.png
+
+# block03 の元写真は高解像度 PNG。ローカル保持し、配信は圧縮 JPEG。
+assets/block03/ballbag_a.png
+assets/block03/ballbag_b.png

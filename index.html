@@ -7,8 +7,8 @@
 <meta name="description" content="部活帰りも、寄り道も。Rankup sports 2026 SUMMER コレクション特設サイト。" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=League+Spartan:wght@500;700&family=M+PLUS+1p:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Bowlby+One&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=17" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=League+Spartan:wght@500;700&family=M+PLUS+1p:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Bowlby+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Montserrat:wght@400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css?v=18" />
 </head>
 <body>
 
@@ -212,6 +212,173 @@
 </section>
 
 <!-- ============================================================
+     BLOCK 03 — "BASKETBALL GEAR BAGS" Instagram モックの確定稿再現。
+     ヒーロー投稿カード → チャット吹き出し×4 → 2×2 の投稿カード。
+     背景 #8B8D9A で固定。フレーム幅 968px を基準にした固定レイアウトを、
+     狭い画面では .b03__scale ごと transform: scale() で縮小する。
+     ============================================================ -->
+<section class="b03" id="block03">
+ <div class="b03__scale">
+  <div class="b03__stage">
+
+    <!-- ---- HERO カード ---- -->
+    <article class="ig ig--hero">
+      <header class="ig__bar">
+        <img class="ig__barLogo" src="assets/block03/block03-logo_b.svg" alt="Rankup sports" />
+        <h2 class="ig__barTtl">BASKETBALL<br />GEAR BAGS</h2>
+        <img class="ig__barBall" src="assets/block03/block03-baskemark.svg" alt="" />
+      </header>
+
+      <div class="ig__profile">
+        <span class="ig__ava ig__ava--ru"><span><img src="assets/block03/block03-ru.svg" alt="" /></span></span>
+        <img class="ig__brand" src="assets/logo-rankup-black.svg" alt="Rankup sports" />
+        <span class="ig__more">•••</span>
+      </div>
+
+      <div class="ig__photo"><img src="assets/block03/ballbag_a.jpg" alt="Rankup sports Drawstring Ball Bag" /></div>
+
+      <div class="ig__actions">
+        <img class="ig__act ig__act--like" src="assets/block03/block03_hearts.svg" alt="いいね" />
+        <img class="ig__act ig__act--cmt" src="assets/block03/block03_hukidasi.svg" alt="コメント" />
+        <span class="ig__dots"><i></i><i class="on"></i><i></i></span>
+        <span class="ig__nav">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+        </span>
+      </div>
+
+      <ul class="ig__prod">
+        <li><span class="ig__pName">DRAWSTRING BALL BAG</span><span class="ig__lead"></span><span class="ig__price">¥0,000</span><a class="ig__add" href="#">Add</a></li>
+        <li><span class="ig__pName">ROPE STRAP - Gray</span><span class="ig__lead"></span><span class="ig__price">¥0,000</span><a class="ig__add" href="#">Add</a></li>
+        <li><span class="ig__pName">ROPE STRAP - Pink</span><span class="ig__lead"></span><span class="ig__price">¥0,000</span><a class="ig__add" href="#">Add</a></li>
+        <li><span class="ig__pName">ROPE STRAP - Blue</span><span class="ig__lead"></span><span class="ig__price">¥0,000</span><a class="ig__add" href="#">Add</a></li>
+      </ul>
+    </article>
+
+    <!-- ---- チャット吹き出し（cropped SVG を背景、本文は live text） ---- -->
+    <div class="b03__chat">
+      <p class="bub bub--l bub--a">バスケットボールがすっぽり収まる巾着タイプのボールバッグ。</p>
+      <p class="bub bub--r bub--b">裏返せばデザインが変わるリバーシブル仕様で、<br />気分やコーデに合わせて2通りのスタイルを楽しめます！</p>
+      <p class="bub bub--l bub--c">お好みのストラップロープを取り付けて、自分らしくアレンジすることも!</p>
+      <p class="bub bub--r bub--d">お気に入りのボールを入れて、練習や試合に持っていこう！</p>
+    </div>
+
+    <!-- ---- 2×2 グリッド（ユーザー投稿カード） ---- -->
+    <div class="b03__grid">
+      <article class="ig ig--mini">
+        <header class="ig__bar">
+          <img class="ig__barLogo" src="assets/block03/block03-logo_b.svg" alt="Rankup sports" />
+          <h2 class="ig__barTtl">BASKETBALL<br />GEAR BAGS</h2>
+          <img class="ig__barBall" src="assets/block03/block03-baskemark.svg" alt="" />
+        </header>
+        <div class="ig__profile">
+          <span class="ig__ava ig__ava--photo"><span><img src="assets/block03/ballbag_b.jpg" alt="" /></span></span>
+          <div class="ig__names"><p class="ig__uname">osayu.bsk</p><p class="ig__urole">ユーザー名</p></div>
+          <span class="ig__more">•••</span>
+        </div>
+        <div class="ig__photo"><img src="assets/block03/ballbag_b.jpg" alt="" /></div>
+        <div class="ig__actions">
+          <img class="ig__act ig__act--like" src="assets/block03/block03_hearts.svg" alt="いいね" />
+          <img class="ig__act ig__act--cmt" src="assets/block03/block03_hukidasi.svg" alt="コメント" />
+          <span class="ig__dots"><i class="on"></i><i></i></span>
+          <span class="ig__nav">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+        <ul class="ig__prod">
+          <li><span class="ig__pName">DRAW STRING BALL BAG</span><span class="ig__lead"></span><span class="ig__price">¥0,000</span><a class="ig__add" href="#">Add</a></li>
+          <li><span class="ig__pName">ROPE STRAP</span><span class="ig__lead"></span><span class="ig__price">¥0,000</span><a class="ig__add" href="#">Add</a></li>
+        </ul>
+      </article>
+
+      <article class="ig ig--mini">
+        <header class="ig__bar">
+          <img class="ig__barLogo" src="assets/block03/block03-logo_b.svg" alt="Rankup sports" />
+          <h2 class="ig__barTtl">BASKETBALL<br />GEAR BAGS</h2>
+          <img class="ig__barBall" src="assets/block03/block03-baskemark.svg" alt="" />
+        </header>
+        <div class="ig__profile">
+          <span class="ig__ava ig__ava--photo"><span><img src="assets/block03/ballbag_b.jpg" alt="" /></span></span>
+          <div class="ig__names"><p class="ig__uname">osayu.bsk</p><p class="ig__urole">ユーザー名</p></div>
+          <span class="ig__more">•••</span>
+        </div>
+        <div class="ig__photo"><img src="assets/block03/ballbag_b.jpg" alt="" /></div>
+        <div class="ig__actions">
+          <img class="ig__act ig__act--like" src="assets/block03/block03_hearts.svg" alt="いいね" />
+          <img class="ig__act ig__act--cmt" src="assets/block03/block03_hukidasi.svg" alt="コメント" />
+          <span class="ig__dots"><i class="on"></i><i></i></span>
+          <span class="ig__nav">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+        <ul class="ig__prod">
+          <li><span class="ig__pName">DRAW STRING BALL BAG</span><span class="ig__lead"></span><span class="ig__price">¥0,000</span><a class="ig__add" href="#">Add</a></li>
+          <li><span class="ig__pName">ROPE STRAP</span><span class="ig__lead"></span><span class="ig__price">¥0,000</span><a class="ig__add" href="#">Add</a></li>
+        </ul>
+      </article>
+
+      <article class="ig ig--mini">
+        <header class="ig__bar">
+          <img class="ig__barLogo" src="assets/block03/block03-logo_b.svg" alt="Rankup sports" />
+          <h2 class="ig__barTtl">BASKETBALL<br />GEAR BAGS</h2>
+          <img class="ig__barBall" src="assets/block03/block03-baskemark.svg" alt="" />
+        </header>
+        <div class="ig__profile">
+          <span class="ig__ava ig__ava--photo"><span><img src="assets/block03/ballbag_b.jpg" alt="" /></span></span>
+          <div class="ig__names"><p class="ig__uname">osayu.bsk</p><p class="ig__urole">ユーザー名</p></div>
+          <span class="ig__more">•••</span>
+        </div>
+        <div class="ig__photo"><img src="assets/block03/ballbag_b.jpg" alt="" /></div>
+        <div class="ig__actions">
+          <img class="ig__act ig__act--like" src="assets/block03/block03_hearts.svg" alt="いいね" />
+          <img class="ig__act ig__act--cmt" src="assets/block03/block03_hukidasi.svg" alt="コメント" />
+          <span class="ig__dots"><i class="on"></i><i></i></span>
+          <span class="ig__nav">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+        <ul class="ig__prod">
+          <li><span class="ig__pName">DRAW STRING BALL BAG</span><span class="ig__lead"></span><span class="ig__price">¥0,000</span><a class="ig__add" href="#">Add</a></li>
+          <li><span class="ig__pName">ROPE STRAP</span><span class="ig__lead"></span><span class="ig__price">¥0,000</span><a class="ig__add" href="#">Add</a></li>
+        </ul>
+      </article>
+
+      <article class="ig ig--mini">
+        <header class="ig__bar">
+          <img class="ig__barLogo" src="assets/block03/block03-logo_b.svg" alt="Rankup sports" />
+          <h2 class="ig__barTtl">BASKETBALL<br />GEAR BAGS</h2>
+          <img class="ig__barBall" src="assets/block03/block03-baskemark.svg" alt="" />
+        </header>
+        <div class="ig__profile">
+          <span class="ig__ava ig__ava--photo"><span><img src="assets/block03/ballbag_b.jpg" alt="" /></span></span>
+          <div class="ig__names"><p class="ig__uname">osayu.bsk</p><p class="ig__urole">ユーザー名</p></div>
+          <span class="ig__more">•••</span>
+        </div>
+        <div class="ig__photo"><img src="assets/block03/ballbag_b.jpg" alt="" /></div>
+        <div class="ig__actions">
+          <img class="ig__act ig__act--like" src="assets/block03/block03_hearts.svg" alt="いいね" />
+          <img class="ig__act ig__act--cmt" src="assets/block03/block03_hukidasi.svg" alt="コメント" />
+          <span class="ig__dots"><i class="on"></i><i></i></span>
+          <span class="ig__nav">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+          </span>
+        </div>
+        <ul class="ig__prod">
+          <li><span class="ig__pName">DRAW STRING BALL BAG</span><span class="ig__lead"></span><span class="ig__price">¥0,000</span><a class="ig__add" href="#">Add</a></li>
+          <li><span class="ig__pName">ROPE STRAP</span><span class="ig__lead"></span><span class="ig__price">¥0,000</span><a class="ig__add" href="#">Add</a></li>
+        </ul>
+      </article>
+    </div>
+
+  </div>
+ </div>
+</section>
+
+<!-- ============================================================
      2) SIDE CONT — 左右に縦組みテキストが sticky で貼りつく
      ============================================================ -->
 <div class="sideCont">
@@ -403,6 +570,27 @@
   <p class="shop__copy">© RANKUP SPORTS — sample site</p>
 </footer>
 
+<!-- BLOCK 03 を画面幅に合わせて等比縮小（968px 基準の固定レイアウト） -->
+<script>
+(function(){
+  var sec=document.querySelector('.b03');
+  if(!sec)return;
+  var scaleEl=sec.querySelector('.b03__scale');
+  var stage=sec.querySelector('.b03__stage');
+  function fit(){
+    var k=Math.min(1, sec.clientWidth/968);
+    scaleEl.style.setProperty('--k', k);
+    sec.style.height = stage.getBoundingClientRect().height + 'px';
+  }
+  window.addEventListener('resize', fit);
+  window.addEventListener('load', fit);
+  // 画像ロードで stage 高が変わるため、読み込み完了ごとに再計算
+  sec.querySelectorAll('img').forEach(function(img){
+    if(!img.complete) img.addEventListener('load', fit, {once:true});
+  });
+  fit();
+})();
+</script>
 <script src="app.js?v=8"></script>
 </body>
 </html>
