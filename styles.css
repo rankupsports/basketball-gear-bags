@@ -674,7 +674,10 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .b03 .ig__pName{font-family:var(--f-mont);font-weight:400;letter-spacing:.02em;color:#111}
 .b03 .ig__lead{flex:1;margin:0 8px;border-bottom:1px dotted #b7b7b7;transform:translateY(-3px)}
 .b03 .ig__price{font-family:var(--f-zkaku);font-weight:500;color:#111}
-.b03 .ig__add{font-family:var(--f-mont);font-weight:400;color:var(--b3blue);text-decoration:none}
+/* Add は太字＋青の下線（赤字校正 ②④） */
+.b03 .ig__add{font-family:var(--f-mont);font-weight:700;color:var(--b3blue);
+  text-decoration:underline;text-decoration-color:var(--b3blue);
+  text-decoration-thickness:1.5px;text-underline-offset:2px}
 
 /* =============== HERO カード（上部・大） =============== */
 .b03 .ig--hero{width:482px;margin:0 auto}
@@ -685,8 +688,9 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .b03 .ig--hero .ig__profile{padding:18px 26px 34px;border-top:1px solid var(--b3line);gap:16px}
 .b03 .ig--hero .ig__ava{width:64px;height:64px;padding:3px}
 .b03 .ig--hero .ig__ava > *{border:3px solid #fff}
-/* logo_b から抽出した RU モノグラム（外周の文字リング無し） */
-.b03 .ig--hero .ig__ava--ru img{width:60%;height:60%;object-fit:contain}
+/* 赤字校正 ①: 崩れて見えたロゴを修正。full logo_b を RU 領域だけに
+   viewBox クロップした block03-ru.svg（外周リング文字なし）を使用。 */
+.b03 .ig--hero .ig__ava--ru img{width:66%;height:66%;object-fit:contain}
 .b03 .ig--hero .ig__brand{height:22px}
 .b03 .ig--hero .ig__more{font-size:26px}
 .b03 .ig--hero .ig__photo{height:598px}
@@ -705,15 +709,17 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    cropped SVG（viewBox をパス実寸に切り詰め）を背景に敷き、本文は live text。
    各 SVG はテキスト量に合わせて幅が作られている。 */
 .b03__chat{margin:86px 0 0 132px;width:727px}   /* カード下端から 86px、左端 x=132 */
-.b03 .bub{position:relative;margin:0;font-family:var(--f-zkaku);font-weight:500;
-  font-size:15px;line-height:1.5;letter-spacing:.01em;white-space:nowrap;
+/* 赤字校正 ③: 文字を一段太く・少し大きく（可読性UP）。
+   本文が大きくなった分、吹き出しも SVG のアスペクト比を保ったまま拡大する。 */
+.b03 .bub{position:relative;margin:0;font-family:var(--f-zkaku);font-weight:700;
+  font-size:16px;line-height:1.5;letter-spacing:.01em;white-space:nowrap;
   background-repeat:no-repeat;background-size:100% 100%;display:flex;align-items:center}
 .b03 .bub--l{color:#111}                    /* 左・白・しっぽ左下 */
 .b03 .bub--r{color:#fff;margin-left:auto}   /* 右・青・しっぽ右下 */
-.b03 .bub--a{width:499px;height:73px;background-image:url('assets/block03/block03_bub-a.svg');padding:0 30px 13px 34px}
-.b03 .bub--b{width:448px;height:97px;white-space:normal;line-height:1.45;background-image:url('assets/block03/block03_bub-b.svg');padding:0 24px 12px 24px}
-.b03 .bub--c{width:556px;height:73px;background-image:url('assets/block03/block03_bub-c.svg');padding:0 26px 13px 30px}
-.b03 .bub--d{width:499px;height:73px;background-image:url('assets/block03/block03_bub-d.svg');padding:0 34px 13px 30px}
+.b03 .bub--a{width:536px;height:79px;background-image:url('assets/block03/block03_bub-a.svg');padding:0 30px 14px 34px}
+.b03 .bub--b{width:462px;height:100px;white-space:normal;line-height:1.5;background-image:url('assets/block03/block03_bub-b.svg');padding:0 24px 13px 24px}
+.b03 .bub--c{width:600px;height:79px;background-image:url('assets/block03/block03_bub-c.svg');padding:0 26px 14px 30px}
+.b03 .bub--d{width:506px;height:74px;background-image:url('assets/block03/block03_bub-d.svg');padding:0 34px 13px 30px}
 .b03__chat .bub + .bub{margin-top:38px}
 
 /* =============== 2×2 グリッド（下部・小カード） =============== */
@@ -734,10 +740,11 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .b03 .ig--mini .ig__act--cmt{width:24px}
 .b03 .ig--mini .ig__nav svg{width:22px;height:22px}
 .b03 .ig--mini .ig__nav{gap:12px}
-.b03 .ig--mini .ig__prod{padding:50px 14px 30px}
-.b03 .ig--mini .ig__prod li{margin-bottom:20px}
+/* 赤字校正 ⑤: 文字が小さすぎるので一回り大きく（11→13px）。行間も調整。 */
+.b03 .ig--mini .ig__prod{padding:42px 15px 26px}
+.b03 .ig--mini .ig__prod li{margin-bottom:16px}
 .b03 .ig--mini .ig__prod li:last-child{margin-bottom:0}
-.b03 .ig--mini .ig__pName{font-size:11px}
-.b03 .ig--mini .ig__price{font-size:11px;margin-right:14px}
-.b03 .ig--mini .ig__add{font-size:11px}
+.b03 .ig--mini .ig__pName{font-size:13px}
+.b03 .ig--mini .ig__price{font-size:13px;margin-right:16px}
+.b03 .ig--mini .ig__add{font-size:13px}
 .b03 .ig--mini .ig__lead{transform:translateY(-2px)}
