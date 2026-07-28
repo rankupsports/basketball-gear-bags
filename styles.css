@@ -630,80 +630,80 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .b03__stage{width:968px;padding:132px 0 184px}
 
 /* =============== Instagram カード共通 =============== */
-.b03 .ig{background:var(--b3card);border-radius:14px;overflow:hidden}
+:is(.b03,.b04) .ig{background:var(--b3card);border-radius:14px;overflow:hidden}
 
 /* ---- 上段バー: ロゴ / BASKETBALL GEAR BAGS / バスケマーク ---- */
-.b03 .ig__bar{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px}
-.b03 .ig__barTtl{margin:0;text-align:center;font-family:var(--f-bowlby);font-weight:400;line-height:1.08;letter-spacing:.01em;color:#000}
-.b03 .ig__barLogo,.b03 .ig__barBall{display:block;flex:0 0 auto}
+:is(.b03,.b04) .ig__bar{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:10px}
+:is(.b03,.b04) .ig__barTtl{margin:0;text-align:center;font-family:var(--f-bowlby);font-weight:400;line-height:1.08;letter-spacing:.01em;color:#000}
+:is(.b03,.b04) .ig__barLogo,:is(.b03,.b04) .ig__barBall{display:block;flex:0 0 auto}
 
 /* ---- プロフィール行 ---- */
-.b03 .ig__profile{display:flex;align-items:center}
-.b03 .ig__brand{display:block;height:auto}
-.b03 .ig__more{margin-left:auto;letter-spacing:.12em;color:#111;line-height:1}
+:is(.b03,.b04) .ig__profile{display:flex;align-items:center}
+:is(.b03,.b04) .ig__brand{display:block;height:auto}
+:is(.b03,.b04) .ig__more{margin-left:auto;letter-spacing:.12em;color:#111;line-height:1}
 
 /* Instagram のグラデーションリング付きアバター */
-.b03 .ig__ava{flex:0 0 auto;border-radius:50%;
+:is(.b03,.b04) .ig__ava{flex:0 0 auto;border-radius:50%;
   background:conic-gradient(from 210deg,#feda75,#fa7e1e,#f56040,#e1306c,#c13584,#833ab4,#5b51d8,#feda75);
   display:grid;place-items:center}
-.b03 .ig__ava > *{border-radius:50%;background:#fff;width:100%;height:100%;display:grid;place-items:center;overflow:hidden}
-.b03 .ig__ava img{display:block}
-.b03 .ig__ava--photo img{width:100%;height:100%;object-fit:cover;object-position:50% 20%}
+:is(.b03,.b04) .ig__ava > *{border-radius:50%;background:#fff;width:100%;height:100%;display:grid;place-items:center;overflow:hidden}
+:is(.b03,.b04) .ig__ava img{display:block}
+:is(.b03,.b04) .ig__ava--photo img{width:100%;height:100%;object-fit:cover;object-position:50% 20%}
 
-.b03 .ig__names{min-width:0;line-height:1.15}
-.b03 .ig__uname{font-family:var(--f-zkaku);font-weight:500}
-.b03 .ig__urole{font-family:var(--f-zkaku);font-weight:500;color:#111}
+:is(.b03,.b04) .ig__names{min-width:0;line-height:1.15}
+:is(.b03,.b04) .ig__uname{font-family:var(--f-zkaku);font-weight:500}
+:is(.b03,.b04) .ig__urole{font-family:var(--f-zkaku);font-weight:500;color:#111}
 
 /* ---- 写真 ---- */
-.b03 .ig__photo{width:100%;overflow:hidden;background:#d9d9d9}
-.b03 .ig__photo img{display:block;width:100%;height:100%;object-fit:cover}
+:is(.b03,.b04) .ig__photo{width:100%;overflow:hidden;background:#d9d9d9}
+:is(.b03,.b04) .ig__photo img{display:block;width:100%;height:100%;object-fit:cover}
 
 /* ---- アクション行: ハート / コメント / ドット / 矢印 ---- */
-.b03 .ig__actions{display:flex;align-items:center}
-.b03 .ig__act{display:block}
-.b03 .ig__act--cmt{margin-left:14px}
-.b03 .ig__dots{display:flex;gap:6px;margin:0 auto}
-.b03 .ig__dots i{width:7px;height:7px;border-radius:50%;background:#c9c9c9}
-.b03 .ig__dots i.on{background:var(--b3blue)}
-.b03 .ig__nav{display:flex;align-items:center;gap:18px;color:#111}
-.b03 .ig__nav svg{display:block}
+:is(.b03,.b04) .ig__actions{display:flex;align-items:center}
+:is(.b03,.b04) .ig__act{display:block}
+:is(.b03,.b04) .ig__act--cmt{margin-left:14px}
+:is(.b03,.b04) .ig__dots{display:flex;gap:6px;margin:0 auto}
+:is(.b03,.b04) .ig__dots i{width:7px;height:7px;border-radius:50%;background:#c9c9c9}
+:is(.b03,.b04) .ig__dots i.on{background:var(--b3blue)}
+:is(.b03,.b04) .ig__nav{display:flex;align-items:center;gap:18px;color:#111}
+:is(.b03,.b04) .ig__nav svg{display:block}
 
 /* ---- 商品リスト ---- */
-.b03 .ig__prod{list-style:none;margin:0;padding:0}
-.b03 .ig__prod li{display:flex;align-items:baseline;white-space:nowrap}
-.b03 .ig__pName{font-family:var(--f-mont);font-weight:400;letter-spacing:.02em;color:#111}
-.b03 .ig__lead{flex:1;margin:0 8px;border-bottom:1px dotted #b7b7b7;transform:translateY(-3px)}
-.b03 .ig__price{font-family:var(--f-zkaku);font-weight:500;color:#111}
+:is(.b03,.b04) .ig__prod{list-style:none;margin:0;padding:0}
+:is(.b03,.b04) .ig__prod li{display:flex;align-items:baseline;white-space:nowrap}
+:is(.b03,.b04) .ig__pName{font-family:var(--f-mont);font-weight:400;letter-spacing:.02em;color:#111}
+:is(.b03,.b04) .ig__lead{flex:1;margin:0 8px;border-bottom:1px dotted #b7b7b7;transform:translateY(-3px)}
+:is(.b03,.b04) .ig__price{font-family:var(--f-zkaku);font-weight:500;color:#111}
 /* Add は太字＋青の下線（赤字校正 ②④） */
-.b03 .ig__add{font-family:var(--f-mont);font-weight:700;color:var(--b3blue);
+:is(.b03,.b04) .ig__add{font-family:var(--f-mont);font-weight:700;color:var(--b3blue);
   text-decoration:underline;text-decoration-color:var(--b3blue);
   text-decoration-thickness:1.5px;text-underline-offset:2px}
 
 /* =============== HERO カード（上部・大） =============== */
-.b03 .ig--hero{width:482px;margin:0 auto}
-.b03 .ig--hero .ig__bar{padding:28px 26px 15px}
-.b03 .ig--hero .ig__barTtl{font-size:23px}
-.b03 .ig--hero .ig__barLogo{width:40px}
-.b03 .ig--hero .ig__barBall{width:34px}
-.b03 .ig--hero .ig__profile{padding:18px 26px 34px;border-top:1px solid var(--b3line);gap:16px}
-.b03 .ig--hero .ig__ava{width:64px;height:64px;padding:3px}
-.b03 .ig--hero .ig__ava > *{border:3px solid #fff}
+:is(.b03,.b04) .ig--hero{width:482px;margin:0 auto}
+:is(.b03,.b04) .ig--hero .ig__bar{padding:28px 26px 15px}
+:is(.b03,.b04) .ig--hero .ig__barTtl{font-size:23px}
+:is(.b03,.b04) .ig--hero .ig__barLogo{width:40px}
+:is(.b03,.b04) .ig--hero .ig__barBall{width:34px}
+:is(.b03,.b04) .ig--hero .ig__profile{padding:18px 26px 34px;border-top:1px solid var(--b3line);gap:16px}
+:is(.b03,.b04) .ig--hero .ig__ava{width:64px;height:64px;padding:3px}
+:is(.b03,.b04) .ig--hero .ig__ava > *{border:3px solid #fff}
 /* 赤字校正 ①: 崩れて見えたロゴを修正。full logo_b を RU 領域だけに
    viewBox クロップした block03-ru.svg（外周リング文字なし）を使用。 */
-.b03 .ig--hero .ig__ava--ru img{width:66%;height:66%;object-fit:contain}
-.b03 .ig--hero .ig__brand{height:22px}
-.b03 .ig--hero .ig__more{font-size:26px}
-.b03 .ig--hero .ig__photo{height:598px}
-.b03 .ig--hero .ig__actions{padding:23px 26px 0}
-.b03 .ig--hero .ig__act--like{width:30px}
-.b03 .ig--hero .ig__act--cmt{width:33px}
-.b03 .ig--hero .ig__nav svg{width:30px;height:30px}
-.b03 .ig--hero .ig__prod{padding:50px 26px 20px}
-.b03 .ig--hero .ig__prod li{margin-bottom:16px}
-.b03 .ig--hero .ig__prod li:last-child{margin-bottom:0}
-.b03 .ig--hero .ig__pName{font-size:16px}
-.b03 .ig--hero .ig__price{font-size:16px;margin-right:22px}
-.b03 .ig--hero .ig__add{font-size:16px}
+:is(.b03,.b04) .ig--hero .ig__ava--ru img{width:66%;height:66%;object-fit:contain}
+:is(.b03,.b04) .ig--hero .ig__brand{height:22px}
+:is(.b03,.b04) .ig--hero .ig__more{font-size:26px}
+:is(.b03,.b04) .ig--hero .ig__photo{height:598px}
+:is(.b03,.b04) .ig--hero .ig__actions{padding:23px 26px 0}
+:is(.b03,.b04) .ig--hero .ig__act--like{width:30px}
+:is(.b03,.b04) .ig--hero .ig__act--cmt{width:33px}
+:is(.b03,.b04) .ig--hero .ig__nav svg{width:30px;height:30px}
+:is(.b03,.b04) .ig--hero .ig__prod{padding:50px 26px 20px}
+:is(.b03,.b04) .ig--hero .ig__prod li{margin-bottom:16px}
+:is(.b03,.b04) .ig--hero .ig__prod li:last-child{margin-bottom:0}
+:is(.b03,.b04) .ig--hero .ig__pName{font-size:16px}
+:is(.b03,.b04) .ig--hero .ig__price{font-size:16px;margin-right:22px}
+:is(.b03,.b04) .ig--hero .ig__add{font-size:16px}
 
 /* =============== チャット吹き出し（4個） ===============
    cropped SVG（viewBox をパス実寸に切り詰め）を背景に敷き、本文は live text。
@@ -724,27 +724,74 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 
 /* =============== 2×2 グリッド（下部・小カード） =============== */
 .b03__grid{margin:200px auto 0;width:848px;display:grid;grid-template-columns:repeat(2,1fr);column-gap:32px;row-gap:34px}
-.b03 .ig--mini{width:100%}
-.b03 .ig--mini .ig__bar{padding:12px 16px 6px}
-.b03 .ig--mini .ig__barTtl{font-size:15px;letter-spacing:.02em}
-.b03 .ig--mini .ig__barLogo{width:26px}
-.b03 .ig--mini .ig__barBall{width:22px}
-.b03 .ig--mini .ig__profile{padding:8px 14px 7px;gap:11px}
-.b03 .ig--mini .ig__ava{width:40px;height:40px;padding:2px}
-.b03 .ig--mini .ig__ava > *{border:2px solid #fff}
-.b03 .ig--mini .ig__uname{font-size:15px;font-weight:700}
-.b03 .ig--mini .ig__urole{font-size:11px}
-.b03 .ig--mini .ig__photo{height:403px}
-.b03 .ig--mini .ig__actions{padding:18px 14px 0}
-.b03 .ig--mini .ig__act--like{width:22px}
-.b03 .ig--mini .ig__act--cmt{width:24px}
-.b03 .ig--mini .ig__nav svg{width:22px;height:22px}
-.b03 .ig--mini .ig__nav{gap:12px}
+:is(.b03,.b04) .ig--mini{width:100%}
+:is(.b03,.b04) .ig--mini .ig__bar{padding:12px 16px 6px}
+:is(.b03,.b04) .ig--mini .ig__barTtl{font-size:15px;letter-spacing:.02em}
+:is(.b03,.b04) .ig--mini .ig__barLogo{width:26px}
+:is(.b03,.b04) .ig--mini .ig__barBall{width:22px}
+:is(.b03,.b04) .ig--mini .ig__profile{padding:8px 14px 7px;gap:11px}
+:is(.b03,.b04) .ig--mini .ig__ava{width:40px;height:40px;padding:2px}
+:is(.b03,.b04) .ig--mini .ig__ava > *{border:2px solid #fff}
+:is(.b03,.b04) .ig--mini .ig__uname{font-size:15px;font-weight:700}
+:is(.b03,.b04) .ig--mini .ig__urole{font-size:11px}
+:is(.b03,.b04) .ig--mini .ig__photo{height:403px}
+:is(.b03,.b04) .ig--mini .ig__actions{padding:18px 14px 0}
+:is(.b03,.b04) .ig--mini .ig__act--like{width:22px}
+:is(.b03,.b04) .ig--mini .ig__act--cmt{width:24px}
+:is(.b03,.b04) .ig--mini .ig__nav svg{width:22px;height:22px}
+:is(.b03,.b04) .ig--mini .ig__nav{gap:12px}
 /* 赤字校正 ⑤: 文字が小さすぎるので一回り大きく（11→13px）。行間も調整。 */
-.b03 .ig--mini .ig__prod{padding:42px 15px 26px}
-.b03 .ig--mini .ig__prod li{margin-bottom:16px}
-.b03 .ig--mini .ig__prod li:last-child{margin-bottom:0}
-.b03 .ig--mini .ig__pName{font-size:13px}
-.b03 .ig--mini .ig__price{font-size:13px;margin-right:16px}
-.b03 .ig--mini .ig__add{font-size:13px}
-.b03 .ig--mini .ig__lead{transform:translateY(-2px)}
+:is(.b03,.b04) .ig--mini .ig__prod{padding:42px 15px 26px}
+:is(.b03,.b04) .ig--mini .ig__prod li{margin-bottom:16px}
+:is(.b03,.b04) .ig--mini .ig__prod li:last-child{margin-bottom:0}
+:is(.b03,.b04) .ig--mini .ig__pName{font-size:13px}
+:is(.b03,.b04) .ig--mini .ig__price{font-size:13px;margin-right:16px}
+:is(.b03,.b04) .ig--mini .ig__add{font-size:13px}
+:is(.b03,.b04) .ig--mini .ig__lead{transform:translateY(-2px)}
+
+/* ============================================================
+   BLOCK 04 — BLOCK03 とほぼ同じ構成（カード CSS は :is(.b03,.b04) で共有）。
+   変更点は背景色 #683F90 / 写真 / テキスト（SHOE BARREL BAG 等）。
+   チャット吹き出しは行数が 1/3/2/1 行で異なるため、SVG ではなく
+   CSS（角丸＋しっぽ）で可変に実装する。
+   ============================================================ */
+.b04{
+  --b3bg:#683F90;                /* 変更: 紫 */
+  --b3blue:#1780e1;
+  --b3card:#fff;
+  --b3line:rgba(0,0,0,.10);
+  --f-zkaku:"Zen Kaku Gothic New",sans-serif;
+  --f-mont:"Montserrat",sans-serif;
+  --k:1;
+  background:var(--b3bg);
+  overflow:hidden;
+  font-family:var(--f-zkaku);
+  color:#111;
+}
+.b04__scale{
+  width:968px;
+  transform:scale(var(--k));
+  transform-origin:top left;
+  margin-left:calc(50% - 484px * var(--k));
+}
+.b04__stage{width:968px;padding:132px 0 184px}
+
+/* ---- チャット（CSS 吹き出し） ---- */
+.b04__chat{margin:86px 0 0 180px;width:553px;display:flex;flex-direction:column}
+.b04 .bub{position:relative;margin:0;width:max-content;max-width:100%;
+  font-family:var(--f-zkaku);font-weight:700;font-size:16px;line-height:1.6;letter-spacing:.01em;
+  padding:12px 22px;border-radius:22px}
+.b04 .bub + .bub{margin-top:22px}
+.b04 .bub--l{align-self:flex-start;background:#fff;color:#111}      /* 左・白・しっぽ左下 */
+.b04 .bub--r{align-self:flex-end;background:var(--b3blue);color:#fff} /* 右・青・しっぽ右下 */
+.b04 .bub--l::after{content:"";position:absolute;bottom:-7px;left:20px;
+  border:8px solid transparent;border-top-color:#fff;border-bottom:0}
+.b04 .bub--r::after{content:"";position:absolute;bottom:-7px;right:20px;
+  border:8px solid transparent;border-top-color:var(--b3blue);border-bottom:0}
+/* 行数を確定稿に合わせる: 1 行は折り返さない、複数行は幅を指定して折り返す */
+.b04 .bub--nowrap{white-space:nowrap}
+.b04 .bub--w3{width:411px}   /* 3 行に折り返す白吹き出し */
+.b04 .bub--w2{width:421px}   /* 2 行に折り返す青吹き出し */
+
+/* ---- 2×2 グリッド（block03 と同じ） ---- */
+.b04__grid{margin:200px auto 0;width:848px;display:grid;grid-template-columns:repeat(2,1fr);column-gap:32px;row-gap:34px}
