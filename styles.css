@@ -269,30 +269,29 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    INTRO REEL — hero 直下。背景 #898B98 固定。
    ポエム(Zen Maru Gothic) → IG リール風モックアップ → 商品2点。
    ========================================================= */
-.igIntro{background:#898B98;padding:clamp(48px,10vw,96px) var(--pad) clamp(56px,11vw,110px);
-  /* 指示③: フィッシュエディの「表示幅間」＝ビューポート幅の 53.35%（実測）。
-     この帯幅を --band として持ち、本文・商品カードをこれに合わせる。
-     max-width 側は本文が折り返さないよう 54vw の余裕を持たせている。 */
-  --band:clamp(340px,54vw,1240px)}
-.igIntro__cont{width:100%;max-width:var(--band);margin:0 auto;
+.igIntro{background:#898B98;padding:clamp(48px,10vw,96px) var(--pad) clamp(56px,11vw,110px)}
+/* 指示02: 参考サイト（フィッシュエディ）の実測比率に合わせて再調整。
+   ①本文     1文字=表示幅の 1.149% ≒ 23.4px 相当 → 上限 24px
+   ②動画      500px → 560px（もう少し大きく）
+   ③商品カード 動画幅の 1.09 倍（参考サイトの2枚組カード実測）→ 610px
+   カラムは商品カード(610px)が収まる幅にする。 */
+.igIntro__cont{width:100%;max-width:610px;margin:0 auto;
   display:flex;flex-direction:column;align-items:center}
 
 .igIntro__text{
   font-family:var(--f-zen);color:#fff;text-align:center;
-  /* 最長行(23文字 ≒ 23.68em)の実表示幅がフィッシュエディと同じ
-     「表示幅の 53.35%」になる係数。100vw はスクロールバーを含むため
-     2.253 ではなく 2.234vw で補正している。
+  /* 上限 24px が参考サイトの文字サイズ（デザイナー表示幅 ≒2174px で 23.4px）に相当。
      最小 14px はスマホで <br> の改行位置が崩れないようにするための下限。 */
-  font-size:clamp(14px,2.234vw,51px);line-height:2;letter-spacing:.03em;
+  font-size:clamp(14px,3.4vw,24px);line-height:2;letter-spacing:.03em;
   margin:0 0 clamp(22px,5vw,34px);
 }
 .igIntro__text:last-of-type{margin-bottom:clamp(40px,8vw,56px)}
 
 /* ---- IG ストーリー風カード（動画＋UI） ----
-   指示③でカード幅を 340px → 500px に拡大。内部 UI を px 固定のままだと
+   指示② でカード幅を 500px → 560px にさらに拡大。内部 UI を px 固定のままだと
    相対的に小さく見えてしまうため、コンテナ幅基準(cqw)で記述して
    340px 時点の見た目の比率を保ったままスケールさせる。 */
-.igCard{position:relative;width:100%;max-width:500px;aspect-ratio:9/16;
+.igCard{position:relative;width:100%;max-width:560px;aspect-ratio:9/16;
   container-type:inline-size;
   background:#000;border-radius:var(--radius);overflow:hidden;
   box-shadow:0 20px 44px rgba(0,0,0,.25);margin-bottom:clamp(28px,6vw,40px)}
@@ -322,27 +321,25 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .igCard__icon{width:7.06cqw;height:7.06cqw;flex:0 0 auto;filter:drop-shadow(0 1px 3px rgba(0,0,0,.5))}
 
 /* ---- 商品2点（白カード・下向き矢印） ---- */
-/* 指示③に合わせ、商品カードは帯幅(--band)いっぱいに広げ、中身も
-   帯幅に対する比率（840px 時点の見た目）を保ったままスケールさせる。 */
+/* 指示③: 商品カードは「動画の幅よりちょい大きいくらい」＝参考サイトの
+   実測比 1.09 倍。動画 560px に対して 610px（カラム幅いっぱい）。
+   中身は元デザインの比率（円＝カード幅の 24.5%）を保って収める。 */
 .igIntro__products{width:100%;background:#fff;border-radius:var(--radius);
   box-shadow:0 12px 30px rgba(0,0,0,.18);
   display:flex;align-items:flex-start;justify-content:center;
-  gap:clamp(16px,calc(var(--band) * .0857),106px);
-  padding:clamp(24px,calc(var(--band) * .0643),80px) clamp(16px,calc(var(--band) * .05),62px)}
-.igIntro__item{display:flex;flex-direction:column;align-items:center;
-  gap:clamp(10px,calc(var(--band) * .0262),32px);text-align:center}
+  gap:clamp(16px,5vw,52px);padding:clamp(24px,5vw,39px) clamp(16px,4vw,31px)}
+.igIntro__item{display:flex;flex-direction:column;align-items:center;gap:clamp(10px,2.2vw,16px);text-align:center}
 .igIntro__ring{
   display:grid;place-items:center;
-  width:clamp(88px,calc(var(--band) * .245),304px);aspect-ratio:1;border-radius:50%;
+  width:clamp(88px,22vw,150px);aspect-ratio:1;border-radius:50%;
   background:conic-gradient(from 0deg,#fbb040 0deg,#f7791e 85deg,#ec1e63 200deg,#cf1f8e 285deg,#fbb040 360deg);
-  padding:clamp(5px,calc(var(--band) * .0143),18px)}
+  padding:clamp(5px,1.2vw,9px)}
 .igIntro__ph{width:100%;height:100%;border-radius:50%;background-color:var(--white);
   background-repeat:no-repeat;background-position:50% 50%;background-size:135%;
   box-shadow:inset 0 0 0 5px #fff}
-.igIntro__name{font-family:var(--f-league);font-weight:700;
-  font-size:clamp(13px,calc(var(--band) * .0286),35px);line-height:1.3;
+.igIntro__name{font-family:var(--f-league);font-weight:700;font-size:clamp(13px,2.6vw,17px);line-height:1.3;
   min-height:2.6em;display:flex;align-items:center;justify-content:center}
-.igIntro__arrow{width:clamp(16px,calc(var(--band) * .0357),44px);height:auto;margin-top:2px}
+.igIntro__arrow{width:clamp(16px,3.4vw,22px);height:auto;margin-top:2px}
 .igIntro__div{align-self:stretch;width:2px;background:rgba(0,0,0,.12);border-radius:2px}
 
 /* =========================================================
