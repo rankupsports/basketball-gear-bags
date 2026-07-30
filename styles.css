@@ -747,7 +747,9 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 /* =============== チャット吹き出し（4個） ===============
    cropped SVG（viewBox をパス実寸に切り詰め）を背景に敷き、本文は live text。
    各 SVG はテキスト量に合わせて幅が作られている。 */
-.b03__chat{margin:86px 0 0 132px;width:600px}   /* カード下端から 86px、左端 x=132 */
+/* 指示05-②: 吹き出し全体が左に寄って見えるのでステージ中央にそろえる
+   （旧: margin-left 132px → 中心が 432px でステージ中心 484px より 52px 左） */
+.b03__chat{margin:86px auto 0;width:600px}   /* カード下端から 86px、左右 auto で中央 */
 /* 赤字校正 ③: 文字を一段太く・少し大きく（可読性UP）。
    本文が大きくなった分、吹き出しも SVG のアスペクト比を保ったまま拡大する。
 
@@ -825,11 +827,17 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    参考サイトのサイズ（≒22px 相当）で表示されるようステージ座標を 0.825 倍にする。
    16px x 0.825 = 13.2px → 13.2 x 1.655 = 21.9px（画面上は 16px → 22px に拡大）。
    吹き出しの余白・角丸・しっぽ・折り返し幅も同じ 0.825 倍で、収まりを元のまま保つ。 */
-.b04__chat{margin:86px 0 0 180px;width:456px;display:flex;flex-direction:column}
+/* 指示05-②: block03 と同じくステージ中央にそろえる
+   （旧: margin-left 180px → 中心が 408px でステージ中心 484px より 76px 左） */
+.b04__chat{margin:86px auto 0;width:456px;display:flex;flex-direction:column}
 .b04 .bub{position:relative;margin:0;width:max-content;max-width:100%;
   font-family:var(--f-zkaku);font-weight:700;font-size:13.2px;line-height:1.6;letter-spacing:.01em;
   padding:10px 18px;border-radius:18px}
-.b04 .bub + .bub{margin-top:18px}
+/* 指示05-①: 吹き出しの間隔を block03 に合わせる。
+   block03 は SVG 内にしっぽを含むので見た目の間隔＝margin-top(31px)。
+   block04 はしっぽが ::after で箱の下 6px にはみ出すため、
+   同じ 31px を空けるには 31+6=37px が必要。 */
+.b04 .bub + .bub{margin-top:37px}
 .b04 .bub--l{align-self:flex-start;background:#fff;color:#111}      /* 左・白・しっぽ左下 */
 .b04 .bub--r{align-self:flex-end;background:var(--b3blue);color:#fff} /* 右・青・しっぽ右下 */
 .b04 .bub--l::after{content:"";position:absolute;bottom:-6px;left:17px;
