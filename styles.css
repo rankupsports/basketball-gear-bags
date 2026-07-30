@@ -910,98 +910,119 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
     linear-gradient(#000,#000) center / 100% calc(100% - 2*var(--th) + 2px) no-repeat;
 }
 /* 左右余白は参考サイト実測の 9.19%（cqw）。上下は従来どおり。 */
-.shop__pad{padding:clamp(30px,5vw,52px) max(20px,9.19cqw) clamp(26px,4vw,44px)}
+/* ---- 内側の余白 ----
+   block05.pdf 実測（すべてレシート幅に対する % = cqw）:
+   左右 9.26% / 上（見出しインクまで）4.08% ← 指示①「上下に幅欲しい」 */
+.shop__pad{padding:4.08cqw max(20px,9.26cqw) 2.4cqw}
 
 /* ---- 見出し ----
-   指示06: 参考サイトはレシート幅に対して見出しが 16.22%、サブが 12.79%。
-   レシートが広がっても比率を保つよう cqw を併用し、max() で従来サイズを
-   下限にしている（狭い画面の見た目は変えない）。 */
+   実測: ONLINE SHOP は 1文字あたり 1.4457%、サブは全体で 14.83%。
+   max() で従来の px 値を下限にしているので、狭い画面の見た目は変わらない。 */
 .shop__title{
   margin:0;text-align:center;
   font-family:var(--f-bodoni);font-weight:700;
-  font-size:max(clamp(30px,6vw,44px),2.051cqw);line-height:1;letter-spacing:.06em;
+  font-size:max(clamp(30px,6vw,44px),2.012cqw);line-height:1;letter-spacing:.06em;
   color:var(--shop-ink);
 }
 .shop__sub{
-  margin:clamp(8px,1.4vw,13px) 0 0;text-align:center;
+  margin:1.25cqw 0 0;text-align:center;
   font-family:var(--f-cormorant);font-weight:600;font-style:italic;
-  font-size:max(clamp(16px,2.8vw,22px),1.216cqw);line-height:1;color:var(--shop-ink);
+  font-size:max(clamp(16px,2.8vw,22px),1.411cqw);line-height:1;color:var(--shop-ink);
 }
 .shop__sub span{position:relative;padding:0 .95em}
 .shop__sub span::before,.shop__sub span::after{content:"-";position:absolute;top:0}
 .shop__sub span::before{left:0}
 .shop__sub span::after{right:0}
 
-/* ---- 商品写真（2枚並び） ---- */
-/* 参考サイトの実測比: 写真2枚が各 36.7%、左右余白 9.19%、写真間 8.19%。
-   余白と間隔を cqw にすると写真幅が自動で 36.7% になる。 */
+/* ---- バッグ2点（写真・ドット・商品名行を各カラムに）----
+   実測: 写真は各 36.75%、写真間 7.86%、左右余白 9.26% で合計 100%。
+   余白と gap を cqw にすれば写真幅は自動で 36.75% になる。 */
 .shop__gallery{
-  display:grid;grid-template-columns:1fr 1fr;gap:8.19cqw;
-  margin-top:clamp(22px,3.6vw,40px);
+  /* minmax(0,1fr): 商品名が nowrap で min-content 下限を作るため、
+     1fr だけだと左右のカラム幅がずれる（写真の大きさも変わってしまう）。 */
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7.86cqw;
+  /* 写真の上端がレシート上端から 12.60% に来る値（指示①の「上下に幅」） */
+  margin-top:3.85cqw;
 }
 .shop__prod{margin:0}
 .shop__box{
-  background:var(--shop-box);border-radius:16px;overflow:hidden;
-  aspect-ratio:1.23/1;display:flex;align-items:center;justify-content:center;
+  background:var(--shop-box);border-radius:1.4cqw;overflow:hidden;
+  aspect-ratio:1.218;display:flex;align-items:center;justify-content:center;
 }
 .shop__img{width:100%;height:100%;object-fit:contain;display:block}
 
-/* カラードット（4色 / 写真は3色） */
-.shop__dots{display:flex;justify-content:center;gap:clamp(10px,2vw,17px);margin-top:clamp(12px,2vw,18px)}
+/* ---- ROPE STRAP（写真1枚を中央、色は3行）----
+   実測: 写真 36.60% を中央、行のまとまりは 49.3% を中央。 */
+.shop__prod--rope{margin-top:6.41cqw}
+.shop__prod--rope .shop__box{width:36.6cqw;margin:0 auto}
+/* ロープ側はドットが写真から少し離れる（実測 1.69% / バッグ側は 0.87%） */
+.shop__prod--rope .shop__dots{margin-top:max(10px,1.69cqw)}
+.shop__prod--rope .shop__list{width:49.3cqw;margin:3.78cqw auto 0}
+
+/* ---- カラードット（4色 / 写真は3色）----
+   実測: 直径 1.846% / 間隔 1.88% / 写真下端から 0.87% */
+.shop__dots{display:flex;justify-content:center;gap:max(8px,1.88cqw);margin-top:max(10px,.87cqw)}
 .shop__dot{
-  width:clamp(15px,2.7vw,19px);aspect-ratio:1;border-radius:50%;padding:0;cursor:pointer;
+  width:max(15px,1.846cqw);aspect-ratio:1;border-radius:50%;padding:0;cursor:pointer;
   background:var(--c);border:0;outline:0;
   transition:transform .15s ease, box-shadow .15s ease;
 }
 .shop__dot:hover,.shop__dot:focus-visible{transform:scale(1.14);box-shadow:0 0 0 2px #fff,0 0 0 4px rgba(35,70,139,.4)}
 .shop__dot.is-on{transform:scale(1.08)}
 
-/* ---- 点線区切り ---- */
-.shop__rule{
-  border:0;height:0;margin:clamp(26px,4vw,42px) 0 clamp(20px,3vw,30px);
-  border-top:2px dotted rgba(35,70,139,.55);
-}
-
-/* ---- 商品リスト（名前 … リーダー … Add） ---- */
+/* ---- 商品名の行（名前 … リーダー … Add）----
+   指示②: 文字を大きく。実測は 1文字あたり 1.0141%（＝約 1.69cqw）。 */
 .shop__list{list-style:none;margin:0;padding:0}
-.shop__li{display:flex;align-items:center;gap:12px;padding:clamp(7px,1.2vw,11px) 0}
+.shop__li{display:flex;align-items:center;gap:1.6cqw;margin:0;padding:1.1cqw 0}
+/* バッグ側の行はドットのすぐ下に置く（実測 3.4%） */
+.shop__gallery .shop__li{padding:0;margin-top:3.4cqw}
 .shop__pn{
   flex:0 0 auto;
   font-family:var(--f-geist);font-weight:400;
-  font-size:clamp(14px,2.5vw,19px);line-height:1;letter-spacing:.02em;
+  font-size:max(clamp(14px,2.5vw,19px),1.641cqw);line-height:1;letter-spacing:.02em;
   color:var(--shop-ink);white-space:nowrap;
 }
 .shop__leader{flex:1 1 auto;height:0;border-bottom:2px dotted rgba(35,70,139,.5);transform:translateY(-2px)}
 .shop__add{
   flex:0 0 auto;
   font-family:var(--f-jersey10);font-weight:400;
-  font-size:clamp(17px,2.6vw,22px);line-height:1;letter-spacing:.03em;
+  /* 実測: ボタンは幅 4.05% / 高さ 2.00%。上下 padding 込みで 1.4em になるので 1.43cqw */
+  font-size:max(clamp(17px,2.6vw,22px),1.43cqw);line-height:1;letter-spacing:.03em;
   color:#fff;background:var(--shop-ink);text-decoration:none;
-  padding:.16em .7em .24em;border-radius:3px;
+  padding:.16em .73em .24em;border-radius:3px;
   transition:transform .12s ease, opacity .2s ease;
 }
 .shop__add:hover{transform:translateY(-1px);opacity:.9}
 
-/* ---- Continue to checkout ---- */
-.shop__checkoutWrap{display:flex;justify-content:center;margin-top:clamp(30px,5vw,54px)}
+/* ---- Continue to checkout（実測: 幅 21.08% / 高さ 3.78%）---- */
+.shop__checkoutWrap{display:flex;justify-content:center;margin-top:2.39cqw}
 .shop__checkout{
   display:inline-block;
   font-family:var(--f-jersey20);font-weight:400;
-  font-size:clamp(19px,3.4vw,27px);line-height:1;letter-spacing:.02em;
+  /* 実測: ボタンは幅 21.08% / 高さ 3.78%。上下 padding 込みで 2.24em なので 1.688cqw */
+  font-size:max(clamp(19px,3.4vw,27px),1.688cqw);line-height:1;letter-spacing:.02em;
   color:#fff;background:var(--shop-ink);text-decoration:none;
-  padding:.62em 1.9em;border-radius:6px;
+  padding:.62em 2em;border-radius:6px;
   box-shadow:5px 6px 12px rgba(35,70,139,.35);
   transition:transform .15s ease, box-shadow .15s ease;
 }
 .shop__checkout:hover{transform:translateY(-2px);box-shadow:5px 9px 16px rgba(35,70,139,.4)}
 
-/* ---- ロゴ + バーコード ---- */
+/* ---- ロゴ + バーコード（1枚の SVG に両方入っている。実測はバーコード幅 11.41%）---- */
 .shop__logo{
-  display:block;margin:clamp(30px,5vw,52px) auto 0;
-  width:clamp(150px,34vw,210px);height:auto;
+  display:block;margin:3.57cqw auto 0;
+  width:max(150px,11.41cqw);height:auto;
 }
 
-/* ---- スマホ ---- */
+/* ---- 狭い画面 ----
+   コンプはレシートが広い前提のレイアウト。レシートが狭いと商品名の
+   px 下限が効いてカラムに収まらないので、そこだけ折り返しを許して
+   間隔を詰める（2カラムと写真サイズはコンプ通り保つ）。 */
+@media (max-width:1520px){
+  .shop__gallery .shop__li{gap:.6em;flex-wrap:wrap}
+  .shop__gallery .shop__pn{white-space:normal;min-width:0}
+  .shop__gallery .shop__leader{min-width:1.5em}
+}
 @media (max-width:460px){
   .shop__pn{font-size:12px;letter-spacing:0}
   .shop__title{letter-spacing:.04em}
