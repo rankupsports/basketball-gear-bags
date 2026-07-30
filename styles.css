@@ -872,10 +872,13 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 
 /* ---- レシート本体（上下ギザギザ） ---- */
 .shop__receipt{
-  --th:18px;                       /* ギザギザの高さ */
-  --tw:34px;                       /* ギザギザ1山の幅 */
+  --th:15px;                       /* ギザギザの高さ（参考実測 ≒15px） */
+  --tw:26px;                       /* ギザギザ1山の幅（参考実測 ≒26px / 幅の1.19%） */
   position:relative;
-  max-width:600px;margin:0 auto;
+  /* 指示06: 参考サイトの実測に合わせて大きく。参考はレシートが
+     表示幅の 76.5%（当方は 600px = 21%）。狭い画面では従来の 600px を下限に。 */
+  max-width:max(600px,76.5vw);margin:0 auto;
+  container-type:inline-size;      /* 内側の cqw の基準 */
   background:#fff;
   filter:drop-shadow(0 24px 46px rgba(35,70,139,.20));
   -webkit-mask:
@@ -887,19 +890,23 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='18'%3E%3Cpath d='M0 0 L17 18 L34 0 Z' fill='%23000'/%3E%3C/svg%3E") bottom center / var(--tw) var(--th) repeat-x,
     linear-gradient(#000,#000) center / 100% calc(100% - 2*var(--th) + 2px) no-repeat;
 }
-.shop__pad{padding:clamp(30px,5vw,52px) clamp(26px,5vw,52px) clamp(26px,4vw,44px)}
+/* 左右余白は参考サイト実測の 9.19%（cqw）。上下は従来どおり。 */
+.shop__pad{padding:clamp(30px,5vw,52px) max(20px,9.19cqw) clamp(26px,4vw,44px)}
 
-/* ---- 見出し ---- */
+/* ---- 見出し ----
+   指示06: 参考サイトはレシート幅に対して見出しが 16.22%、サブが 12.79%。
+   レシートが広がっても比率を保つよう cqw を併用し、max() で従来サイズを
+   下限にしている（狭い画面の見た目は変えない）。 */
 .shop__title{
   margin:0;text-align:center;
   font-family:var(--f-bodoni);font-weight:700;
-  font-size:clamp(30px,6vw,44px);line-height:1;letter-spacing:.06em;
+  font-size:max(clamp(30px,6vw,44px),2.051cqw);line-height:1;letter-spacing:.06em;
   color:var(--shop-ink);
 }
 .shop__sub{
   margin:clamp(8px,1.4vw,13px) 0 0;text-align:center;
   font-family:var(--f-cormorant);font-weight:600;font-style:italic;
-  font-size:clamp(16px,2.8vw,22px);line-height:1;color:var(--shop-ink);
+  font-size:max(clamp(16px,2.8vw,22px),1.216cqw);line-height:1;color:var(--shop-ink);
 }
 .shop__sub span{position:relative;padding:0 .95em}
 .shop__sub span::before,.shop__sub span::after{content:"-";position:absolute;top:0}
@@ -907,8 +914,10 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .shop__sub span::after{right:0}
 
 /* ---- 商品写真（2枚並び） ---- */
+/* 参考サイトの実測比: 写真2枚が各 36.7%、左右余白 9.19%、写真間 8.19%。
+   余白と間隔を cqw にすると写真幅が自動で 36.7% になる。 */
 .shop__gallery{
-  display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,2.6vw,26px);
+  display:grid;grid-template-columns:1fr 1fr;gap:8.19cqw;
   margin-top:clamp(22px,3.6vw,40px);
 }
 .shop__prod{margin:0}

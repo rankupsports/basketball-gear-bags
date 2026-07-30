@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=League+Spartan:wght@500;700&family=M+PLUS+1p:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Bowlby+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Montserrat:wght@400;500;700&family=Libre+Bodoni:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=Geist+Pixel&family=Jersey+10&family=Jersey+20&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=34" />
+<link rel="stylesheet" href="styles.css?v=36" />
 </head>
 <body>
 
@@ -30,13 +30,11 @@
 
 <nav class="navDrawer" id="navDrawer" aria-hidden="true">
   <ul>
+    <!-- 指示06: 以降のセクションを削除したため、残っているブロックだけに貼り直す -->
     <li><a href="#top" data-n="00">TOP</a></li>
-    <li><a href="#lead" data-n="01">INTRODUCTION</a></li>
-    <li><a href="#look1" data-n="02">LOOK 01</a></li>
-    <li><a href="#look2" data-n="03">LOOK 02</a></li>
-    <li><a href="#allitems" data-n="04">ALL ITEMS</a></li>
-    <li><a href="#staff" data-n="05">LIKE? OR NOT?</a></li>
-    <li><a href="#shop" data-n="06">SHOP LIST</a></li>
+    <li><a href="#block03" data-n="01">DRAWSTRING BALL BAG</a></li>
+    <li><a href="#block04" data-n="02">SHOE BARREL BAG</a></li>
+    <li><a href="#shop" data-n="03">ONLINE SHOP</a></li>
   </ul>
   <p class="navDrawer__mark">2026<br />SUMMER</p>
 </nav>
@@ -120,13 +118,13 @@
     </div>
 
     <div class="igIntro__products">
-      <a class="igIntro__item reveal" href="#allitems">
+      <a class="igIntro__item reveal" href="#shop">
         <span class="igIntro__ring"><span class="igIntro__ph" style="background-image:url('assets/product-ball-bag.png')" role="img" aria-label="Drawstring Ball Bag"></span></span>
         <span class="igIntro__name">Drawstring<br />Ball Bag</span>
         <img class="igIntro__arrow" src="assets/icon-arrow-down.svg" alt="" />
       </a>
       <span class="igIntro__div" aria-hidden="true"></span>
-      <a class="igIntro__item reveal" style="--d:.12s" href="#allitems">
+      <a class="igIntro__item reveal" style="--d:.12s" href="#shop">
         <span class="igIntro__ring"><span class="igIntro__ph" style="background-image:url('assets/product-shoe-bag.png')" role="img" aria-label="ShoeBarrelbag"></span></span>
         <span class="igIntro__name">ShoeBarrelbag</span>
         <img class="igIntro__arrow" src="assets/icon-arrow-down.svg" alt="" />
@@ -590,198 +588,6 @@
     </div>
   </div>
 </section>
-
-<!-- ============================================================
-     2) SIDE CONT — 左右に縦組みテキストが sticky で貼りつく
-     ============================================================ -->
-<div class="sideCont">
-  <div class="side" aria-hidden="true">
-    <p class="side__txt side__txt--1">rankup sports</p>
-    <p class="side__txt side__txt--2">Like or Not?</p>
-  </div>
-
-  <!-- ---- 2-1) LEAD（introduction） ---- -->
-  <section class="lead" id="lead">
-    <div class="lead__icons" id="leadIcons" aria-hidden="true"></div>
-    <div class="lead__cont">
-      <p class="lead__label">introduction</p>
-      <h2 class="lead__head">
-        <span class="ttlPopQ" style="--d:0s">i am baller !!</span>
-        <span class="ttlPopQ" style="--d:.12s">i love fashion !!</span>
-      </h2>
-      <p class="lead__text reveal">
-        体育館を出たら、そのまま駅前に集合。<br />
-        シューズはまだ湿ってるし、絆創膏は貼りっぱなし。<br />
-        それでも寄り道はしたいし、写真だってちゃんと撮りたい。<br />
-        Rankup sports の 2026 SUMMER は、その「そのまま」を持ち歩くための道具です。
-      </p>
-    </div>
-  </section>
-
-  <!-- ---- 2-2) LOOKS（背面に sticky のカラーベッド） ---- -->
-  <div class="looks">
-    <div class="looks__bg" id="looksBg" aria-hidden="true"></div>
-    <div class="looks__cont">
-
-      <section class="look" id="look1" data-bg="#ccff63">
-        <div class="look__head">
-          <p class="look__no">LOOK 01</p>
-          <h2 class="look__title">
-            <span class="ttlPop">詰めこみすぎる人の、</span>
-            <span class="ttlPop" style="--d:.12s">放課後の中身。</span>
-          </h2>
-          <p class="look__lead reveal">
-            「とりあえず全部入れとこ」で毎回パンパンになるタイプ。<br />
-            シューズも、水筒も、着替えも。重いけど、減らす気はないらしい。
-          </p>
-        </div>
-        <div class="look__items" data-look="1"></div>
-      </section>
-
-      <section class="allitems" data-look="1">
-        <h2 class="allitems__title ttlPop">RANKUP SPORTS 2026</h2>
-        <div class="allitems__grid"></div>
-      </section>
-
-      <section class="story">
-        <h2 class="story__title ttlPopQ">We pack light.</h2>
-        <p class="story__text reveal">
-          はじまりは、部室の床に転がっていたビニール袋でした。濡れたシューズを入れる場所がなくて、
-          みんな仕方なくそうしていた。だったら、濡れたまま放りこめる袋をつくろう。絆創膏は探さなくても
-          届く場所に。水筒は立てずに、ころんと寝かせて。ストラップの色くらいは、その日の気分で選べるように。
-          強くなるための道具が、いちばん好きな持ち物でもあってほしい。Rankup sports がつくっているのは、
-          たぶんそれだけです。
-        </p>
-      </section>
-
-      <section class="look look--alt" id="look2" data-bg="#1780e7">
-        <div class="look__head">
-          <p class="look__no">LOOK 02</p>
-          <h2 class="look__title">
-            <span class="ttlPop">ストラップの色で、</span>
-            <span class="ttlPop" style="--d:.12s">その日を決める。</span>
-          </h2>
-          <p class="look__lead reveal">
-            ブルー、ピンク、グレー。付け替えるだけで、同じバッグが別の顔になる。<br />
-            today's color、今日はどれ？
-          </p>
-        </div>
-        <div class="look__items" data-look="2"></div>
-      </section>
-
-      <section class="allitems" data-look="2">
-        <h2 class="allitems__title ttlPop">RANKUP SPORTS 2026</h2>
-        <div class="allitems__grid"></div>
-      </section>
-
-      <section class="story">
-        <h2 class="story__title ttlPopQ">We play loud.</h2>
-        <p class="story__text reveal">
-          コートの上でも、その行き帰りでも。持ち物ぜんぶを好きなままでいさせるために、道具をつくっています。
-        </p>
-      </section>
-
-    </div>
-  </div>
-</div><!-- /sideCont -->
-
-<!-- ============ 3) SNS BLOCK — ALL ITEMS ============ -->
-<section class="sns sns--shop" id="allitems" data-look="all">
-  <a class="sns__link" href="#">
-    <span class="sns__ph ph" aria-hidden="true"></span>
-    <span class="sns__label ttlPop">ALL ITEMS</span>
-  </a>
-  <div class="allitems__grid"></div>
-</section>
-
-<!-- ============================================================
-     4) STAFF — 背の高いセクションの中で写真ステージだけが sticky で
-     止まり、スクロール量に応じて写真とコピーが切り替わる。
-     ============================================================ -->
-<section class="staff" id="staff">
-  <div class="staff__fix">
-    <div class="staff__phs" id="staffPhs"></div>
-    <div class="staff__frame" id="staffFrame" aria-hidden="true"></div>
-    <div class="staff__hearts" id="staffHearts" aria-hidden="true"></div>
-    <div class="staff__cap" id="staffCap"></div>
-  </div>
-
-  <div class="staff__txtBox">
-    <div class="staff__steps" id="staffSteps"></div>
-
-    <div class="staff__end">
-      <h2 class="staff__ttl ttlPopQ">Like? or Not?</h2>
-      <p class="staff__text reveal">
-        投げたくなる日も、寄り道したい日もある。<br />
-        どっちの日も、この一本で足りますように。
-      </p>
-      <button class="staff__heart" id="likeHeart" type="button" aria-label="ありに投票" aria-pressed="false">
-        <svg viewBox="0 0 24 24"><path d="M12 21s-8.6-5.3-11-10.2C-.6 6.9 1.9 3 5.7 3 8 3 10 4.3 11 6.3 12 4.3 14 3 16.3 3c3.8 0 6.3 3.9 6.7 7.8C20.6 15.7 12 21 12 21z"/></svg>
-        <span id="likeCount">0</span>
-      </button>
-
-      <h3 class="staff__creditTtl">CAST</h3>
-      <p class="staff__note">※テンプレートです。実際のクレジットに差し替えてください。</p>
-      <dl class="staff__credit">
-        <div><dt>Model</dt><dd>—</dd></div>
-        <div><dt>Photography</dt><dd>—</dd></div>
-        <div><dt>Movie</dt><dd>—</dd></div>
-        <div><dt>Styling</dt><dd>—</dd></div>
-        <div><dt>Hair &amp; Make-Up</dt><dd>—</dd></div>
-        <div><dt>Edit &amp; Text</dt><dd>—</dd></div>
-        <div><dt>Art Direction &amp; Web</dt><dd>—</dd></div>
-      </dl>
-    </div>
-  </div>
-</section>
-
-<!-- ============ 5) SNS BLOCK — FOLLOW US ============ -->
-<section class="sns sns--insta">
-  <a class="sns__link" href="#">
-    <span class="sns__ph ph" aria-hidden="true"></span>
-    <span class="sns__label ttlPop">FOLLOW US</span>
-  </a>
-  <ul class="sns__list">
-    <li><a href="#">INSTAGRAM</a></li>
-    <li><a href="#">X</a></li>
-    <li><a href="#">TIKTOK</a></li>
-  </ul>
-</section>
-
-<!-- ============ 6) SHOP ============ -->
-<footer class="shop" id="shop">
-  <h2 class="shop__head ttlPop">SHOP LIST</h2>
-  <div class="shop__ph ph reveal" role="img" aria-label="Rankup sports 店頭"></div>
-  <p class="shop__desc">※取扱店舗はサンプルです</p>
-  <div class="shop__lists">
-    <ul class="shop__list">
-      <li>Rankup sports 直営店 A</li>
-      <li>Rankup sports 直営店 B</li>
-      <li>Rankup sports 直営店 C</li>
-    </ul>
-    <ul class="shop__list">
-      <li>取扱店舗 D</li>
-      <li>取扱店舗 E</li>
-    </ul>
-  </div>
-  <a class="shop__cta" href="#">公式WEBストア</a>
-
-  <div class="shop__brand">
-    <h3>RANKUP SPORTS</h3>
-    <p>
-      放課後の体育館から生まれたスポーツギアブランド。<br />
-      コートの上でも、その行き帰りでも。<br />
-      持ち物ぜんぶを好きなままでいさせるために、道具をつくっています。
-    </p>
-  </div>
-
-  <ul class="shop__links">
-    <li><a href="#top">TOP PAGE</a></li>
-    <li><a href="#">INSTAGRAM</a></li>
-    <li><a href="#">ONLINE SHOP</a></li>
-  </ul>
-  <p class="shop__copy">© RANKUP SPORTS — sample site</p>
-</footer>
 
 <!-- BLOCK 03 / 04 を画面幅に合わせて等比縮小（968px 基準の固定レイアウト） -->
 <script>
