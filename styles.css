@@ -55,7 +55,18 @@
 
 *,*::before,*::after{box-sizing:border-box}
 html{scroll-behavior:smooth;background:var(--white)}
-body{margin:0;font-family:var(--f-body);color:var(--ink);background:var(--white);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+/* 背景色は .bgFade（固定レイヤー）が受け持つので body は透明にする。
+   ベース色は html 側に残してあるので、JS が動かない場合も白地になる。 */
+body{margin:0;font-family:var(--f-body);color:var(--ink);background:transparent;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* ============================================================
+   スクロール連動の背景クロスフェード
+   画面全体に敷いた1枚の固定レイヤーの色を、スクロール位置に応じて
+   隣のセクション色へ補間する。セクション境界の前後だけで混ぜるので、
+   各セクションの中ほどでは指定色そのままになる。
+   参加するセクションは CSS で --sec-bg を宣言したものだけ（JS が読む）。
+   ============================================================ */
+.bgFade{position:fixed;inset:0;z-index:-1;pointer-events:none;background:var(--white)}
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
 ul,ol,dl,dd{margin:0;padding:0;list-style:none}
@@ -269,7 +280,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    INTRO REEL — hero 直下。背景 #898B98 固定。
    ポエム(Zen Maru Gothic) → IG リール風モックアップ → 商品2点。
    ========================================================= */
-.igIntro{background:#898B98;padding:clamp(48px,10vw,96px) var(--pad) clamp(56px,11vw,110px)}
+/* 背景色は --sec-bg として宣言し、描画は .bgFade に任せる（クロスフェード対象） */
+.igIntro{--sec-bg:#898B98;background:transparent;padding:clamp(48px,10vw,96px) var(--pad) clamp(56px,11vw,110px)}
 /* 指示02: 参考サイト（フィッシュエディ）の実測比率に合わせて再調整。
    ①本文     1文字=表示幅の 1.149% ≒ 23.4px 相当 → 上限 24px
    ②動画      500px → 560px（もう少し大きく）
@@ -352,7 +364,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    本文（ひとことコメント）はブロック01と同じ 24px。
    カード内部は元デザイン(FIX)比率を保つためコンテナ幅基準(cqw)で記述する。
    ========================================================= */
-.rinaSec{background:#B9FF61;padding:clamp(32px,7vw,64px) var(--pad) clamp(48px,9vw,80px)}
+.rinaSec{--sec-bg:#B9FF61;background:transparent;padding:clamp(32px,7vw,64px) var(--pad) clamp(48px,9vw,80px)}
 
 /* ---- ヒーロー写真（ラベル・ロゴ・ハートバッジを重ねる）
    縦横比・重ね位置は FIX の実測値（写真 968x1570）に合わせる。 ---- */
@@ -652,14 +664,14 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    変数は .b03 にスコープし、既存 :root（--blue 等）を汚さない。
    ============================================================ */
 .b03{
-  --b3bg:#8B8D9A;
   --b3blue:#1780e1;
   --b3card:#fff;
   --b3line:rgba(0,0,0,.10);
   --f-zkaku:"Zen Kaku Gothic New",sans-serif;
   --f-mont:"Montserrat",sans-serif;
   --k:1;
-  background:var(--b3bg);
+  --sec-bg:#8B8D9A;              /* 描画は .bgFade（クロスフェード対象） */
+  background:transparent;
   overflow:hidden;               /* 縮小後にはみ出す 968px 幅を切り取る */
   font-family:var(--f-zkaku);
   color:#111;
@@ -809,14 +821,14 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    CSS（角丸＋しっぽ）で可変に実装する。
    ============================================================ */
 .b04{
-  --b3bg:#683F90;                /* 変更: 紫 */
   --b3blue:#1780e1;
   --b3card:#fff;
   --b3line:rgba(0,0,0,.10);
   --f-zkaku:"Zen Kaku Gothic New",sans-serif;
   --f-mont:"Montserrat",sans-serif;
   --k:1;
-  background:var(--b3bg);
+  --sec-bg:#683F90;              /* 描画は .bgFade（クロスフェード対象） */
+  background:transparent;
   overflow:hidden;
   font-family:var(--f-zkaku);
   color:#111;
@@ -868,10 +880,10 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    商品名=Geist Pixel / Add=Jersey 10 / Continue=Jersey 20
    ============================================================ */
 .shop{
-  --shop-bg:#F4E06D;
   --shop-ink:#23468B;
   --shop-box:#E9E9E9;
-  background:var(--shop-bg);
+  --sec-bg:#F4E06D;              /* 描画は .bgFade（クロスフェード対象） */
+  background:transparent;
   color:var(--shop-ink);
   padding:clamp(40px,6vw,86px) 20px clamp(48px,7vw,96px);
   overflow:hidden;

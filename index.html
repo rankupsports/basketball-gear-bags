@@ -8,9 +8,12 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=League+Spartan:wght@500;700&family=M+PLUS+1p:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Bowlby+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Montserrat:wght@400;500;700&family=Libre+Bodoni:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=Geist+Pixel&family=Jersey+10&family=Jersey+20&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=38" />
+<link rel="stylesheet" href="styles.css?v=40" />
 </head>
 <body>
+
+<!-- スクロールに応じて色が変わる背景レイヤー（各セクションの背景はこれが描く） -->
+<div class="bgFade" id="bgFade" aria-hidden="true"></div>
 
 <div class="noise" aria-hidden="true"></div>
 
@@ -633,6 +636,72 @@
         if(src && img) img.src=src;
       });
     });
+  });
+})();
+</script>
+<script>
+/* 背景色のスクロール連動クロスフェード。
+   --sec-bg を宣言したセクションを上から順に「色の区間」として拾い、
+   境界の前後 FD だけで隣の色へ smoothstep 補間する。
+   区間の中ほどでは指定色そのままなので、各セクションの見た目は変わらない。 */
+(function(){
+  var layer=document.getElementById('bgFade');
+  if(!layer) return;
+
+  var parse=function(c){
+    c=(c||'').trim();
+    if(c.charAt(0)==='#'){
+      if(c.length===4) c='#'+c[1]+c[1]+c[2]+c[2]+c[3]+c[3];
+      if(c.length!==7) return null;
+      var n=parseInt(c.slice(1),16);
+      return isNaN(n)?null:[(n>>16)&255,(n>>8)&255,n&255];
+    }
+    var m=c.match(/rgba?\(([^)]+)\)/);
+    if(!m) return null;
+    var p=m[1].split(',').map(parseFloat);
+    return p.length<3?null:[p[0],p[1],p[2]];
+  };
+  var mix=function(a,b,t){return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t];};
+  var smooth=function(t){return t*t*(3-2*t);};
+
+  var WHITE=[255,255,255], stops=[];
+  function build(){
+    stops=[];
+    [].forEach.call(document.querySelectorAll('section'), function(s){
+      var col=parse(getComputedStyle(s).getPropertyValue('--sec-bg'));
+      if(!col) return;
+      var r=s.getBoundingClientRect(), y=window.pageYOffset;
+      stops.push({top:r.top+y, bottom:r.bottom+y, rgb:col});
+    });
+    stops.sort(function(a,b){return a.top-b.top;});
+    // 最初のセクションより上（hero）は白地として扱い、白→1色目も滑らかに繋ぐ
+    if(stops.length) stops.unshift({top:0, bottom:stops[0].top, rgb:WHITE});
+  }
+
+  var raf=0;
+  function paint(){
+    raf=0;
+    if(!stops.length) return;
+    var vh=window.innerHeight, ref=window.pageYOffset+vh*0.5, FD=vh*0.45;
+    var i=0;
+    while(i<stops.length-1 && ref>=stops[i].bottom) i++;
+    var cur=stops[i], prev=stops[i-1], next=stops[i+1];
+    var dTop=ref-cur.top, dBot=cur.bottom-ref, rgb=cur.rgb;
+    // 近いほうの境界だけで混ぜる（境界でどちらの式も 0.5 になり連続する）
+    if(prev && dTop<FD && dTop<=dBot)      rgb=mix(prev.rgb, cur.rgb, smooth(0.5*(1+dTop/FD)));
+    else if(next && dBot<FD)               rgb=mix(cur.rgb, next.rgb, smooth(0.5*(1-dBot/FD)));
+    layer.style.backgroundColor='rgb('+Math.round(rgb[0])+','+Math.round(rgb[1])+','+Math.round(rgb[2])+')';
+  }
+  function onScroll(){ if(!raf) raf=requestAnimationFrame(paint); }
+  function rebuild(){ build(); paint(); }
+
+  rebuild();
+  addEventListener('scroll', onScroll, {passive:true});
+  addEventListener('resize', rebuild);
+  addEventListener('load', rebuild);
+  // 画像/動画のロードで各セクションの高さが変わるため、都度作り直す
+  [].forEach.call(document.querySelectorAll('img'), function(im){
+    if(!im.complete) im.addEventListener('load', rebuild, {once:true});
   });
 })();
 </script>
