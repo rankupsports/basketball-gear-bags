@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=League+Spartan:wght@500;700&family=M+PLUS+1p:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Bowlby+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Montserrat:wght@400;500;700&family=Libre+Bodoni:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=Geist+Pixel&family=Jersey+10&family=Jersey+20&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=31" />
+<link rel="stylesheet" href="styles.css?v=32" />
 </head>
 <body>
 
@@ -216,7 +216,7 @@
      背景 #8B8D9A で固定。フレーム幅 968px を基準にした固定レイアウトを、
      狭い画面では .b03__scale ごと transform: scale() で縮小する。
      ============================================================ -->
-<section class="b03" id="block03">
+<section class="b03" id="block03" data-kmax="1.655">
  <div class="b03__scale">
   <div class="b03__stage">
 
@@ -790,8 +790,11 @@
     var scaleEl=sec.querySelector('[class*="__scale"]');
     var stage=sec.querySelector('[class*="__stage"]');
     if(!scaleEl||!stage)return;
+    // data-kmax で拡大側の上限を指定（既定 1 = 拡大しない）。
+    // 指示04: block03 のみ 1.655 倍まで拡大して参考サイトの表示サイズに合わせる。
+    var kmax=parseFloat(sec.dataset.kmax||'1');
     function fit(){
-      var k=Math.min(1, sec.clientWidth/968);
+      var k=Math.min(kmax, sec.clientWidth/968);
       scaleEl.style.setProperty('--k', k);
       sec.style.height = stage.getBoundingClientRect().height + 'px';
     }
@@ -821,6 +824,6 @@
   });
 })();
 </script>
-<script src="app.js?v=8"></script>
+<script src="app.js?v=9"></script>
 </body>
 </html>
