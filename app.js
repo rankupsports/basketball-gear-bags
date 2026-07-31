@@ -138,9 +138,24 @@
     }).join('');
   };
 
+  /* hero の♡ — FISHS EDDY の TOP 左と同じ「一列で昇って上で消える」動き。
+     支給モックの実測に合わせている：
+       ・左 6.90%、幅 4.60%（hero 幅比）。3個ともサイズも x も完全に同じ一列
+       ・同時に見えるのは3個。上から 12.1% / 31.1% / 87.4% の位置関係
+     位相 p = 1 - dl/DUR なので、その3点(下から 87.9/68.9/12.6%)を再現する
+     ディレイは DUR×0.121 / 0.311 / 0.874。先頭を0に寄せて下の値になる。 */
+  const MV_HEART = { left: 6.9, dur: 9000, delays: [0, 1710, 6777] };
+  const fillMvHearts = (host) => {
+    if (!host) return;
+    host.innerHTML = MV_HEART.delays.map(dl =>
+      `<span class="mvHeart" style="left:${MV_HEART.left}%;--s:clamp(20px,4.6cqw,90px);`
+      + `--dur:${MV_HEART.dur}ms;--dl:${dl}ms"><span class="mvHeart__i">${HEART_SVG}</span></span>`
+    ).join('');
+  };
+
   cornerFrame($('#mvFrame'));
   cornerFrame($('#staffFrame'));
-  fillHearts($('#mvHearts'), 11, 3000);
+  fillMvHearts($('#mvHearts'));
   fillHearts($('#staffHearts'), 14, 3200);
 
   /* =========================================================

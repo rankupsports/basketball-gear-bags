@@ -135,6 +135,16 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   65%{opacity:0}
   100%{transform:translate3d(0,-20%,0);opacity:0}
 }
+/* hero の♡（FISHS EDDY TOP 実測）。ラッパーが hero と同じ高さなので
+   translateY の % ＝ hero 高さに対する割合になり、下端の外から上端の外まで
+   きっちり昇りきる。透明度は7割まで保ってから上でゆっくり抜く
+   （実測: 上から12%地点で ≒0.45）。 */
+@keyframes mvHeartRise{
+  0%{transform:translate3d(0,9%,0);opacity:0}
+  6%{opacity:1}
+  70%{opacity:1}
+  100%{transform:translate3d(0,-100%,0);opacity:0}
+}
 /* いいねボタンの popHeart（0.2倍から弾け、1.08倍でわずかにオーバーシュート） */
 @keyframes popHeart{
   0%{transform:scale(.2) translate3d(0,10%,0);opacity:0}
@@ -180,6 +190,18 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 }
 .floatHeart--pop{animation:popHeart .45s ease-out var(--dl,0ms) both,
                           heartFloat var(--dur,1100ms) ease-out var(--dl,0ms) forwards}
+
+/* hero 専用の昇る♡。.floatHeart は「いいね」ボタンのポップにも使われていて
+   あちらは数十pxだけ跳ねるのが正しいので、hero は別クラスにしてある。
+   ラッパー(.mvHeart)は hero と同じ高さの縦一列、♡ 本体はその下端に置く。
+   実測(designer mock): 左 6.90% / 幅 4.60% の一列、サイズ・x とも全個体で同一。 */
+.mvHeart{
+  position:absolute;top:0;height:100%;
+  width:var(--s,26px);color:inherit;pointer-events:none;
+  opacity:0;will-change:transform,opacity;
+  animation:mvHeartRise var(--dur,9000ms) linear var(--dl,0ms) infinite;
+}
+.mvHeart__i{position:absolute;left:0;bottom:0;width:100%;aspect-ratio:42.04/35.49;display:block}
 
 /* フィルムグレイン。以前は fixed + mix-blend-mode:multiply + 無限アニメ + z-index:150
    （ヘッダーより上）だったため、スクロール中に固定ヘッダーが二重残像化＋白ちらつき
@@ -244,8 +266,10 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 /* Rankup sports ロゴ：デザイナー支給の SVG から抽出したベクター画像 */
 .mv__brand{display:inline-block;margin-top:.5em;width:clamp(160px,26vw,360px);height:auto}
 
-.mv__cont{position:relative;background:var(--lime)}
-.mv__hearts{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:2;color:var(--white)}
+/* container-type は ♡ のサイズを hero 実幅(cqw)で決めるため。
+   スクロールバー分ずれる vw は使わない。 */
+.mv__cont{position:relative;background:var(--lime);container-type:inline-size}
+.mv__hearts{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:2;color:var(--lime)}
 /* hero 写真は画面いっぱい（フルブリード・全幅 × ビューポート高） */
 .mv__phBox{position:relative;z-index:1;width:100%;padding:0;container-type:inline-size}
 /* hero は2枚の写真を重ね、透明度でクロスフェード（揺れなし） */
