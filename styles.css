@@ -46,6 +46,7 @@
   --f-geist:"Geist Pixel","Geist",monospace;
   --f-jersey10:"Jersey 10",sans-serif;
   --f-jersey20:"Jersey 20",sans-serif;
+  --f-encode:"Encode Sans Condensed",sans-serif;
 
   --pad:clamp(18px,5vw,40px);
   --card:480px;
@@ -762,6 +763,24 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 :is(.b03,.b04) .ig--hero .ig__pName{font-size:16px}
 :is(.b03,.b04) .ig--hero .ig__price{font-size:16px;margin-right:22px}
 :is(.b03,.b04) .ig--hero .ig__add{font-size:16px}
+
+/* ---- BUY NOW（Buynow_0731.pdf / block03 の HERO カードのみ）----
+   コンプ実測（カード幅 482px に対する比率）:
+   ボタン 27.11%×8.36% = 131×40px / 上の余白 10.08% / 下 2.81% = 14px。
+   行の Add を外しても価格の位置は動かさないので、Add ぶんの余白を
+   li の padding-right として残す（実測: 価格右端はカード幅の 83%）。 */
+.b03 .ig--hero .ig__prod li{padding-right:57px}
+.b03 .ig--hero .ig__price{margin-right:0}
+.b03 .ig--hero .ig__buyWrap{display:flex;justify-content:center;padding:29px 26px 14px}
+.b03 .ig--hero .ig__buy{
+  display:flex;align-items:center;justify-content:center;
+  width:131px;height:40px;
+  background:#27498D;color:#fff;text-decoration:none;
+  font-family:var(--f-encode);font-weight:700;
+  font-size:23.4px;line-height:1;letter-spacing:.02em;
+  transition:opacity .2s ease, transform .12s ease;
+}
+.b03 .ig--hero .ig__buy:hover{opacity:.9;transform:translateY(-1px)}
 
 /* =============== チャット吹き出し（4個） ===============
    cropped SVG（viewBox をパス実寸に切り詰め）を背景に敷き、本文は live text。
