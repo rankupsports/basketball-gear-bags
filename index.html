@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=League+Spartan:wght@500;700&family=M+PLUS+1p:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Bowlby+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Montserrat:wght@400;500;700&family=Libre+Bodoni:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=Geist+Pixel&family=Jersey+10&family=Jersey+20&family=Encode+Sans+Condensed:wght@700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=49" />
+<link rel="stylesheet" href="styles.css?v=50" />
 </head>
 <body>
 
@@ -242,15 +242,31 @@
         <span class="ig__more">•••</span>
       </div>
 
-      <div class="ig__photo"><img src="assets/block03/ballbag_a.jpg" alt="Rankup sports Drawstring Ball Bag" /></div>
+      <!-- Block03_最初の画像ラインナップ.pdf: 1枚だった写真をこの9枚のラインナップに。
+           マスク位置はコンプのカードを実測して各画像に焼き込んである（カード比 482/598）。 -->
+      <div class="ig__photo ig__photo--car" id="b03Car">
+        <img class="is-show" src="assets/block03/lineup/lineup01.jpg" alt="Rankup sports Shoe Barrel Bag（ブルーロープ）をかけてコートに座る女の子" />
+        <img src="assets/block03/lineup/lineup02.jpg" alt="ロッカールームでピンクロープの Shoe Barrel Bag を肩にかける男の子" loading="lazy" />
+        <img src="assets/block03/lineup/lineup03.jpg" alt="ベンチでひと休み。足元にブルーロープの Shoe Barrel Bag" loading="lazy" />
+        <img src="assets/block03/lineup/lineup04.jpg" alt="ブラックロープの Shoe Barrel Bag を手に持ったスタイリング" loading="lazy" />
+        <img src="assets/block03/lineup/lineup05.jpg" alt="ホワイトロープの Shoe Barrel Bag を提げて歩くスタイリング" loading="lazy" />
+        <img src="assets/block03/lineup/lineup06.jpg" alt="ピンクロープの Shoe Barrel Bag を手に持ったスタイリング" loading="lazy" />
+        <img src="assets/block03/lineup/lineup07.jpg" alt="ブルーロープの Shoe Barrel Bag を肩にかけたスタイリング" loading="lazy" />
+        <img src="assets/block03/lineup/lineup08.jpg" alt="ピンクロープの Shoe Barrel Bag を斜めがけしたスタイリング" loading="lazy" />
+        <img src="assets/block03/lineup/lineup09.jpg" alt="ブルーロープの Shoe Barrel Bag を斜めがけしたスタイリング" loading="lazy" />
+      </div>
 
       <div class="ig__actions">
         <img class="ig__act ig__act--like" src="assets/block03/block03_hearts.svg" alt="いいね" />
         <img class="ig__act ig__act--cmt" src="assets/block03/block03_hukidasi.svg" alt="コメント" />
-        <span class="ig__dots"><i></i><i class="on"></i><i></i></span>
+        <span class="ig__dots" id="b03Dots"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
         <span class="ig__nav">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+          <button type="button" class="ig__navBtn" data-car="prev" aria-controls="b03Car" aria-label="前の写真">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+          </button>
+          <button type="button" class="ig__navBtn" data-car="next" aria-controls="b03Car" aria-label="次の写真">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
         </span>
       </div>
 
@@ -633,6 +649,29 @@
       if(!img.complete) img.addEventListener('load', fit, {once:true});
     });
     fit();
+  });
+})();
+</script>
+<script>
+/* block03 HERO の写真カルーセル（Block03_最初の画像ラインナップ.pdf）。
+   ← → で9枚を巡回。ドットは現在位置の表示のみ（コンプ通り、押せない）。 */
+(function(){
+  var car=document.getElementById('b03Car');
+  var dots=document.getElementById('b03Dots');
+  if(!car||!dots) return;
+  var slides=car.querySelectorAll('img');
+  var pips=dots.querySelectorAll('i');
+  if(slides.length<2) return;
+  var i=0;
+  function go(n){
+    i=(n+slides.length)%slides.length;
+    for(var k=0;k<slides.length;k++) slides[k].classList.toggle('is-show',k===i);
+    for(var m=0;m<pips.length;m++) pips[m].classList.toggle('on',m===i);
+  }
+  document.querySelectorAll('.ig__navBtn[aria-controls="b03Car"]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      go(i + (btn.dataset.car==='next' ? 1 : -1));
+    });
   });
 })();
 </script>

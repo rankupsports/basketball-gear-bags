@@ -741,6 +741,12 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 :is(.b03,.b04) .ig__photo{width:100%;overflow:hidden;background:#d9d9d9}
 :is(.b03,.b04) .ig__photo img{display:block;width:100%;height:100%;object-fit:cover}
 
+/* ラインナップのカルーセル。9枚を重ねて透明度で入れ替える。
+   マスクは画像側に焼き込み済みなので object-fit:cover のみでコンプ通りになる。 */
+:is(.b03,.b04) .ig__photo--car{position:relative}
+:is(.b03,.b04) .ig__photo--car img{position:absolute;inset:0;opacity:0;transition:opacity .45s ease}
+:is(.b03,.b04) .ig__photo--car img.is-show{opacity:1}
+
 /* ---- アクション行: ハート / コメント / ドット / 矢印 ---- */
 :is(.b03,.b04) .ig__actions{display:flex;align-items:center}
 :is(.b03,.b04) .ig__act{display:block}
@@ -750,6 +756,14 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 :is(.b03,.b04) .ig__dots i.on{background:var(--b3blue)}
 :is(.b03,.b04) .ig__nav{display:flex;align-items:center;gap:18px;color:#111}
 :is(.b03,.b04) .ig__nav svg{display:block}
+/* 矢印はカルーセルの操作ボタン。見た目は元の svg のままにしたいので
+   ボタンの装飾は全部落とす。 */
+:is(.b03,.b04) .ig__navBtn{
+  display:block;padding:0;border:0;background:none;color:inherit;cursor:pointer;
+  -webkit-appearance:none;appearance:none;
+}
+:is(.b03,.b04) .ig__navBtn:hover{opacity:.6}
+:is(.b03,.b04) .ig__navBtn:focus-visible{outline:2px solid var(--b3blue);outline-offset:3px;border-radius:3px}
 
 /* ---- 商品リスト ---- */
 :is(.b03,.b04) .ig__prod{list-style:none;margin:0;padding:0}
