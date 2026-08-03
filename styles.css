@@ -998,7 +998,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 /* 下パディングは下ギザギザ（--th 15px 固定）より大きくして、
    狭い画面でバーコードがギザギザに切られないようにする（cqw は
    モバイルだと数px しかないため max() で最低 34px を確保）。 */
-.shop__pad{padding:max(24px,4.08cqw) max(20px,9.26cqw) max(34px,2.4cqw)}
+.shop__pad{padding:max(40px,5.2cqw) max(20px,9.26cqw) max(34px,2.4cqw)}
 
 /* ---- 見出し ----
    実測: ONLINE SHOP は 1文字あたり 1.4457%、サブは全体で 14.83%。
@@ -1026,8 +1026,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   /* minmax(0,1fr): 商品名が nowrap で min-content 下限を作るため、
      1fr だけだと左右のカラム幅がずれる（写真の大きさも変わってしまう）。 */
   display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7.86cqw;
-  /* 写真の上端がレシート上端から 12.60% に来る値（指示①の「上下に幅」） */
-  margin-top:3.85cqw;
+  /* サブ見出しと商品画像の間に少し隙間（狭い画面でも効くよう下限 26px） */
+  margin-top:max(26px,5cqw);
 }
 .shop__prod{margin:0}
 .shop__box{
@@ -1080,7 +1080,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .shop__add:hover{transform:translateY(-1px);opacity:.9}
 
 /* ---- Continue to checkout（実測: 幅 21.08% / 高さ 3.78%）---- */
-.shop__checkoutWrap{display:flex;justify-content:center;margin-top:2.39cqw}
+.shop__checkoutWrap{display:flex;justify-content:center;margin-top:max(24px,4.2cqw)}
 .shop__checkout{
   display:inline-block;
   font-family:var(--f-jersey20);font-weight:400;
@@ -1095,7 +1095,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 
 /* ---- ロゴ + バーコード（1枚の SVG に両方入っている。実測はバーコード幅 11.41%）---- */
 .shop__logo{
-  display:block;margin:3.57cqw auto 0;
+  display:block;margin:max(28px,4.6cqw) auto 0;
   width:max(150px,11.41cqw);height:auto;
 }
 
