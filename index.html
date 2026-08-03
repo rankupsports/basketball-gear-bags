@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=League+Spartan:wght@500;700&family=M+PLUS+1p:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Bowlby+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Montserrat:wght@400;500;700&family=Libre+Bodoni:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=Geist+Pixel&family=Jersey+10&family=Jersey+20&family=Encode+Sans+Condensed:wght@700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=55" />
+<link rel="stylesheet" href="styles.css?v=56" />
 </head>
 <body>
 
@@ -278,7 +278,7 @@
         <li><span class="ig__pName">ROPE STRAP - Blue</span><span class="ig__lead"></span><span class="ig__price">¥0,000</span></li>
       </ul>
 
-      <div class="ig__buyWrap"><a class="ig__buy" href="#">BUY NOW</a></div>
+      <div class="ig__buyWrap"><a class="ig__buy" href="https://www.rankup-sports.com/product-page/basketball-gear-bags" target="_blank" rel="noopener">BUY NOW</a></div>
     </article>
 
     <!-- ---- チャット吹き出し（cropped SVG を背景、本文は live text） ---- -->
@@ -769,133 +769,26 @@
 })();
 </script>
 
-<!-- ============ BUY NOW → 下からスライドUPする商品ページ ============
+<!-- ============ BUY NOW → 公式商品ページをポップアップで開く ============
+     Wix の公式ページは JS フレームバスティングで iframe 埋め込みできないため、
+     window.open で公式 rankup-sports.com の商品ページをポップアップウィンドウで開く。
+     こうすると公式ストアのカートがそのまま機能する。
      ボタンは block03 HERO カード内の既存 .ig__buy を使う（新規追加しない）。 -->
-<div class="buySheet" id="buySheet" role="dialog" aria-modal="true" aria-label="SHOE BARREL BAG 商品ページ" aria-hidden="true">
-  <div class="buySheet__overlay" id="buySheetOverlay"></div>
-  <div class="buySheet__panel">
-    <button class="buySheet__close" id="buySheetClose" type="button" aria-label="閉じる">&times;</button>
-    <div class="buySheet__grab" aria-hidden="true"></div>
-
-    <div class="buyProd">
-      <!-- 画像ギャラリー -->
-      <div class="buyGal">
-        <div class="buyGal__main"><img id="buyMain" src="assets/product-shoe-bag.png" alt="SHOE BARREL BAG" /></div>
-        <div class="buyGal__thumbs" id="buyThumbs">
-          <button class="buyGal__thumb is-active" type="button" data-src="assets/product-shoe-bag.png"><img src="assets/product-shoe-bag.png" alt="" /></button>
-          <button class="buyGal__thumb" type="button" data-src="assets/block04/bag_pic.jpg"><img src="assets/block04/bag_pic.jpg" alt="" /></button>
-          <button class="buyGal__thumb" type="button" data-src="assets/block04/shose_02.jpg"><img src="assets/block04/shose_02.jpg" alt="" /></button>
-          <button class="buyGal__thumb" type="button" data-src="assets/product-ball-bag.png"><img src="assets/product-ball-bag.png" alt="" /></button>
-        </div>
-      </div>
-
-      <!-- 商品情報 -->
-      <div class="buyProd__info">
-        <p class="buyProd__crumb">ホーム / shoe barrel bag</p>
-        <h2 class="buyProd__title">SHOE BARREL BAG</h2>
-        <p class="buyProd__sku">SKU: al5550034</p>
-        <p class="buyProd__price">¥5,499<span>税込</span></p>
-
-        <p class="buyProd__desc">
-          バスケットシューズがすっぽり収まるシューズバッグ。サイドポケットには水筒、フロントポケットにはハンドタオルや絆創膏など、練習や試合で使う小物をまとめて収納できます。お好みのロープストラップを付けて、自分らしくアレンジできるのもポイントです。
-        </p>
-
-        <div class="buyProd__opt">
-          <label class="buyProd__optLabel">商品タイプ <em>必須</em></label>
-          <div class="buyVar" data-var="type">
-            <button class="buyVar__btn is-active" type="button" data-value="SHOE BARREL BAG">SHOE BARREL BAG</button>
-            <button class="buyVar__btn" type="button" data-value="DRAWSTRING BALL BAG">DRAWSTRING BALL BAG</button>
-          </div>
-        </div>
-
-        <div class="buyProd__opt">
-          <label class="buyProd__optLabel">カラー（ロープストラップ） <em>必須</em></label>
-          <div class="buyVar" data-var="color">
-            <button class="buyVar__btn is-active" type="button" data-value="ブルー">ブルー</button>
-            <button class="buyVar__btn" type="button" data-value="ピンク">ピンク</button>
-            <button class="buyVar__btn" type="button" data-value="グレー">グレー</button>
-          </div>
-        </div>
-
-        <div class="buyProd__opt">
-          <label class="buyProd__optLabel">数量</label>
-          <div class="buyQty">
-            <button class="buyQty__btn" id="buyQtyMinus" type="button" aria-label="数量を減らす">&minus;</button>
-            <span class="buyQty__val" id="buyQtyVal">1</span>
-            <button class="buyQty__btn" id="buyQtyPlus" type="button" aria-label="数量を増やす">&plus;</button>
-          </div>
-        </div>
-
-        <a class="buyProd__cta" id="buyCta"
-           href="https://www.rankup-sports.com/product-page/basketball-gear-bags"
-           target="_blank" rel="noopener">カートに追加する</a>
-        <p class="buyProd__note">公式オンラインストア（rankup-sports.com）で購入手続きに進みます。</p>
-
-        <div class="buyProd__assure">
-          <div>🚚 <span>3,000円以上で送料無料</span></div>
-          <div>↩️ <span>30日間返品保証</span></div>
-          <div>🔒 <span>SSL安全決済</span></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script>
-/* BUY NOW ボトムシート（開閉・ギャラリー・オプション・数量） */
 (function(){
-  var sheet=document.getElementById('buySheet');
-  if(!sheet)return;
-  // 既存の BUY NOW ボタン（block03 HERO カードの .ig__buy）に紐付ける
-  var openBtns=document.querySelectorAll('.ig__buy');
-  var overlay=document.getElementById('buySheetOverlay');
-  var closeBtn=document.getElementById('buySheetClose');
-  var panel=sheet.querySelector('.buySheet__panel');
-  var lastFocus=null;
-
-  function open(){
-    lastFocus=document.activeElement;
-    sheet.classList.add('is-open');
-    sheet.setAttribute('aria-hidden','false');
-    document.body.style.overflow='hidden';
-    closeBtn.focus();
+  var STORE='https://www.rankup-sports.com/product-page/basketball-gear-bags';
+  function openStore(){
+    var aw=screen.availWidth||window.innerWidth, ah=screen.availHeight||window.innerHeight;
+    var w=Math.min(560,aw), h=Math.min(900,ah);
+    var x=Math.max(0,(aw-w)/2), y=Math.max(0,(ah-h)/2);
+    var win=window.open(STORE,'rankupStore',
+      'popup=yes,width='+w+',height='+h+',left='+x+',top='+y+',scrollbars=yes,resizable=yes');
+    if(win){ try{win.opener=null;}catch(e){} if(win.focus)win.focus(); }
+    else { window.open(STORE,'_blank'); }   // ポップアップがブロックされたら新規タブ
   }
-  function close(){
-    sheet.classList.remove('is-open');
-    sheet.setAttribute('aria-hidden','true');
-    document.body.style.overflow='';
-    panel.scrollTop=0;
-    if(lastFocus&&lastFocus.focus)lastFocus.focus();
-  }
-  openBtns.forEach(function(btn){
-    btn.addEventListener('click', function(e){ e.preventDefault(); open(); });
+  document.querySelectorAll('.ig__buy').forEach(function(b){
+    b.addEventListener('click', function(e){ e.preventDefault(); openStore(); });
   });
-  closeBtn.addEventListener('click', close);
-  overlay.addEventListener('click', close);
-  document.addEventListener('keydown', function(e){ if(e.key==='Escape'&&sheet.classList.contains('is-open'))close(); });
-
-  /* ギャラリー切替 */
-  var mainImg=document.getElementById('buyMain');
-  document.getElementById('buyThumbs').addEventListener('click', function(e){
-    var b=e.target.closest('.buyGal__thumb'); if(!b)return;
-    this.querySelectorAll('.buyGal__thumb').forEach(function(t){t.classList.remove('is-active');});
-    b.classList.add('is-active');
-    mainImg.src=b.dataset.src;
-  });
-
-  /* オプション選択 */
-  sheet.querySelectorAll('.buyVar').forEach(function(group){
-    group.addEventListener('click', function(e){
-      var b=e.target.closest('.buyVar__btn'); if(!b)return;
-      group.querySelectorAll('.buyVar__btn').forEach(function(x){x.classList.remove('is-active');});
-      b.classList.add('is-active');
-    });
-  });
-
-  /* 数量 */
-  var qty=1, qtyVal=document.getElementById('buyQtyVal');
-  document.getElementById('buyQtyPlus').addEventListener('click', function(){ qty=Math.min(qty+1,99); qtyVal.textContent=qty; });
-  document.getElementById('buyQtyMinus').addEventListener('click', function(){ qty=Math.max(qty-1,1); qtyVal.textContent=qty; });
 })();
 </script>
 <script src="app.js?v=10"></script>
