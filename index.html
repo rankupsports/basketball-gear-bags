@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=League+Spartan:wght@500;700&family=M+PLUS+1p:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Bowlby+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Montserrat:wght@400;500;700&family=Libre+Bodoni:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=Geist+Pixel&family=Jersey+10&family=Jersey+20&family=Encode+Sans+Condensed:wght@700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=57" />
+<link rel="stylesheet" href="styles.css?v=58" />
 </head>
 <body>
 
@@ -769,30 +769,42 @@
 })();
 </script>
 
-<!-- ============ BUY NOW -> 同一ページ内モーダル（Wix Headless 連携）============
+<!-- ============ BUY NOW -> 下からスライドアップするモーダル（Wix Headless 連携）============
      Wix 公式ページは iframe 埋め込み不可（JS フレームバスティング）のため、
      Wix Headless の公式 API で実データ表示＋実カート追加→公式チェックアウトへ。
-     ★ 有効化は下の WIX_CLIENT_ID に Wix Headless の Client ID（公開可）を貼るだけ。
-       未設定・失敗時は公式商品ページをポップアップで開くフォールバックにしているので、
-       サイト/ショップには影響しません。ボタンは既存の .ig__buy を使用。 -->
-<div class="wixM" id="wixM" role="dialog" aria-modal="true" aria-label="SHOE BARREL BAG 商品ページ" aria-hidden="true">
+     ★ 表示する商品は下の PRODUCT_SLUG / STORE_URL を変えるだけで差し替え可能。
+       API に商品が無い/失敗時は静的データで商品ページを表示し、購入は公式ページへ。
+       ボタンは既存の .ig__buy を使用。 -->
+<div class="wixM" id="wixM" role="dialog" aria-modal="true" aria-label="商品ページ" aria-hidden="true">
   <div class="wixM__ov" id="wixMov"></div>
   <div class="wixM__panel">
     <button class="wixM__close" id="wixMclose" type="button" aria-label="閉じる">&times;</button>
+    <div class="wixM__grab" aria-hidden="true"></div>
     <div class="wixM__body" id="wixMbody"></div>
   </div>
 </div>
 <script>
 (function(){
   /* ===== 設定 ===== */
-  var WIX_CLIENT_ID = '';   /* <- Wix Headless の Client ID をここに貼る（公開して問題ないトークン） */
-  var PRODUCT_SLUG  = 'basketball-gear-bags';
+  var WIX_CLIENT_ID = 'c496512e-4317-4b12-9e20-895a7a15be80';   /* Wix Headless の Client ID（公開可） */
+  var PRODUCT_SLUG  = 'basketball-gear-bags';                   /* ← 表示する商品の slug（後で変更可） */
   var STORE_URL     = 'https://www.rankup-sports.com/product-page/basketball-gear-bags';
-  var STORES_APP_ID = '1380b703-ce81-ff05-f115-39571d94dfcd'; /* Wix Stores 固定 appId */
+  var STORES_APP_ID = '1380b703-ce81-ff05-f115-39571d94dfcd';   /* Wix Stores 固定 appId */
+
+  /* API に商品が無い間の静的フォールバック表示（購入は公式ページへ） */
+  var STATIC_PRODUCT={
+    _static:true, name:'SHOE BARREL BAG', sku:'al5550034',
+    media:{mainMedia:{image:{url:'assets/product-shoe-bag.png'}}},
+    priceData:{formatted:{price:'\u00a55,499'}},
+    description:'\u30d0\u30b9\u30b1\u30c3\u30c8\u30b7\u30e5\u30fc\u30ba\u304c\u3059\u3063\u307d\u308a\u53ce\u307e\u308b\u30b7\u30e5\u30fc\u30ba\u30d0\u30c3\u30b0\u3002\u30b5\u30a4\u30c9\u30dd\u30b1\u30c3\u30c8\u306b\u306f\u6c34\u7b52\u3001\u30d5\u30ed\u30f3\u30c8\u30dd\u30b1\u30c3\u30c8\u306b\u306f\u30cf\u30f3\u30c9\u30bf\u30aa\u30eb\u3084\u7d46\u5275\u818f\u306a\u3069\u3092\u307e\u3068\u3081\u3066\u53ce\u7d0d\u3067\u304d\u307e\u3059\u3002',
+    productOptions:[
+      {name:'\u5546\u54c1\u30bf\u30a4\u30d7', choices:[{value:'SHOE BARREL BAG',description:'SHOE BARREL BAG'},{value:'DRAWSTRING BALL BAG',description:'DRAWSTRING BALL BAG'}]},
+      {name:'\u30ab\u30e9\u30fc', optionType:'color', choices:[{value:'#282828',description:'\u30d6\u30e9\u30c3\u30af'},{value:'#00DEFF',description:'\u30d6\u30eb\u30fc'},{value:'#FF3E97',description:'\u30d4\u30f3\u30af'},{value:'#BDC0CB',description:'\u30b0\u30ec\u30fc'}]}
+    ]
+  };
 
   var modal=document.getElementById('wixM'), body=document.getElementById('wixMbody');
   var lastFocus=null, wix=null, product=null, sel={}, qty=1;
-  var yen=function(n){return '\u00a5'+Number(n).toLocaleString('ja-JP');};
 
   function openPopup(){
     var aw=screen.availWidth||innerWidth, ah=screen.availHeight||innerHeight;
@@ -801,7 +813,7 @@
     if(win){ try{win.opener=null;}catch(e){} win.focus&&win.focus(); } else { window.open(STORE_URL,'_blank'); }
   }
   function openModal(){ lastFocus=document.activeElement; modal.classList.add('is-open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
-  function closeModal(){ modal.classList.remove('is-open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; if(lastFocus&&lastFocus.focus)lastFocus.focus(); }
+  function closeModal(){ modal.classList.remove('is-open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; body.scrollTop=0; if(lastFocus&&lastFocus.focus)lastFocus.focus(); }
   document.getElementById('wixMclose').addEventListener('click',closeModal);
   document.getElementById('wixMov').addEventListener('click',closeModal);
   document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&modal.classList.contains('is-open'))closeModal(); });
@@ -830,7 +842,7 @@
 
   function render(){
     var img=(product.media&&product.media.mainMedia&&product.media.mainMedia.image&&product.media.mainMedia.image.url)||'assets/product-shoe-bag.png';
-    var price=(product.priceData&&product.priceData.formatted&&product.priceData.formatted.price)||(product.price&&product.price.formatted&&product.price.formatted.price)||yen((product.priceData&&product.priceData.price)||0);
+    var price=(product.priceData&&product.priceData.formatted&&product.priceData.formatted.price)||(product.price&&product.price.formatted&&product.price.formatted.price)||'';
     var opts=(product.productOptions||[]).map(function(o){
       var choices=(o.choices||[]).map(function(c){
         var on=sel[o.name]===c.value?' is-on':'';
@@ -841,6 +853,7 @@
       }).join('');
       return '<div class="wixP__opt"><label class="wixP__optLabel">'+o.name+' <em>\u5fc5\u9808</em></label><div class="wixVar">'+choices+'</div></div>';
     }).join('');
+    var ctaLabel=product._static?'\u516c\u5f0f\u30b9\u30c8\u30a2\u3067\u8cfc\u5165':'\u30ab\u30fc\u30c8\u306b\u8ffd\u52a0\u3059\u308b';
     body.innerHTML=
       '<div class="wixP">'+
         '<div class="wixP__gal"><img src="'+img+'" alt="'+(product.name||'')+'"></div>'+
@@ -848,12 +861,12 @@
           '<p class="wixP__crumb">\u30db\u30fc\u30e0 / '+(product.name||'')+'</p>'+
           '<h2 class="wixP__title">'+(product.name||'')+'</h2>'+
           (product.sku?'<p class="wixP__sku">SKU: '+product.sku+'</p>':'')+
-          '<p class="wixP__price">'+price+'</p>'+
+          (price?'<p class="wixP__price">'+price+'</p>':'')+
           (product.description?'<div class="wixP__desc">'+product.description+'</div>':'')+
           opts+
           '<div class="wixP__opt"><label class="wixP__optLabel">\u6570\u91cf</label>'+
             '<div class="wixQty"><button type="button" data-q="-1" aria-label="\u6e1b\u3089\u3059">\u2212</button><span id="wixQ">1</span><button type="button" data-q="1" aria-label="\u5897\u3084\u3059">\uff0b</button></div></div>'+
-          '<button class="wixP__cta" id="wixCta">\u30ab\u30fc\u30c8\u306b\u8ffd\u52a0\u3059\u308b</button>'+
+          '<button class="wixP__cta" id="wixCta">'+ctaLabel+'</button>'+
           '<p class="wixP__msg" id="wixMsg"></p>'+
           '<a class="wixP__official" href="'+STORE_URL+'" target="_blank" rel="noopener">\u516c\u5f0f\u30da\u30fc\u30b8\u3067\u898b\u308b</a>'+
         '</div>'+
@@ -867,7 +880,7 @@
     });
     var qEl=document.getElementById('wixQ');
     body.querySelectorAll('[data-q]').forEach(function(b){ b.addEventListener('click',function(){ qty=Math.max(1,Math.min(99,qty+Number(b.dataset.q))); qEl.textContent=qty; }); });
-    document.getElementById('wixCta').addEventListener('click',checkout);
+    document.getElementById('wixCta').addEventListener('click', product._static?openPopup:checkout);
   }
 
   async function checkout(){
@@ -894,18 +907,18 @@
   }
 
   async function openBuy(){
-    if(!WIX_CLIENT_ID){ openPopup(); return; }
-    openModal(); spinner();
+    openModal(); sel={}; qty=1;
+    if(!WIX_CLIENT_ID){ product=STATIC_PRODUCT; render(); return; }
+    spinner();
     try{
       wix=await loadSdk();
       var res=await wix.client.products.queryProducts().eq('slug',PRODUCT_SLUG).limit(1).find();
-      product=res.items&&res.items[0];
+      product=(res.items&&res.items[0]) || STATIC_PRODUCT;
       persistTokens(wix.client);
-      if(!product){ throw new Error('product not found'); }
-      sel={}; qty=1; render();
+      render();
     }catch(e){
-      console.warn('[wix] load error, fallback',e);
-      closeModal(); openPopup();
+      console.warn('[wix] load error, static fallback',e);
+      product=STATIC_PRODUCT; render();
     }
   }
 

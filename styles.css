@@ -1119,15 +1119,17 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    Client ID 未設定/失敗時は公式ページをポップアップで開くフォールバック。
    ============================================================ */
 .wixM{position:fixed;inset:0;z-index:200;visibility:hidden;pointer-events:none}
-.wixM__ov{position:absolute;inset:0;background:rgba(15,15,20,.55);opacity:0;transition:opacity .35s ease}
+.wixM__ov{position:absolute;inset:0;background:rgba(15,15,20,.55);opacity:0;transition:opacity .4s ease}
+/* 下からスライドアップするボトムシート（全画面幅共通） */
 .wixM__panel{
-  position:absolute;left:50%;top:50%;transform:translate(-50%,calc(-50% + 24px));
-  width:min(1000px,94vw);max-height:92vh;overflow-y:auto;-webkit-overflow-scrolling:touch;
-  background:#fff;border-radius:16px;box-shadow:0 30px 80px rgba(0,0,0,.35);
-  opacity:0;transition:opacity .35s ease,transform .35s cubic-bezier(.22,.9,.25,1)}
+  position:absolute;left:50%;bottom:0;transform:translate(-50%,100%);
+  width:min(1000px,100%);max-height:94vh;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  background:#fff;border-radius:20px 20px 0 0;box-shadow:0 -14px 44px rgba(0,0,0,.28);
+  transition:transform .5s cubic-bezier(.22,.9,.25,1);will-change:transform}
 .wixM.is-open{visibility:visible;pointer-events:auto}
 .wixM.is-open .wixM__ov{opacity:1}
-.wixM.is-open .wixM__panel{opacity:1;transform:translate(-50%,-50%)}
+.wixM.is-open .wixM__panel{transform:translate(-50%,0)}
+.wixM__grab{width:44px;height:5px;border-radius:999px;background:#d7d7dd;margin:12px auto 2px}
 .wixM__close{position:absolute;top:14px;right:16px;z-index:2;width:38px;height:38px;border:0;
   border-radius:50%;background:#f1f1f4;color:#111;font-size:22px;line-height:1;cursor:pointer}
 .wixM__close:hover{background:#e6e6ec}
@@ -1171,8 +1173,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .wixP__official{display:inline-block;margin-top:6px;font-size:12px;color:#1780e1;text-decoration:underline}
 
 @media (max-width:600px){
-  .wixM__panel{top:auto;bottom:0;transform:translate(-50%,100%);width:100vw;max-height:94vh;border-radius:18px 18px 0 0}
-  .wixM.is-open .wixM__panel{transform:translate(-50%,0)}
+  .wixM__panel{width:100%}
 }
 @media (prefers-reduced-motion:reduce){
   .wixM__panel,.wixM__ov{transition:none}
