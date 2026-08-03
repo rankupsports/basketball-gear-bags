@@ -460,9 +460,16 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 
 .rinaSec__mockProfile{display:flex;align-items:center;gap:4.58cqw;
   padding:0 10%;margin-bottom:3.33cqw}
+/* Instagram 風グラデーションリング付きアバター（block03/04 と同配色）。
+   中身は白背景の商品カット（product-ball-bag.png）を中央に。 */
 .rinaSec__mockPic{flex:0 0 auto;width:22.29cqw;aspect-ratio:1;border-radius:50%;
-  background-color:var(--white);background-repeat:no-repeat;background-position:50% 50%;
-  background-size:cover;box-shadow:0 0 0 1px rgba(0,0,0,.08)}
+  padding:1.15cqw;
+  background:conic-gradient(from 210deg,#feda75,#fa7e1e,#f56040,#e1306c,#c13584,#833ab4,#5b51d8,#feda75);
+  display:grid;place-items:center}
+.rinaSec__mockPicIn{width:100%;height:100%;border-radius:50%;
+  border:0.7cqw solid var(--white);
+  background-color:var(--white);background-repeat:no-repeat;
+  background-position:49% 40%;background-size:185%}
 .rinaSec__mockNames{min-width:0}
 /* ブランド名は支給の元ロゴデータ（黒）を使う */
 .rinaSec__mockBrand{display:block;width:26.04cqw;height:auto;margin:0 0 1.04cqw}
