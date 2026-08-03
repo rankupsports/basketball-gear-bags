@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=League+Spartan:wght@500;700&family=M+PLUS+1p:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Bowlby+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Montserrat:wght@400;500;700&family=Libre+Bodoni:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=Geist+Pixel&family=Jersey+10&family=Jersey+20&family=Encode+Sans+Condensed:wght@700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=56" />
+<link rel="stylesheet" href="styles.css?v=57" />
 </head>
 <body>
 
@@ -769,25 +769,148 @@
 })();
 </script>
 
-<!-- ============ BUY NOW → 公式商品ページをポップアップで開く ============
-     Wix の公式ページは JS フレームバスティングで iframe 埋め込みできないため、
-     window.open で公式 rankup-sports.com の商品ページをポップアップウィンドウで開く。
-     こうすると公式ストアのカートがそのまま機能する。
-     ボタンは block03 HERO カード内の既存 .ig__buy を使う（新規追加しない）。 -->
+<!-- ============ BUY NOW -> 同一ページ内モーダル（Wix Headless 連携）============
+     Wix 公式ページは iframe 埋め込み不可（JS フレームバスティング）のため、
+     Wix Headless の公式 API で実データ表示＋実カート追加→公式チェックアウトへ。
+     ★ 有効化は下の WIX_CLIENT_ID に Wix Headless の Client ID（公開可）を貼るだけ。
+       未設定・失敗時は公式商品ページをポップアップで開くフォールバックにしているので、
+       サイト/ショップには影響しません。ボタンは既存の .ig__buy を使用。 -->
+<div class="wixM" id="wixM" role="dialog" aria-modal="true" aria-label="SHOE BARREL BAG 商品ページ" aria-hidden="true">
+  <div class="wixM__ov" id="wixMov"></div>
+  <div class="wixM__panel">
+    <button class="wixM__close" id="wixMclose" type="button" aria-label="閉じる">&times;</button>
+    <div class="wixM__body" id="wixMbody"></div>
+  </div>
+</div>
 <script>
 (function(){
-  var STORE='https://www.rankup-sports.com/product-page/basketball-gear-bags';
-  function openStore(){
-    var aw=screen.availWidth||window.innerWidth, ah=screen.availHeight||window.innerHeight;
-    var w=Math.min(560,aw), h=Math.min(900,ah);
-    var x=Math.max(0,(aw-w)/2), y=Math.max(0,(ah-h)/2);
-    var win=window.open(STORE,'rankupStore',
-      'popup=yes,width='+w+',height='+h+',left='+x+',top='+y+',scrollbars=yes,resizable=yes');
-    if(win){ try{win.opener=null;}catch(e){} if(win.focus)win.focus(); }
-    else { window.open(STORE,'_blank'); }   // ポップアップがブロックされたら新規タブ
+  /* ===== 設定 ===== */
+  var WIX_CLIENT_ID = '';   /* <- Wix Headless の Client ID をここに貼る（公開して問題ないトークン） */
+  var PRODUCT_SLUG  = 'basketball-gear-bags';
+  var STORE_URL     = 'https://www.rankup-sports.com/product-page/basketball-gear-bags';
+  var STORES_APP_ID = '1380b703-ce81-ff05-f115-39571d94dfcd'; /* Wix Stores 固定 appId */
+
+  var modal=document.getElementById('wixM'), body=document.getElementById('wixMbody');
+  var lastFocus=null, wix=null, product=null, sel={}, qty=1;
+  var yen=function(n){return '\u00a5'+Number(n).toLocaleString('ja-JP');};
+
+  function openPopup(){
+    var aw=screen.availWidth||innerWidth, ah=screen.availHeight||innerHeight;
+    var w=Math.min(560,aw), h=Math.min(900,ah), x=Math.max(0,(aw-w)/2), y=Math.max(0,(ah-h)/2);
+    var win=window.open(STORE_URL,'rankupStore','popup=yes,width='+w+',height='+h+',left='+x+',top='+y+',scrollbars=yes,resizable=yes');
+    if(win){ try{win.opener=null;}catch(e){} win.focus&&win.focus(); } else { window.open(STORE_URL,'_blank'); }
   }
+  function openModal(){ lastFocus=document.activeElement; modal.classList.add('is-open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+  function closeModal(){ modal.classList.remove('is-open'); modal.setAttribute('aria-hidden','true'); document.body.style.overflow=''; if(lastFocus&&lastFocus.focus)lastFocus.focus(); }
+  document.getElementById('wixMclose').addEventListener('click',closeModal);
+  document.getElementById('wixMov').addEventListener('click',closeModal);
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&modal.classList.contains('is-open'))closeModal(); });
+  function spinner(){ body.innerHTML='<div class="wixM__loading"><div class="wixM__spin"></div>\u5546\u54c1\u60c5\u5831\u3092\u8aad\u307f\u8fbc\u307f\u4e2d\u2026</div>'; }
+
+  var sdkP=null;
+  function loadSdk(){
+    if(sdkP)return sdkP;
+    sdkP=Promise.all([
+      import('https://esm.sh/@wix/sdk@1'),
+      import('https://esm.sh/@wix/stores@1'),
+      import('https://esm.sh/@wix/ecom@1'),
+      import('https://esm.sh/@wix/redirects@1')
+    ]).then(function(m){
+      var sdk=m[0], stores=m[1], ecom=m[2], redirects=m[3];
+      var tokens=null; try{tokens=JSON.parse(localStorage.getItem('wixTokens')||'null');}catch(e){}
+      var client=sdk.createClient({
+        modules:{ products:stores.products, currentCart:ecom.currentCart, redirects:redirects.redirects },
+        auth: sdk.OAuthStrategy({ clientId: WIX_CLIENT_ID, tokens: tokens })
+      });
+      return { sdk:sdk, client:client };
+    });
+    return sdkP;
+  }
+  function persistTokens(client){ try{ var t=client.auth.getTokens?client.auth.getTokens():null; if(t)localStorage.setItem('wixTokens',JSON.stringify(t)); }catch(e){} }
+
+  function render(){
+    var img=(product.media&&product.media.mainMedia&&product.media.mainMedia.image&&product.media.mainMedia.image.url)||'assets/product-shoe-bag.png';
+    var price=(product.priceData&&product.priceData.formatted&&product.priceData.formatted.price)||(product.price&&product.price.formatted&&product.price.formatted.price)||yen((product.priceData&&product.priceData.price)||0);
+    var opts=(product.productOptions||[]).map(function(o){
+      var choices=(o.choices||[]).map(function(c){
+        var on=sel[o.name]===c.value?' is-on':'';
+        if(o.optionType==='color'||(c.value&&/^#/.test(c.value))){
+          return '<button class="wixVar__btn wixVar__sw'+on+'" style="--c:'+c.value+'" data-opt="'+o.name+'" data-val="'+c.value+'" title="'+(c.description||c.value)+'"></button>';
+        }
+        return '<button class="wixVar__btn'+on+'" data-opt="'+o.name+'" data-val="'+c.value+'">'+(c.description||c.value)+'</button>';
+      }).join('');
+      return '<div class="wixP__opt"><label class="wixP__optLabel">'+o.name+' <em>\u5fc5\u9808</em></label><div class="wixVar">'+choices+'</div></div>';
+    }).join('');
+    body.innerHTML=
+      '<div class="wixP">'+
+        '<div class="wixP__gal"><img src="'+img+'" alt="'+(product.name||'')+'"></div>'+
+        '<div class="wixP__info">'+
+          '<p class="wixP__crumb">\u30db\u30fc\u30e0 / '+(product.name||'')+'</p>'+
+          '<h2 class="wixP__title">'+(product.name||'')+'</h2>'+
+          (product.sku?'<p class="wixP__sku">SKU: '+product.sku+'</p>':'')+
+          '<p class="wixP__price">'+price+'</p>'+
+          (product.description?'<div class="wixP__desc">'+product.description+'</div>':'')+
+          opts+
+          '<div class="wixP__opt"><label class="wixP__optLabel">\u6570\u91cf</label>'+
+            '<div class="wixQty"><button type="button" data-q="-1" aria-label="\u6e1b\u3089\u3059">\u2212</button><span id="wixQ">1</span><button type="button" data-q="1" aria-label="\u5897\u3084\u3059">\uff0b</button></div></div>'+
+          '<button class="wixP__cta" id="wixCta">\u30ab\u30fc\u30c8\u306b\u8ffd\u52a0\u3059\u308b</button>'+
+          '<p class="wixP__msg" id="wixMsg"></p>'+
+          '<a class="wixP__official" href="'+STORE_URL+'" target="_blank" rel="noopener">\u516c\u5f0f\u30da\u30fc\u30b8\u3067\u898b\u308b</a>'+
+        '</div>'+
+      '</div>';
+    body.querySelectorAll('.wixVar__btn').forEach(function(b){
+      b.addEventListener('click',function(){
+        sel[b.dataset.opt]=b.dataset.val;
+        body.querySelectorAll('.wixVar__btn[data-opt="'+b.dataset.opt+'"]').forEach(function(x){x.classList.remove('is-on');});
+        b.classList.add('is-on');
+      });
+    });
+    var qEl=document.getElementById('wixQ');
+    body.querySelectorAll('[data-q]').forEach(function(b){ b.addEventListener('click',function(){ qty=Math.max(1,Math.min(99,qty+Number(b.dataset.q))); qEl.textContent=qty; }); });
+    document.getElementById('wixCta').addEventListener('click',checkout);
+  }
+
+  async function checkout(){
+    var cta=document.getElementById('wixCta'), msg=document.getElementById('wixMsg');
+    var missing=(product.productOptions||[]).some(function(o){return !sel[o.name];});
+    if(missing){ msg.textContent='\u30aa\u30d7\u30b7\u30e7\u30f3\u3092\u9078\u629e\u3057\u3066\u304f\u3060\u3055\u3044\u3002'; return; }
+    cta.disabled=true; msg.textContent='\u30ab\u30fc\u30c8\u306b\u8ffd\u52a0\u4e2d\u2026';
+    try{
+      var options={}; Object.keys(sel).forEach(function(k){options[k]=sel[k];});
+      await wix.client.currentCart.addToCurrentCart({ lineItems:[{
+        catalogReference:{ appId:STORES_APP_ID, catalogItemId:product._id, options:Object.keys(options).length?{options:options}:undefined },
+        quantity:qty }]});
+      persistTokens(wix.client);
+      msg.textContent='\u30c1\u30a7\u30c3\u30af\u30a2\u30a6\u30c8\u3078\u79fb\u52d5\u3057\u307e\u3059\u2026';
+      var chk=await wix.client.currentCart.createCheckoutFromCurrentCart({ channelType:'WEB' });
+      var rs=await wix.client.redirects.createRedirectSession({ ecomCheckout:{ checkoutId:chk.checkoutId }, callbacks:{ postFlowUrl:location.href } });
+      var url=rs&&rs.redirectSession&&rs.redirectSession.fullUrl;
+      if(url){ location.href=url; } else { throw new Error('no redirect url'); }
+    }catch(e){
+      console.warn('[wix] checkout error, fallback',e);
+      cta.disabled=false; msg.textContent='';
+      openPopup();
+    }
+  }
+
+  async function openBuy(){
+    if(!WIX_CLIENT_ID){ openPopup(); return; }
+    openModal(); spinner();
+    try{
+      wix=await loadSdk();
+      var res=await wix.client.products.queryProducts().eq('slug',PRODUCT_SLUG).limit(1).find();
+      product=res.items&&res.items[0];
+      persistTokens(wix.client);
+      if(!product){ throw new Error('product not found'); }
+      sel={}; qty=1; render();
+    }catch(e){
+      console.warn('[wix] load error, fallback',e);
+      closeModal(); openPopup();
+    }
+  }
+
   document.querySelectorAll('.ig__buy').forEach(function(b){
-    b.addEventListener('click', function(e){ e.preventDefault(); openStore(); });
+    b.addEventListener('click',function(e){ e.preventDefault(); openBuy(); });
   });
 })();
 </script>
