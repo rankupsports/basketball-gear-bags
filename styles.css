@@ -852,7 +852,10 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 :is(.b03,.b04) .ig--mini .ig__barLogo{width:26px}
 :is(.b03,.b04) .ig--mini .ig__barBall{width:22px}
 :is(.b03,.b04) .ig--mini .ig__profile{padding:8px 14px 7px;gap:11px}
-:is(.b03,.b04) .ig--mini .ig__ava{width:40px;height:40px;padding:2px}
+/* 虹色リングは padding で見せている。2px だと写真の上で
+   アンチエイリアスに溶けて途切れて見えたので、HERO と同じ 3px に。
+   直径比 7.5% で、HERO(3/64) より太く見せる。 */
+:is(.b03,.b04) .ig--mini .ig__ava{width:40px;height:40px;padding:3px}
 :is(.b03,.b04) .ig--mini .ig__ava > *{border:2px solid #fff}
 :is(.b03,.b04) .ig--mini .ig__uname{font-size:15px;font-weight:700}
 :is(.b03,.b04) .ig--mini .ig__urole{font-size:11px}
@@ -1083,4 +1086,91 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 @media (max-width:460px){
   .shop__pn{font-size:12px;letter-spacing:0}
   .shop__title{letter-spacing:.04em}
+}
+
+/* ============================================================
+   BUY NOW → 下からスライドUPする商品ページ・ポップアップ
+   （参考: tsuriking-team/test-01 のドロワー開閉パターンを
+   ボトムシート化。商品は shoe barrel bag / ¥5,499）
+   ============================================================ */
+.buySheet{position:fixed;inset:0;z-index:180;visibility:hidden;pointer-events:none}
+.buySheet__overlay{position:absolute;inset:0;background:rgba(15,15,20,.55);
+  opacity:0;transition:opacity .4s ease}
+.buySheet__panel{
+  position:absolute;left:0;right:0;bottom:0;
+  max-height:94vh;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  background:#fff;border-radius:22px 22px 0 0;
+  transform:translateY(100%);
+  transition:transform .46s cubic-bezier(.22,.9,.25,1);
+  box-shadow:0 -12px 40px rgba(0,0,0,.25);
+  will-change:transform;
+}
+.buySheet.is-open{visibility:visible;pointer-events:auto}
+.buySheet.is-open .buySheet__overlay{opacity:1}
+.buySheet.is-open .buySheet__panel{transform:translateY(0)}
+
+.buySheet__grab{width:44px;height:5px;border-radius:999px;background:#d7d7dd;
+  margin:12px auto 0}
+.buySheet__close{position:absolute;top:14px;right:16px;z-index:2;
+  width:38px;height:38px;border-radius:50%;background:#f1f1f4;color:#111;
+  font-size:22px;line-height:1;cursor:pointer;border:0}
+.buySheet__close:hover{background:#e6e6ec}
+
+/* ---- 商品ページ本体 ---- */
+.buyProd{
+  width:min(1040px,100%);margin:0 auto;
+  padding:20px clamp(18px,4vw,40px) clamp(28px,6vw,56px);
+  display:grid;grid-template-columns:1fr;gap:clamp(20px,4vw,44px);
+  font-family:var(--f-body);color:#111;
+}
+@media (min-width:800px){
+  .buyProd{grid-template-columns:1.05fr .95fr;align-items:start;padding-top:34px}
+}
+
+.buyGal__main{border-radius:16px;overflow:hidden;background:#f5f5f7;aspect-ratio:1/1}
+.buyGal__main img{width:100%;height:100%;object-fit:cover;display:block}
+.buyGal__thumbs{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+.buyGal__thumb{width:72px;height:72px;border-radius:12px;overflow:hidden;
+  border:2px solid transparent;background:#f5f5f7;cursor:pointer;padding:0}
+.buyGal__thumb img{width:100%;height:100%;object-fit:cover}
+.buyGal__thumb.is-active{border-color:#111}
+
+.buyProd__crumb{font-size:12px;color:#8a8a93;letter-spacing:.02em}
+.buyProd__title{font-family:var(--f-mont),var(--f-body);font-weight:700;
+  font-size:clamp(24px,4vw,32px);letter-spacing:.02em;margin:6px 0 2px;text-transform:uppercase}
+.buyProd__sku{font-size:12px;color:#9a9aa2;margin-bottom:14px}
+.buyProd__price{font-family:var(--f-mont),var(--f-body);font-weight:700;
+  font-size:clamp(22px,3.4vw,28px);color:#111}
+.buyProd__price span{font-size:13px;font-weight:500;color:#8a8a93;margin-left:6px}
+.buyProd__desc{margin:16px 0 4px;font-size:14px;line-height:1.9;color:#333}
+
+.buyProd__opt{margin-top:20px}
+.buyProd__optLabel{display:block;font-size:13px;font-weight:700;margin-bottom:8px}
+.buyProd__optLabel em{color:#e63946;font-style:normal;font-size:11px;margin-left:6px}
+.buyVar{display:flex;gap:10px;flex-wrap:wrap}
+.buyVar__btn{border:1.5px solid #d9d9e0;background:#fff;color:#111;
+  border-radius:10px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;
+  font-family:var(--f-body);transition:.15s}
+.buyVar__btn:hover{border-color:#111}
+.buyVar__btn.is-active{border-color:#111;background:#111;color:#fff}
+
+.buyQty{display:inline-flex;align-items:center;border:1.5px solid #d9d9e0;border-radius:10px;overflow:hidden}
+.buyQty__btn{width:42px;height:42px;font-size:20px;background:#fff;color:#111;cursor:pointer;border:0;line-height:1}
+.buyQty__btn:hover{background:#f2f2f5}
+.buyQty__val{min-width:44px;text-align:center;font-weight:700}
+
+.buyProd__cta{display:block;width:100%;margin-top:24px;
+  background:#111;color:#fff;text-align:center;
+  font-family:var(--f-mont),var(--f-body);font-weight:700;letter-spacing:.04em;
+  font-size:15px;padding:17px;border-radius:12px;cursor:pointer;border:0;
+  transition:.2s}
+.buyProd__cta:hover{background:#000;transform:translateY(-1px)}
+.buyProd__note{margin-top:10px;font-size:11.5px;color:#9a9aa2;text-align:center;line-height:1.7}
+.buyProd__assure{margin-top:18px;display:flex;flex-direction:column;gap:8px;
+  border-top:1px solid #eee;padding-top:16px}
+.buyProd__assure div{font-size:12.5px;color:#555;display:flex;gap:8px;align-items:center}
+
+@media (prefers-reduced-motion:reduce){
+  .buySheet__panel{transition:none}
+  .buySheet__overlay{transition:none}
 }
