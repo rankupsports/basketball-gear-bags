@@ -703,22 +703,23 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   --f-zkaku:"Zen Kaku Gothic New",sans-serif;
   --f-mont:"Montserrat",sans-serif;
   --k:1;
+  --stageW:968px;               /* レイアウト基準幅（モバイルで狭めて拡大する） */
   --sec-bg:#8B8D9A;              /* 描画は .bgFade（クロスフェード対象） */
   background:transparent;
   overflow:hidden;               /* 縮小後にはみ出す 968px 幅を切り取る */
   font-family:var(--f-zkaku);
   color:#111;
 }
-/* 968px 固定レイアウトを --k 倍に縮小。transform-origin を左上に固定し、
+/* --stageW の固定レイアウトを --k 倍に縮小。transform-origin を左上に固定し、
    margin-left で「縮小後の幅」を中央寄せする（flex を使わないので
    flex-shrink による潰れが起きない）。--k は JS が更新。 */
 .b03__scale{
-  width:968px;
+  width:var(--stageW);
   transform:scale(var(--k));
   transform-origin:top left;
-  margin-left:calc(50% - 484px * var(--k));
+  margin-left:calc(50% - var(--stageW) / 2 * var(--k));
 }
-.b03__stage{width:968px;padding:132px 0 184px}
+.b03__stage{width:var(--stageW);padding:132px 0 184px}
 
 /* =============== Instagram カード共通 =============== */
 :is(.b03,.b04) .ig{background:var(--b3card);border-radius:14px;overflow:hidden}
@@ -895,6 +896,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   --f-zkaku:"Zen Kaku Gothic New",sans-serif;
   --f-mont:"Montserrat",sans-serif;
   --k:1;
+  --stageW:968px;
   --sec-bg:#683F90;              /* 描画は .bgFade（クロスフェード対象） */
   background:transparent;
   overflow:hidden;
@@ -902,12 +904,12 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   color:#111;
 }
 .b04__scale{
-  width:968px;
+  width:var(--stageW);
   transform:scale(var(--k));
   transform-origin:top left;
-  margin-left:calc(50% - 484px * var(--k));
+  margin-left:calc(50% - var(--stageW) / 2 * var(--k));
 }
-.b04__stage{width:968px;padding:132px 0 184px}
+.b04__stage{width:var(--stageW);padding:132px 0 184px}
 
 /* ---- チャット（CSS 吹き出し） ---- */
 /* block03 と同じ調整: ブロック全体が 1.655 倍になるため、吹き出しの文字が
@@ -938,6 +940,18 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 
 /* ---- 2×2 グリッド（block03 と同じ） ---- */
 .b04__grid{margin:200px auto 0;width:848px;display:grid;grid-template-columns:repeat(2,1fr);column-gap:32px;row-gap:34px}
+
+/* ============================================================
+   モバイル: 全体を大きく＋グリッドを1列に。
+   基準幅 --stageW を 968→530px に狭めると、JS が --k を上げるので
+   （390px 幅で約0.40→0.74）素材が約1.8倍に拡大される。
+   グリッドは1カラム、チャット帯はステージ幅に収める。
+   ============================================================ */
+@media (max-width:600px){
+  .b03,.b04{--stageW:530px}
+  .b03__chat{width:505px}                    /* 600px は 530 に収まらないので詰める（bub-c 495 が入る幅） */
+  .b03__grid,.b04__grid{width:482px;grid-template-columns:1fr;margin-top:150px}
+}
 
 
 /* ============================================================
@@ -981,7 +995,10 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 /* ---- 内側の余白 ----
    block05.pdf 実測（すべてレシート幅に対する % = cqw）:
    左右 9.26% / 上（見出しインクまで）4.08% ← 指示①「上下に幅欲しい」 */
-.shop__pad{padding:4.08cqw max(20px,9.26cqw) 2.4cqw}
+/* 下パディングは下ギザギザ（--th 15px 固定）より大きくして、
+   狭い画面でバーコードがギザギザに切られないようにする（cqw は
+   モバイルだと数px しかないため max() で最低 34px を確保）。 */
+.shop__pad{padding:max(24px,4.08cqw) max(20px,9.26cqw) max(34px,2.4cqw)}
 
 /* ---- 見出し ----
    実測: ONLINE SHOP は 1文字あたり 1.4457%、サブは全体で 14.83%。
