@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=League+Spartan:wght@500;700&family=M+PLUS+1p:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Bowlby+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Montserrat:wght@400;500;700&family=Libre+Bodoni:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=Geist+Pixel&family=Jersey+10&family=Jersey+20&family=Encode+Sans+Condensed:wght@700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=63" />
+<link rel="stylesheet" href="styles.css?v=67" />
 </head>
 <body>
 
@@ -185,7 +185,8 @@
     </header>
 
     <div class="rinaSec__mockProfile">
-      <span class="rinaSec__mockPic"><span class="rinaSec__mockPicIn"><img src="assets/block03/block03-ru.svg" alt="Rankup sports" /></span></span>
+      <!-- ② RU ロゴではなくこの写真に（PDF 埋め込みから円の可視範囲を実測して切り出し） -->
+      <span class="rinaSec__mockPic"><span class="rinaSec__mockPicIn"><img src="assets/block02/profile-avatar.jpg" alt="Rankup sports" /></span></span>
       <div class="rinaSec__mockNames">
         <img class="rinaSec__mockBrand" src="assets/logo-rankup-black.svg" alt="Rankup sports" />
         <p class="rinaSec__mockTag">For those of you who love<br />both basketball and fashion!</p>
@@ -205,17 +206,18 @@
       <span class="ph" style="background-image:url('assets/cast-hl-grey.jpg')" role="img" aria-label="Rope Strap Grey"></span>
     </div>
 
-    <!-- マスク位置は FIX から実寸で切り出した正方形画像をそのまま使う -->
+    <!-- ③ 写真ラインナップとマスク位置。PDF の画像配置矩形とタイル枠の交差から
+         マスクが解析的に決まるので、その正方形を焼き込んである。 -->
     <div class="rinaSec__mockGrid">
-      <span class="ph" style="background-image:url('assets/cast-grid-1.jpg')"></span>
-      <span class="ph" style="background-image:url('assets/cast-grid-2.jpg')"></span>
-      <span class="ph" style="background-image:url('assets/cast-grid-3.jpg')"></span>
-      <span class="ph" style="background-image:url('assets/cast-grid-4.jpg')"></span>
-      <span class="ph" style="background-image:url('assets/cast-grid-5.jpg')"></span>
-      <span class="ph" style="background-image:url('assets/cast-grid-6.jpg')"></span>
-      <span class="ph" style="background-image:url('assets/cast-grid-7.jpg')"></span>
-      <span class="ph" style="background-image:url('assets/cast-grid-8.jpg')"></span>
-      <span class="ph" style="background-image:url('assets/cast-grid-9.jpg')"></span>
+      <span class="ph" style="background-image:url('assets/block02/grid01.jpg')" role="img" aria-label="ブルーロープの Drawstring Ball Bag を提げてコートに立つ"></span>
+      <span class="ph" style="background-image:url('assets/block02/grid02.jpg')" role="img" aria-label="バスケットボールがすっぽり収まる巾着タイプ"></span>
+      <span class="ph" style="background-image:url('assets/block02/grid03.jpg')" role="img" aria-label="ブラウンの Drawstring Ball Bag を肩にかけたうしろ姿"></span>
+      <span class="ph" style="background-image:url('assets/block02/grid04.jpg')" role="img" aria-label="ピンクロープの Shoe Barrel Bag を手に提げて"></span>
+      <span class="ph" style="background-image:url('assets/block02/grid05.jpg')" role="img" aria-label="ピンクロープの Shoe Barrel Bag に水筒とバッシュを"></span>
+      <span class="ph" style="background-image:url('assets/block02/grid06.jpg')" role="img" aria-label="ブルーロープのバッグにバスケットシューズを入れる"></span>
+      <span class="ph" style="background-image:url('assets/block02/grid07.jpg')" role="img" aria-label="ブルーロープの Shoe Barrel Bag を肩にかけて"></span>
+      <span class="ph" style="background-image:url('assets/block02/grid08.jpg')" role="img" aria-label="2人で Drawstring Ball Bag を背負ったうしろ姿"></span>
+      <span class="ph" style="background-image:url('assets/block02/grid09.jpg')" role="img" aria-label="ピンクロープを肩に、Drawstring Ball Bag を手に"></span>
     </div>
   </div>
 </section>
