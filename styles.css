@@ -284,7 +284,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .navDrawer__inner{display:flex;flex-direction:column;align-items:center;gap:clamp(30px,7vw,56px)}
 .navDrawer__logo{width:min(230px,52vw);height:auto;opacity:.4}
 .navDrawer ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;align-items:center;gap:clamp(18px,4.6vw,30px)}
-.navDrawer a{font-family:var(--f-encode);font-weight:700;font-size:clamp(26px,7vw,44px);line-height:1;letter-spacing:.02em;color:#111;
+/* メニューのフォントは見出し「BASKETBALLGEAR BAGS」と同じ Bowlby One */
+.navDrawer a{font-family:var(--f-bowlby);font-weight:400;font-size:clamp(21px,5.6vw,38px);line-height:1.1;letter-spacing:.01em;color:#111;
   text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:2px}
 .navDrawer a:hover{color:var(--blue);text-decoration-color:var(--blue)}
 
