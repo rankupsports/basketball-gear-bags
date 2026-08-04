@@ -741,6 +741,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 :is(.b03,.b04) .ig__ava > *{border-radius:50%;background:#fff;width:100%;height:100%;display:grid;place-items:center;overflow:hidden}
 :is(.b03,.b04) .ig__ava img{display:block}
 :is(.b03,.b04) .ig__ava--photo img{width:100%;height:100%;object-fit:cover;object-position:50% 20%}
+/* ② ユーザー枠のアバターはリングだけ（中身はユーザーが入れるので空） */
+:is(.b03,.b04) .ig__ava--blank > *{background:#fff}
 
 :is(.b03,.b04) .ig__names{min-width:0;line-height:1.15}
 :is(.b03,.b04) .ig__uname{font-family:var(--f-zkaku);font-weight:500}
@@ -753,8 +755,18 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 /* ラインナップのカルーセル。9枚を重ねて透明度で入れ替える。
    マスクは画像側に焼き込み済みなので object-fit:cover のみでコンプ通りになる。 */
 :is(.b03,.b04) .ig__photo--car{position:relative}
-:is(.b03,.b04) .ig__photo--car img{position:absolute;inset:0;opacity:0;transition:opacity .45s ease}
-:is(.b03,.b04) .ig__photo--car img.is-show{opacity:1}
+:is(.b03,.b04) .ig__photo--car :is(img,video){position:absolute;inset:0;
+  width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .45s ease}
+:is(.b03,.b04) .ig__photo--car :is(img,video).is-show{opacity:1}
+
+/* ④ ユーザー投稿枠。写真の代わりにグレー＋説明文。
+   コンプ実測（カード幅 359.5pt = 408px なので ×1.1349）:
+   グレー #D0D0D0 / 本文 19.02pt -> 21.6px / 行送り 33.3pt -> 37.8px = 1.75。 */
+:is(.b03,.b04) .ig__photo--ph{
+  display:grid;place-items:center;
+  background:#D0D0D0;
+  font-family:var(--f-zkaku);color:#111;text-align:center}
+:is(.b03,.b04) .ig__photo--ph p{margin:0;font-size:21.6px;line-height:1.75}
 
 /* ---- アクション行: ハート / コメント / ドット / 矢印 ---- */
 :is(.b03,.b04) .ig__actions{display:flex;align-items:center}
@@ -874,8 +886,14 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 :is(.b03,.b04) .ig--mini .ig__ava{width:40px;height:40px;padding:3px}
 :is(.b03,.b04) .ig--mini .ig__ava > *{border:2px solid #fff}
 :is(.b03,.b04) .ig--mini .ig__uname{font-size:15px;font-weight:700}
-:is(.b03,.b04) .ig--mini .ig__urole{font-size:11px}
-:is(.b03,.b04) .ig--mini .ig__photo{height:403px}
+/* コンプ実測 11.57pt ×1.1349 = 13.1px（user.ID の 13.52pt->15.3px が現行
+   15px と一致するので、この縮尺で読める）。 */
+:is(.b03,.b04) .ig--mini .ig__urole{font-size:13px}
+/* ① Block03素材差し替え指示.pdf「ユーザースペース部分も同じ比率で」。
+   403px はほぼ正方形（408/403=1.01）で HERO と比率が違っていた。
+   HERO の写真比 482/598 = 0.806 にそろえる → 408/0.806 = 506px。
+   （コンプのグレー枠実測は 0.773 だが、指示文の「同じ比率」を優先） */
+:is(.b03,.b04) .ig--mini .ig__photo{height:506px}
 :is(.b03,.b04) .ig--mini .ig__actions{padding:18px 14px 0}
 :is(.b03,.b04) .ig--mini .ig__act--like{width:22px}
 :is(.b03,.b04) .ig--mini .ig__act--cmt{width:24px}

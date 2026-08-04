@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=League+Spartan:wght@500;700&family=M+PLUS+1p:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Bowlby+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Montserrat:wght@400;500;700&family=Libre+Bodoni:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=Geist+Pixel&family=Jersey+10&family=Jersey+20&family=Encode+Sans+Condensed:wght@700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=61" />
+<link rel="stylesheet" href="styles.css?v=63" />
 </head>
 <body>
 
@@ -244,24 +244,27 @@
         <span class="ig__more">•••</span>
       </div>
 
-      <!-- Block03_最初の画像ラインナップ.pdf: 1枚だった写真をこの9枚のラインナップに。
-           マスク位置はコンプのカードを実測して各画像に焼き込んである（カード比 482/598）。 -->
+      <!-- Block03素材差し替え指示.pdf:「先にムービー」= ムービーを先頭に、
+           そのあとに差し替え素材03の7枚。マスク位置はコンプの写真枠
+           （354.6x438.8pt = カード比 482/598 と同じ）を実測して焼き込み済み。
+           ムービーは 1080x1800 なので枠より縦長 → cover で中央。 -->
       <div class="ig__photo ig__photo--car" id="b03Car">
-        <img class="is-show" src="assets/block03/lineup/lineup01.jpg" alt="Rankup sports Shoe Barrel Bag（ブルーロープ）をかけてコートに座る女の子" />
-        <img data-src="assets/block03/lineup/lineup02.jpg" alt="ロッカールームでピンクロープの Shoe Barrel Bag を肩にかける男の子" />
-        <img data-src="assets/block03/lineup/lineup03.jpg" alt="ベンチでひと休み。足元にブルーロープの Shoe Barrel Bag" />
-        <img data-src="assets/block03/lineup/lineup04.jpg" alt="ブラックロープの Shoe Barrel Bag を手に持ったスタイリング" />
-        <img data-src="assets/block03/lineup/lineup05.jpg" alt="ホワイトロープの Shoe Barrel Bag を提げて歩くスタイリング" />
-        <img data-src="assets/block03/lineup/lineup06.jpg" alt="ピンクロープの Shoe Barrel Bag を手に持ったスタイリング" />
-        <img data-src="assets/block03/lineup/lineup07.jpg" alt="ブルーロープの Shoe Barrel Bag を肩にかけたスタイリング" />
-        <img data-src="assets/block03/lineup/lineup08.jpg" alt="ピンクロープの Shoe Barrel Bag を斜めがけしたスタイリング" />
-        <img data-src="assets/block03/lineup/lineup09.jpg" alt="ブルーロープの Shoe Barrel Bag を斜めがけしたスタイリング" />
+        <video class="is-show" src="assets/block03/lineup/ballbag.mp4"
+               muted loop playsinline preload="metadata"
+               aria-label="Rankup sports Drawstring Ball Bag のムービー"></video>
+        <img data-src="assets/block03/lineup/ball01.jpg" alt="ブルーロープの Drawstring Ball Bag を提げてコートを歩く" />
+        <img data-src="assets/block03/lineup/ball02.jpg" alt="ブルーロープの Drawstring Ball Bag を真上から。巾着を締めたところ" />
+        <img data-src="assets/block03/lineup/ball03.jpg" alt="バスケットボールがすっぽり収まった Drawstring Ball Bag" />
+        <img data-src="assets/block03/lineup/ball04.jpg" alt="ブルーとホワイトのロープで肩にかけたスタイリング" />
+        <img data-src="assets/block03/lineup/ball05.jpg" alt="ブルーロープで肩にかけ、もう1つを手に持ったスタイリング" />
+        <img data-src="assets/block03/lineup/ball06.jpg" alt="リュックに Drawstring Ball Bag を重ねて背負ったうしろ姿" />
+        <img data-src="assets/block03/lineup/ball07.jpg" alt="ホワイトとブルーのロープで手に提げたスタイリング" />
       </div>
 
       <div class="ig__actions">
         <img class="ig__act ig__act--like" src="assets/block03/block03_hearts.svg" alt="いいね" />
         <img class="ig__act ig__act--cmt" src="assets/block03/block03_hukidasi.svg" alt="コメント" />
-        <span class="ig__dots" id="b03Dots"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+        <span class="ig__dots" id="b03Dots"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
         <span class="ig__nav">
           <button type="button" class="ig__navBtn" data-car="prev" aria-controls="b03Car" aria-label="前の写真">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
@@ -294,17 +297,15 @@
     <!-- ---- 2×2 グリッド（ユーザー投稿カード） ---- -->
     <div class="b03__grid">
       <article class="ig ig--mini">
-        <header class="ig__bar">
-          <img class="ig__barLogo" src="assets/block03/block03-logo_b.svg" alt="Rankup sports" />
-          <h2 class="ig__barTtl">BASKETBALL<br />GEAR BAGS</h2>
-          <img class="ig__barBall" src="assets/block03/block03-baskemark.svg" alt="" />
-        </header>
         <div class="ig__profile">
-          <span class="ig__ava ig__ava--photo"><span><img src="assets/block03/ballbag_b.jpg" alt="" /></span></span>
-          <div class="ig__names"><p class="ig__uname">osayu.bsk</p><p class="ig__urole">ユーザー名</p></div>
+          <span class="ig__ava ig__ava--blank"><span></span></span>
+          <div class="ig__names"><p class="ig__uname">user.ID</p><p class="ig__urole">ユーザー名</p></div>
           <span class="ig__more">•••</span>
         </div>
-        <div class="ig__photo"><img src="assets/block03/ballbag_b.jpg" alt="" /></div>
+        <!-- ④ 写真はグレー＋説明文（ユーザー投稿が入る枠） -->
+        <div class="ig__photo ig__photo--ph">
+          <p>ユーザー様から<br />頂いた写真や動画が入ります</p>
+        </div>
         <div class="ig__actions">
           <img class="ig__act ig__act--like" src="assets/block03/block03_hearts.svg" alt="いいね" />
           <img class="ig__act ig__act--cmt" src="assets/block03/block03_hukidasi.svg" alt="コメント" />
@@ -323,17 +324,15 @@
       </article>
 
       <article class="ig ig--mini">
-        <header class="ig__bar">
-          <img class="ig__barLogo" src="assets/block03/block03-logo_b.svg" alt="Rankup sports" />
-          <h2 class="ig__barTtl">BASKETBALL<br />GEAR BAGS</h2>
-          <img class="ig__barBall" src="assets/block03/block03-baskemark.svg" alt="" />
-        </header>
         <div class="ig__profile">
-          <span class="ig__ava ig__ava--photo"><span><img src="assets/block03/ballbag_b.jpg" alt="" /></span></span>
-          <div class="ig__names"><p class="ig__uname">osayu.bsk</p><p class="ig__urole">ユーザー名</p></div>
+          <span class="ig__ava ig__ava--blank"><span></span></span>
+          <div class="ig__names"><p class="ig__uname">user.ID</p><p class="ig__urole">ユーザー名</p></div>
           <span class="ig__more">•••</span>
         </div>
-        <div class="ig__photo"><img src="assets/block03/ballbag_b.jpg" alt="" /></div>
+        <!-- ④ 写真はグレー＋説明文（ユーザー投稿が入る枠） -->
+        <div class="ig__photo ig__photo--ph">
+          <p>ユーザー様から<br />頂いた写真や動画が入ります</p>
+        </div>
         <div class="ig__actions">
           <img class="ig__act ig__act--like" src="assets/block03/block03_hearts.svg" alt="いいね" />
           <img class="ig__act ig__act--cmt" src="assets/block03/block03_hukidasi.svg" alt="コメント" />
@@ -352,17 +351,15 @@
       </article>
 
       <article class="ig ig--mini">
-        <header class="ig__bar">
-          <img class="ig__barLogo" src="assets/block03/block03-logo_b.svg" alt="Rankup sports" />
-          <h2 class="ig__barTtl">BASKETBALL<br />GEAR BAGS</h2>
-          <img class="ig__barBall" src="assets/block03/block03-baskemark.svg" alt="" />
-        </header>
         <div class="ig__profile">
-          <span class="ig__ava ig__ava--photo"><span><img src="assets/block03/ballbag_b.jpg" alt="" /></span></span>
-          <div class="ig__names"><p class="ig__uname">osayu.bsk</p><p class="ig__urole">ユーザー名</p></div>
+          <span class="ig__ava ig__ava--blank"><span></span></span>
+          <div class="ig__names"><p class="ig__uname">user.ID</p><p class="ig__urole">ユーザー名</p></div>
           <span class="ig__more">•••</span>
         </div>
-        <div class="ig__photo"><img src="assets/block03/ballbag_b.jpg" alt="" /></div>
+        <!-- ④ 写真はグレー＋説明文（ユーザー投稿が入る枠） -->
+        <div class="ig__photo ig__photo--ph">
+          <p>ユーザー様から<br />頂いた写真や動画が入ります</p>
+        </div>
         <div class="ig__actions">
           <img class="ig__act ig__act--like" src="assets/block03/block03_hearts.svg" alt="いいね" />
           <img class="ig__act ig__act--cmt" src="assets/block03/block03_hukidasi.svg" alt="コメント" />
@@ -381,17 +378,15 @@
       </article>
 
       <article class="ig ig--mini">
-        <header class="ig__bar">
-          <img class="ig__barLogo" src="assets/block03/block03-logo_b.svg" alt="Rankup sports" />
-          <h2 class="ig__barTtl">BASKETBALL<br />GEAR BAGS</h2>
-          <img class="ig__barBall" src="assets/block03/block03-baskemark.svg" alt="" />
-        </header>
         <div class="ig__profile">
-          <span class="ig__ava ig__ava--photo"><span><img src="assets/block03/ballbag_b.jpg" alt="" /></span></span>
-          <div class="ig__names"><p class="ig__uname">osayu.bsk</p><p class="ig__urole">ユーザー名</p></div>
+          <span class="ig__ava ig__ava--blank"><span></span></span>
+          <div class="ig__names"><p class="ig__uname">user.ID</p><p class="ig__urole">ユーザー名</p></div>
           <span class="ig__more">•••</span>
         </div>
-        <div class="ig__photo"><img src="assets/block03/ballbag_b.jpg" alt="" /></div>
+        <!-- ④ 写真はグレー＋説明文（ユーザー投稿が入る枠） -->
+        <div class="ig__photo ig__photo--ph">
+          <p>ユーザー様から<br />頂いた写真や動画が入ります</p>
+        </div>
         <div class="ig__actions">
           <img class="ig__act ig__act--like" src="assets/block03/block03_hearts.svg" alt="いいね" />
           <img class="ig__act ig__act--cmt" src="assets/block03/block03_hukidasi.svg" alt="コメント" />
@@ -470,9 +465,9 @@
     <div class="b04__grid">
       <article class="ig ig--mini">
         <header class="ig__bar">
-          <img class="ig__barLogo" src="assets/block03/block03-logo_b.svg" alt="Rankup sports" />
+          <img class="ig__barLogo" src="assets/block04/block04-logo_b.svg" alt="Rankup sports" />
           <h2 class="ig__barTtl">BASKETBALL<br />GEAR BAGS</h2>
-          <img class="ig__barBall" src="assets/block03/block03-baskemark.svg" alt="" />
+          <img class="ig__barBall" src="assets/block04/block04-baskemark.svg" alt="" />
         </header>
         <div class="ig__profile">
           <span class="ig__ava ig__ava--photo"><span><img src="assets/block04/bag_pic.jpg" alt="" style="object-position:62% 30%" /></span></span>
@@ -499,9 +494,9 @@
 
       <article class="ig ig--mini">
         <header class="ig__bar">
-          <img class="ig__barLogo" src="assets/block03/block03-logo_b.svg" alt="Rankup sports" />
+          <img class="ig__barLogo" src="assets/block04/block04-logo_b.svg" alt="Rankup sports" />
           <h2 class="ig__barTtl">BASKETBALL<br />GEAR BAGS</h2>
-          <img class="ig__barBall" src="assets/block03/block03-baskemark.svg" alt="" />
+          <img class="ig__barBall" src="assets/block04/block04-baskemark.svg" alt="" />
         </header>
         <div class="ig__profile">
           <span class="ig__ava ig__ava--photo"><span><img src="assets/block04/bag_pic.jpg" alt="" style="object-position:62% 30%" /></span></span>
@@ -528,9 +523,9 @@
 
       <article class="ig ig--mini">
         <header class="ig__bar">
-          <img class="ig__barLogo" src="assets/block03/block03-logo_b.svg" alt="Rankup sports" />
+          <img class="ig__barLogo" src="assets/block04/block04-logo_b.svg" alt="Rankup sports" />
           <h2 class="ig__barTtl">BASKETBALL<br />GEAR BAGS</h2>
-          <img class="ig__barBall" src="assets/block03/block03-baskemark.svg" alt="" />
+          <img class="ig__barBall" src="assets/block04/block04-baskemark.svg" alt="" />
         </header>
         <div class="ig__profile">
           <span class="ig__ava ig__ava--photo"><span><img src="assets/block04/bag_pic.jpg" alt="" style="object-position:62% 30%" /></span></span>
@@ -557,9 +552,9 @@
 
       <article class="ig ig--mini">
         <header class="ig__bar">
-          <img class="ig__barLogo" src="assets/block03/block03-logo_b.svg" alt="Rankup sports" />
+          <img class="ig__barLogo" src="assets/block04/block04-logo_b.svg" alt="Rankup sports" />
           <h2 class="ig__barTtl">BASKETBALL<br />GEAR BAGS</h2>
-          <img class="ig__barBall" src="assets/block03/block03-baskemark.svg" alt="" />
+          <img class="ig__barBall" src="assets/block04/block04-baskemark.svg" alt="" />
         </header>
         <div class="ig__profile">
           <span class="ig__ava ig__ava--photo"><span><img src="assets/block04/bag_pic.jpg" alt="" style="object-position:62% 30%" /></span></span>
@@ -682,23 +677,33 @@
   var car=document.getElementById('b03Car');
   var dots=document.getElementById('b03Dots');
   if(!car||!dots) return;
-  var slides=car.querySelectorAll('img');
+  var slides=car.querySelectorAll('img,video');
   var pips=dots.querySelectorAll('i');
   if(slides.length<2) return;
   var i=0;
-  // loading="lazy" だと 9枚ともカードが画面に入った瞬間に一斉に飛ぶ（重なって
-  // 置いてあり全部ビューポート内なので）。表示する分と隣だけを読む。
+  // 重ねて置いてあり全部ビューポート内なので loading="lazy" では一斉に飛ぶ。
+  // 表示する分と隣だけを読む。
   function load(n){
     var el=slides[(n+slides.length)%slides.length];
     if(el && el.dataset.src){ el.src=el.dataset.src; delete el.dataset.src; }
+  }
+  // 見えていないムービーは止めておく（先頭がムービーなので初期表示で再生）。
+  function playState(){
+    for(var k=0;k<slides.length;k++){
+      var el=slides[k];
+      if(el.tagName!=='VIDEO') continue;
+      if(k===i){ var q=el.play(); if(q&&q.catch) q.catch(function(){}); }
+      else { el.pause(); }
+    }
   }
   function go(n){
     i=(n+slides.length)%slides.length;
     load(i); load(i+1); load(i-1);
     for(var k=0;k<slides.length;k++) slides[k].classList.toggle('is-show',k===i);
     for(var m=0;m<pips.length;m++) pips[m].classList.toggle('on',m===i);
+    playState();
   }
-  load(1); load(-1);
+  load(1); load(-1); playState();
   document.querySelectorAll('.ig__navBtn[aria-controls="b03Car"]').forEach(function(btn){
     btn.addEventListener('click', function(){
       go(i + (btn.dataset.car==='next' ? 1 : -1));
