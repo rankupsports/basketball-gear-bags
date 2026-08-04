@@ -339,6 +339,26 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   font-size:calc(var(--lockup) * .0373);letter-spacing:.2em;line-height:1;
   text-shadow:0 2px 10px rgba(0,0,0,.45)}
 
+/* すまほ版トップ.pdf: スマホの縦長セット。PC 幅では出さない。 */
+.mv__ph--sp{display:none}
+
+/* ① 最初にスマホで開いたとき写真が画面いっぱいに。
+   ② 分割せず縦長を1枚ずつ（PC の横長とは別セット）。
+   白帯(BASKETBALL GEAR BAGS / Rankup sports)の下から画面下端まで写真が占める。
+   境界は既存の min-width:760px（タブレット以上）に合わせる。 */
+@media (max-width:759.98px){
+  .mv{display:flex;flex-direction:column;min-height:100svh}
+  .mv__cont{flex:1 1 auto;display:flex}
+  .mv__phBox{flex:1 1 auto;display:flex}
+  .mv__ph--pc{display:none}
+  .mv__ph--sp{display:block;flex:1 1 auto;width:100%;aspect-ratio:auto;min-height:0}
+  /* 全画面なので is-show の relative は使わず、全枚数を重ねる */
+  .mv__ph--sp .mv__phImg,
+  .mv__ph--sp .mv__phImg.is-show{position:absolute}
+  /* 縦長全画面ではキャッチが大きすぎるので、hero 幅基準の比率を少し下げる */
+  .mv__overlay{--lockup:clamp(240px,78cqw,520px);justify-content:flex-end;padding-bottom:12svh}
+}
+
 /* =========================================================
    INTRO REEL — hero 直下。背景 #898B98 固定。
    ポエム(Zen Maru Gothic) → IG リール風モックアップ → 商品2点。

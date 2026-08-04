@@ -340,21 +340,22 @@
 
   /* =========================================================
      HERO — 透明度で写真をクロスフェード
-     data-hero にカンマ区切りで並べた写真を順に表示する。
+     PC(#mvPh 横長) と スマホ(#mvPhSp 縦長) の2セットを同じ間隔で回す。
+     表示は CSS で出し分けるので、非表示側が回っていても実害はない。
      ========================================================= */
-  const heroPh = $('#mvPh');
-  if (heroPh) {
-    const imgs = $$('.mv__phImg', heroPh);
-    if (imgs.length > 1) {
-      let cur = 0;
-      setInterval(() => {
-        const next = (cur + 1) % imgs.length;
-        imgs[cur].classList.remove('is-show');
-        imgs[next].classList.add('is-show');
-        cur = next;
-      }, 3800);
-    }
-  }
+  ['#mvPh', '#mvPhSp'].forEach(sel => {
+    const box = $(sel);
+    if (!box) return;
+    const imgs = $$('.mv__phImg', box);
+    if (imgs.length < 2) return;
+    let cur = 0;
+    setInterval(() => {
+      const next = (cur + 1) % imgs.length;
+      imgs[cur].classList.remove('is-show');
+      imgs[next].classList.add('is-show');
+      cur = next;
+    }, 3800);
+  });
 
   /* =========================================================
      STAFF — sticky ステージ。スクロール量で写真とコピーが切り替わる
