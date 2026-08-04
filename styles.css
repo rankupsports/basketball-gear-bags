@@ -515,8 +515,11 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .rinaSec__mockBtns img{flex:1;height:max(26px,6.25cqw);width:100%;object-fit:contain;
   background:#efefef;border-radius:8px;padding:max(5px,1.25cqw) 0}
 
+/* Black を足して6個になった。円の径(12.5cqw)はコンプ実測値なので変えず、
+   横 padding を詰めて収める。6*12.5 + 5*1.67 = 83.35 なので左右 8.33% で
+   ちょうど宣言どおりの gap になる（5個時は 14.4% / 実効 gap 2.18cqw）。 */
 .rinaSec__mockHighlights{display:flex;justify-content:space-between;gap:1.67cqw;
-  padding:0 14.4%;margin-bottom:4.17cqw}
+  padding:0 8.33%;margin-bottom:4.17cqw}
 .rinaSec__mockHighlights .ph{flex:0 0 auto;width:max(46px,12.5cqw);aspect-ratio:1;
   border-radius:50%;background-size:cover}
 
