@@ -780,11 +780,6 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 :is(.b03,.b04) .ig__pName{font-family:var(--f-mont);font-weight:400;letter-spacing:.02em;color:#111}
 :is(.b03,.b04) .ig__lead{flex:1;margin:0 8px;border-bottom:1px dotted #b7b7b7;transform:translateY(-3px)}
 :is(.b03,.b04) .ig__price{font-family:var(--f-zkaku);font-weight:500;color:#111}
-/* Add は太字＋青の下線（赤字校正 ②④） */
-:is(.b03,.b04) .ig__add{font-family:var(--f-mont);font-weight:700;color:var(--b3blue);
-  text-decoration:underline;text-decoration-color:var(--b3blue);
-  text-decoration-thickness:1.5px;text-underline-offset:2px}
-
 /* =============== HERO カード（上部・大） =============== */
 :is(.b03,.b04) .ig--hero{width:482px;margin:0 auto}
 :is(.b03,.b04) .ig--hero .ig__bar{padding:28px 26px 15px}
@@ -808,26 +803,38 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 :is(.b03,.b04) .ig--hero .ig__prod li{margin-bottom:16px}
 :is(.b03,.b04) .ig--hero .ig__prod li:last-child{margin-bottom:0}
 :is(.b03,.b04) .ig--hero .ig__pName{font-size:16px}
-:is(.b03,.b04) .ig--hero .ig__price{font-size:16px;margin-right:22px}
-:is(.b03,.b04) .ig--hero .ig__add{font-size:16px}
+:is(.b03,.b04) .ig--hero .ig__price{font-size:16px}
 
-/* ---- BUY NOW（Buynow_0731.pdf / block03 の HERO カードのみ）----
-   コンプ実測（カード幅 482px に対する比率）:
-   ボタン 27.11%×8.36% = 131×40px / 上の余白 10.08% / 下 2.81% = 14px。
-   行の Add を外しても価格の位置は動かさないので、Add ぶんの余白を
-   li の padding-right として残す（実測: 価格右端はカード幅の 83%）。 */
-.b03 .ig--hero .ig__prod li{padding-right:57px}
-.b03 .ig--hero .ig__price{margin-right:0}
-.b03 .ig--hero .ig__buyWrap{display:flex;justify-content:center;padding:29px 26px 14px}
-.b03 .ig--hero .ig__buy{
+/* ---- BUY NOW ----
+   レイアウト調整指示0731.pdf:「ブロック０３．０４の Add を消して、↑のタイプに
+   全部変更」。HERO だけでなく MINI も、block04 も同じ型にする。
+   「下に幅少しほしい！」= ボタン下の余白。コンプの2枚を実測して比べたところ
+   ボタン下端〜カード下端は 現状 2.74% → 希望 7.53%（カード幅比）なので
+   14px 相当から 36px 相当へ広げる。
+
+   寸法はすべてカード幅に対する比率で書く（HERO 482px / MINI 408px の
+   どちらでもコンプ比のまま効く）。実測値: ボタン 27.18%×(131:40)
+   上 6.02% / 下 7.47%。横 padding は中央寄せなので置かない
+   （置くと width:% の基準がその分狭まってボタンが小さくなる）。
+   行の Add を外しても価格の位置は動かさないので、Add ぶんの余白は
+   li の padding-right として残す。HERO 57px で価格右端がカード幅の 82.8%、
+   MINI 42px で 86.0% — どちらも Add があった時と同じ位置。 */
+:is(.b03,.b04) .ig--hero .ig__prod li{padding-right:57px}
+:is(.b03,.b04) .ig--mini .ig__prod li{padding-right:42px}
+:is(.b03,.b04) .ig__buyWrap{display:flex;justify-content:center;padding:6.02% 0 7.47%}
+:is(.b03,.b04) .ig__buy{
   display:flex;align-items:center;justify-content:center;
-  width:131px;height:40px;
+  width:27.18%;aspect-ratio:131/40;
   background:#27498D;color:#fff;text-decoration:none;
   font-family:var(--f-encode);font-weight:700;
-  font-size:23.4px;line-height:1;letter-spacing:.02em;
+  line-height:1;letter-spacing:.02em;
   transition:opacity .2s ease, transform .12s ease;
 }
-.b03 .ig--hero .ig__buy:hover{opacity:.9;transform:translateY(-1px)}
+:is(.b03,.b04) .ig--hero .ig__buy{font-size:23.4px}
+/* MINI は 408/482 = 0.846 倍 */
+:is(.b03,.b04) .ig--mini .ig__buy{font-size:19.8px}
+:is(.b03,.b04) .ig__buy:hover{opacity:.9;transform:translateY(-1px)}
+:is(.b03,.b04) .ig__buy:focus-visible{outline:2px solid #fff;outline-offset:-5px}
 
 /* =============== チャット吹き出し（4個） ===============
    cropped SVG（viewBox をパス実寸に切り詰め）を背景に敷き、本文は live text。
@@ -875,12 +882,11 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 :is(.b03,.b04) .ig--mini .ig__nav svg{width:22px;height:22px}
 :is(.b03,.b04) .ig--mini .ig__nav{gap:12px}
 /* 赤字校正 ⑤: 文字が小さすぎるので一回り大きく（11→13px）。行間も調整。 */
-:is(.b03,.b04) .ig--mini .ig__prod{padding:42px 15px 26px}
+:is(.b03,.b04) .ig--mini .ig__prod{padding:42px 15px 17px}
 :is(.b03,.b04) .ig--mini .ig__prod li{margin-bottom:16px}
 :is(.b03,.b04) .ig--mini .ig__prod li:last-child{margin-bottom:0}
 :is(.b03,.b04) .ig--mini .ig__pName{font-size:13px}
-:is(.b03,.b04) .ig--mini .ig__price{font-size:13px;margin-right:16px}
-:is(.b03,.b04) .ig--mini .ig__add{font-size:13px}
+:is(.b03,.b04) .ig--mini .ig__price{font-size:13px}
 :is(.b03,.b04) .ig--mini .ig__lead{transform:translateY(-2px)}
 
 /* ============================================================
@@ -1114,9 +1120,13 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 }
 
 /* ============================================================
-   BUY NOW → 同一ページ内モーダル（Wix Headless 連携）
-   実データ表示＋実カート追加→公式チェックアウトへ。
-   Client ID 未設定/失敗時は公式ページをポップアップで開くフォールバック。
+   BUY NOW → 公式商品ページをそのままポップアップ（ポップアップリンク_0803.pdf）
+   これまでは Wix Headless API で商品ページを再現していたが、指示は
+   「この公式ページリンクがポップアップででてきてほしい」。参考サイト
+   （reservation.baseballrankup.workers.dev）と同じく、ボトムシートに
+   公式ページを iframe で出す。旧コメントの「iframe 埋め込み不可」は誤りで、
+   X-Frame-Options も CSP frame-ancestors も返らず、フレームバスティング
+   もされないことを実機で確認済み。
    ============================================================ */
 .wixM{position:fixed;inset:0;z-index:200;visibility:hidden;pointer-events:none}
 .wixM__ov{position:absolute;inset:0;background:rgba(15,15,20,.55);opacity:0;transition:opacity .4s ease}
@@ -1134,46 +1144,16 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   border-radius:50%;background:#f1f1f4;color:#111;font-size:22px;line-height:1;cursor:pointer}
 .wixM__close:hover{background:#e6e6ec}
 
-/* ロード中スピナー */
-.wixM__loading{display:grid;place-items:center;min-height:320px;gap:14px;color:#666;font:14px var(--f-body)}
-.wixM__spin{width:34px;height:34px;border:3px solid #e2e2e8;border-top-color:#111;border-radius:50%;animation:wixSpin .8s linear infinite}
-@keyframes wixSpin{to{transform:rotate(360deg)}}
-
-/* 商品ページ本体（公式ページ風） */
-.wixP{display:grid;grid-template-columns:1fr;gap:clamp(18px,3vw,40px);padding:clamp(20px,3vw,40px);
-  font-family:var(--f-body);color:#111}
-@media (min-width:820px){.wixP{grid-template-columns:1fr 1fr;align-items:start;padding-top:52px}}
-.wixP__gal{border-radius:14px;overflow:hidden;background:#f5f5f7;aspect-ratio:1/1}
-.wixP__gal img{width:100%;height:100%;object-fit:contain;display:block}
-.wixP__crumb{font-size:12px;color:#8a8a93}
-.wixP__title{font-family:var(--f-mont),var(--f-body);font-weight:700;font-size:clamp(24px,3.4vw,32px);
-  margin:6px 0 2px;text-transform:uppercase;letter-spacing:.02em}
-.wixP__sku{font-size:12px;color:#9a9aa2;margin-bottom:14px}
-.wixP__price{font-family:var(--f-mont),var(--f-body);font-weight:700;font-size:clamp(22px,3vw,28px)}
-.wixP__desc{margin:14px 0 4px;font-size:14px;line-height:1.9;color:#333}
-.wixP__opt{margin-top:18px}
-.wixP__optLabel{display:block;font-size:13px;font-weight:700;margin-bottom:8px}
-.wixP__optLabel em{color:#e63946;font-style:normal;font-size:11px;margin-left:6px}
-.wixVar{display:flex;gap:10px;flex-wrap:wrap}
-.wixVar__btn{border:1.5px solid #d9d9e0;background:#fff;color:#111;border-radius:10px;padding:9px 16px;
-  font:600 13px var(--f-body);cursor:pointer;transition:.15s}
-.wixVar__btn:hover{border-color:#111}
-.wixVar__btn.is-on{border-color:#111;background:#111;color:#fff}
-.wixVar__sw{width:30px;height:30px;border-radius:50%;padding:0;border:2px solid #d9d9e0;background:var(--c,#ccc)}
-.wixVar__sw.is-on{background:var(--c,#ccc);outline:2px solid #111;outline-offset:2px;border-color:#fff}
-.wixQty{display:inline-flex;align-items:center;border:1.5px solid #d9d9e0;border-radius:10px;overflow:hidden}
-.wixQty button{width:42px;height:42px;font-size:20px;background:#fff;border:0;cursor:pointer;line-height:1}
-.wixQty button:hover{background:#f2f2f5}
-.wixQty span{min-width:44px;text-align:center;font-weight:700}
-.wixP__cta{display:block;width:100%;margin-top:22px;background:#111;color:#fff;text-align:center;border:0;
-  font:700 15px var(--f-mont),var(--f-body);letter-spacing:.04em;padding:17px;border-radius:12px;cursor:pointer;transition:.2s}
-.wixP__cta:hover{background:#000;transform:translateY(-1px)}
-.wixP__cta[disabled]{opacity:.5;cursor:default;transform:none}
-.wixP__msg{margin-top:10px;font-size:12px;color:#9a9aa2;text-align:center;min-height:1.2em}
-.wixP__official{display:inline-block;margin-top:6px;font-size:12px;color:#1780e1;text-decoration:underline}
+/* 公式ページを出す iframe。パネルは中でスクロールさせず iframe に高さを持たせる
+   （公式ページ側が自前でスクロールする）。 */
+.wixM__panel{overflow:hidden}
+.wixM__frame{display:block;width:100%;height:min(86vh,900px);border:0;background:#fff}
+.wixM__note{margin:0;padding:9px 16px 12px;font:12px var(--f-body);color:#9a9aa2;text-align:center}
+.wixM__note a{color:#1780e1}
 
 @media (max-width:600px){
   .wixM__panel{width:100%}
+  .wixM__frame{height:82vh}
 }
 @media (prefers-reduced-motion:reduce){
   .wixM__panel,.wixM__ov{transition:none}
