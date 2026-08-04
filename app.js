@@ -401,7 +401,7 @@
       io.unobserve(en.target);
     });
   }, { threshold: 0.1, rootMargin: '0px 0px -6% 0px' });
-  $$('.post, .reveal, .ttlPop, .ttlPopQ, .cast__item').forEach(el => io.observe(el));
+  $$('.post, .reveal, .ttlPop, .ttlPopQ, .cast__item, .b03__chat, .b04__chat').forEach(el => io.observe(el));
 
   /* =========================================================
      HEADER — 下方向で隠し、上方向で戻す
