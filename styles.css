@@ -355,8 +355,13 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   /* 全画面なので is-show の relative は使わず、全枚数を重ねる */
   .mv__ph--sp .mv__phImg,
   .mv__ph--sp .mv__phImg.is-show{position:absolute}
-  /* 縦長全画面ではキャッチが大きすぎるので、hero 幅基準の比率を少し下げる */
-  .mv__overlay{--lockup:clamp(240px,78cqw,520px);justify-content:flex-end;padding-bottom:12svh}
+  /* 縦長全画面ではキャッチが大きすぎるので、hero 幅基準の比率を少し下げる。
+     すまほ版トップ02.pdf ②: ロゴ(キャッチ+RANKUP SPORTS)の位置を上げる
+     → 下寄せ(flex-end/12svh)をやめ、写真の縦中央に。 */
+  .mv__overlay{--lockup:clamp(240px,78cqw,520px);justify-content:center;padding-bottom:0}
+  /* ③ ドロップシャドウを消す（スマホの hero のみ）。 */
+  .mv__catch{filter:none}
+  .mv__over-brand{text-shadow:none}
 }
 
 /* =========================================================
