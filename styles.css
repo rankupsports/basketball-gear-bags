@@ -1160,7 +1160,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .wixVar__btn:hover{border-color:#111}
 .wixVar__btn.is-on{border-color:#111;background:#111;color:#fff}
 .wixVar__sw{width:30px;height:30px;border-radius:50%;padding:0;border:2px solid #d9d9e0;background:var(--c,#ccc)}
-.wixVar__sw.is-on{outline:2px solid #111;outline-offset:2px;border-color:#fff}
+.wixVar__sw.is-on{background:var(--c,#ccc);outline:2px solid #111;outline-offset:2px;border-color:#fff}
 .wixQty{display:inline-flex;align-items:center;border:1.5px solid #d9d9e0;border-radius:10px;overflow:hidden}
 .wixQty button{width:42px;height:42px;font-size:20px;background:#fff;border:0;cursor:pointer;line-height:1}
 .wixQty button:hover{background:#f2f2f5}
