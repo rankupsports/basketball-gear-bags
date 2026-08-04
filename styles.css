@@ -265,9 +265,11 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 /* 最上部ではハンバーガーだけ（白帯に溶け込む）。スクロールしたら白背景とロゴを出す。 */
 .head.is-solid{background:var(--white)}
 .head.is-hidden{transform:translateY(-100%) translateZ(0)}
-.head__mark{font-family:var(--f-disp);font-size:15px;line-height:1;display:flex;flex-direction:column;opacity:0;transition:opacity .3s ease}
+/* ブランド表記は支給の SVG ロゴ。ブロック03のプロフィール行(.ig__brand)と
+   同じ height:22px にそろえ、幅は比率まかせ（514:91）。 */
+.head__mark{display:flex;align-items:center;opacity:0;transition:opacity .3s ease}
 .head.is-solid .head__mark{opacity:1}
-.head__mark span{color:var(--blue);font-size:11px}
+.head__mark img{display:block;height:22px;width:auto}
 
 /* 丸背景なしの細い3本線（モックアップに合わせる） */
 /* メニュー.pdf ①: ハンバーガーを少し大きく（参考サイトくらい） */

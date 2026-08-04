@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=League+Spartan:wght@500;700&family=M+PLUS+1p:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Bowlby+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Montserrat:wght@400;500;700&family=Libre+Bodoni:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=Geist+Pixel&family=Jersey+10&family=Jersey+20&family=Encode+Sans+Condensed:wght@700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=75" />
+<link rel="stylesheet" href="styles.css?v=70" />
 </head>
 <body>
 
@@ -27,7 +27,11 @@
 
 <!-- ============ FIXED HEADER ============ -->
 <header class="head" id="head">
-  <a class="head__mark" href="#top">RANKUP<span>SPORTS</span></a>
+  <!-- 支給の SVG ロゴに差し替え（それまでは font で組んだ2段の擬似ロゴだった）。
+       ブロック03のプロフィール行と同じ height:22px でそろえている。 -->
+  <a class="head__mark" href="#top">
+    <img src="assets/logo-rankup-black.svg" alt="Rankup sports" width="514" height="91" />
+  </a>
   <button class="navBtn" id="navBtn" aria-label="メニュー" aria-expanded="false"><span></span><span></span><span></span></button>
 </header>
 
