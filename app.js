@@ -138,29 +138,30 @@
     }).join('');
   };
 
-  /* hero の♡ — 参考動画(左側) + アニメ調整_0804.pdf に合わせた昇る♡。
-       ・②間隔が広すぎたので詰める：フル区間に COUNT 個を等間隔で並べ、
-         隙間のない密な一列（中心間 ≈ ハート約2個ぶん）にする
-       ・③左右2列。右は左と「若干」タイミングをずらして浮上させる
-       ・負のディレイで読み込み直後から列が埋まった状態にする
+  /* hero の♡ — 参照サイト(FISHS EDDY) の MV 左列と厳密に同じ昇り方に合わせた。
+       ・アニメ調整_0804_b.pdf:「3つのかたまり上昇 → 次のかたまりまでスペース」
+       ・実測: dur 3s、1列6個、delays [0.2 0.45 0.7 / 1.3 1.55 1.8]（秒）＝
+         3個クラスタ（0.25s間隔）×2、クラスタ間は 0.6s のスペース
+       ・③左右2列。右は左と若干タイミングをずらす（+500ms）
+       ・負のディレイ（位相は参照と同一）で読み込み直後から埋まった状態にする
      左 6.90% / 右 88.5%（幅 4.60% を考慮した左右対称位置）。 */
   const MV_HEART = {
-    dur: 6000,
-    count: 6,                                   // 1列あたりの♡数（間隔 = dur/count）
-    cols: [ { left: 6.9, offset: 0 }, { left: 88.5, offset: 500 } ], // 右は +500ms ずらし
+    dur: 3000,
+    baseDelays: [200, 450, 700, 1300, 1550, 1800],  // 参照サイト MV 左列と同一（ms）
+    cols: [ { left: 6.9, off: 0 }, { left: 88.5, off: 500 } ],
   };
   const fillMvHearts = (host) => {
     if (!host) return;
-    const { dur, count, cols } = MV_HEART;
+    const { dur, baseDelays, cols } = MV_HEART;
     const spans = [];
     cols.forEach(col => {
-      for (let i = 0; i < count; i++) {
-        const dl = -(i * dur / count) - col.offset;   // 負値＝即座に均等配置
+      baseDelays.forEach(d => {
+        const dl = ((d + col.off) % dur) - dur;   // 負値＝即フル表示、位相は参照と一致
         spans.push(
           `<span class="mvHeart" style="left:${col.left}%;--s:clamp(20px,4.6cqw,90px);`
           + `--dur:${dur}ms;--dl:${dl}ms"><span class="mvHeart__i">${HEART_SVG}</span></span>`
         );
-      }
+      });
     });
     host.innerHTML = spans.join('');
   };
