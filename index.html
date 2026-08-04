@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=League+Spartan:wght@500;700&family=M+PLUS+1p:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Bowlby+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Montserrat:wght@400;500;700&family=Libre+Bodoni:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=Geist+Pixel&family=Jersey+10&family=Jersey+20&family=Encode+Sans+Condensed:wght@700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=67" />
+<link rel="stylesheet" href="styles.css?v=68" />
 </head>
 <body>
 
@@ -433,15 +433,34 @@
         <span class="ig__more">•••</span>
       </div>
 
-      <div class="ig__photo"><img src="assets/block04/bag_pic.jpg" alt="Rankup sports Shoe Barrel Bag" style="object-position:63% 38%;transform:scale(1.5);transform-origin:63% 40%" /></div>
+      <!-- Block04素材_0803.pdf:「先にムービー」= ムービーを先頭に、そのあとに
+           ブロック04_sozai の7枚（②〜⑧）。マスクは PDF の画像配置矩形と
+           写真枠(354.6x438.8 = カード比 482/598)の交差から解析的に求めて焼き込み。
+           ムービーは 1080x1800 なので枠より縦長 → cover で中央。 -->
+      <div class="ig__photo ig__photo--car" id="b04Car">
+        <video class="is-show" src="assets/block04/lineup/shoebag.mp4"
+               muted loop playsinline preload="metadata"
+               aria-label="Rankup sports Shoe Barrel Bag のムービー"></video>
+        <img data-src="assets/block04/lineup/shoe01.jpg" alt="ピンクロープの Shoe Barrel Bag を手に提げてコートに立つ" />
+        <img data-src="assets/block04/lineup/shoe02.jpg" alt="ピンクロープの Shoe Barrel Bag を肩にかけたスタイリング" />
+        <img data-src="assets/block04/lineup/shoe03.jpg" alt="ピンクロープで斜めがけしたうしろ姿" />
+        <img data-src="assets/block04/lineup/shoe04.jpg" alt="ピンクロープのバッグに水筒とバッシュを収める" />
+        <img data-src="assets/block04/lineup/shoe05.jpg" alt="ブルーロープのバッグにバスケットシューズを入れる" />
+        <img data-src="assets/block04/lineup/shoe06.jpg" alt="ブルーロープの Shoe Barrel Bag をチャーム付きで肩にかけて" />
+        <img data-src="assets/block04/lineup/shoe07.jpg" alt="ブルーロープの Shoe Barrel Bag を手に提げたスタイリング" />
+      </div>
 
       <div class="ig__actions">
         <img class="ig__act ig__act--like" src="assets/block03/block03_hearts.svg" alt="いいね" />
         <img class="ig__act ig__act--cmt" src="assets/block03/block03_hukidasi.svg" alt="コメント" />
-        <span class="ig__dots"><i></i><i class="on"></i><i></i></span>
+        <span class="ig__dots" id="b04Dots"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
         <span class="ig__nav">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 5l-7 7 7 7"/></svg>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+          <button type="button" class="ig__navBtn" data-car="prev" aria-controls="b04Car" aria-label="前の写真">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+          </button>
+          <button type="button" class="ig__navBtn" data-car="next" aria-controls="b04Car" aria-label="次の写真">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
         </span>
       </div>
 
@@ -466,17 +485,15 @@
     <!-- ---- 2×2 グリッド ---- -->
     <div class="b04__grid">
       <article class="ig ig--mini">
-        <header class="ig__bar">
-          <img class="ig__barLogo" src="assets/block04/block04-logo_b.svg" alt="Rankup sports" />
-          <h2 class="ig__barTtl">BASKETBALL<br />GEAR BAGS</h2>
-          <img class="ig__barBall" src="assets/block04/block04-baskemark.svg" alt="" />
-        </header>
         <div class="ig__profile">
-          <span class="ig__ava ig__ava--photo"><span><img src="assets/block04/bag_pic.jpg" alt="" style="object-position:62% 30%" /></span></span>
-          <div class="ig__names"><p class="ig__uname">osayu.bsk</p><p class="ig__urole">ユーザー名</p></div>
+          <span class="ig__ava ig__ava--blank"><span></span></span>
+          <div class="ig__names"><p class="ig__uname">user.ID</p><p class="ig__urole">ユーザー名</p></div>
           <span class="ig__more">•••</span>
         </div>
-        <div class="ig__photo"><img src="assets/block04/shose_02.jpg" alt="" style="object-position:50% 30%" /></div>
+        <!-- ④ 写真はグレー＋説明文（ユーザー投稿が入る枠） -->
+        <div class="ig__photo ig__photo--ph">
+          <p>ユーザー様から<br />頂いた写真や動画が入ります</p>
+        </div>
         <div class="ig__actions">
           <img class="ig__act ig__act--like" src="assets/block03/block03_hearts.svg" alt="いいね" />
           <img class="ig__act ig__act--cmt" src="assets/block03/block03_hukidasi.svg" alt="コメント" />
@@ -495,17 +512,15 @@
       </article>
 
       <article class="ig ig--mini">
-        <header class="ig__bar">
-          <img class="ig__barLogo" src="assets/block04/block04-logo_b.svg" alt="Rankup sports" />
-          <h2 class="ig__barTtl">BASKETBALL<br />GEAR BAGS</h2>
-          <img class="ig__barBall" src="assets/block04/block04-baskemark.svg" alt="" />
-        </header>
         <div class="ig__profile">
-          <span class="ig__ava ig__ava--photo"><span><img src="assets/block04/bag_pic.jpg" alt="" style="object-position:62% 30%" /></span></span>
-          <div class="ig__names"><p class="ig__uname">osayu.bsk</p><p class="ig__urole">ユーザー名</p></div>
+          <span class="ig__ava ig__ava--blank"><span></span></span>
+          <div class="ig__names"><p class="ig__uname">user.ID</p><p class="ig__urole">ユーザー名</p></div>
           <span class="ig__more">•••</span>
         </div>
-        <div class="ig__photo"><img src="assets/block04/shose_02.jpg" alt="" style="object-position:50% 30%" /></div>
+        <!-- ④ 写真はグレー＋説明文（ユーザー投稿が入る枠） -->
+        <div class="ig__photo ig__photo--ph">
+          <p>ユーザー様から<br />頂いた写真や動画が入ります</p>
+        </div>
         <div class="ig__actions">
           <img class="ig__act ig__act--like" src="assets/block03/block03_hearts.svg" alt="いいね" />
           <img class="ig__act ig__act--cmt" src="assets/block03/block03_hukidasi.svg" alt="コメント" />
@@ -524,17 +539,15 @@
       </article>
 
       <article class="ig ig--mini">
-        <header class="ig__bar">
-          <img class="ig__barLogo" src="assets/block04/block04-logo_b.svg" alt="Rankup sports" />
-          <h2 class="ig__barTtl">BASKETBALL<br />GEAR BAGS</h2>
-          <img class="ig__barBall" src="assets/block04/block04-baskemark.svg" alt="" />
-        </header>
         <div class="ig__profile">
-          <span class="ig__ava ig__ava--photo"><span><img src="assets/block04/bag_pic.jpg" alt="" style="object-position:62% 30%" /></span></span>
-          <div class="ig__names"><p class="ig__uname">osayu.bsk</p><p class="ig__urole">ユーザー名</p></div>
+          <span class="ig__ava ig__ava--blank"><span></span></span>
+          <div class="ig__names"><p class="ig__uname">user.ID</p><p class="ig__urole">ユーザー名</p></div>
           <span class="ig__more">•••</span>
         </div>
-        <div class="ig__photo"><img src="assets/block04/shose_02.jpg" alt="" style="object-position:50% 30%" /></div>
+        <!-- ④ 写真はグレー＋説明文（ユーザー投稿が入る枠） -->
+        <div class="ig__photo ig__photo--ph">
+          <p>ユーザー様から<br />頂いた写真や動画が入ります</p>
+        </div>
         <div class="ig__actions">
           <img class="ig__act ig__act--like" src="assets/block03/block03_hearts.svg" alt="いいね" />
           <img class="ig__act ig__act--cmt" src="assets/block03/block03_hukidasi.svg" alt="コメント" />
@@ -553,17 +566,15 @@
       </article>
 
       <article class="ig ig--mini">
-        <header class="ig__bar">
-          <img class="ig__barLogo" src="assets/block04/block04-logo_b.svg" alt="Rankup sports" />
-          <h2 class="ig__barTtl">BASKETBALL<br />GEAR BAGS</h2>
-          <img class="ig__barBall" src="assets/block04/block04-baskemark.svg" alt="" />
-        </header>
         <div class="ig__profile">
-          <span class="ig__ava ig__ava--photo"><span><img src="assets/block04/bag_pic.jpg" alt="" style="object-position:62% 30%" /></span></span>
-          <div class="ig__names"><p class="ig__uname">osayu.bsk</p><p class="ig__urole">ユーザー名</p></div>
+          <span class="ig__ava ig__ava--blank"><span></span></span>
+          <div class="ig__names"><p class="ig__uname">user.ID</p><p class="ig__urole">ユーザー名</p></div>
           <span class="ig__more">•••</span>
         </div>
-        <div class="ig__photo"><img src="assets/block04/shose_02.jpg" alt="" style="object-position:50% 30%" /></div>
+        <!-- ④ 写真はグレー＋説明文（ユーザー投稿が入る枠） -->
+        <div class="ig__photo ig__photo--ph">
+          <p>ユーザー様から<br />頂いた写真や動画が入ります</p>
+        </div>
         <div class="ig__actions">
           <img class="ig__act ig__act--like" src="assets/block03/block03_hearts.svg" alt="いいね" />
           <img class="ig__act ig__act--cmt" src="assets/block03/block03_hukidasi.svg" alt="コメント" />
@@ -673,42 +684,44 @@
 })();
 </script>
 <script>
-/* block03 HERO の写真カルーセル（Block03_最初の画像ラインナップ.pdf）。
-   ← → で9枚を巡回。ドットは現在位置の表示のみ（コンプ通り、押せない）。 */
+/* HERO の写真カルーセル（Block03素材差し替え指示.pdf / Block04素材_0803.pdf）。
+   どちらも「先にムービー」でムービーが先頭。← → で巡回し、ドットは現在位置の
+   表示のみ（コンプ通り、押せない）。 */
 (function(){
-  var car=document.getElementById('b03Car');
-  var dots=document.getElementById('b03Dots');
-  if(!car||!dots) return;
-  var slides=car.querySelectorAll('img,video');
-  var pips=dots.querySelectorAll('i');
-  if(slides.length<2) return;
-  var i=0;
-  // 重ねて置いてあり全部ビューポート内なので loading="lazy" では一斉に飛ぶ。
-  // 表示する分と隣だけを読む。
-  function load(n){
-    var el=slides[(n+slides.length)%slides.length];
-    if(el && el.dataset.src){ el.src=el.dataset.src; delete el.dataset.src; }
-  }
-  // 見えていないムービーは止めておく（先頭がムービーなので初期表示で再生）。
-  function playState(){
-    for(var k=0;k<slides.length;k++){
-      var el=slides[k];
-      if(el.tagName!=='VIDEO') continue;
-      if(k===i){ var q=el.play(); if(q&&q.catch) q.catch(function(){}); }
-      else { el.pause(); }
+  [['b03Car','b03Dots'],['b04Car','b04Dots']].forEach(function(ids){
+    var car=document.getElementById(ids[0]), dots=document.getElementById(ids[1]);
+    if(!car||!dots) return;
+    var slides=car.querySelectorAll('img,video');
+    var pips=dots.querySelectorAll('i');
+    if(slides.length<2) return;
+    var i=0;
+    // 重ねて置いてあり全部ビューポート内なので loading="lazy" では一斉に飛ぶ。
+    // 表示する分と隣だけを読む。
+    function load(n){
+      var el=slides[(n+slides.length)%slides.length];
+      if(el && el.dataset.src){ el.src=el.dataset.src; delete el.dataset.src; }
     }
-  }
-  function go(n){
-    i=(n+slides.length)%slides.length;
-    load(i); load(i+1); load(i-1);
-    for(var k=0;k<slides.length;k++) slides[k].classList.toggle('is-show',k===i);
-    for(var m=0;m<pips.length;m++) pips[m].classList.toggle('on',m===i);
-    playState();
-  }
-  load(1); load(-1); playState();
-  document.querySelectorAll('.ig__navBtn[aria-controls="b03Car"]').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      go(i + (btn.dataset.car==='next' ? 1 : -1));
+    // 見えていないムービーは止めておく（先頭がムービーなので初期表示で再生）。
+    function playState(){
+      for(var k=0;k<slides.length;k++){
+        var el=slides[k];
+        if(el.tagName!=='VIDEO') continue;
+        if(k===i){ var q=el.play(); if(q&&q.catch) q.catch(function(){}); }
+        else { el.pause(); }
+      }
+    }
+    function go(n){
+      i=(n+slides.length)%slides.length;
+      load(i); load(i+1); load(i-1);
+      for(var k=0;k<slides.length;k++) slides[k].classList.toggle('is-show',k===i);
+      for(var m=0;m<pips.length;m++) pips[m].classList.toggle('on',m===i);
+      playState();
+    }
+    load(1); load(-1); playState();
+    document.querySelectorAll('.ig__navBtn[aria-controls="'+ids[0]+'"]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        go(i + (btn.dataset.car==='next' ? 1 : -1));
+      });
     });
   });
 })();
@@ -848,6 +861,6 @@
   });
 })();
 </script>
-<script src="app.js?v=10"></script>
+<script src="app.js?v=11"></script>
 </body>
 </html>
