@@ -1116,6 +1116,34 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .shop__dot:hover,.shop__dot:focus-visible{transform:scale(1.14);box-shadow:0 0 0 2px #fff,0 0 0 4px rgba(35,70,139,.4)}
 .shop__dot.is-on{transform:scale(1.08)}
 
+/* ---- 商品名（中央寄せ・名前のみ / 05.pdf）---- */
+.shop__name{
+  text-align:center;margin:0;
+  font-family:var(--f-geist);font-weight:400;
+  font-size:max(clamp(14px,2.5vw,19px),1.641cqw);line-height:1.15;letter-spacing:.06em;
+  color:var(--shop-ink);
+}
+.shop__gallery .shop__name{margin-top:3.4cqw}
+.shop__ropeList{list-style:none;margin:max(14px,3.4cqw) auto 0;padding:0}
+.shop__ropeList .shop__name{line-height:2.1}
+
+/* ---- BUY NOW（紺色ボタン / 05.pdf。block03 と同じ #27498D）---- */
+.shop__buyWrap{display:flex;justify-content:center;margin-top:max(20px,4cqw)}
+.shop__buy{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:max(150px,14cqw);
+  background:#27498D;color:#fff;text-decoration:none;
+  font-family:var(--f-encode);font-weight:700;line-height:1;letter-spacing:.04em;
+  font-size:max(15px,1.55cqw);
+  padding:.85em 1.9em;border-radius:4px;
+  box-shadow:4px 5px 11px rgba(35,70,139,.32);
+  transition:transform .15s ease, box-shadow .15s ease, opacity .2s ease;
+}
+.shop__buy:hover{transform:translateY(-2px);box-shadow:4px 8px 15px rgba(35,70,139,.4)}
+
+/* ---- バッグ2点と ROPE STRAP の間の点線区切り（05.pdf）---- */
+.shop__sep{border-top:2px dotted rgba(35,70,139,.35);width:100%;height:0;margin:max(22px,4.5cqw) 0 0}
+
 /* ---- 商品名の行（名前 … リーダー … Add）----
    指示②: 文字を大きく。実測は 1文字あたり 1.0141%（＝約 1.69cqw）。 */
 .shop__list{list-style:none;margin:0;padding:0}
