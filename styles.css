@@ -915,17 +915,18 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 :is(.b03,.b04) .ig--mini .ig__barTtl{font-size:15px;letter-spacing:.02em}
 :is(.b03,.b04) .ig--mini .ig__barLogo{width:26px}
 :is(.b03,.b04) .ig--mini .ig__barBall{width:22px}
-:is(.b03,.b04) .ig--mini .ig__profile{padding:8px 14px 7px;gap:11px}
+/* Block_01-03-04微調整: ① 幅に若干余裕（padding/gap を少し広く） ② 塊ごと少し大きく */
+:is(.b03,.b04) .ig--mini .ig__profile{padding:9px 16px 8px;gap:12px}
 /* 虹色リングは padding で見せている。2px だと写真の上で
    アンチエイリアスに溶けて途切れて見えた。Block02素材_0804.pdf の
    実測でコンプの帯はカード幅の0.42%なので 408px × 0.42% = 1.71px。
    細さで途切れるのは太さではなく白い隙間と低コントラストが原因なので、
    隙間を外して密着させた（① 参照）。 */
-:is(.b03,.b04) .ig--mini .ig__ava{width:40px;height:40px;padding:1.71px}
-:is(.b03,.b04) .ig--mini .ig__uname{font-size:15px;font-weight:700}
+:is(.b03,.b04) .ig--mini .ig__ava{width:46px;height:46px;padding:2px}
+:is(.b03,.b04) .ig--mini .ig__uname{font-size:17px;font-weight:700}
 /* コンプ実測 11.57pt ×1.1349 = 13.1px（user.ID の 13.52pt->15.3px が現行
    15px と一致するので、この縮尺で読める）。 */
-:is(.b03,.b04) .ig--mini .ig__urole{font-size:13px}
+:is(.b03,.b04) .ig--mini .ig__urole{font-size:14.5px}
 /* ① Block03素材差し替え指示.pdf「ユーザースペース部分も同じ比率で」。
    403px はほぼ正方形（408/403=1.01）で HERO と比率が違っていた。
    HERO の写真比 482/598 = 0.806 にそろえる → 408/0.806 = 506px。
