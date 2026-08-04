@@ -138,23 +138,34 @@
     }).join('');
   };
 
-  /* hero の♡ — FISHS EDDY の TOP 左と同じ「一列で昇って上で消える」動き。
-     参考動画(1785822560050.mp4 の左側)に合わせ直した：
-       ・3個の♡が「塊」として等間隔で連続して上昇し、上から順に消えていく
-       ・以前は 12/31/87% と不均一（下側に大きな空き）だったので、位相を
-         均等（0 / 1/3 / 2/3）にして隙間のない一列にする
-       ・スピード感も動画に寄せて速める（9000ms → 6000ms）
-     左 6.90%、幅 4.60%（hero 幅比）。3個ともサイズも x も完全に同じ一列。 */
-  const MV_HEART = { left: 6.9, dur: 6000, delays: [0, 2000, 4000] };
+  /* hero の♡ — 参考動画(左側) + アニメ調整_0804.pdf に合わせた昇る♡。
+       ・②間隔が広すぎたので詰める：フル区間に COUNT 個を等間隔で並べ、
+         隙間のない密な一列（中心間 ≈ ハート約2個ぶん）にする
+       ・③左右2列。右は左と「若干」タイミングをずらして浮上させる
+       ・負のディレイで読み込み直後から列が埋まった状態にする
+     左 6.90% / 右 88.5%（幅 4.60% を考慮した左右対称位置）。 */
+  const MV_HEART = {
+    dur: 6000,
+    count: 6,                                   // 1列あたりの♡数（間隔 = dur/count）
+    cols: [ { left: 6.9, offset: 0 }, { left: 88.5, offset: 500 } ], // 右は +500ms ずらし
+  };
   const fillMvHearts = (host) => {
     if (!host) return;
-    host.innerHTML = MV_HEART.delays.map(dl =>
-      `<span class="mvHeart" style="left:${MV_HEART.left}%;--s:clamp(20px,4.6cqw,90px);`
-      + `--dur:${MV_HEART.dur}ms;--dl:${dl}ms"><span class="mvHeart__i">${HEART_SVG}</span></span>`
-    ).join('');
+    const { dur, count, cols } = MV_HEART;
+    const spans = [];
+    cols.forEach(col => {
+      for (let i = 0; i < count; i++) {
+        const dl = -(i * dur / count) - col.offset;   // 負値＝即座に均等配置
+        spans.push(
+          `<span class="mvHeart" style="left:${col.left}%;--s:clamp(20px,4.6cqw,90px);`
+          + `--dur:${dur}ms;--dl:${dl}ms"><span class="mvHeart__i">${HEART_SVG}</span></span>`
+        );
+      }
+    });
+    host.innerHTML = spans.join('');
   };
 
-  cornerFrame($('#mvFrame'));
+  // ① アニメ調整_0804.pdf: hero 四隅の♡は無しでOK（mvFrame は呼ばない）
   cornerFrame($('#staffFrame'));
   fillMvHearts($('#mvHearts'));
   fillHearts($('#staffHearts'), 14, 3200);
