@@ -419,6 +419,24 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   border:.44cqw solid rgba(255,255,255,.7);border-radius:999px;
   color:rgba(255,255,255,.85);font-family:var(--f-rob);font-size:3.82cqw}
 .igCard__icon{width:7.06cqw;height:7.06cqw;flex:0 0 auto;filter:drop-shadow(0 1px 3px rgba(0,0,0,.5))}
+/* SNS 風フレームのハート♡をタップ → hero(#mvHearts) と同じ角ばった♡が
+   カード下から上へ昇る。オーバーレイは動画/スクリムの上・本文(z:3)の下。 */
+.igCard__hearts{position:absolute;inset:0;z-index:2;overflow:hidden;
+  pointer-events:none;color:var(--lime)}
+.igCard__icon--like{cursor:pointer}
+.igCard__icon--like.is-pop{animation:igLikePop .45s cubic-bezier(.2,.9,.25,1)}
+@keyframes igLikePop{0%{transform:scale(1)}35%{transform:scale(1.35)}100%{transform:scale(1)}}
+/* hero の mvHeartRise を単発(both)で再利用。ラッパーはカード全高、
+   ♡本体は下端に置くので translateY の % がカード高さ基準で昇りきる。 */
+.riseHeart{position:absolute;top:0;height:100%;width:var(--s,26px);color:inherit;
+  opacity:0;will-change:transform,opacity;
+  animation:mvHeartRise var(--dur,2600ms) linear var(--dl,0ms) both}
+.riseHeart>.hsvg{position:absolute;left:0;bottom:0;width:100%;height:auto;
+  aspect-ratio:42.04/35.49}
+@media (prefers-reduced-motion:reduce){
+  .igCard__icon--like.is-pop{animation:none}
+  .riseHeart{animation-duration:1200ms}
+}
 
 /* ---- 商品2点（白カード・下向き矢印） ---- */
 /* 指示③: 商品カードは「動画の幅よりちょい大きいくらい」＝参考サイトの

@@ -133,9 +133,11 @@
 
       <p class="igCard__brand"><b>Rankup</b> sports</p>
 
+      <div class="igCard__hearts" id="igCardHearts" aria-hidden="true"></div>
+
       <div class="igCard__reply">
         <span class="igCard__msg">Send message</span>
-        <img class="igCard__icon" src="assets/icon-heart.svg" alt="いいね" />
+        <img class="igCard__icon igCard__icon--like" src="assets/icon-heart.svg" alt="いいね（タップでハートが飛ぶ）" role="button" tabindex="0" aria-pressed="false" />
         <img class="igCard__icon" src="assets/icon-share.svg" alt="シェア" />
       </div>
     </div>
@@ -884,6 +886,6 @@
   });
 })();
 </script>
-<script src="app.js?v=12"></script>
+<script src="app.js?v=13"></script>
 </body>
 </html>

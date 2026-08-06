@@ -339,6 +339,50 @@
   }
 
   /* =========================================================
+     SNS 風フレーム(.igCard)のハート♡タップ →
+     hero(#mvHearts) と同じ角ばった♡がカード下から昇るギミック
+     ========================================================= */
+  (() => {
+    const card = $('.igCard');
+    if (!card) return;
+    const like = $('.igCard__icon--like', card);
+    const host = $('#igCardHearts') || card.appendChild(
+      Object.assign(document.createElement('div'),
+        { className: 'igCard__hearts', id: 'igCardHearts' }));
+    if (!like) return;
+
+    const spawn = () => {
+      // カード幅にランダムに散らし、サイズ・速度・ディレイをばらして一斉に昇らせる
+      const N = 12;
+      const nodes = Array.from({ length: N }, () => {
+        const left = 5 + Math.round(Math.random() * 86);
+        const size = 16 + Math.round(Math.random() * 26);
+        const dur  = 2200 + Math.round(Math.random() * 1300);
+        const dl   = Math.round(Math.random() * 500);
+        const s = document.createElement('span');
+        s.className = 'riseHeart';
+        s.style.cssText = `left:${left}%;--s:${size}px;--dur:${dur}ms;--dl:${dl}ms`;
+        s.innerHTML = HEART_SVG;
+        return s;
+      });
+      nodes.forEach(n => host.appendChild(n));
+      // 一番遅い個体が抜けきったら片付ける
+      setTimeout(() => nodes.forEach(n => n.remove()), 3500 + 600);
+      // アイコンをぽんと弾ませるフィードバック
+      like.classList.remove('is-pop');
+      void like.offsetWidth;                       // reflow で再生し直す
+      like.classList.add('is-pop');
+      like.setAttribute('aria-pressed',
+        String(like.getAttribute('aria-pressed') !== 'true'));
+    };
+
+    like.addEventListener('click', spawn);
+    like.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); spawn(); }
+    });
+  })();
+
+  /* =========================================================
      HERO — 透明度で写真をクロスフェード
      PC(#mvPh 横長) と スマホ(#mvPhSp 縦長) の2セットを同じ間隔で回す。
      表示は CSS で出し分けるので、非表示側が回っていても実害はない。
