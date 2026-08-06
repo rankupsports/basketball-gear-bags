@@ -466,7 +466,21 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .rinaSec__script{position:absolute;left:50%;bottom:5.5%;transform:translateX(-50%);
   width:82%;height:auto;filter:drop-shadow(0 2px 8px rgba(0,0,0,.25))}
 .rinaSec__heart{position:absolute;bottom:-7.9%;left:50%;transform:translateX(-50%);
-  width:19%;height:auto;filter:drop-shadow(0 6px 14px rgba(0,0,0,.25))}
+  width:19%;height:auto;filter:drop-shadow(0 6px 14px rgba(0,0,0,.25));
+  /* 吹き出しアニメ.mp4: 尾(下端)を軸に縦へ軽くスカッシュするビートを2連発 →
+     約1.3秒の間(ま) → ループ。動画実測 = 高さ 71→67px(約7%縮み)・幅は不変・
+     ビート間隔約0.5秒。translateX(-50%) は各キーフレームで維持し中央固定。 */
+  transform-origin:bottom center;
+  animation:rinaHeartBeat 2s ease-in-out infinite}
+@keyframes rinaHeartBeat{
+  0%   {transform:translateX(-50%) scaleY(1)}
+  8%   {transform:translateX(-50%) scaleY(.92)}   /* ① ビート1(縮み) */
+  16%  {transform:translateX(-50%) scaleY(1)}     /*    戻り */
+  28%  {transform:translateX(-50%) scaleY(.92)}   /* ② ビート2(縮み) */
+  36%  {transform:translateX(-50%) scaleY(1)}     /*    戻り */
+  100% {transform:translateX(-50%) scaleY(1)}     /*    間(ま)＝約1.3秒 */
+}
+@media (prefers-reduced-motion:reduce){.rinaSec__heart{animation:none}}
 
 /* ---- ひとことコメント（Zen Maru Gothic）／行間は FIX 実測の 1.31 ---- */
 /* 指示03-②: フォントはブロック01（.igIntro__text）と同じ 24px 上限にそろえる
