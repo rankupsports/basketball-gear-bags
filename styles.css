@@ -1087,8 +1087,10 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    送りは 1.39em と広いので、参考どおり3個で 44.4% に収まるよう字間を詰める。 */
 .bubEmo{margin:0;line-height:1;white-space:nowrap;letter-spacing:-.345em;
   width:max-content;font-size:calc(var(--chatW,600px) * .144)}
-.b03__chat .bubEmo{margin-top:.34em}
-.b04__chat .bubEmo{align-self:flex-start;margin-top:.34em}
+/* 絵文字行の上下に同じ空きを取る（下を空けないと次の吹き出しと詰まる。
+   .bub + .bub の余白は「吹き出しの次が吹き出し」のときだけ効くため） */
+.b03__chat .bubEmo{margin-top:.34em;margin-bottom:.34em}
+.b04__chat .bubEmo{align-self:flex-start;margin-top:.34em;margin-bottom:.34em}
 
 /* ===== チャット吹き出しのポップイン（ブロック03_吹き出しモーション.mp4）=====
    ●（吹き出しの尻尾）を軸に scale 0→1 / opacity 0→1。ビューに入ったら上から順に。
