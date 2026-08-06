@@ -433,8 +433,13 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   animation:mvHeartRise var(--dur,2600ms) linear var(--dl,0ms) both}
 .riseHeart>.hsvg{position:absolute;left:0;bottom:0;width:100%;height:auto;
   aspect-ratio:42.04/35.49}
+/* ブロック03/04 の投稿カード写真枠に重ねる汎用オーバーレイ（同ギミック） */
+.riseHearts{position:absolute;inset:0;z-index:4;overflow:hidden;
+  pointer-events:none;color:var(--lime)}
+.is-likeTap{cursor:pointer}
+.is-likeTap.is-pop{animation:igLikePop .45s cubic-bezier(.2,.9,.25,1)}
 @media (prefers-reduced-motion:reduce){
-  .igCard__icon--like.is-pop{animation:none}
+  .igCard__icon--like.is-pop,.is-likeTap.is-pop{animation:none}
   .riseHeart{animation-duration:1200ms}
 }
 

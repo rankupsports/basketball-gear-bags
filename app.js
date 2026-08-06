@@ -339,20 +339,20 @@
   }
 
   /* =========================================================
-     SNS 風フレーム(.igCard)のハート♡タップ →
-     hero(#mvHearts) と同じ角ばった♡がカード下から昇るギミック
+     SNS 風フレームのハート♡タップ →
+     hero(#mvHearts) と同じ角ばった♡がフレーム下から昇るギミック。
+     イントロリール(.igCard) と ブロック03/04 の投稿カード(.ig--hero)に適用。
      ========================================================= */
-  (() => {
-    const card = $('.igCard');
-    if (!card) return;
-    const like = $('.igCard__icon--like', card);
-    const host = $('#igCardHearts') || card.appendChild(
-      Object.assign(document.createElement('div'),
-        { className: 'igCard__hearts', id: 'igCardHearts' }));
-    if (!like) return;
+  const attachRisingHearts = (like, host) => {
+    if (!like || !host) return;
+    // <img> をタップ可能に（role/フォーカス/キーボード）
+    like.setAttribute('role', 'button');
+    like.setAttribute('tabindex', '0');
+    if (!like.hasAttribute('aria-pressed')) like.setAttribute('aria-pressed', 'false');
+    like.classList.add('is-likeTap');
 
     const spawn = () => {
-      // カード幅にランダムに散らし、サイズ・速度・ディレイをばらして一斉に昇らせる
+      // フレーム幅にランダムに散らし、サイズ・速度・ディレイをばらして一斉に昇らせる
       const N = 12;
       const nodes = Array.from({ length: N }, () => {
         const left = 5 + Math.round(Math.random() * 86);
@@ -380,7 +380,27 @@
     like.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); spawn(); }
     });
-  })();
+  };
+
+  // ① イントロリール（Instagram 風カード）
+  const igCard = $('.igCard');
+  if (igCard) {
+    const host = $('#igCardHearts') || igCard.appendChild(
+      Object.assign(document.createElement('div'),
+        { className: 'igCard__hearts', id: 'igCardHearts' }));
+    attachRisingHearts($('.igCard__icon--like', igCard), host);
+  }
+
+  // ② ブロック03/04 のヒーロー投稿カード。オーバーレイは写真枠(.ig__photo)に重ねる
+  $$(':is(.b03,.b04) .ig--hero').forEach(card => {
+    const like  = $('.ig__act--like', card);
+    const photo = $('.ig__photo', card);
+    if (!like || !photo) return;
+    const host = document.createElement('div');
+    host.className = 'riseHearts';
+    photo.appendChild(host);
+    attachRisingHearts(like, host);
+  });
 
   /* =========================================================
      HERO — 透明度で写真をクロスフェード
