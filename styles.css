@@ -358,7 +358,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   /* 縦長全画面ではキャッチが大きすぎるので、hero 幅基準の比率を少し下げる。
      すまほ版トップ02.pdf ②: ロゴ(キャッチ+RANKUP SPORTS)の位置を上げる
      → 下寄せ(flex-end/12svh)をやめ、写真の縦中央に。 */
-  .mv__overlay{--lockup:clamp(240px,78cqw,520px);justify-content:center;padding-bottom:0}
+  /* モバイルはキャッチをもう少し大きく（左右パディングも詰めて max-width の上限を広げる） */
+  .mv__overlay{--lockup:clamp(300px,104cqw,680px);justify-content:center;padding:var(--pad) 8px 0}
   /* ③ ドロップシャドウを消す（スマホの hero のみ）。 */
   .mv__catch{filter:none}
   .mv__over-brand{text-shadow:none}
@@ -1284,6 +1285,27 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   .shop__pn{font-size:12px;letter-spacing:0}
   .shop__title{letter-spacing:.04em}
 }
+
+/* ============================================================
+   block06 : Instagram フォロー導線（Block_06.pdf）背景は白（クロスフェード）
+   ============================================================ */
+.ig06{--sec-bg:#ffffff;background:transparent;
+  padding:clamp(52px,11vw,120px) var(--pad) clamp(60px,13vw,140px);
+  display:flex;flex-direction:column;align-items:center;text-align:center}
+.ig06__logo{width:min(300px,62vw);height:auto;display:block}
+.ig06__all{margin-top:clamp(22px,4.2vw,36px);
+  display:inline-flex;align-items:center;gap:1.1em;
+  background:#111;color:#fff;text-decoration:none;
+  font-family:var(--f-encode);font-weight:700;letter-spacing:.14em;
+  font-size:clamp(15px,2.2vw,20px);padding:.95em 2em;border-radius:999px;
+  transition:transform .15s ease, opacity .2s ease}
+.ig06__all:hover{transform:translateY(-2px);opacity:.92}
+.ig06__arrow{font-size:.72em;line-height:1}
+.ig06__card{margin-top:clamp(34px,6vw,64px);display:block;width:min(430px,86vw);
+  border-radius:10px;overflow:hidden;
+  transition:transform .2s ease, box-shadow .2s ease}
+.ig06__card img{display:block;width:100%;height:auto}
+.ig06__card:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(0,0,0,.2)}
 
 /* ============================================================
    BUY NOW → 公式商品ページをそのままポップアップ（ポップアップリンク_0803.pdf）
