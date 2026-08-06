@@ -789,7 +789,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   *{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
   html{scroll-behavior:auto}
   .ttlPop,.ttlPopQ,.reveal,.post,
-  .b03__chat .bub,.b04__chat .bub{opacity:1!important;transform:none!important}
+  .b03__chat .bub,.b04__chat .bub,
+  .b03__chat .bubEmo,.b04__chat .bubEmo{opacity:1!important;transform:none!important}
 }
 
 /* ============================================================
@@ -959,7 +960,12 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    各 SVG はテキスト量に合わせて幅が作られている。 */
 /* 指示05-②: 吹き出し全体が左に寄って見えるのでステージ中央にそろえる
    （旧: margin-left 132px → 中心が 432px でステージ中心 484px より 52px 左） */
-.b03__chat{margin:86px auto 0;width:600px}   /* カード下端から 86px、左右 auto で中央 */
+/* 吹き出しの文字を参考サイト(FISHS EDDY)の比率にそろえて拡大。
+   参考実測: チャットカラム 630px に対し本文 18px（=2.86%）。
+   従来は 600px に 13.2px（=2.20%）で相対的に小さかったため 17.2px に。
+   吹き出しは SVG 画像なので、幅・高さ・余白を em 化して文字と一緒に拡大する
+   （495px の bub-c が 17.2px 時 645px になるのでカラムを 660px に広げる）。 */
+.b03__chat{margin:86px auto 0;width:660px;--chatW:660px}  /* 左右 auto で中央 */
 /* 赤字校正 ③: 文字を一段太く・少し大きく（可読性UP）。
    本文が大きくなった分、吹き出しも SVG のアスペクト比を保ったまま拡大する。
 
@@ -968,15 +974,16 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    16px x 0.825 = 13.2px → 13.2 x 1.655 = 21.9px（画面上は 16px → 22px に拡大）。
    吹き出し画像も同じ 0.825 倍にして、文字と枠の収まりを元のまま保つ。 */
 .b03 .bub{position:relative;margin:0;font-family:var(--f-zkaku);font-weight:700;
-  font-size:13.2px;line-height:1.5;letter-spacing:.01em;white-space:nowrap;
+  font-size:17.2px;line-height:1.5;letter-spacing:.01em;white-space:nowrap;
   background-repeat:no-repeat;background-size:100% 100%;display:flex;align-items:center}
 .b03 .bub--l{color:#111}                    /* 左・白・しっぽ左下 */
 .b03 .bub--r{color:#fff;margin-left:auto}   /* 右・青・しっぽ右下 */
-.b03 .bub--a{width:442px;height:65px;background-image:url('assets/block03/block03_bub-a.svg');padding:0 25px 12px 28px}
-.b03 .bub--b{width:381px;height:82px;white-space:normal;line-height:1.5;background-image:url('assets/block03/block03_bub-b.svg');padding:0 20px 11px 20px}
-.b03 .bub--c{width:495px;height:65px;background-image:url('assets/block03/block03_bub-c.svg');padding:0 21px 12px 25px}
-.b03 .bub--d{width:417px;height:61px;background-image:url('assets/block03/block03_bub-d.svg');padding:0 28px 11px 25px}
-.b03__chat .bub + .bub{margin-top:31px}
+/* 寸法は元の px（13.2px 基準）を em 換算。文字サイズを変えても収まりは同じ。 */
+.b03 .bub--a{width:33.485em;height:4.924em;background-image:url('assets/block03/block03_bub-a.svg');padding:0 1.894em .909em 2.121em}
+.b03 .bub--b{width:28.864em;height:6.212em;white-space:normal;line-height:1.5;background-image:url('assets/block03/block03_bub-b.svg');padding:0 1.515em .833em 1.515em}
+.b03 .bub--c{width:37.5em;height:4.924em;background-image:url('assets/block03/block03_bub-c.svg');padding:0 1.591em .909em 1.894em}
+.b03 .bub--d{width:31.591em;height:4.621em;background-image:url('assets/block03/block03_bub-d.svg');padding:0 2.121em .833em 1.894em}
+.b03__chat .bub + .bub{margin-top:2.348em}
 
 /* =============== 2×2 グリッド（下部・小カード） =============== */
 .b03__grid{margin:200px auto 0;width:848px;display:grid;grid-template-columns:repeat(2,1fr);column-gap:32px;row-gap:34px}
@@ -1050,38 +1057,52 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    吹き出しの余白・角丸・しっぽ・折り返し幅も同じ 0.825 倍で、収まりを元のまま保つ。 */
 /* 指示05-②: block03 と同じくステージ中央にそろえる
    （旧: margin-left 180px → 中心が 408px でステージ中心 484px より 76px 左） */
-.b04__chat{margin:86px auto 0;width:456px;display:flex;flex-direction:column}
+/* block03 と同じく参考サイト比率に合わせて本文を拡大（13.2→17.2px）。
+   余白・角丸・しっぽ・折り返し幅も em 化して収まりを保ち、
+   最長の nowrap 行（436px→568px）が入るようカラムを 580px に広げる。 */
+.b04__chat{margin:86px auto 0;width:580px;--chatW:580px;display:flex;flex-direction:column}
 .b04 .bub{position:relative;margin:0;width:max-content;max-width:100%;
-  font-family:var(--f-zkaku);font-weight:700;font-size:13.2px;line-height:1.6;letter-spacing:.01em;
-  padding:10px 18px;border-radius:18px}
+  font-family:var(--f-zkaku);font-weight:700;font-size:17.2px;line-height:1.6;letter-spacing:.01em;
+  padding:.758em 1.364em;border-radius:1.364em}
 /* 指示05-①: 吹き出しの間隔を block03 に合わせる。
    block03 は SVG 内にしっぽを含むので見た目の間隔＝margin-top(31px)。
    block04 はしっぽが ::after で箱の下 6px にはみ出すため、
    同じ 31px を空けるには 31+6=37px が必要。 */
-.b04 .bub + .bub{margin-top:37px}
+.b04 .bub + .bub{margin-top:2.803em}
 .b04 .bub--l{align-self:flex-start;background:#fff;color:#111}      /* 左・白・しっぽ左下 */
 .b04 .bub--r{align-self:flex-end;background:var(--b3blue);color:#fff} /* 右・青・しっぽ右下 */
-.b04 .bub--l::after{content:"";position:absolute;bottom:-6px;left:17px;
-  border:7px solid transparent;border-top-color:#fff;border-bottom:0}
-.b04 .bub--r::after{content:"";position:absolute;bottom:-6px;right:17px;
-  border:7px solid transparent;border-top-color:var(--b3blue);border-bottom:0}
+.b04 .bub--l::after{content:"";position:absolute;bottom:-.455em;left:1.288em;
+  border:.53em solid transparent;border-top-color:#fff;border-bottom:0}
+.b04 .bub--r::after{content:"";position:absolute;bottom:-.455em;right:1.288em;
+  border:.53em solid transparent;border-top-color:var(--b3blue);border-bottom:0}
 /* 行数を確定稿に合わせる: 1 行は折り返さない、複数行は幅を指定して折り返す */
 .b04 .bub--nowrap{white-space:nowrap}
-.b04 .bub--w3{width:339px}   /* 3 行に折り返す白吹き出し */
-.b04 .bub--w2{width:347px}   /* 2 行に折り返す青吹き出し */
+.b04 .bub--w3{width:25.682em}   /* 3 行に折り返す白吹き出し */
+.b04 .bub--w2{width:26.288em}   /* 2 行に折り返す青吹き出し */
+
+/* ===== 絵文字あしらい（参考サイト FISHS EDDY の look チャット）=====
+   参考実測: カラム 630px に対し絵文字行は 280x91px
+   ＝ 横 44.4% / 高さ 14.4%（3個1行・吹き出しなし・左寄せ）。
+   絵文字の字面は実測で font-size とほぼ同寸(1.00em)なので 14.4% を font-size に。
+   送りは 1.39em と広いので、参考どおり3個で 44.4% に収まるよう字間を詰める。 */
+.bubEmo{margin:0;line-height:1;white-space:nowrap;letter-spacing:-.345em;
+  width:max-content;font-size:calc(var(--chatW,600px) * .144)}
+.b03__chat .bubEmo{margin-top:.34em}
+.b04__chat .bubEmo{align-self:flex-start;margin-top:.34em}
 
 /* ===== チャット吹き出しのポップイン（ブロック03_吹き出しモーション.mp4）=====
-   ●（吹き出しの尻尾）を軸に scale 0→1 / opacity 0→1。ビューに入ったら上から順に。 */
-.b03 .bub,.b04 .bub{opacity:0;transform:scale(0);
+   ●（吹き出しの尻尾）を軸に scale 0→1 / opacity 0→1。ビューに入ったら上から順に。
+   絵文字行を挟むので順番は nth-child ではなく各要素の --d で指定する。 */
+.b03 .bub,.b04 .bub,.bubEmo{opacity:0;transform:scale(0);
   transition:opacity .34s ease, transform .46s cubic-bezier(.34,1.4,.5,1)}
-.b03 .bub--l{transform-origin:24px 100%}
-.b03 .bub--r{transform-origin:calc(100% - 24px) 100%}
-.b04 .bub--l{transform-origin:17px 100%}
-.b04 .bub--r{transform-origin:calc(100% - 17px) 100%}
-.b03__chat.is-in .bub,.b04__chat.is-in .bub{opacity:1;transform:scale(1)}
-.b03__chat.is-in .bub:nth-child(2),.b04__chat.is-in .bub:nth-child(2){transition-delay:.16s}
-.b03__chat.is-in .bub:nth-child(3),.b04__chat.is-in .bub:nth-child(3){transition-delay:.32s}
-.b03__chat.is-in .bub:nth-child(4),.b04__chat.is-in .bub:nth-child(4){transition-delay:.48s}
+.b03 .bub--l{transform-origin:1.818em 100%}
+.b03 .bub--r{transform-origin:calc(100% - 1.818em) 100%}
+.b04 .bub--l{transform-origin:1.288em 100%}
+.b04 .bub--r{transform-origin:calc(100% - 1.288em) 100%}
+.bubEmo{transform-origin:0 100%}
+.b03__chat.is-in .bub,.b04__chat.is-in .bub,
+.b03__chat.is-in .bubEmo,.b04__chat.is-in .bubEmo{opacity:1;transform:scale(1);
+  transition-delay:var(--d,0s)}
 
 /* ---- 2×2 グリッド（block03 と同じ） ---- */
 .b04__grid{margin:200px auto 0;width:848px;display:grid;grid-template-columns:repeat(2,1fr);column-gap:32px;row-gap:34px}
@@ -1094,7 +1115,13 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    ============================================================ */
 @media (max-width:600px){
   .b03,.b04{--stageW:530px}
-  .b03__chat{width:505px}                    /* 600px は 530 に収まらないので詰める（bub-c 495 が入る幅） */
+  /* モバイルはステージ幅 530px が上限なので、拡大率を収まる範囲に抑える
+     （bub-c 37.5em が 510px に収まる 13.6px / block04 は 15.2px）。
+     モバイルは元々カラムに対する文字比が大きいので、これで参考サイト相当。 */
+  .b03__chat{width:515px;--chatW:515px}
+  .b03 .bub{font-size:13.6px}
+  .b04__chat{width:510px;--chatW:510px}
+  .b04 .bub{font-size:15.2px}
   .b03__grid,.b04__grid{width:482px;grid-template-columns:1fr;margin-top:150px}
 }
 
