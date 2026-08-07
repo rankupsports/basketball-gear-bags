@@ -1139,6 +1139,61 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 
 
 /* ============================================================
+   REVIEWS — block05 の上。公式商品ページのレビュー枠を iframe で見せる。
+   地色・文字色は block05 とそろえて（#F4E06D / #23468B）、ONLINE SHOP への
+   前置きとして続けて読める見た目にする（bgFade の色区間も block05 と同じ）。
+
+   窓の高さ:
+     PC       --rvwH（レビュー枠の実測高さ）。商品ページは 980px 固定幅レイアウト
+              なので、窓幅も 980px を上限にして等倍で見せる。
+     モバイル 商品ページ側が viewport 320px 基準で端末幅まで拡大されるため、
+              高さも幅に比例する。aspect-ratio で 320:190 に固定しておく。
+   レビューが増えたら --rvwH と aspect-ratio を伸ばす（0件のいまは空状態ぶん）。
+   ============================================================ */
+.rvw{
+  --rvwH:140px;                  /* 実測 133px + 下の余白 */
+  --sec-bg:#F4E06D;              /* 描画は .bgFade（block05 と同色でつなぐ） */
+  background:transparent;
+  color:#23468B;
+  padding:clamp(36px,6vw,72px) 20px clamp(20px,3vw,36px);
+}
+.rvw__inner{max-width:980px;margin:0 auto;display:flex;flex-direction:column;align-items:center}
+
+/* 見出しは block05 の ONLINE SHOP と同じ Libre Bodoni */
+.rvw__ttl{
+  margin:0 0 clamp(16px,2.4vw,26px);text-align:center;
+  font-family:var(--f-bodoni);font-weight:700;
+  font-size:clamp(26px,5vw,40px);line-height:1;letter-spacing:.06em;
+}
+
+/* 白カードで切り抜く。overflow:hidden がレビュー枠だけを見せる窓になる。 */
+.rvw__win{
+  width:100%;max-width:980px;height:var(--rvwH);
+  overflow:hidden;border-radius:14px;background:#fff;
+  box-shadow:0 14px 30px rgba(35,70,139,.18);
+}
+.rvw__if{
+  display:block;width:100%;height:100%;border:0;
+  pointer-events:none;         /* 小窓の中で投稿フォームを開かせない */
+}
+
+.rvw__link{
+  margin-top:clamp(14px,2vw,20px);
+  display:inline-flex;align-items:center;gap:6px;
+  padding:11px 22px;border-radius:999px;
+  background:#23468B;color:#fff;text-decoration:none;
+  font-family:var(--f-body);font-weight:700;font-size:clamp(13px,1.4vw,15px);letter-spacing:.03em;
+  transition:opacity .2s ease,transform .12s ease;
+}
+.rvw__link:hover{opacity:.9;transform:translateY(-1px)}
+.rvw__link:focus-visible{outline:2px solid #fff;outline-offset:2px}
+
+@media (max-width:750px){
+  /* モバイル版の商品ページは 320px 基準で拡大表示されるので、高さも幅に比例する */
+  .rvw__win{height:auto;aspect-ratio:320/190;border-radius:10px}
+}
+
+/* ============================================================
    block05 : ONLINE SHOP （レシート / block05.pdf 準拠）
    背景 #F4E06D / 文字 #23468B
    ONLINE SHOP=Libre Bodoni 700 /

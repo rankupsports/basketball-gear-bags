@@ -631,6 +631,39 @@
 </section>
 
 <!-- ============================================================
+     REVIEWS — block05 の上。公式商品ページ（バスケットボール巾着バッグ・
+     シューズバレルバッグ）のレビュー枠を、そのページごと iframe で読み込んで
+     レビュー部分だけ見せる。
+
+     ・src の #wix-reviews-stores-… が要点。レビュー枠は SSR 済み（HTML に
+       <section aria-label="レビュー" id="wix-reviews-stores-…"> が入っている）なので、
+       読み込み時にアンカーが効いて枠が iframe の最上部に来る。
+       → 商品ページのレイアウトが変わってもオフセットの数字を直さなくてよい。
+     ・pointer-events:none（styles.css）。枠内の「レビューを書く」を小窓の中で
+       開かせないため。投稿・全件表示は下のリンク（別タブ）に任せる。
+     ・窓の高さは styles.css の --rvwH（PC）と .rvw__win の aspect-ratio（モバイル）。
+       いまはレビュー0件の空状態に合わせた高さ（PC 133px / モバイル 184px 実測）。
+       レビューが増えたらこの2か所を伸ばす。
+     ============================================================ -->
+<section class="rvw" id="reviews">
+  <div class="rvw__inner">
+    <h2 class="rvw__ttl">REVIEWS</h2>
+
+    <div class="rvw__win">
+      <iframe class="rvw__if"
+        src="https://www.rankup-sports.com/product-page/basketball-gear-bags-%E3%83%90%E3%82%B9%E3%82%B1%E3%83%83%E3%83%88%E3%83%9C%E3%83%BC%E3%83%AB%E5%B7%BE%E7%9D%80%E3%83%90%E3%83%83%E3%82%B0-%E3%82%B7%E3%83%A5%E3%83%BC%E3%82%BA%E3%83%90%E3%83%AC%E3%83%AB%E3%83%90%E3%83%83%E3%82%B02#wix-reviews-stores-34590dda-07a4-c952-41a2-6143331477d9"
+        title="公式商品ページのレビュー"
+        loading="lazy" scrolling="no"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+
+    <a class="rvw__link"
+       href="https://www.rankup-sports.com/product-page/basketball-gear-bags-%E3%83%90%E3%82%B9%E3%82%B1%E3%83%83%E3%83%88%E3%83%9C%E3%83%BC%E3%83%AB%E5%B7%BE%E7%9D%80%E3%83%90%E3%83%83%E3%82%B0-%E3%82%B7%E3%83%A5%E3%83%BC%E3%82%BA%E3%83%90%E3%83%AC%E3%83%AB%E3%83%90%E3%83%83%E3%82%B02#wix-reviews-stores-34590dda-07a4-c952-41a2-6143331477d9"
+       target="_blank" rel="noopener">レビューを書く / すべて見る ↗</a>
+  </div>
+</section>
+
+<!-- ============================================================
      block05 : ONLINE SHOP （レシート風カート / 背景 #F4E06D）
      ============================================================ -->
 <section class="shop" id="shop">
