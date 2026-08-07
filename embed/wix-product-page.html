@@ -9,29 +9,21 @@
      サイズ（エディタ側で枠のサイズを指定してください。中身は枠いっぱいに追従します）
        PC       : 幅 980px（= サイト幅いっぱい） × 高さ 820px
        モバイル : 幅 320px（= モバイル canvas いっぱい） × 高さ 560px
-     ※ もっと小さく収めたいときは PC 980×620 でも成立します。
-        高さを変えても中の LP 側は自動で追従します（下限 420px）。
+     ※ もっと小さく収めたいときは PC 980×620 でも成立します（下限 420px）。
 
-     ■ 枠内をスクロールしたら全画面へ
-       枠の中で LP をスクロールさせる代わりに、スクロール操作を全画面表示の
-       きっかけに使う（プレビュー中は iframe を pointer-events:none にして
-       LP 側がスクロールを食わないようにしてある）。
-
-       - タッチ（スマホ/タブレット）: 縦スワイプで即全画面。
-         スワイプ終わりの touchend はブラウザ仕様で「ユーザー操作」として
-         有効なので、Fullscreen API をそのまま呼べる。
-       - PC（ホイール）: wheel は仕様上ユーザー操作にカウントされず
-         Fullscreen API が拒否されるため、中央にプロンプトを出して
-         1クリックで全画面へ。枠のどこをクリックしても全画面になる。
-       - Fullscreen API 非対応（iPhone Safari など）: 別タブで LP を開く。
-       - 全画面中は iframe の操作を戻すので LP は普通にスクロールできる。
-         右上の「閉じる」または Esc でプレビューに戻る。
+     ■ 動き
+       枠の中で LP をそのままスクロールして見られる。
+       全画面にしたいときだけ右下の「全画面表示」を押す。全画面 API が使えない
+       環境（iPhone Safari など）では別タブで LP を開く。
+       全画面中は右上の「閉じる」または Esc でプレビューに戻る。
 
      メモ
        - loading="lazy" なので、レビュー位置まで実際にスクロールされるまで
          LP 内の動画（合計 60MB 超）は読み込まれません。
        - LP 内の BUY NOW はリンクを切ってあるので、商品ページ → LP → 商品ページ の
          ループにはなりません。復活させるときは LP 側 index.html の BUY_LINK を戻します。
+       - PC では iframe 上にカーソルがあるとホイールが LP 側に効きます。気になる場合は
+         枠の高さを 620px 前後に抑えると、脇から商品ページをスクロールしやすくなります。
      ============================================================ -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -46,18 +38,14 @@
     overflow: hidden;
     background: #ffffff;                      /* 読み込み中の地色 */
     box-shadow: 0 10px 30px rgba(0, 0, 0, .14);
-    cursor: zoom-in;                          /* プレビューは「開くもの」だと示す */
   }
-  .lpEmbed iframe {
-    display: block; width: 100%; height: 100%; border: 0;
-    pointer-events: none;                     /* プレビュー中は LP を操作させない */
-  }
+  /* 枠の中でそのままスクロールできる（pointer-events は触らない） */
+  .lpEmbed iframe { display: block; width: 100%; height: 100%; border: 0; }
 
   /* ---- 全画面中 ---- */
-  .lpEmbed.is-fs { border-radius: 0; box-shadow: none; cursor: auto; }
-  .lpEmbed.is-fs iframe { pointer-events: auto; }   /* LP を普通に触れるように戻す */
+  .lpEmbed.is-fs { border-radius: 0; box-shadow: none; }
 
-  /* ---- 共通のチップ（右下の全画面ボタン / 右上の閉じる） ---- */
+  /* ---- チップ（右下の全画面ボタン / 右上の閉じる） ---- */
   .lpChip {
     position: absolute; z-index: 3;
     display: inline-flex; align-items: center; gap: 6px;
@@ -75,44 +63,11 @@
   .lpEmbed__open  { right: 12px; bottom: 12px; }
   .lpEmbed__close { right: 12px; top: 12px; }
 
-  /* ---- スクロールで出るプロンプト（PC 用の1クリック導線） ---- */
-  .lpEmbed__cta {
-    position: absolute; inset: 0; z-index: 4;
-    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
-    background: rgba(12, 12, 16, .42);
-    -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
-    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
-                 "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
-    animation: lpCtaIn .18s ease-out both;
-  }
-  .lpEmbed__cta[hidden] { display: none; }
-  .lpEmbed__ctaTxt {
-    margin: 0; color: #fff; font-size: 15px; font-weight: 600; letter-spacing: .04em;
-    text-shadow: 0 1px 6px rgba(0, 0, 0, .5);
-  }
-  .lpEmbed__ctaBtn {
-    border: 0; border-radius: 999px; padding: 13px 26px;
-    background: #27498D; color: #fff; cursor: pointer;
-    font: 700 15px/1 inherit; letter-spacing: .03em;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, .3);
-    animation: lpCtaPulse 1.8s ease-in-out infinite;
-  }
-  .lpEmbed__ctaBtn:hover { background: #2f57a8; }
-  .lpEmbed__ctaBtn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
-
-  @keyframes lpCtaIn   { from { opacity: 0 } to { opacity: 1 } }
-  @keyframes lpCtaPulse{ 0%,100% { transform: scale(1) } 50% { transform: scale(1.045) } }
-  @media (prefers-reduced-motion: reduce) {
-    .lpEmbed__cta, .lpEmbed__ctaBtn { animation: none }
-  }
-
   @media (max-width: 600px) {
     .lpEmbed { border-radius: 10px; box-shadow: 0 6px 18px rgba(0, 0, 0, .12); }
     .lpChip { padding: 7px 12px; font-size: 12px; }
     .lpEmbed__open  { right: 8px; bottom: 8px; }
     .lpEmbed__close { right: 8px; top: 8px; }
-    .lpEmbed__ctaTxt { font-size: 14px; }
-    .lpEmbed__ctaBtn { padding: 12px 22px; font-size: 14px; }
   }
 </style>
 
@@ -125,12 +80,6 @@
     referrerpolicy="no-referrer-when-downgrade"
     scrolling="yes"></iframe>
 
-  <!-- スクロール時に出る全画面プロンプト（PC 用） -->
-  <div class="lpEmbed__cta" id="lpCta" hidden>
-    <p class="lpEmbed__ctaTxt">続きは全画面で</p>
-    <button class="lpEmbed__ctaBtn" type="button" id="lpCtaBtn">全画面で見る</button>
-  </div>
-
   <!-- JS が動かない環境ではただの別タブリンクとして機能する -->
   <a class="lpChip lpEmbed__open" id="lpOpen"
      href="https://rankupsports.github.io/basketball-gear-bags/"
@@ -142,76 +91,22 @@
 <script>
 (function(){
   var box   = document.getElementById('lpEmbed');
-  var cta   = document.getElementById('lpCta');
-  var ctaBtn= document.getElementById('lpCtaBtn');
   var open  = document.getElementById('lpOpen');
   var close = document.getElementById('lpClose');
 
   var req  = box.requestFullscreen || box.webkitRequestFullscreen;
   var exit = document.exitFullscreen || document.webkitExitFullscreen;
-  var ctaTimer = null;
-  var wheelBlocked = false;   // ホイール由来の全画面が弾かれたら、以降は試さない
 
   function isFs(){ return !!(document.fullscreenElement || document.webkitFullscreenElement); }
-
-  function showCta(){
-    if(isFs()) return;
-    cta.hidden = false;
-    // 出しっぱなしでプレビューを覆い続けないよう、操作が止まったら引っ込める。
-    clearTimeout(ctaTimer);
-    ctaTimer = setTimeout(function(){ cta.hidden = true; }, 5000);
-  }
-  function hideCta(){ clearTimeout(ctaTimer); cta.hidden = true; }
   function openTab(){ window.open(open.href, '_blank', 'noopener'); }
 
-  /* allowPopup: 全画面 API が使えないときに別タブを開いてよい操作か。
-     クリック / プロンプトのタップは可。ホイールやスワイプで勝手に別タブは開かない。 */
-  function toFullscreen(allowPopup, onFail){
-    if(isFs()) return;
-    if(!req){                                   // iPhone Safari など要素の全画面に非対応
-      if(allowPopup) openTab(); else if(onFail) onFail();
-      return;
-    }
-    var p;
-    try { p = req.call(box); } catch(e){ if(onFail) onFail(); return; }
-    if(p && p.catch) p.catch(function(){ if(onFail) onFail(); });
-  }
-
-  // ---- PC: wheel はブラウザ仕様で「ユーザー操作」に数えられないため全画面 API が
-  //          弾かれる。1度だけ試し、弾かれたら以降はプロンプト（＝1クリック）に任せる。
-  box.addEventListener('wheel', function(){
-    if(isFs()) return;
-    if(wheelBlocked){ showCta(); return; }
-    toFullscreen(false, function(){ wheelBlocked = true; showCta(); });
-  }, {passive:true});
-
-  // ---- タッチ: 縦スワイプの終わり(touchend)は有効な操作なので、そのまま全画面へ
-  var startY = null, moved = 0;
-  box.addEventListener('touchstart', function(e){
-    startY = e.touches[0].clientY; moved = 0;
-  }, {passive:true});
-  box.addEventListener('touchmove', function(e){
-    if(startY !== null) moved = Math.abs(e.touches[0].clientY - startY);
-  }, {passive:true});
-  box.addEventListener('touchend', function(){
-    if(moved > 20) toFullscreen(false, showCta);  // 20px 以上動いたらスクロール操作とみなす
-    startY = null;
-  }, {passive:true});
-
-  // ---- クリックはどこでも全画面。全画面が使えない環境では別タブで開く。
-  box.addEventListener('click', function(e){
-    if(open.contains(e.target) || close.contains(e.target)) return;
-    hideCta();
-    toFullscreen(true, openTab);
-  });
-  ctaBtn.addEventListener('click', function(e){
-    e.stopPropagation();                         // box 側ハンドラとの二重発火を防ぐ
-    hideCta();
-    toFullscreen(true, openTab);
-  });
-  // 右下チップ: 対応環境は全画面、非対応環境はリンクのまま別タブへ
+  // 全画面 API が使えない環境（iPhone Safari など）では別タブで開く
   open.addEventListener('click', function(e){
-    if(req){ e.preventDefault(); toFullscreen(true, openTab); }
+    if(!req) return;                       // href のまま別タブへ
+    e.preventDefault();
+    var p;
+    try { p = req.call(box); } catch(err){ openTab(); return; }
+    if(p && p.catch) p.catch(openTab);
   });
   close.addEventListener('click', function(){ if(exit) exit.call(document); });
 
@@ -220,8 +115,6 @@
     box.classList.toggle('is-fs', fs);
     close.hidden = !fs;
     open.hidden  = fs;
-    if(fs) hideCta();
-    // iframe の表示サイズが変わると LP 側の resize が自前で走るので、ここでは何もしない。
   }
   document.addEventListener('fullscreenchange', sync);
   document.addEventListener('webkitfullscreenchange', sync);
