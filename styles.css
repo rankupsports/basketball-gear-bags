@@ -1143,15 +1143,26 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    地色・文字色は block05 とそろえて（#F4E06D / #23468B）、ONLINE SHOP への
    前置きとして続けて読める見た目にする（bgFade の色区間も block05 と同じ）。
 
-   窓の高さ:
-     PC       --rvwH（レビュー枠の実測高さ）。商品ページは 980px 固定幅レイアウト
-              なので、窓幅も 980px を上限にして等倍で見せる。
-     モバイル 商品ページ側が viewport 320px 基準で端末幅まで拡大されるため、
-              高さも幅に比例する。aspect-ratio で 320:190 に固定しておく。
-   レビューが増えたら --rvwH と aspect-ratio を伸ばす（0件のいまは空状態ぶん）。
+   仕組み:
+     iframe の高さ(--rvwFrame)を商品ページの文書全高より大きく取ると、中の文書は
+     スクロール不可能になる（実測: 980px幅で文書 3,929px / viewport 4,200px のとき
+     scrollable:false・scrollY:0 固定）。そこで margin-top:-(--rvwTop) で
+     レビュー枠の位置まで持ち上げ、窓(--rvwH)で切り抜く。
+     アンカー(#wix-reviews-stores-…)方式は Wix の追従ヘッダー(sticky 175px)で
+     着地位置がぶれるので使わない。
+
+   数値（すべて実測）:
+     PC       レビュー枠は 980px 幅で絶対位置 1,852px / 高さ 133px。
+     モバイル 商品ページ側が viewport width=320 で端末幅まで拡大されるため、
+              位置も高さも窓幅に比例する（1cqw = 窓幅の1%）。
+              2498/320 = 7.806 → 780.6cqw、184/320 = 0.575 → aspect-ratio 320/184、
+              文書全高 4,608/320 = 14.4 → iframe は余裕をみて 1600cqw。
+   レビューが増えたら --rvwH と、モバイルの aspect-ratio を伸ばす（0件のいまは空状態ぶん）。
    ============================================================ */
 .rvw{
-  --rvwH:140px;                  /* 実測 133px + 下の余白 */
+  --rvwTop:1852px;               /* レビュー枠の絶対位置（980px幅・実測） */
+  --rvwH:140px;                  /* 見せる高さ = 枠 133px + 余白 7px */
+  --rvwFrame:4600px;             /* 文書全高(3,929px)より大きく = 内部スクロール不可 */
   --sec-bg:#F4E06D;              /* 描画は .bgFade（block05 と同色でつなぐ） */
   background:transparent;
   color:#23468B;
@@ -1166,15 +1177,18 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   font-size:clamp(26px,5vw,40px);line-height:1;letter-spacing:.06em;
 }
 
-/* 白カードで切り抜く。overflow:hidden がレビュー枠だけを見せる窓になる。 */
+/* 白カードで切り抜く。overflow:hidden がレビュー枠だけを見せる窓になる。
+   container-type は中の iframe が cqw（窓幅基準）を使うため。 */
 .rvw__win{
   width:100%;max-width:980px;height:var(--rvwH);
   overflow:hidden;border-radius:14px;background:#fff;
   box-shadow:0 14px 30px rgba(35,70,139,.18);
+  container-type:inline-size;
 }
 .rvw__if{
-  display:block;width:100%;height:100%;border:0;
-  pointer-events:none;         /* 小窓の中で投稿フォームを開かせない */
+  display:block;width:100%;height:var(--rvwFrame);border:0;
+  margin-top:calc(-1 * var(--rvwTop));   /* レビュー枠の位置まで持ち上げる */
+  pointer-events:none;                   /* 小窓の中で投稿フォームを開かせない */
 }
 
 .rvw__link{
@@ -1189,8 +1203,10 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .rvw__link:focus-visible{outline:2px solid #fff;outline-offset:2px}
 
 @media (max-width:750px){
-  /* モバイル版の商品ページは 320px 基準で拡大表示されるので、高さも幅に比例する */
-  .rvw__win{height:auto;aspect-ratio:320/190;border-radius:10px}
+  /* モバイル版の商品ページは viewport width=320 で端末幅まで拡大されるので、
+     位置・高さ・文書全高がすべて窓幅に比例する。cqw（窓幅の1%）で書く。 */
+  .rvw__win{height:auto;aspect-ratio:320/184;border-radius:10px}
+  .rvw__if{height:1600cqw;margin-top:-780.6cqw}
 }
 
 /* ============================================================

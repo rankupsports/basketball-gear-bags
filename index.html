@@ -631,19 +631,26 @@
 </section>
 
 <!-- ============================================================
-     REVIEWS — block05 の上。公式商品ページ（バスケットボール巾着バッグ・
-     シューズバレルバッグ）のレビュー枠を、そのページごと iframe で読み込んで
-     レビュー部分だけ見せる。
+     REVIEWS — block05 の上。公式商品ページ
+     （https://www.rankup-sports.com/product-page/basketball-gear-bags）を
+     iframe で読み込み、レビュー枠の位置だけを窓で切り抜いて見せる。
 
-     ・src の #wix-reviews-stores-… が要点。レビュー枠は SSR 済み（HTML に
-       <section aria-label="レビュー" id="wix-reviews-stores-…"> が入っている）なので、
-       読み込み時にアンカーが効いて枠が iframe の最上部に来る。
-       → 商品ページのレイアウトが変わってもオフセットの数字を直さなくてよい。
+     ■ なぜアンカー(#wix-reviews-stores-…)を使わないか
+       試したが、Wix の追従ヘッダー（sticky・高さ175px）が絡んで着地位置が
+       状況によって変わる（枠が上端に来る場合と、ヘッダーぶん下がって
+       177px の位置に来る場合があり、窓が低いとヘッダーがナビごと写る）。
+
+     ■ 代わりの方法（位置が完全に固定される）
+       iframe の高さを商品ページの文書全高（980px幅で 3,929px）より大きく取ると、
+       中の文書はスクロール不可能になる（実測 scrollable:false / scrollY:0 固定）。
+       あとは margin-top で見たい位置まで持ち上げるだけ。Wix 側の JS にも
+       スクロールされないので、毎回同じ場所が写る。
+       数値は styles.css の --rvwTop / --rvwH / --rvwFrame。
+
      ・pointer-events:none（styles.css）。枠内の「レビューを書く」を小窓の中で
        開かせないため。投稿・全件表示は下のリンク（別タブ）に任せる。
-     ・窓の高さは styles.css の --rvwH（PC）と .rvw__win の aspect-ratio（モバイル）。
-       いまはレビュー0件の空状態に合わせた高さ（PC 133px / モバイル 184px 実測）。
-       レビューが増えたらこの2か所を伸ばす。
+     ・いまはレビュー0件の空状態に合わせた高さ（PC 133px / モバイル 184px 実測）。
+       レビューが増えたら --rvwH と、モバイルの aspect-ratio を伸ばす。
      ============================================================ -->
 <section class="rvw" id="reviews">
   <div class="rvw__inner">
@@ -651,14 +658,14 @@
 
     <div class="rvw__win">
       <iframe class="rvw__if"
-        src="https://www.rankup-sports.com/product-page/basketball-gear-bags-%E3%83%90%E3%82%B9%E3%82%B1%E3%83%83%E3%83%88%E3%83%9C%E3%83%BC%E3%83%AB%E5%B7%BE%E7%9D%80%E3%83%90%E3%83%83%E3%82%B0-%E3%82%B7%E3%83%A5%E3%83%BC%E3%82%BA%E3%83%90%E3%83%AC%E3%83%AB%E3%83%90%E3%83%83%E3%82%B02#wix-reviews-stores-34590dda-07a4-c952-41a2-6143331477d9"
+        src="https://www.rankup-sports.com/product-page/basketball-gear-bags"
         title="公式商品ページのレビュー"
         loading="lazy" scrolling="no"
         referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
 
     <a class="rvw__link"
-       href="https://www.rankup-sports.com/product-page/basketball-gear-bags-%E3%83%90%E3%82%B9%E3%82%B1%E3%83%83%E3%83%88%E3%83%9C%E3%83%BC%E3%83%AB%E5%B7%BE%E7%9D%80%E3%83%90%E3%83%83%E3%82%B0-%E3%82%B7%E3%83%A5%E3%83%BC%E3%82%BA%E3%83%90%E3%83%AC%E3%83%AB%E3%83%90%E3%83%83%E3%82%B02#wix-reviews-stores-34590dda-07a4-c952-41a2-6143331477d9"
+       href="https://www.rankup-sports.com/product-page/basketball-gear-bags#wix-reviews-stores-34590dda-07a4-c952-41a2-6143331477d9"
        target="_blank" rel="noopener">レビューを書く / すべて見る ↗</a>
   </div>
 </section>
