@@ -5,8 +5,8 @@
    ■ 方式（バージョン非依存）
      `wix-reviews.v2` などの特殊モジュールに依存すると、そのサイトで
      未提供のとき import 全体が落ちて MODULE_LOAD_ERROR になる（実測で発生）。
-     そこで確実に存在する wix-fetch / wix-secrets-backend だけを使い、
-     Wix REST の Reviews API を叩く。
+     そこで確実に存在する wix-fetch だけを使い、Wix REST の
+     Reviews API を叩く（API キーはコード内定数・Secrets 不要）。
 
    ■ 事前準備（Wix 側で1回だけ）— Secrets Manager は不要
      1) https://manage.wix.com/account/api-keys で API キーを新規作成。
