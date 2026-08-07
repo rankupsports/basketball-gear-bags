@@ -1139,32 +1139,18 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 
 
 /* ============================================================
-   REVIEWS — block05 の上。公式商品ページのレビュー枠を iframe で見せる。
-   地色・文字色は block05 とそろえて（#F4E06D / #23468B）、ONLINE SHOP への
-   前置きとして続けて読める見た目にする（bgFade の色区間も block05 と同じ）。
-
-   仕組み:
-     iframe の高さ(--rvwFrame)を商品ページの文書全高より大きく取ると、中の文書は
-     スクロール不可能になる（実測: 980px幅で文書 3,929px / viewport 4,200px のとき
-     scrollable:false・scrollY:0 固定）。そこで margin-top:-(--rvwTop) で
-     レビュー枠の位置まで持ち上げ、窓(--rvwH)で切り抜く。
-     アンカー(#wix-reviews-stores-…)方式は Wix の追従ヘッダー(sticky 175px)で
-     着地位置がぶれるので使わない。
-
-   数値（すべて実測）:
-     PC       レビュー枠は 980px 幅で絶対位置 1,852px / 高さ 133px。
-     モバイル 商品ページ側が viewport width=320 で端末幅まで拡大されるため、
-              位置も高さも窓幅に比例する（1cqw = 窓幅の1%）。
-              2498/320 = 7.806 → 780.6cqw、184/320 = 0.575 → aspect-ratio 320/184、
-              文書全高 4,608/320 = 14.4 → iframe は余裕をみて 1600cqw。
-   レビューが増えたら --rvwH と、モバイルの aspect-ratio を伸ばす（0件のいまは空状態ぶん）。
+   REVIEWS — block05 の上。背景は白。
+   iframe をやめ、Velo の http-function（/_functions/reviews）から
+   API取得したレビューを白カードで横に流す（app.js が描画）。
+   ・Wix のレビュー読み取りAPIは認証必須＋CORS不許可で、静的LPから
+     直接は叩けない（同一オリジンでも403・ACAO無しを実測）。よって
+     取得はWix側の Velo に寄せ、CORSを付けてこのLPへJSONで返す。
+     Velo コード: embed/velo-reviews-http-function.js
+   ・Wix 未公開の間 / レビュー0件のときは空状態の文言を出す。
    ============================================================ */
 .rvw{
-  --rvwTop:1852px;               /* レビュー枠の絶対位置（980px幅・実測） */
-  --rvwH:140px;                  /* 見せる高さ = 枠 133px + 余白 7px */
-  --rvwFrame:4600px;             /* 文書全高(3,929px)より大きく = 内部スクロール不可 */
-  --sec-bg:#F4E06D;              /* 描画は .bgFade（block05 と同色でつなぐ） */
-  background:transparent;
+  --sec-bg:#fff;                 /* 背景は白 */
+  background:#fff;
   color:#23468B;
   padding:clamp(36px,6vw,72px) 20px clamp(20px,3vw,36px);
 }
@@ -1177,19 +1163,33 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   font-size:clamp(26px,5vw,40px);line-height:1;letter-spacing:.06em;
 }
 
-/* 白カードで切り抜く。overflow:hidden がレビュー枠だけを見せる窓になる。
-   container-type は中の iframe が cqw（窓幅基準）を使うため。 */
+/* API取得したレビューを横に流す窓。overflow:hidden で見切れをマスク。 */
 .rvw__win{
-  width:100%;max-width:980px;height:var(--rvwH);
-  overflow:hidden;border-radius:14px;background:#fff;
-  box-shadow:0 14px 30px rgba(35,70,139,.18);
-  container-type:inline-size;
+  width:100%;max-width:980px;
+  overflow:hidden;border-radius:14px;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
 }
-.rvw__if{
-  display:block;width:100%;height:var(--rvwFrame);border:0;
-  margin-top:calc(-1 * var(--rvwTop));   /* レビュー枠の位置まで持ち上げる */
-  pointer-events:none;                   /* 小窓の中で投稿フォームを開かせない */
+.rvw__empty{
+  margin:0;padding:28px 16px;text-align:center;
+  font-family:var(--f-body);font-size:14px;color:#23468B;opacity:.7;
 }
+/* 2周ぶん並べて途切れなく流す。ホバーで一時停止。 */
+.rvw__track{display:flex;gap:16px;width:max-content;padding:6px 0;animation:rvwFlow 34s linear infinite}
+.rvw__track:hover{animation-play-state:paused}
+.rvw__card{
+  flex:0 0 clamp(230px,60vw,280px);
+  background:#fff;border:1px solid #eef1f6;border-radius:14px;
+  padding:16px 18px;box-shadow:0 8px 22px rgba(35,70,139,.10);
+  display:flex;flex-direction:column;gap:6px;
+}
+.rvw__stars{color:#f4b400;letter-spacing:2px;font-size:14px;line-height:1}
+.rvw__cardTtl{margin:0;font-family:var(--f-body);font-weight:700;font-size:14px;color:#23468B}
+.rvw__body{margin:0;font-family:var(--f-body);font-size:13px;line-height:1.65;color:#333;
+  display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.rvw__by{margin:0;font-family:var(--f-body);font-size:11px;color:#23468B;opacity:.6}
+@keyframes rvwFlow{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.rvw__track{animation:none;flex-wrap:wrap;justify-content:center}}
 
 .rvw__link{
   margin-top:clamp(14px,2vw,20px);
@@ -1203,10 +1203,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .rvw__link:focus-visible{outline:2px solid #fff;outline-offset:2px}
 
 @media (max-width:750px){
-  /* モバイル版の商品ページは viewport width=320 で端末幅まで拡大されるので、
-     位置・高さ・文書全高がすべて窓幅に比例する。cqw（窓幅の1%）で書く。 */
-  .rvw__win{height:auto;aspect-ratio:320/184;border-radius:10px}
-  .rvw__if{height:1600cqw;margin-top:-780.6cqw}
+  .rvw__win{border-radius:10px}
+  .rvw__card{flex-basis:78vw}
 }
 
 /* ============================================================

@@ -513,4 +513,37 @@
     addEventListener('resize', onScrollBed, { passive: true });
     paint();
   }
+
+  /* =========================================================
+     REVIEWS — iframe をやめ、Velo の http-function からAPI取得して
+     横に流す。取得先は data-src（/_functions/reviews・CORS済み）。
+     Wix 未公開の間は取得に失敗するので空状態の文言を出す。
+     ========================================================= */
+  const rvwWin = $('#rvwWin');
+  if (rvwWin) {
+    const esc = s => String(s || '').replace(/[&<>"]/g, c =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const stars = n => '★'.repeat(n || 0) + '☆'.repeat(5 - (n || 0));
+    const card = r => `<article class="rvw__card">
+        <div class="rvw__stars" aria-hidden="true">${stars(r.rating)}</div>
+        ${r.title ? `<p class="rvw__cardTtl">${esc(r.title)}</p>` : ''}
+        <p class="rvw__body">${esc(r.body)}</p>
+        <p class="rvw__by">— ${esc(r.author)}</p>
+      </article>`;
+
+    fetch(rvwWin.dataset.src, { mode: 'cors' })
+      .then(r => r.json())
+      .then(({ items }) => {
+        if (!items || !items.length) {
+          rvwWin.innerHTML = '<p class="rvw__empty">まだレビューはありません</p>';
+          return;
+        }
+        // 流れが途切れないよう2周ぶん並べる（-50% で1周ぶんループ）
+        const dup = [...items, ...items].map(card).join('');
+        rvwWin.innerHTML = `<div class="rvw__track">${dup}</div>`;
+      })
+      .catch(() => {
+        rvwWin.innerHTML = '<p class="rvw__empty">レビューを表示できませんでした</p>';
+      });
+  }
 })();
