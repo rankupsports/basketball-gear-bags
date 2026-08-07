@@ -514,4 +514,102 @@
     paint();
   }
 
+  /* =========================================================
+     REVIEWS 表示 — GET /_functions/reviews を取得して白カードを横に流す。
+     ========================================================= */
+  const rvwWin = $('#rvwWin');
+  if (rvwWin) {
+    const esc = (s) => String(s || '').replace(/[&<>"]/g, (c) =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const stars = (n) => '★'.repeat(n || 0) + '☆'.repeat(5 - (n || 0));
+    const card = (r) => `<article class="rvw__card">
+        <div class="rvw__stars" aria-hidden="true">${stars(r.rating)}</div>
+        ${r.title ? `<p class="rvw__cardTtl">${esc(r.title)}</p>` : ''}
+        <p class="rvw__body">${esc(r.body)}</p>
+        <p class="rvw__by">— ${esc(r.author)}</p>
+      </article>`;
+
+    window.__renderReviews = (items) => {
+      if (!items || !items.length) {
+        rvwWin.innerHTML = '<p class="rvw__empty">最初のレビューを書いてみませんか？</p>';
+        return;
+      }
+      const dup = [...items, ...items].map(card).join('');
+      rvwWin.innerHTML = `<div class="rvw__track">${dup}</div>`;
+    };
+
+    fetch(rvwWin.dataset.src, { mode: 'cors' })
+      .then((r) => r.json())
+      .then(({ items }) => window.__renderReviews(items))
+      .catch(() => { rvwWin.innerHTML = '<p class="rvw__empty">最初のレビューを書いてみませんか？</p>'; });
+  }
+
+  /* =========================================================
+     REVIEW FORM — 星評価＋送信。Velo の POST /_functions/reviews へ。
+     ========================================================= */
+  const rvfForm = $('#rvfForm');
+  if (rvfForm) {
+    const stars = $$('.rvf__star', rvfForm);
+    const ratingInput = $('#rvfRating');
+    const msg = $('#rvfMsg');
+    const submit = $('.rvf__submit', rvfForm);
+    let rating = 0;
+
+    const paintStars = (n) => stars.forEach((s, i) => {
+      s.classList.toggle('is-on', i < n);
+      s.setAttribute('aria-checked', String(i + 1 === n));
+    });
+    stars.forEach((s) => {
+      const v = parseInt(s.dataset.v, 10);
+      s.addEventListener('mouseenter', () => paintStars(v));
+      s.addEventListener('focus', () => paintStars(v));
+      s.addEventListener('click', () => { rating = v; ratingInput.value = String(v); paintStars(v); });
+    });
+    $('#rvfStars').addEventListener('mouseleave', () => paintStars(rating));
+
+    const setMsg = (text, kind) => {
+      msg.textContent = text;
+      msg.classList.remove('is-ok', 'is-err');
+      if (kind) msg.classList.add(kind);
+    };
+
+    rvfForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const fd = new FormData(rvfForm);
+      const payload = {
+        rating,
+        author: (fd.get('author') || '').toString().trim(),
+        email: (fd.get('email') || '').toString().trim(),
+        title: (fd.get('title') || '').toString().trim(),
+        content: (fd.get('content') || '').toString().trim(),
+      };
+      if (!rating) { setMsg('星の数を選んでください。', 'is-err'); return; }
+      if (!payload.author) { setMsg('お名前を入力してください。', 'is-err'); return; }
+      if (!payload.content) { setMsg('レビュー本文を入力してください。', 'is-err'); return; }
+
+      submit.disabled = true;
+      setMsg('送信中…');
+      try {
+        const res = await fetch(rvfForm.dataset.src, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && data.ok) {
+          const pending = String(data.status || '').toUpperCase().indexOf('PEND') !== -1;
+          setMsg(pending
+            ? 'ありがとうございます！承認後に公開されます。'
+            : 'ありがとうございます！レビューを受け付けました。', 'is-ok');
+          rvfForm.reset(); rating = 0; ratingInput.value = ''; paintStars(0);
+        } else {
+          setMsg((data && data.error) ? data.error : '送信に失敗しました。時間をおいて再度お試しください。', 'is-err');
+        }
+      } catch (err) {
+        setMsg('送信に失敗しました。通信環境をご確認ください。', 'is-err');
+      } finally {
+        submit.disabled = false;
+      }
+    });
+  }
 })();

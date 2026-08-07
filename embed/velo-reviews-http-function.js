@@ -10,7 +10,8 @@
 
    ■ 事前準備（Wix 側で1回だけ）— Secrets Manager は不要
      1) https://manage.wix.com/account/api-keys で API キーを新規作成。
-        権限は「Wix Reviews（Read Reviews / レビューの読み取り）」を付与。
+        権限は「Wix Reviews」の読み取り＋**作成/管理（Manage Reviews）**を付与。
+        （フォーム投稿＝作成に書き込み権限が要る。読み取りだけだと POST が 403）
      2) 下の API_KEY 定数に、その値を貼る。
      3) 公開（Publish）。
 
@@ -39,13 +40,13 @@ const NAMESPACE = 'stores';
 
 const cors = {
   'Access-Control-Allow-Origin': ALLOW_ORIGIN,
-  'Access-Control-Allow-Methods': 'GET, OPTIONS',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   'Access-Control-Allow-Headers': 'content-type',
   'Cache-Control': 'no-store',
   'Content-Type': 'application/json',
 };
 
-// ブラウザのプリフライト用
+// ブラウザのプリフライト用（GET / POST 兼用）
 export function options_reviews() {
   return ok({ headers: cors, body: '' });
 }
@@ -83,6 +84,61 @@ export async function get_reviews() {
     }));
 
     return ok({ headers: cors, body: JSON.stringify({ total: items.length, items }) });
+  } catch (e) {
+    return badRequest({ headers: cors, body: JSON.stringify({ error: String((e && e.message) || e) }) });
+  }
+}
+
+/* ============================================================
+   POST /_functions/reviews — LP のフォームから受け取り、Wix に作成する。
+   body(JSON): { author, email, rating, title, content }
+
+   ※ API キーの権限に「Wix Reviews の作成/管理（Manage Reviews）」が必要。
+     読み取りだけの権限だと 403 になる。
+   ※ サイトのレビュー設定によっては、作成後 status:PENDING（承認待ち）に
+     なり、ダッシュボードで承認するまで公開されない。これは正常。
+   ============================================================ */
+export async function post_reviews(request) {
+  try {
+    const b = await request.body.json();
+
+    const rating = Math.min(5, Math.max(1, parseInt(b.rating, 10) || 0));
+    if (!rating || !b.content || !b.author) {
+      return badRequest({ headers: cors, body: JSON.stringify({ error: '評価・お名前・本文は必須です。' }) });
+    }
+
+    const res = await fetch('https://www.wixapis.com/reviews/v1/reviews', {
+      method: 'POST',
+      headers: {
+        'Authorization': API_KEY,
+        'wix-site-id': SITE_ID,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        review: {
+          namespace: NAMESPACE,
+          entityId: ENTITY_ID,
+          author: { authorName: String(b.author).slice(0, 60), email: b.email || undefined },
+          content: {
+            rating,
+            title: b.title ? String(b.title).slice(0, 120) : undefined,
+            body: String(b.content).slice(0, 3000),
+          },
+        },
+      }),
+    });
+
+    const text = await res.text();
+    if (!res.ok) {
+      return serverError({ headers: cors, body: JSON.stringify({ error: `upstream ${res.status}`, detail: text.slice(0, 400) }) });
+    }
+
+    let created = {};
+    try { created = JSON.parse(text); } catch (e) { /* ignore */ }
+    const status = (created.review && created.review.moderation && created.review.moderation.moderationStatus)
+      || (created.review && created.review.status) || 'CREATED';
+
+    return ok({ headers: cors, body: JSON.stringify({ ok: true, status }) });
   } catch (e) {
     return badRequest({ headers: cors, body: JSON.stringify({ error: String((e && e.message) || e) }) });
   }

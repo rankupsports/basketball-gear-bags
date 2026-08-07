@@ -1138,8 +1138,80 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 }
 
 
-/* REVIEWS セクションは廃止（レビューは商品ページの Wix ネイティブ
-   ウィジェットに一本化）。関連スタイル(.rvw*)は削除済み。 */
+/* ============================================================
+   REVIEWS 表示 — 既存レビューを白カードで横に流す
+   ============================================================ */
+.rvw--flow{max-width:980px;margin:0 auto clamp(28px,5vw,48px);display:flex;flex-direction:column;align-items:center}
+.rvw__ttl{margin:0 0 clamp(14px,2.4vw,24px);text-align:center;font-family:var(--f-bodoni);font-weight:700;font-size:clamp(24px,5vw,38px);line-height:1;letter-spacing:.06em;color:#23468B}
+.rvw__win{
+  width:100%;overflow:hidden;border-radius:14px;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+}
+.rvw__empty{margin:0;padding:24px 16px;text-align:center;font-family:var(--f-body);font-size:14px;color:#23468B;opacity:.7}
+.rvw__track{display:flex;gap:16px;width:max-content;padding:6px 0;animation:rvwFlow 34s linear infinite}
+.rvw__track:hover{animation-play-state:paused}
+.rvw__card{flex:0 0 clamp(230px,60vw,280px);background:#fff;border:1px solid #eef1f6;border-radius:14px;padding:16px 18px;box-shadow:0 8px 22px rgba(35,70,139,.10);display:flex;flex-direction:column;gap:6px}
+.rvw__stars{color:#f4b400;letter-spacing:2px;font-size:14px;line-height:1}
+.rvw__cardTtl{margin:0;font-family:var(--f-body);font-weight:700;font-size:14px;color:#23468B}
+.rvw__body{margin:0;font-family:var(--f-body);font-size:13px;line-height:1.65;color:#333;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+.rvw__by{margin:0;font-family:var(--f-body);font-size:11px;color:#23468B;opacity:.6}
+@keyframes rvwFlow{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.rvw__track{animation:none;flex-wrap:wrap;justify-content:center}}
+@media (max-width:750px){.rvw__card{flex-basis:78vw}}
+
+/* ============================================================
+   REVIEW FORM — Wix 風の投稿フォーム（白地・角丸カード）
+   ============================================================ */
+.rvf{--sec-bg:#fff;background:#fff;color:#23468B;padding:clamp(20px,4vw,40px) 20px clamp(40px,7vw,80px)}
+.rvf__inner{
+  max-width:680px;margin:0 auto;
+  border:1px solid #e6e8ef;border-radius:16px;
+  padding:clamp(24px,4vw,40px);
+  box-shadow:0 14px 34px rgba(35,70,139,.08);
+  background:#fff;
+}
+.rvf__ttl{margin:0;text-align:center;font-family:var(--f-bodoni);font-weight:700;font-size:clamp(24px,4.4vw,34px);letter-spacing:.04em}
+.rvf__lead{margin:.6em 0 clamp(18px,3vw,26px);text-align:center;font-family:var(--f-body);font-size:14px;color:#5a6b90}
+
+/* 星 */
+.rvf__stars{display:flex;justify-content:center;gap:4px;margin-bottom:clamp(16px,2.6vw,24px)}
+.rvf__star{
+  font-size:34px;line-height:1;padding:2px;background:none;border:0;cursor:pointer;
+  color:#d3d8e6;transition:color .12s ease,transform .12s ease;
+}
+.rvf__star:hover{transform:scale(1.12)}
+.rvf__star.is-on{color:#f4b400}
+.rvf__star:focus-visible{outline:2px solid #23468B;outline-offset:2px;border-radius:4px}
+
+.rvf__row{display:grid;gap:14px;margin-bottom:14px}
+@media (min-width:560px){ .rvf__row--2{grid-template-columns:1fr 1fr} }
+.rvf__field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.rvf__row .rvf__field{margin-bottom:0}
+.rvf__label{font-family:var(--f-body);font-size:12.5px;font-weight:700;color:#23468B}
+.rvf__label i{color:#e0117f;font-style:normal}
+.rvf__input{
+  font-family:var(--f-body);font-size:15px;color:#1c2333;
+  padding:11px 13px;border:1px solid #cfd5e4;border-radius:9px;background:#fff;
+  transition:border-color .15s ease,box-shadow .15s ease;
+}
+.rvf__input:focus{outline:0;border-color:#23468B;box-shadow:0 0 0 3px rgba(35,70,139,.15)}
+.rvf__textarea{resize:vertical;min-height:120px;line-height:1.6}
+
+.rvf__submit{
+  margin-top:6px;width:100%;
+  background:#23468B;color:#fff;border:0;border-radius:999px;cursor:pointer;
+  font-family:var(--f-body);font-weight:700;font-size:15px;letter-spacing:.03em;
+  padding:14px 20px;transition:opacity .2s ease,transform .12s ease;
+}
+.rvf__submit:hover{transform:translateY(-1px)}
+.rvf__submit:disabled{opacity:.55;cursor:default;transform:none}
+.rvf__msg{margin:14px 0 0;text-align:center;font-family:var(--f-body);font-size:13.5px;min-height:1.2em}
+.rvf__msg.is-ok{color:#1a8f4a}
+.rvf__msg.is-err{color:#d23}
+
+/* ============================================================
+   block05 : ONLINE SHOP （レシート / block05.pdf 準拠）
 
 /* ============================================================
    block05 : ONLINE SHOP （レシート / block05.pdf 準拠）

@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=League+Spartan:wght@500;700&family=M+PLUS+1p:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Bowlby+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Montserrat:wght@400;500;700&family=Libre+Bodoni:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=Geist+Pixel&family=Jersey+10&family=Jersey+20&family=Encode+Sans+Condensed:wght@700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=80" />
+<link rel="stylesheet" href="styles.css?v=81" />
 </head>
 <body>
 
@@ -630,10 +630,63 @@
   </div>
 </section>
 
-<!-- REVIEWS セクションは廃止。レビュー（表示・投稿・すべて見る）は
-     商品ページ側の Wix ネイティブ・レビューウィジェット（デフォルトの
-     レビューフォーム）に一本化する。LP は静的サイトのため Wix 部品を
-     内包できない。関連 CSS(.rvw*) と app.js の取得処理も撤去済み。 -->
+<!-- ============================================================
+     REVIEW FORM — Wix 風の投稿フォーム。送信すると Velo の
+     POST /_functions/reviews 経由で Wix にレビューが作成される
+     （サイト設定によっては承認待ちになる）。
+     ============================================================ -->
+<section class="rvf" id="reviews">
+  <!-- 既存レビューを横に流す（GET /_functions/reviews）。0件なら誘導文。 -->
+  <div class="rvw rvw--flow">
+    <h2 class="rvw__ttl">REVIEWS</h2>
+    <div class="rvw__win" id="rvwWin"
+         data-src="https://www.rankup-sports.com/_functions/reviews">
+      <p class="rvw__empty">レビューを読み込み中…</p>
+    </div>
+  </div>
+
+  <div class="rvf__inner">
+    <h2 class="rvf__ttl">レビューを書く</h2>
+    <p class="rvf__lead">この商品を使った感想を教えてください。</p>
+
+    <form class="rvf__form" id="rvfForm"
+          data-src="https://www.rankup-sports.com/_functions/reviews" novalidate>
+      <!-- 星評価 -->
+      <div class="rvf__stars" id="rvfStars" role="radiogroup" aria-label="評価">
+        <button type="button" class="rvf__star" data-v="1" role="radio" aria-checked="false" aria-label="星1">★</button>
+        <button type="button" class="rvf__star" data-v="2" role="radio" aria-checked="false" aria-label="星2">★</button>
+        <button type="button" class="rvf__star" data-v="3" role="radio" aria-checked="false" aria-label="星3">★</button>
+        <button type="button" class="rvf__star" data-v="4" role="radio" aria-checked="false" aria-label="星4">★</button>
+        <button type="button" class="rvf__star" data-v="5" role="radio" aria-checked="false" aria-label="星5">★</button>
+      </div>
+      <input type="hidden" name="rating" id="rvfRating" value="" />
+
+      <div class="rvf__row rvf__row--2">
+        <label class="rvf__field">
+          <span class="rvf__label">お名前 <i>*</i></span>
+          <input class="rvf__input" name="author" type="text" maxlength="60" autocomplete="name" required />
+        </label>
+        <label class="rvf__field">
+          <span class="rvf__label">メールアドレス</span>
+          <input class="rvf__input" name="email" type="email" autocomplete="email" />
+        </label>
+      </div>
+
+      <label class="rvf__field">
+        <span class="rvf__label">タイトル</span>
+        <input class="rvf__input" name="title" type="text" maxlength="120" />
+      </label>
+
+      <label class="rvf__field">
+        <span class="rvf__label">レビュー <i>*</i></span>
+        <textarea class="rvf__input rvf__textarea" name="content" rows="5" maxlength="3000" required></textarea>
+      </label>
+
+      <button class="rvf__submit" type="submit">レビューを送信</button>
+      <p class="rvf__msg" id="rvfMsg" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
 
 <!-- ============================================================
      block05 : ONLINE SHOP （レシート風カート / 背景 #F4E06D）
@@ -921,6 +974,6 @@
   }
 })();
 </script>
-<script src="app.js?v=16"></script>
+<script src="app.js?v=17"></script>
 </body>
 </html>
