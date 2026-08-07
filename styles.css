@@ -468,6 +468,11 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .igIntro__arrow{width:clamp(16px,3.4vw,22px);height:auto;margin-top:2px}
 .igIntro__div{align-self:stretch;width:2px;background:rgba(0,0,0,.12);border-radius:2px}
 
+/* 指示③: ブロック02から移ってきた Instagram モック。.igIntro__cont は
+   align-items:center の縦フレックスなので、幅を明示しないと 0 に潰れる。
+   上マージンだけカテゴリカードとの間隔にそろえ、中身の比率は元のまま。 */
+.igIntro__mock{width:100%;margin-top:clamp(28px,6vw,40px)}
+
 /* =========================================================
    RINA SEZAKI — キャスト紹介。背景色 #B9FF61 固定。
 
@@ -954,6 +959,11 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 :is(.b03,.b04) .ig--mini .ig__buy{font-size:19.8px}
 :is(.b03,.b04) .ig__buy:hover{opacity:.9;transform:translateY(-1px)}
 :is(.b03,.b04) .ig__buy:focus-visible{outline:2px solid #fff;outline-offset:-5px}
+
+/* 指示④: BUY NOW のリンクは一旦停止。見た目は変えず、押せる素振り
+   （カーソル・ホバーの浮き）だけ止める。復活は index.html の
+   is-linkOff / aria-disabled と BUY_LINK=true を戻すだけ。 */
+.ig__buy.is-linkOff{cursor:default;pointer-events:none}
 
 /* =============== チャット吹き出し（4個） ===============
    cropped SVG（viewBox をパス実寸に切り詰め）を背景に敷き、本文は live text。

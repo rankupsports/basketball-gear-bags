@@ -155,91 +155,55 @@
         <img class="igIntro__arrow" src="assets/icon-arrow-down.svg" alt="" />
       </a>
     </div>
-  </div>
-</section>
 
-<!-- ============================================================
-     RINA SEZAKI — キャスト紹介。背景色は指定の #B9FF61 で固定。
-     説明文:Zen Maru Gothic / 名前(瀬崎理奈)・紹介文:M PLUS 1p /
-     見出し(RINA SEZAKI):Space Grotesk。
-     ============================================================ -->
-<section class="rinaSec">
-  <div class="rinaSec__hero">
-    <img class="rinaSec__photo" src="assets/cast-portrait.jpg" alt="瀬崎理奈" />
-    <img class="rinaSec__label" src="assets/cast-joybasketballschool.svg" alt="JOY BASKETBALL SCHOOL" />
-    <img class="rinaSec__script" src="assets/cast-rina-sezaki.svg" alt="Rina Sezaki" />
-    <img class="rinaSec__heart" src="assets/cast-heart-badge.svg" alt="" aria-hidden="true" />
-  </div>
+    <!-- 指示③: ブロック02にあった Instagram プロフィール風モックを、
+         ブロック01のカテゴリ（商品2点カード）の下へ移動。見た目はそのままなので
+         クラス名は据え置き、幅だけ .igIntro__mock でカラム幅に合わせる。 -->
+    <div class="rinaSec__mock igIntro__mock">
+      <header class="rinaSec__mockTop">
+        <img class="rinaSec__mockLogo" src="assets/cast-logo-circle.svg" alt="Rankup sports" />
+        <span class="rinaSec__mockTitle">BASKETBALL<br />GEAR BAGS</span>
+        <img class="rinaSec__mockBall" src="assets/cast-ball-mark.svg" alt="" />
+      </header>
 
-  <p class="rinaSec__quote">
-    こういうバッグ、意外となかったよね。<br />
-    最初、バスケ用って気づかなかった（笑）<br />
-    練習日だけ使うには、ちょっともったいない。
-  </p>
-
-  <div class="rinaSec__profile">
-    <div class="rinaSec__action"><img src="assets/cast-action.jpg" alt="" /></div>
-    <div class="rinaSec__info">
-      <div class="rinaSec__face"><img src="assets/cast-face.jpg" alt="瀬崎理奈" /></div>
-      <h3 class="rinaSec__name">RINA SEZAKI<span>瀬崎理奈</span></h3>
-      <p class="rinaSec__bio">元WJBL選手で、現在は「Joy basketball school」のコーチとして活動。福岡県を拠点に、スクールやオンラインレッスンを通じて、これまでの経験を活かした実践的な指導を行っている。バスケットボールの楽しさを伝えながら、子どもたち一人ひとりのレベルや目標に寄り添い、スキルアップをサポートしている。</p>
-      <div class="rinaSec__social">
-        <a href="https://www.instagram.com/j.o.y__basketball/" target="_blank" rel="noopener noreferrer"
-           aria-label="Joy basketball school の Instagram（別タブで開く）">
-          <img src="assets/cast-icon-insta.svg" alt="Instagram" />
-        </a>
-        <a href="https://joy-basketballschool.com/" target="_blank" rel="noopener noreferrer"
-           aria-label="Joy basketball school 公式サイト（別タブで開く）">
-          <img src="assets/cast-icon-net.svg" alt="Website" />
-        </a>
+      <div class="rinaSec__mockProfile">
+        <!-- ② RU ロゴではなくこの写真に（PDF 埋め込みから円の可視範囲を実測して切り出し） -->
+        <span class="rinaSec__mockPic"><span class="rinaSec__mockPicIn"><img src="assets/block02/profile-avatar.jpg" alt="Rankup sports" /></span></span>
+        <div class="rinaSec__mockNames">
+          <img class="rinaSec__mockBrand" src="assets/logo-rankup-black.svg" alt="Rankup sports" />
+          <p class="rinaSec__mockTag">For those of you who love<br />both basketball and fashion!</p>
+        </div>
       </div>
-    </div>
-  </div>
 
-  <div class="rinaSec__mock">
-    <header class="rinaSec__mockTop">
-      <img class="rinaSec__mockLogo" src="assets/cast-logo-circle.svg" alt="Rankup sports" />
-      <span class="rinaSec__mockTitle">BASKETBALL<br />GEAR BAGS</span>
-      <img class="rinaSec__mockBall" src="assets/cast-ball-mark.svg" alt="" />
-    </header>
-
-    <div class="rinaSec__mockProfile">
-      <!-- ② RU ロゴではなくこの写真に（PDF 埋め込みから円の可視範囲を実測して切り出し） -->
-      <span class="rinaSec__mockPic"><span class="rinaSec__mockPicIn"><img src="assets/block02/profile-avatar.jpg" alt="Rankup sports" /></span></span>
-      <div class="rinaSec__mockNames">
-        <img class="rinaSec__mockBrand" src="assets/logo-rankup-black.svg" alt="Rankup sports" />
-        <p class="rinaSec__mockTag">For those of you who love<br />both basketball and fashion!</p>
+      <div class="rinaSec__mockBtns">
+        <img src="assets/cast-following.svg" alt="Following" />
+        <img src="assets/cast-message.svg" alt="Message" />
       </div>
-    </div>
 
-    <div class="rinaSec__mockBtns">
-      <img src="assets/cast-following.svg" alt="Following" />
-      <img src="assets/cast-message.svg" alt="Message" />
-    </div>
+      <div class="rinaSec__mockHighlights">
+        <span class="ph" style="background-image:url('assets/cast-hl-ball-bag.jpg')" role="img" aria-label="Drawstring Ball Bag"></span>
+        <span class="ph" style="background-image:url('assets/cast-hl-shoe-bag.jpg')" role="img" aria-label="ShoeBarrelbag"></span>
+        <span class="ph" style="background-image:url('assets/cast-hl-pink.jpg')" role="img" aria-label="Rope Strap Pink"></span>
+        <span class="ph" style="background-image:url('assets/cast-hl-blue.jpg')" role="img" aria-label="Rope Strap Blue"></span>
+        <span class="ph" style="background-image:url('assets/cast-hl-grey.jpg')" role="img" aria-label="Rope Strap Grey"></span>
+        <!-- Black ロープを追加（ブロック04_sozai の Black_rope.png）。
+             既存3色と向きが違ったので 90度回転して合わせている。 -->
+        <span class="ph" style="background-image:url('assets/cast-hl-black.jpg')" role="img" aria-label="Rope Strap Black"></span>
+      </div>
 
-    <div class="rinaSec__mockHighlights">
-      <span class="ph" style="background-image:url('assets/cast-hl-ball-bag.jpg')" role="img" aria-label="Drawstring Ball Bag"></span>
-      <span class="ph" style="background-image:url('assets/cast-hl-shoe-bag.jpg')" role="img" aria-label="ShoeBarrelbag"></span>
-      <span class="ph" style="background-image:url('assets/cast-hl-pink.jpg')" role="img" aria-label="Rope Strap Pink"></span>
-      <span class="ph" style="background-image:url('assets/cast-hl-blue.jpg')" role="img" aria-label="Rope Strap Blue"></span>
-      <span class="ph" style="background-image:url('assets/cast-hl-grey.jpg')" role="img" aria-label="Rope Strap Grey"></span>
-      <!-- Black ロープを追加（ブロック04_sozai の Black_rope.png）。
-           既存3色と向きが違ったので 90度回転して合わせている。 -->
-      <span class="ph" style="background-image:url('assets/cast-hl-black.jpg')" role="img" aria-label="Rope Strap Black"></span>
-    </div>
-
-    <!-- ③ 写真ラインナップとマスク位置。PDF の画像配置矩形とタイル枠の交差から
-         マスクが解析的に決まるので、その正方形を焼き込んである。 -->
-    <div class="rinaSec__mockGrid">
-      <span class="ph" style="background-image:url('assets/block02/grid01.jpg')" role="img" aria-label="ブルーロープの Drawstring Ball Bag を提げてコートに立つ"></span>
-      <span class="ph" style="background-image:url('assets/block02/grid02.jpg')" role="img" aria-label="バスケットボールがすっぽり収まる巾着タイプ"></span>
-      <span class="ph" style="background-image:url('assets/block02/grid03.jpg')" role="img" aria-label="ブラウンの Drawstring Ball Bag を肩にかけたうしろ姿"></span>
-      <span class="ph" style="background-image:url('assets/block02/grid04.jpg')" role="img" aria-label="ピンクロープの Shoe Barrel Bag を手に提げて"></span>
-      <span class="ph" style="background-image:url('assets/block02/grid05.jpg')" role="img" aria-label="ピンクロープの Shoe Barrel Bag に水筒とバッシュを"></span>
-      <span class="ph" style="background-image:url('assets/block02/grid06.jpg')" role="img" aria-label="ブルーロープのバッグにバスケットシューズを入れる"></span>
-      <span class="ph" style="background-image:url('assets/block02/grid07.jpg')" role="img" aria-label="ブルーロープの Shoe Barrel Bag を肩にかけて"></span>
-      <span class="ph" style="background-image:url('assets/block02/grid08.jpg')" role="img" aria-label="2人で Drawstring Ball Bag を背負ったうしろ姿"></span>
-      <span class="ph" style="background-image:url('assets/block02/grid09.jpg')" role="img" aria-label="ピンクロープを肩に、Drawstring Ball Bag を手に"></span>
+      <!-- ③ 写真ラインナップとマスク位置。PDF の画像配置矩形とタイル枠の交差から
+           マスクが解析的に決まるので、その正方形を焼き込んである。 -->
+      <div class="rinaSec__mockGrid">
+        <span class="ph" style="background-image:url('assets/block02/grid01.jpg')" role="img" aria-label="ブルーロープの Drawstring Ball Bag を提げてコートに立つ"></span>
+        <span class="ph" style="background-image:url('assets/block02/grid02.jpg')" role="img" aria-label="バスケットボールがすっぽり収まる巾着タイプ"></span>
+        <span class="ph" style="background-image:url('assets/block02/grid03.jpg')" role="img" aria-label="ブラウンの Drawstring Ball Bag を肩にかけたうしろ姿"></span>
+        <span class="ph" style="background-image:url('assets/block02/grid04.jpg')" role="img" aria-label="ピンクロープの Shoe Barrel Bag を手に提げて"></span>
+        <span class="ph" style="background-image:url('assets/block02/grid05.jpg')" role="img" aria-label="ピンクロープの Shoe Barrel Bag に水筒とバッシュを"></span>
+        <span class="ph" style="background-image:url('assets/block02/grid06.jpg')" role="img" aria-label="ブルーロープのバッグにバスケットシューズを入れる"></span>
+        <span class="ph" style="background-image:url('assets/block02/grid07.jpg')" role="img" aria-label="ブルーロープの Shoe Barrel Bag を肩にかけて"></span>
+        <span class="ph" style="background-image:url('assets/block02/grid08.jpg')" role="img" aria-label="2人で Drawstring Ball Bag を背負ったうしろ姿"></span>
+        <span class="ph" style="background-image:url('assets/block02/grid09.jpg')" role="img" aria-label="ピンクロープを肩に、Drawstring Ball Bag を手に"></span>
+      </div>
     </div>
   </div>
 </section>
@@ -307,18 +271,19 @@
         <li><span class="ig__pName">ROPE STRAP - Blue</span><span class="ig__lead"></span><span class="ig__price">¥0,000</span></li>
       </ul>
 
-      <div class="ig__buyWrap"><a class="ig__buy" href="https://www.rankup-sports.com/product-page/basketball-gear-bags" target="_blank" rel="noopener">BUY NOW</a></div>
+      <div class="ig__buyWrap"><a class="ig__buy is-linkOff" aria-disabled="true">BUY NOW</a></div>
     </article>
 
     <!-- ---- チャット吹き出し（cropped SVG を背景、本文は live text） ---- -->
     <div class="b03__chat">
       <p class="bub bub--l bub--a">バスケットボールがすっぽり収まる巾着タイプのボールバッグ。</p>
       <p class="bub bub--r bub--b" style="--d:.16s">裏返せばデザインが変わるリバーシブル仕様で、<br />気分やコーデに合わせて2通りのスタイルを楽しめます！</p>
-      <!-- 参考サイト(FISHS EDDY)の絵文字あしらい。3個1行・カラム幅比 44%（高さ14.4%）。 -->
+      <!-- 参考サイト(FISHS EDDY)の絵文字あしらい。3個1行・カラム幅比 44%（高さ14.4%）。
+           指示①: 絵文字はブロックごとに1種類。ブロック03は😍、ブロック04は❤️。 -->
       <p class="bubEmo" style="--d:.32s" aria-hidden="true">😍😍😍</p>
       <p class="bub bub--l bub--c" style="--d:.48s">お好みのストラップロープを取り付けて、自分らしくアレンジすることも!</p>
       <p class="bub bub--r bub--d" style="--d:.64s">お気に入りのボールを入れて、練習や試合に持っていこう！</p>
-      <p class="bubEmo" style="--d:.8s" aria-hidden="true">❤️❤️❤️</p>
+      <p class="bubEmo" style="--d:.8s" aria-hidden="true">😍😍😍</p>
     </div>
 
     <!-- ---- 2×2 グリッド（ユーザー投稿カード） ---- -->
@@ -347,7 +312,7 @@
           <li><span class="ig__pName">ROPE STRAP</span><span class="ig__lead"></span><span class="ig__price">¥0,000</span></li>
         </ul>
 
-        <div class="ig__buyWrap"><a class="ig__buy" href="https://www.rankup-sports.com/product-page/basketball-gear-bags" target="_blank" rel="noopener">BUY NOW</a></div>
+        <div class="ig__buyWrap"><a class="ig__buy is-linkOff" aria-disabled="true">BUY NOW</a></div>
       </article>
 
       <article class="ig ig--mini">
@@ -374,7 +339,7 @@
           <li><span class="ig__pName">ROPE STRAP</span><span class="ig__lead"></span><span class="ig__price">¥0,000</span></li>
         </ul>
 
-        <div class="ig__buyWrap"><a class="ig__buy" href="https://www.rankup-sports.com/product-page/basketball-gear-bags" target="_blank" rel="noopener">BUY NOW</a></div>
+        <div class="ig__buyWrap"><a class="ig__buy is-linkOff" aria-disabled="true">BUY NOW</a></div>
       </article>
 
       <article class="ig ig--mini">
@@ -401,7 +366,7 @@
           <li><span class="ig__pName">ROPE STRAP</span><span class="ig__lead"></span><span class="ig__price">¥0,000</span></li>
         </ul>
 
-        <div class="ig__buyWrap"><a class="ig__buy" href="https://www.rankup-sports.com/product-page/basketball-gear-bags" target="_blank" rel="noopener">BUY NOW</a></div>
+        <div class="ig__buyWrap"><a class="ig__buy is-linkOff" aria-disabled="true">BUY NOW</a></div>
       </article>
 
       <article class="ig ig--mini">
@@ -428,7 +393,7 @@
           <li><span class="ig__pName">ROPE STRAP</span><span class="ig__lead"></span><span class="ig__price">¥0,000</span></li>
         </ul>
 
-        <div class="ig__buyWrap"><a class="ig__buy" href="https://www.rankup-sports.com/product-page/basketball-gear-bags" target="_blank" rel="noopener">BUY NOW</a></div>
+        <div class="ig__buyWrap"><a class="ig__buy is-linkOff" aria-disabled="true">BUY NOW</a></div>
       </article>
     </div>
 
@@ -496,15 +461,16 @@
         <li><span class="ig__pName">ROPE STRAP - Blue</span><span class="ig__lead"></span><span class="ig__price">¥0,000</span></li>
       </ul>
 
-      <div class="ig__buyWrap"><a class="ig__buy" href="https://www.rankup-sports.com/product-page/basketball-gear-bags" target="_blank" rel="noopener">BUY NOW</a></div>
+      <div class="ig__buyWrap"><a class="ig__buy is-linkOff" aria-disabled="true">BUY NOW</a></div>
     </article>
 
     <!-- ---- チャット吹き出し（CSS 実装 / 右青→左白→右青→左白） ---- -->
     <div class="b04__chat">
       <p class="bub bub--r bub--nowrap">バスケットシューズをすっぽり収納できるシューズバッグ。</p>
       <p class="bub bub--l bub--w3" style="--d:.16s">サイドポケットには水筒、フロントポケットにはハンドタオルや絆創膏など、練習や試合で使う小物をまとめて収納できます！</p>
-      <!-- 参考サイト(FISHS EDDY)の絵文字あしらい。3個1行・カラム幅比 44%（高さ14.4%）。 -->
-      <p class="bubEmo" style="--d:.32s" aria-hidden="true">😍😍😍</p>
+      <!-- 参考サイト(FISHS EDDY)の絵文字あしらい。3個1行・カラム幅比 44%（高さ14.4%）。
+           指示①: ブロック04の絵文字は❤️にそろえる。 -->
+      <p class="bubEmo" style="--d:.32s" aria-hidden="true">❤️❤️❤️</p>
       <p class="bub bub--r bub--w2" style="--d:.48s">お好みのロープストラップを付けて、自分らしくアレンジできるのもポイント！</p>
       <p class="bub bub--l bub--nowrap" style="--d:.64s">必要なアイテムをひとつにまとめて、練習や試合に持っていこう！</p>
       <p class="bubEmo" style="--d:.8s" aria-hidden="true">❤️❤️❤️</p>
@@ -536,7 +502,7 @@
           <li><span class="ig__pName">ROPE STRAP</span><span class="ig__lead"></span><span class="ig__price">¥0,000</span></li>
         </ul>
 
-        <div class="ig__buyWrap"><a class="ig__buy" href="https://www.rankup-sports.com/product-page/basketball-gear-bags" target="_blank" rel="noopener">BUY NOW</a></div>
+        <div class="ig__buyWrap"><a class="ig__buy is-linkOff" aria-disabled="true">BUY NOW</a></div>
       </article>
 
       <article class="ig ig--mini">
@@ -563,7 +529,7 @@
           <li><span class="ig__pName">ROPE STRAP</span><span class="ig__lead"></span><span class="ig__price">¥0,000</span></li>
         </ul>
 
-        <div class="ig__buyWrap"><a class="ig__buy" href="https://www.rankup-sports.com/product-page/basketball-gear-bags" target="_blank" rel="noopener">BUY NOW</a></div>
+        <div class="ig__buyWrap"><a class="ig__buy is-linkOff" aria-disabled="true">BUY NOW</a></div>
       </article>
 
       <article class="ig ig--mini">
@@ -590,7 +556,7 @@
           <li><span class="ig__pName">ROPE STRAP</span><span class="ig__lead"></span><span class="ig__price">¥0,000</span></li>
         </ul>
 
-        <div class="ig__buyWrap"><a class="ig__buy" href="https://www.rankup-sports.com/product-page/basketball-gear-bags" target="_blank" rel="noopener">BUY NOW</a></div>
+        <div class="ig__buyWrap"><a class="ig__buy is-linkOff" aria-disabled="true">BUY NOW</a></div>
       </article>
 
       <article class="ig ig--mini">
@@ -617,12 +583,51 @@
           <li><span class="ig__pName">ROPE STRAP</span><span class="ig__lead"></span><span class="ig__price">¥0,000</span></li>
         </ul>
 
-        <div class="ig__buyWrap"><a class="ig__buy" href="https://www.rankup-sports.com/product-page/basketball-gear-bags" target="_blank" rel="noopener">BUY NOW</a></div>
+        <div class="ig__buyWrap"><a class="ig__buy is-linkOff" aria-disabled="true">BUY NOW</a></div>
       </article>
     </div>
 
   </div>
  </div>
+</section>
+
+<!-- ============================================================
+     RINA SEZAKI — キャスト紹介。背景色は指定の #B9FF61 で固定。
+     説明文:Zen Maru Gothic / 名前(瀬崎理奈)・紹介文:M PLUS 1p /
+     見出し(RINA SEZAKI):Space Grotesk。
+     ============================================================ -->
+<section class="rinaSec">
+  <div class="rinaSec__hero">
+    <img class="rinaSec__photo" src="assets/cast-portrait.jpg" alt="瀬崎理奈" />
+    <img class="rinaSec__label" src="assets/cast-joybasketballschool.svg" alt="JOY BASKETBALL SCHOOL" />
+    <img class="rinaSec__script" src="assets/cast-rina-sezaki.svg" alt="Rina Sezaki" />
+    <img class="rinaSec__heart" src="assets/cast-heart-badge.svg" alt="" aria-hidden="true" />
+  </div>
+
+  <p class="rinaSec__quote">
+    こういうバッグ、意外となかったよね。<br />
+    最初、バスケ用って気づかなかった（笑）<br />
+    練習日だけ使うには、ちょっともったいない。
+  </p>
+
+  <div class="rinaSec__profile">
+    <div class="rinaSec__action"><img src="assets/cast-action.jpg" alt="" /></div>
+    <div class="rinaSec__info">
+      <div class="rinaSec__face"><img src="assets/cast-face.jpg" alt="瀬崎理奈" /></div>
+      <h3 class="rinaSec__name">RINA SEZAKI<span>瀬崎理奈</span></h3>
+      <p class="rinaSec__bio">元WJBL選手で、現在は「Joy basketball school」のコーチとして活動。福岡県を拠点に、スクールやオンラインレッスンを通じて、これまでの経験を活かした実践的な指導を行っている。バスケットボールの楽しさを伝えながら、子どもたち一人ひとりのレベルや目標に寄り添い、スキルアップをサポートしている。</p>
+      <div class="rinaSec__social">
+        <a href="https://www.instagram.com/j.o.y__basketball/" target="_blank" rel="noopener noreferrer"
+           aria-label="Joy basketball school の Instagram（別タブで開く）">
+          <img src="assets/cast-icon-insta.svg" alt="Instagram" />
+        </a>
+        <a href="https://joy-basketballschool.com/" target="_blank" rel="noopener noreferrer"
+           aria-label="Joy basketball school 公式サイト（別タブで開く）">
+          <img src="assets/cast-icon-net.svg" alt="Website" />
+        </a>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- ============================================================
@@ -658,7 +663,7 @@
         </figure>
       </div>
 
-      <div class="shop__buyWrap"><a class="shop__buy ig__buy" href="https://www.rankup-sports.com/product-page/basketball-gear-bags">BUY NOW</a></div>
+      <div class="shop__buyWrap"><a class="shop__buy ig__buy is-linkOff" aria-disabled="true">BUY NOW</a></div>
 
       <div class="shop__sep" aria-hidden="true"></div>
 
@@ -679,7 +684,7 @@
         </ul>
       </figure>
 
-      <div class="shop__buyWrap"><a class="shop__buy ig__buy" href="https://www.rankup-sports.com/product-page/basketball-gear-bags">BUY NOW</a></div>
+      <div class="shop__buyWrap"><a class="shop__buy ig__buy is-linkOff" aria-disabled="true">BUY NOW</a></div>
 
       <img class="shop__logo" src="assets/block05/shop-logo.svg" alt="Rankup sports" />
     </div>
@@ -873,6 +878,9 @@
 <script>
 (function(){
   var OFFICIAL_URL='https://www.rankup-sports.com/product-page/basketball-gear-bags';
+  // 指示④: BUY NOW のリンクは一旦停止。true に戻すと下の紐付けが復活し、
+  //        HTML 側の is-linkOff / aria-disabled を外せば元通りになる。
+  var BUY_LINK=false;
 
   var modal=document.getElementById('wixM'), frame=document.getElementById('wixMframe');
   var lastFocus=null;
@@ -900,10 +908,12 @@
   });
 
   // JS が無いときは a[href] のまま公式ページへ飛ぶので、ここで初めて奪う。
-  document.querySelectorAll('.ig__buy').forEach(function(b){
-    b.setAttribute('href',OFFICIAL_URL);
-    b.addEventListener('click',function(e){ e.preventDefault(); openSheet(); });
-  });
+  if(BUY_LINK){
+    document.querySelectorAll('.ig__buy').forEach(function(b){
+      b.setAttribute('href',OFFICIAL_URL);
+      b.addEventListener('click',function(e){ e.preventDefault(); openSheet(); });
+    });
+  }
 })();
 </script>
 <script src="app.js?v=14"></script>
