@@ -663,9 +663,14 @@
       <p class="rvw__empty">レビューを読み込み中…</p>
     </div>
 
+    <!-- Wix には「投稿フォームを直接開く」ディープリンクが無い（CTAボタンの
+         クリックでしか開かず、その際 URL も変わらない）。よってできるのは
+         商品ページのレビュー枠（=「レビューを書く」ボタンがある場所）へ着地
+         させるところまで。target="_top" で、LP が iframe 埋め込みでも新規タブ
+         を作らずに商品ページ本体のレビュー枠へスクロールさせる。 -->
     <a class="rvw__link"
        href="https://www.rankup-sports.com/product-page/basketball-gear-bags#wix-reviews-stores-34590dda-07a4-c952-41a2-6143331477d9"
-       target="_blank" rel="noopener">レビューを書く / すべて見る ↗</a>
+       target="_top">レビューを書く / すべて見る ↗</a>
   </div>
 </section>
 
