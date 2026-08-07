@@ -713,9 +713,10 @@
         </label>
       </div>
 
+      <!-- Wix 側の検証で content.title が必須（未入力だと upstream 400）なので必須項目にする -->
       <label class="rvf__field">
-        <span class="rvf__label">タイトル</span>
-        <input class="rvf__input" name="title" type="text" maxlength="120" />
+        <span class="rvf__label">タイトル <i>*</i></span>
+        <input class="rvf__input" name="title" type="text" maxlength="120" required />
       </label>
 
       <label class="rvf__field">
@@ -1020,6 +1021,6 @@
   }
 })();
 </script>
-<script src="app.js?v=20"></script>
+<script src="app.js?v=21"></script>
 </body>
 </html>

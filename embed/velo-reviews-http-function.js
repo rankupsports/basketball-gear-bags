@@ -104,6 +104,9 @@ export async function get_reviews() {
      2) 「すべてのレビューには Contact が必要」（Reviews API の Before you begin）。
         Create Review は contact ID 前提のメソッドなので、先に Contacts API で
         メールから既存 Contact を探し、無ければ作って contactId を渡す。
+     3) `content.title` が未入力だと 400
+        （detail: "content.title field is required"）。ドキュメント上は任意だが
+        このサイトの検証では必須。LP 側でも必須入力にし、ここでも本文から補う。
 
    ■ API キーに必要な権限（足りないと 403）
      ・Wix Reviews : Manage Reviews
@@ -150,13 +153,23 @@ export async function post_reviews(request) {
   try {
     const b = await request.body.json();
 
-    const rating = Math.min(5, Math.max(1, parseInt(b.rating, 10) || 0));
+    // 1〜5 以外は弾く（0 を 1 に丸めると、星を選ばずに 1 が付いてしまう）
+    const n = parseInt(b.rating, 10);
+    const rating = (n >= 1 && n <= 5) ? n : 0;
     const author = String(b.author || '').trim();
     const body   = String(b.content || '').trim();
     const email  = String(b.email || '').trim();
     if (!rating || !author || !body) {
       return badRequest({ headers: cors, body: JSON.stringify({ error: '評価・お名前・本文は必須です。' }) });
     }
+
+    /* content.title は Wix 側の検証で必須（空だと upstream 400:
+       "content.title field is required"）。フォームでも必須にしてあるが、
+       古いキャッシュから空で来ても落ちないよう本文の先頭から補う。 */
+    const rawTitle = String(b.title || '').trim();
+    const title = rawTitle
+      ? rawTitle.slice(0, 120)
+      : (body.split('\n')[0].slice(0, 40) + (body.length > 40 ? '…' : '')) || 'レビュー';
 
     // レビューには Contact が必要。メールがあれば既存を優先、無ければ作る。
     let contactId = null;
@@ -171,7 +184,7 @@ export async function post_reviews(request) {
       author: { authorName: author.slice(0, 60) },
       content: {
         rating,
-        title: b.title ? String(b.title).slice(0, 120) : undefined,
+        title,                        // 必須。空では送らない
         body: body.slice(0, 3000),
       },
     };

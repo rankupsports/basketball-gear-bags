@@ -682,6 +682,8 @@
       };
       if (!rating) { setMsg('星の数を選んでください。', 'is-err'); return; }
       if (!payload.author) { setMsg('お名前を入力してください。', 'is-err'); return; }
+      // Wix 側の検証で content.title は必須
+      if (!payload.title) { setMsg('タイトルを入力してください。', 'is-err'); return; }
       if (!payload.content) { setMsg('レビュー本文を入力してください。', 'is-err'); return; }
 
       submit.disabled = true;
