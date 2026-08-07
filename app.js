@@ -617,6 +617,33 @@
   /* =========================================================
      REVIEW FORM — 星評価＋送信。Velo の POST /_functions/reviews へ。
      ========================================================= */
+  /* 開閉：「レビューを書く」でフォームを開き、✕ / もう一度押すで閉じる。
+     初期状態を閉じるクラス(.has-js)は index.html 側で同期的に付けている。 */
+  const rvfSec = $('#reviews');
+  const rvwWrite = $('#rvwWrite');
+  if (rvfSec && rvwWrite) {
+    const writeTxt = $('.rvw__writeTxt', rvwWrite);
+    const panel = $('#rvfPanel');
+    const setOpen = (open, moveFocus) => {
+      rvfSec.classList.toggle('is-formOpen', open);
+      rvwWrite.setAttribute('aria-expanded', String(open));
+      if (writeTxt) writeTxt.textContent = open ? '閉じる' : 'レビューを書く';
+      if (open && moveFocus) {
+        // 開ききってから最初の入力欄へ（スクロールは自前でやるので preventScroll）
+        setTimeout(() => {
+          const first = panel && panel.querySelector('.rvf__input');
+          if (first) first.focus({ preventScroll: true });
+        }, 460);
+        if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    };
+    rvwWrite.addEventListener('click', () => setOpen(!rvfSec.classList.contains('is-formOpen'), true));
+    const rvfClose = $('#rvfClose');
+    if (rvfClose) rvfClose.addEventListener('click', () => { setOpen(false); rvwWrite.focus(); });
+    // #rvfForm へのリンクで来たときは開いた状態で見せる
+    if (location.hash === '#rvfForm' || location.hash === '#rvfPanel') setOpen(true, false);
+  }
+
   const rvfForm = $('#rvfForm');
   if (rvfForm) {
     const stars = $$('.rvf__star', rvfForm);
@@ -667,14 +694,21 @@
         });
         const data = await res.json().catch(() => ({}));
         if (res.ok && data.ok) {
-          const pending = String(data.status || '').toUpperCase().indexOf('PEND') !== -1;
+          // Wix の moderationStatus は IN_MODERATION / SUBMITTED が承認待ち
+          const st = String(data.status || '').toUpperCase();
+          const pending = st.indexOf('MODERATION') !== -1 || st.indexOf('PEND') !== -1 || st === 'SUBMITTED';
           setMsg(pending
             ? 'ありがとうございます！承認後に公開されます。'
             : 'ありがとうございます！レビューを受け付けました。', 'is-ok');
           rvfForm.reset(); rating = 0; ratingInput.value = ''; paintStars(0);
           if (!pending && window.__reloadReviews) window.__reloadReviews();
         } else {
-          setMsg((data && data.error) ? data.error : '送信に失敗しました。時間をおいて再度お試しください。', 'is-err');
+          // 画面には短い案内、原因(upstream の detail)はコンソールに出す
+          console.warn('[reviews] 送信失敗', res.status, data);
+          const upstream = /^upstream \d+/.test(String(data && data.error));
+          setMsg(upstream
+            ? '送信に失敗しました。時間をおいて再度お試しください。'
+            : ((data && data.error) || '送信に失敗しました。時間をおいて再度お試しください。'), 'is-err');
         }
       } catch (err) {
         setMsg('送信に失敗しました。通信環境をご確認ください。', 'is-err');

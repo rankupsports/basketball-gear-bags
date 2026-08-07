@@ -97,19 +97,85 @@ export async function get_reviews() {
    POST /_functions/reviews — LP のフォームから受け取り、Wix に作成する。
    body(JSON): { author, email, rating, title, content }
 
-   ※ API キーの権限に「Wix Reviews の作成/管理（Manage Reviews）」が必要。
-     読み取りだけの権限だと 403 になる。
-   ※ サイトのレビュー設定によっては、作成後 status:PENDING（承認待ち）に
+   ■ upstream 400 だったときの原因と対処（実測・公式仕様で確認）
+     1) Author に `email` を入れていた。Create Review の Author が持てるのは
+        `contactId` と `authorName` だけで、未知フィールドは 400 になる。
+        → email は Author から外し、Contact 作成側で使う。
+     2) 「すべてのレビューには Contact が必要」（Reviews API の Before you begin）。
+        Create Review は contact ID 前提のメソッドなので、先に Contacts API で
+        メールから既存 Contact を探し、無ければ作って contactId を渡す。
+
+   ■ API キーに必要な権限（足りないと 403）
+     ・Wix Reviews : Manage Reviews
+     ・Contacts    : Read Contacts ＋ Manage Contacts  ← 今回追加が必要
+   ※ サイトのレビュー設定によっては、作成後 IN_MODERATION（承認待ち）に
      なり、ダッシュボードで承認するまで公開されない。これは正常。
+   ※ 同じ Contact が同じ商品に 2 件目を書くとエラーになる（1人1件）。
    ============================================================ */
+
+// メールから既存 Contact を探す（無ければ null）。
+async function findContactId(email) {
+  if (!email) return null;
+  const res = await fetch('https://www.wixapis.com/contacts/v4/contacts/query', {
+    method: 'POST',
+    headers: { 'Authorization': API_KEY, 'wix-site-id': SITE_ID, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ query: { filter: { 'info.emails.email': email }, fieldsets: ['BASIC'] } }),
+  });
+  if (!res.ok) return null;
+  const data = await res.json().catch(() => ({}));
+  const list = data.contacts || [];
+  return list.length ? (list[0].id || list[0]._id || null) : null;
+}
+
+// Contact を作る。重複(409)なら既存を引き直す。
+async function createContactId(name, email) {
+  const info = { name: { first: String(name || 'ゲスト').slice(0, 60) } };
+  if (email) info.emails = { items: [{ tag: 'MAIN', email, primary: true }] };
+
+  const res = await fetch('https://www.wixapis.com/contacts/v4/contacts', {
+    method: 'POST',
+    headers: { 'Authorization': API_KEY, 'wix-site-id': SITE_ID, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ info, allowDuplicates: false }),
+  });
+
+  if (res.status === 409) return await findContactId(email);   // 既に居る
+  if (!res.ok) return null;
+
+  const data = await res.json().catch(() => ({}));
+  const c = data.contact || data;
+  return c.id || c._id || null;
+}
+
 export async function post_reviews(request) {
   try {
     const b = await request.body.json();
 
     const rating = Math.min(5, Math.max(1, parseInt(b.rating, 10) || 0));
-    if (!rating || !b.content || !b.author) {
+    const author = String(b.author || '').trim();
+    const body   = String(b.content || '').trim();
+    const email  = String(b.email || '').trim();
+    if (!rating || !author || !body) {
       return badRequest({ headers: cors, body: JSON.stringify({ error: '評価・お名前・本文は必須です。' }) });
     }
+
+    // レビューには Contact が必要。メールがあれば既存を優先、無ければ作る。
+    let contactId = null;
+    try {
+      contactId = await findContactId(email);
+      if (!contactId) contactId = await createContactId(author, email);
+    } catch (e) { /* Contact が用意できなくても、下でそのまま試す */ }
+
+    const review = {
+      namespace: NAMESPACE,
+      entityId: ENTITY_ID,
+      author: { authorName: author.slice(0, 60) },
+      content: {
+        rating,
+        title: b.title ? String(b.title).slice(0, 120) : undefined,
+        body: body.slice(0, 3000),
+      },
+    };
+    if (contactId) review.author.contactId = contactId;
 
     const res = await fetch('https://www.wixapis.com/reviews/v1/reviews', {
       method: 'POST',
@@ -118,23 +184,20 @@ export async function post_reviews(request) {
         'wix-site-id': SITE_ID,
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({
-        review: {
-          namespace: NAMESPACE,
-          entityId: ENTITY_ID,
-          author: { authorName: String(b.author).slice(0, 60), email: b.email || undefined },
-          content: {
-            rating,
-            title: b.title ? String(b.title).slice(0, 120) : undefined,
-            body: String(b.content).slice(0, 3000),
-          },
-        },
-      }),
+      body: JSON.stringify({ review }),
     });
 
     const text = await res.text();
     if (!res.ok) {
-      return serverError({ headers: cors, body: JSON.stringify({ error: `upstream ${res.status}`, detail: text.slice(0, 400) }) });
+      // 1人1件の制約に当たった場合だけ、来訪者に分かる文言にする
+      if (res.status === 409 || /ALREADY_EXISTS|DUPLICATE/i.test(text)) {
+        return badRequest({ headers: cors, body: JSON.stringify({ error: 'このメールアドレスでは、すでにこの商品のレビューを投稿済みです。' }) });
+      }
+      return serverError({ headers: cors, body: JSON.stringify({
+        error: `upstream ${res.status}`,
+        detail: text.slice(0, 400),
+        sentContactId: contactId ? 'yes' : 'no',   // 400 の切り分け用
+      }) });
     }
 
     let created = {};

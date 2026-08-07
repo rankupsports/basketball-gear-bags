@@ -646,7 +646,13 @@
         <div class="rvw__avgStars" id="rvwAvgStars" aria-hidden="true">☆☆☆☆☆</div>
         <span class="rvw__avg" id="rvwAvg">–</span>
         <p class="rvw__count" id="rvwCount">レビューを読み込み中…</p>
-        <a class="rvw__writeBtn" href="#rvfForm">レビューを書く</a>
+        <!-- 開閉式トグル。JS が無い場合はフォームが開いたままなので、
+             その時はこのボタン自体を隠す（下の .rvf:not(.has-js) 参照）。 -->
+        <button class="rvw__writeBtn" id="rvwWrite" type="button"
+                aria-expanded="false" aria-controls="rvfPanel">
+          <span class="rvw__writeTxt">レビューを書く</span>
+          <span class="rvw__writeCaret" aria-hidden="true"></span>
+        </button>
       </div>
       <div class="rvw__dist" id="rvwDist" aria-hidden="true"></div>
     </div>
@@ -677,7 +683,10 @@
     <div class="rvw__list" id="rvwList"></div>
   </div>
 
-  <div class="rvf__inner">
+  <!-- 開閉式パネル。閉じている間は max-height / padding / border を 0 にして
+       カードごと畳む（JS 無効時は開いたまま＝フォームが使える）。 -->
+  <div class="rvf__inner" id="rvfPanel">
+    <button class="rvf__close" id="rvfClose" type="button" aria-label="入力欄を閉じる">✕</button>
     <h2 class="rvf__ttl">レビューを書く</h2>
     <p class="rvf__lead">この商品を使った感想を教えてください。</p>
 
@@ -719,6 +728,11 @@
     </form>
   </div>
 </section>
+<script>
+  /* JS があるときだけ初期状態を「閉じ」にする。ここで同期的に付けるので
+     読み込み時にフォームが一瞬見えてしまうことがない（JS 無効なら開いたまま）。 */
+  document.getElementById('reviews').classList.add('has-js');
+</script>
 
 <!-- ============================================================
      block05 : ONLINE SHOP （レシート風カート / 背景 #F4E06D）
@@ -1006,6 +1020,6 @@
   }
 })();
 </script>
-<script src="app.js?v=19"></script>
+<script src="app.js?v=20"></script>
 </body>
 </html>
