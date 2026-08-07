@@ -64,7 +64,7 @@ export async function get_reviews() {
         query: {
           filter: { namespace: NAMESPACE, entityId: ENTITY_ID },
           sort: [{ fieldName: 'createdDate', order: 'DESC' }],
-          cursorPaging: { limit: 20 },
+          paging: { limit: 100, offset: 0 },
         },
       }),
     });
@@ -83,7 +83,11 @@ export async function get_reviews() {
       date:   r.createdDate || null,
     }));
 
-    return ok({ headers: cors, body: JSON.stringify({ total: items.length, items }) });
+    // 総件数はページング情報から（無ければ返却件数）
+    const total = (data.pagingMetadata && (data.pagingMetadata.total != null ? data.pagingMetadata.total : data.pagingMetadata.count))
+      || items.length;
+
+    return ok({ headers: cors, body: JSON.stringify({ total, items }) });
   } catch (e) {
     return badRequest({ headers: cors, body: JSON.stringify({ error: String((e && e.message) || e) }) });
   }

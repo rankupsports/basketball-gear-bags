@@ -515,33 +515,74 @@
   }
 
   /* =========================================================
-     REVIEWS 表示 — GET /_functions/reviews を取得して白カードを横に流す。
+     REVIEWS 表示 — Wix 形式（平均スコア＋星分布＋一覧）。
+     GET /_functions/reviews を取得し、平均・分布・件数を集計して描画。
      ========================================================= */
-  const rvwWin = $('#rvwWin');
-  if (rvwWin) {
+  const rvwWrap = $('#rvwWrap');
+  if (rvwWrap) {
     const esc = (s) => String(s || '').replace(/[&<>"]/g, (c) =>
       ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-    const stars = (n) => '★'.repeat(n || 0) + '☆'.repeat(5 - (n || 0));
-    const card = (r) => `<article class="rvw__card">
-        <div class="rvw__stars" aria-hidden="true">${stars(r.rating)}</div>
-        ${r.title ? `<p class="rvw__cardTtl">${esc(r.title)}</p>` : ''}
-        <p class="rvw__body">${esc(r.body)}</p>
-        <p class="rvw__by">— ${esc(r.author)}</p>
-      </article>`;
-
-    window.__renderReviews = (items) => {
-      if (!items || !items.length) {
-        rvwWin.innerHTML = '<p class="rvw__empty">最初のレビューを書いてみませんか？</p>';
-        return;
-      }
-      const dup = [...items, ...items].map(card).join('');
-      rvwWin.innerHTML = `<div class="rvw__track">${dup}</div>`;
+    const starStr = (n) => '★'.repeat(Math.round(n || 0)) + '☆'.repeat(5 - Math.round(n || 0));
+    const fmtDate = (d) => {
+      if (!d) return '';
+      const t = new Date(d);
+      return isNaN(t) ? '' : `${t.getFullYear()}年${t.getMonth() + 1}月${t.getDate()}日`;
     };
 
-    fetch(rvwWin.dataset.src, { mode: 'cors' })
+    const elAvgStars = $('#rvwAvgStars');
+    const elAvg = $('#rvwAvg');
+    const elCount = $('#rvwCount');
+    const elDist = $('#rvwDist');
+    const elList = $('#rvwList');
+
+    const render = (items, total) => {
+      items = items || [];
+      const n = total || items.length;
+
+      // 平均（返ってきた items から算出）
+      const rated = items.filter((r) => r.rating);
+      const avg = rated.length ? rated.reduce((s, r) => s + r.rating, 0) / rated.length : 0;
+      elAvgStars.textContent = starStr(avg);
+      elAvg.textContent = avg ? avg.toFixed(1) : '–';
+      elCount.textContent = n ? `${n}件のレビュー` : 'まだレビューはありません';
+
+      // 分布バー（5→1）。割合は総数に対する比。
+      const counts = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
+      rated.forEach((r) => { const k = Math.round(r.rating); if (counts[k] != null) counts[k]++; });
+      const denom = rated.length || 1;
+      elDist.innerHTML = [5, 4, 3, 2, 1].map((star) => {
+        const c = counts[star];
+        const pct = Math.round((c / denom) * 100);
+        return `<div class="rvw__distRow">
+            <span class="rvw__distLabel">${star}つ星</span>
+            <span class="rvw__distBar"><i class="rvw__distFill" style="width:${pct}%"></i></span>
+            <span class="rvw__distNum">${c}</span>
+          </div>`;
+      }).join('');
+
+      // 一覧
+      if (!items.length) {
+        elList.innerHTML = '<p class="rvw__empty">最初のレビューを書いてみませんか？</p>';
+        return;
+      }
+      elList.innerHTML = items.map((r) => `<article class="rvw__item">
+          <div class="rvw__head">
+            <span class="rvw__author">${esc(r.author)}</span>
+            ${r.date ? `<span class="rvw__dot">・</span><span>${esc(fmtDate(r.date))}</span>` : ''}
+          </div>
+          <div class="rvw__itemStars" aria-hidden="true">${starStr(r.rating)}</div>
+          ${r.title ? `<h3 class="rvw__itemTtl">${esc(r.title)}</h3>` : ''}
+          <p class="rvw__itemBody">${esc(r.body)}</p>
+        </article>`).join('');
+    };
+    // フォーム送信後に一覧を更新できるよう公開
+    window.__reloadReviews = () => fetch(rvwWrap.dataset.src, { mode: 'cors' })
+      .then((r) => r.json()).then(({ items, total }) => render(items, total)).catch(() => {});
+
+    fetch(rvwWrap.dataset.src, { mode: 'cors' })
       .then((r) => r.json())
-      .then(({ items }) => window.__renderReviews(items))
-      .catch(() => { rvwWin.innerHTML = '<p class="rvw__empty">最初のレビューを書いてみませんか？</p>'; });
+      .then(({ items, total }) => render(items, total))
+      .catch(() => { elCount.textContent = 'まだレビューはありません'; render([], 0); });
   }
 
   /* =========================================================
@@ -602,6 +643,7 @@
             ? 'ありがとうございます！承認後に公開されます。'
             : 'ありがとうございます！レビューを受け付けました。', 'is-ok');
           rvfForm.reset(); rating = 0; ratingInput.value = ''; paintStars(0);
+          if (!pending && window.__reloadReviews) window.__reloadReviews();
         } else {
           setMsg((data && data.error) ? data.error : '送信に失敗しました。時間をおいて再度お試しください。', 'is-err');
         }
