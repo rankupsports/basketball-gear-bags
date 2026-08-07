@@ -8,14 +8,16 @@
      そこで確実に存在する wix-fetch / wix-secrets-backend だけを使い、
      Wix REST の Reviews API を叩く。
 
-   ■ 事前準備（Wix 側で1回だけ）
-     1) Wix アカウント → 設定 → API キー → 新規作成
+   ■ 事前準備（Wix 側で1回だけ）— Secrets Manager は不要
+     1) https://manage.wix.com/account/api-keys で API キーを新規作成。
         権限は「Wix Reviews（Read Reviews / レビューの読み取り）」を付与。
-     2) Velo → Secrets Manager で、そのキーを
-        名前  : reviews_api_key
-        値    : 発行された API キー
-        で保存。
+     2) 下の API_KEY 定数に、その値を貼る。
      3) 公開（Publish）。
+
+     ※ バックエンド(backend/)のコードは訪問者には配信されない（サーバー側
+       でのみ実行）ため、ここにキーを置いても公開ページには漏れない。
+       ただし GitHub にこの実キーを push しないこと（このリポジトリの
+       ファイルはプレースホルダのまま。実キーは Wix エディタ内だけに置く）。
 
    ■ 対象（判明済みの値）
      wix-site-id (metaSiteId) : ae41fe9c-e787-4454-b8d8-3a815a33adcd
@@ -26,7 +28,9 @@
    ============================================================ */
 import { ok, badRequest, serverError } from 'wix-http-functions';
 import { fetch } from 'wix-fetch';
-import { getSecret } from 'wix-secrets-backend';
+
+// ここに発行した API キーを貼る（Wix エディタ内のみ。GitHub には push しない）
+const API_KEY = 'PASTE_YOUR_WIX_API_KEY_HERE';
 
 const ALLOW_ORIGIN = 'https://rankupsports.github.io';
 const SITE_ID   = 'ae41fe9c-e787-4454-b8d8-3a815a33adcd';
@@ -48,12 +52,10 @@ export function options_reviews() {
 
 export async function get_reviews() {
   try {
-    const apiKey = await getSecret('reviews_api_key');
-
     const res = await fetch('https://www.wixapis.com/reviews/v1/reviews/query', {
       method: 'POST',
       headers: {
-        'Authorization': apiKey,
+        'Authorization': API_KEY,
         'wix-site-id': SITE_ID,
         'Content-Type': 'application/json',
       },
