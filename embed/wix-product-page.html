@@ -1,0 +1,71 @@
+<!-- ============================================================
+     BASKETBALL GEAR BAGS 特設LP — 商品ページ埋め込み用コード
+     貼り先: www.rankup-sports.com/product-page/basketball-gear-bags
+             「レビュー」ブロックのすぐ上
+     貼り方: Wix エディタ → 追加(+) → 埋め込み＆ソーシャル
+             → 「HTML コードを埋め込む」を配置 → 「コードを入力」
+             → 下の <meta> 以降をすべて貼り付け
+
+     サイズ（エディタ側で枠のサイズを指定してください。中身は枠いっぱいに追従します）
+       PC       : 幅 980px（= サイト幅いっぱい） × 高さ 820px
+       モバイル : 幅 320px（= モバイル canvas いっぱい） × 高さ 560px
+     ※ もっと小さく収めたいときは PC 980×620 でも成立します。
+        高さを変えても中の LP 側は自動で追従します（下限 420px）。
+
+     メモ
+       - LP は iframe 内で自前にスクロールします（固定ヘッダー・スクロール連動の
+         背景クロスフェードもそのまま動きます）。
+       - loading="lazy" にしてあるので、レビュー位置まで実際にスクロールされるまで
+         LP 内の動画（合計 60MB 超）は読み込まれません。
+       - LP 内の BUY NOW はリンクを切ってあるので、商品ページ → LP → 商品ページ の
+         ループにはなりません。復活させるときは LP 側 index.html の BUY_LINK を戻します。
+     ============================================================ -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  html, body { margin: 0; padding: 0; height: 100%; background: transparent; }
+
+  /* 高さは Wix の枠に追従。枠が未設定でも潰れないように下限だけ持たせる。 */
+  .lpEmbed {
+    position: relative;
+    height: 100%;
+    min-height: 420px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #ffffff;                      /* 読み込み中の地色 */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .14);
+  }
+  .lpEmbed iframe { display: block; width: 100%; height: 100%; border: 0; }
+
+  /* iframe 内のスクロールが窮屈な人向けの逃げ道。 */
+  .lpEmbed__open {
+    position: absolute; right: 12px; bottom: 12px; z-index: 2;
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 14px; border-radius: 999px;
+    background: rgba(20, 20, 26, .72); color: #fff; text-decoration: none;
+    font: 600 13px/1 -apple-system, BlinkMacSystemFont, "Helvetica Neue",
+          "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    transition: background .2s ease;
+  }
+  .lpEmbed__open:hover { background: rgba(20, 20, 26, .92); }
+
+  @media (max-width: 600px) {
+    .lpEmbed { border-radius: 10px; box-shadow: 0 6px 18px rgba(0, 0, 0, .12); }
+    .lpEmbed__open { right: 8px; bottom: 8px; padding: 7px 12px; font-size: 12px; }
+  }
+</style>
+
+<div class="lpEmbed">
+  <iframe
+    src="https://rankupsports.github.io/basketball-gear-bags/"
+    title="BASKETBALL GEAR BAGS 特設ページ"
+    loading="lazy"
+    allow="autoplay; fullscreen"
+    referrerpolicy="no-referrer-when-downgrade"
+    scrolling="yes"></iframe>
+
+  <a class="lpEmbed__open"
+     href="https://rankupsports.github.io/basketball-gear-bags/"
+     target="_blank" rel="noopener">全画面で見る ↗</a>
+</div>
