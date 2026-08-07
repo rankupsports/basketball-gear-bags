@@ -12,10 +12,23 @@
      ※ もっと小さく収めたいときは PC 980×620 でも成立します。
         高さを変えても中の LP 側は自動で追従します（下限 420px）。
 
+     ■ 枠内をスクロールしたら全画面へ
+       枠の中で LP をスクロールさせる代わりに、スクロール操作を全画面表示の
+       きっかけに使う（プレビュー中は iframe を pointer-events:none にして
+       LP 側がスクロールを食わないようにしてある）。
+
+       - タッチ（スマホ/タブレット）: 縦スワイプで即全画面。
+         スワイプ終わりの touchend はブラウザ仕様で「ユーザー操作」として
+         有効なので、Fullscreen API をそのまま呼べる。
+       - PC（ホイール）: wheel は仕様上ユーザー操作にカウントされず
+         Fullscreen API が拒否されるため、中央にプロンプトを出して
+         1クリックで全画面へ。枠のどこをクリックしても全画面になる。
+       - Fullscreen API 非対応（iPhone Safari など）: 別タブで LP を開く。
+       - 全画面中は iframe の操作を戻すので LP は普通にスクロールできる。
+         右上の「閉じる」または Esc でプレビューに戻る。
+
      メモ
-       - LP は iframe 内で自前にスクロールします（固定ヘッダー・スクロール連動の
-         背景クロスフェードもそのまま動きます）。
-       - loading="lazy" にしてあるので、レビュー位置まで実際にスクロールされるまで
+       - loading="lazy" なので、レビュー位置まで実際にスクロールされるまで
          LP 内の動画（合計 60MB 超）は読み込まれません。
        - LP 内の BUY NOW はリンクを切ってあるので、商品ページ → LP → 商品ページ の
          ループにはなりません。復活させるときは LP 側 index.html の BUY_LINK を戻します。
@@ -25,7 +38,6 @@
 <style>
   html, body { margin: 0; padding: 0; height: 100%; background: transparent; }
 
-  /* 高さは Wix の枠に追従。枠が未設定でも潰れないように下限だけ持たせる。 */
   .lpEmbed {
     position: relative;
     height: 100%;
@@ -34,30 +46,78 @@
     overflow: hidden;
     background: #ffffff;                      /* 読み込み中の地色 */
     box-shadow: 0 10px 30px rgba(0, 0, 0, .14);
+    cursor: zoom-in;                          /* プレビューは「開くもの」だと示す */
   }
-  .lpEmbed iframe { display: block; width: 100%; height: 100%; border: 0; }
+  .lpEmbed iframe {
+    display: block; width: 100%; height: 100%; border: 0;
+    pointer-events: none;                     /* プレビュー中は LP を操作させない */
+  }
 
-  /* iframe 内のスクロールが窮屈な人向けの逃げ道。 */
-  .lpEmbed__open {
-    position: absolute; right: 12px; bottom: 12px; z-index: 2;
+  /* ---- 全画面中 ---- */
+  .lpEmbed.is-fs { border-radius: 0; box-shadow: none; cursor: auto; }
+  .lpEmbed.is-fs iframe { pointer-events: auto; }   /* LP を普通に触れるように戻す */
+
+  /* ---- 共通のチップ（右下の全画面ボタン / 右上の閉じる） ---- */
+  .lpChip {
+    position: absolute; z-index: 3;
     display: inline-flex; align-items: center; gap: 6px;
-    padding: 8px 14px; border-radius: 999px;
+    padding: 8px 14px; border: 0; border-radius: 999px;
     background: rgba(20, 20, 26, .72); color: #fff; text-decoration: none;
     font: 600 13px/1 -apple-system, BlinkMacSystemFont, "Helvetica Neue",
           "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
     -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
-    transition: background .2s ease;
+    cursor: pointer; transition: background .2s ease;
   }
-  .lpEmbed__open:hover { background: rgba(20, 20, 26, .92); }
+  .lpChip:hover { background: rgba(20, 20, 26, .92); }
+  .lpChip:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+  .lpChip[hidden] { display: none; }
+
+  .lpEmbed__open  { right: 12px; bottom: 12px; }
+  .lpEmbed__close { right: 12px; top: 12px; }
+
+  /* ---- スクロールで出るプロンプト（PC 用の1クリック導線） ---- */
+  .lpEmbed__cta {
+    position: absolute; inset: 0; z-index: 4;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+    background: rgba(12, 12, 16, .42);
+    -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue",
+                 "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
+    animation: lpCtaIn .18s ease-out both;
+  }
+  .lpEmbed__cta[hidden] { display: none; }
+  .lpEmbed__ctaTxt {
+    margin: 0; color: #fff; font-size: 15px; font-weight: 600; letter-spacing: .04em;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, .5);
+  }
+  .lpEmbed__ctaBtn {
+    border: 0; border-radius: 999px; padding: 13px 26px;
+    background: #27498D; color: #fff; cursor: pointer;
+    font: 700 15px/1 inherit; letter-spacing: .03em;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .3);
+    animation: lpCtaPulse 1.8s ease-in-out infinite;
+  }
+  .lpEmbed__ctaBtn:hover { background: #2f57a8; }
+  .lpEmbed__ctaBtn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
+
+  @keyframes lpCtaIn   { from { opacity: 0 } to { opacity: 1 } }
+  @keyframes lpCtaPulse{ 0%,100% { transform: scale(1) } 50% { transform: scale(1.045) } }
+  @media (prefers-reduced-motion: reduce) {
+    .lpEmbed__cta, .lpEmbed__ctaBtn { animation: none }
+  }
 
   @media (max-width: 600px) {
     .lpEmbed { border-radius: 10px; box-shadow: 0 6px 18px rgba(0, 0, 0, .12); }
-    .lpEmbed__open { right: 8px; bottom: 8px; padding: 7px 12px; font-size: 12px; }
+    .lpChip { padding: 7px 12px; font-size: 12px; }
+    .lpEmbed__open  { right: 8px; bottom: 8px; }
+    .lpEmbed__close { right: 8px; top: 8px; }
+    .lpEmbed__ctaTxt { font-size: 14px; }
+    .lpEmbed__ctaBtn { padding: 12px 22px; font-size: 14px; }
   }
 </style>
 
-<div class="lpEmbed">
-  <iframe
+<div class="lpEmbed" id="lpEmbed">
+  <iframe id="lpFrame"
     src="https://rankupsports.github.io/basketball-gear-bags/"
     title="BASKETBALL GEAR BAGS 特設ページ"
     loading="lazy"
@@ -65,7 +125,106 @@
     referrerpolicy="no-referrer-when-downgrade"
     scrolling="yes"></iframe>
 
-  <a class="lpEmbed__open"
+  <!-- スクロール時に出る全画面プロンプト（PC 用） -->
+  <div class="lpEmbed__cta" id="lpCta" hidden>
+    <p class="lpEmbed__ctaTxt">続きは全画面で</p>
+    <button class="lpEmbed__ctaBtn" type="button" id="lpCtaBtn">全画面で見る</button>
+  </div>
+
+  <!-- JS が動かない環境ではただの別タブリンクとして機能する -->
+  <a class="lpChip lpEmbed__open" id="lpOpen"
      href="https://rankupsports.github.io/basketball-gear-bags/"
-     target="_blank" rel="noopener">全画面で見る ↗</a>
+     target="_blank" rel="noopener">全画面表示</a>
+
+  <button class="lpChip lpEmbed__close" id="lpClose" type="button" hidden>閉じる ✕</button>
 </div>
+
+<script>
+(function(){
+  var box   = document.getElementById('lpEmbed');
+  var cta   = document.getElementById('lpCta');
+  var ctaBtn= document.getElementById('lpCtaBtn');
+  var open  = document.getElementById('lpOpen');
+  var close = document.getElementById('lpClose');
+
+  var req  = box.requestFullscreen || box.webkitRequestFullscreen;
+  var exit = document.exitFullscreen || document.webkitExitFullscreen;
+  var ctaTimer = null;
+  var wheelBlocked = false;   // ホイール由来の全画面が弾かれたら、以降は試さない
+
+  function isFs(){ return !!(document.fullscreenElement || document.webkitFullscreenElement); }
+
+  function showCta(){
+    if(isFs()) return;
+    cta.hidden = false;
+    // 出しっぱなしでプレビューを覆い続けないよう、操作が止まったら引っ込める。
+    clearTimeout(ctaTimer);
+    ctaTimer = setTimeout(function(){ cta.hidden = true; }, 5000);
+  }
+  function hideCta(){ clearTimeout(ctaTimer); cta.hidden = true; }
+  function openTab(){ window.open(open.href, '_blank', 'noopener'); }
+
+  /* allowPopup: 全画面 API が使えないときに別タブを開いてよい操作か。
+     クリック / プロンプトのタップは可。ホイールやスワイプで勝手に別タブは開かない。 */
+  function toFullscreen(allowPopup, onFail){
+    if(isFs()) return;
+    if(!req){                                   // iPhone Safari など要素の全画面に非対応
+      if(allowPopup) openTab(); else if(onFail) onFail();
+      return;
+    }
+    var p;
+    try { p = req.call(box); } catch(e){ if(onFail) onFail(); return; }
+    if(p && p.catch) p.catch(function(){ if(onFail) onFail(); });
+  }
+
+  // ---- PC: wheel はブラウザ仕様で「ユーザー操作」に数えられないため全画面 API が
+  //          弾かれる。1度だけ試し、弾かれたら以降はプロンプト（＝1クリック）に任せる。
+  box.addEventListener('wheel', function(){
+    if(isFs()) return;
+    if(wheelBlocked){ showCta(); return; }
+    toFullscreen(false, function(){ wheelBlocked = true; showCta(); });
+  }, {passive:true});
+
+  // ---- タッチ: 縦スワイプの終わり(touchend)は有効な操作なので、そのまま全画面へ
+  var startY = null, moved = 0;
+  box.addEventListener('touchstart', function(e){
+    startY = e.touches[0].clientY; moved = 0;
+  }, {passive:true});
+  box.addEventListener('touchmove', function(e){
+    if(startY !== null) moved = Math.abs(e.touches[0].clientY - startY);
+  }, {passive:true});
+  box.addEventListener('touchend', function(){
+    if(moved > 20) toFullscreen(false, showCta);  // 20px 以上動いたらスクロール操作とみなす
+    startY = null;
+  }, {passive:true});
+
+  // ---- クリックはどこでも全画面。全画面が使えない環境では別タブで開く。
+  box.addEventListener('click', function(e){
+    if(open.contains(e.target) || close.contains(e.target)) return;
+    hideCta();
+    toFullscreen(true, openTab);
+  });
+  ctaBtn.addEventListener('click', function(e){
+    e.stopPropagation();                         // box 側ハンドラとの二重発火を防ぐ
+    hideCta();
+    toFullscreen(true, openTab);
+  });
+  // 右下チップ: 対応環境は全画面、非対応環境はリンクのまま別タブへ
+  open.addEventListener('click', function(e){
+    if(req){ e.preventDefault(); toFullscreen(true, openTab); }
+  });
+  close.addEventListener('click', function(){ if(exit) exit.call(document); });
+
+  function sync(){
+    var fs = isFs();
+    box.classList.toggle('is-fs', fs);
+    close.hidden = !fs;
+    open.hidden  = fs;
+    if(fs) hideCta();
+    // iframe の表示サイズが変わると LP 側の resize が自前で走るので、ここでは何もしない。
+  }
+  document.addEventListener('fullscreenchange', sync);
+  document.addEventListener('webkitfullscreenchange', sync);
+  sync();
+})();
+</script>
