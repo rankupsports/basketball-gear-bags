@@ -38,21 +38,10 @@ const SHOW_ON = [
 /* 埋め込み要素の ID。エディタのプロパティパネルの表示に合わせる。 */
 const EMBED_ID = '#html1';
 
+function asList(x) { return Array.isArray(x) ? x : (x ? [x] : []); }
+function canToggle(e) { return e && typeof e.collapse === 'function' && typeof e.expand === 'function'; }
+
 $w.onReady(() => {
-  let el = null;
-  try { el = $w(EMBED_ID); } catch (e) { /* ID が無いと投げる場合 */ }
-
-  /* Velo は存在しない ID に対してメソッドを持たないスタブを返すことがある。
-     truthy チェックだけだと el.collapse() で TypeError になるので、
-     関数があるかどうかで判定する。無ければ何もしない（＝常に表示のまま）。 */
-  if (!el || typeof el.collapse !== 'function' || typeof el.expand !== 'function') {
-    const all = $w('HtmlComponent');
-    const list = Array.isArray(all) ? all : [all];
-    console.log('[LP埋め込み] ' + EMBED_ID + ' が見つかりません。'
-      + 'このページの HtmlComponent: ' + (list.map(e => e.id).join(', ') || 'なし'));
-    return;
-  }
-
   // 例: /product-page/basketball-gear-bags → ['product-page', 'basketball-gear-bags']
   const parts = wixLocation.path;
   const raw = parts[parts.length - 1] || '';
@@ -60,11 +49,24 @@ $w.onReady(() => {
   try { slug = decodeURIComponent(raw); } catch (e) { /* すでにデコード済み */ }
 
   // 日本語スラッグはエンコード済みで来ることがあるので、両方で照合する
-  if (SHOW_ON.indexOf(slug) !== -1 || SHOW_ON.indexOf(raw) !== -1) {
-    el.expand();
-  } else {
-    el.collapse();                       // 高さごと詰まるので他商品に隙間が残らない
+  const match = SHOW_ON.indexOf(slug) !== -1 || SHOW_ON.indexOf(raw) !== -1;
+
+  /* 対象の埋め込み要素を集める。
+     まず EMBED_ID を試し、見つからなければページ内の全 HtmlComponent を対象にする。
+     こうしておくと ID がズレていても、非対象ページでは確実に畳める
+     （＝他商品ページに出っぱなしになる事故を防ぐ）。 */
+  let targets = [];
+  try { const el = $w(EMBED_ID); if (canToggle(el)) targets = [el]; } catch (e) { /* ID 無し */ }
+  if (!targets.length) targets = asList($w('HtmlComponent')).filter(canToggle);
+
+  if (!targets.length) {
+    console.log('[LP埋め込み] 切り替え対象の HtmlComponent が見つかりません。'
+      + '埋め込み要素の ID を EMBED_ID に設定してください。');
+    return;
   }
+
+  // 対象商品だけ表示。それ以外は高さごと畳んで隙間も残さない。
+  targets.forEach((el) => { if (match) el.expand(); else el.collapse(); });
 });
 
 /* ── URL ではなく商品データで判定したい場合 ─────────────────
