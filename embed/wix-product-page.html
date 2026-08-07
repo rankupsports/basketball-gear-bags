@@ -12,10 +12,7 @@
      ※ もっと小さく収めたいときは PC 980×620 でも成立します（下限 420px）。
 
      ■ 動き
-       枠の中で LP をそのままスクロールして見られる。
-       全画面にしたいときだけ右下の「全画面表示」を押す。全画面 API が使えない
-       環境（iPhone Safari など）では別タブで LP を開く。
-       全画面中は右上の「閉じる」または Esc でプレビューに戻る。
+       枠の中で LP をそのままスクロールして見られる（全画面表示は廃止）。
 
      メモ
        - loading="lazy" なので、レビュー位置まで実際にスクロールされるまで
@@ -42,32 +39,8 @@
   /* 枠の中でそのままスクロールできる（pointer-events は触らない） */
   .lpEmbed iframe { display: block; width: 100%; height: 100%; border: 0; }
 
-  /* ---- 全画面中 ---- */
-  .lpEmbed.is-fs { border-radius: 0; box-shadow: none; }
-
-  /* ---- チップ（右下の全画面ボタン / 右上の閉じる） ---- */
-  .lpChip {
-    position: absolute; z-index: 3;
-    display: inline-flex; align-items: center; gap: 6px;
-    padding: 8px 14px; border: 0; border-radius: 999px;
-    background: rgba(20, 20, 26, .72); color: #fff; text-decoration: none;
-    font: 600 13px/1 -apple-system, BlinkMacSystemFont, "Helvetica Neue",
-          "Hiragino Kaku Gothic ProN", "Noto Sans JP", sans-serif;
-    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
-    cursor: pointer; transition: background .2s ease;
-  }
-  .lpChip:hover { background: rgba(20, 20, 26, .92); }
-  .lpChip:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
-  .lpChip[hidden] { display: none; }
-
-  .lpEmbed__open  { right: 12px; bottom: 12px; }
-  .lpEmbed__close { right: 12px; top: 12px; }
-
   @media (max-width: 600px) {
     .lpEmbed { border-radius: 10px; box-shadow: 0 6px 18px rgba(0, 0, 0, .12); }
-    .lpChip { padding: 7px 12px; font-size: 12px; }
-    .lpEmbed__open  { right: 8px; bottom: 8px; }
-    .lpEmbed__close { right: 8px; top: 8px; }
   }
 </style>
 
@@ -76,48 +49,7 @@
     src="https://rankupsports.github.io/basketball-gear-bags/"
     title="BASKETBALL GEAR BAGS 特設ページ"
     loading="lazy"
-    allow="autoplay; fullscreen"
+    allow="autoplay"
     referrerpolicy="no-referrer-when-downgrade"
     scrolling="yes"></iframe>
-
-  <!-- JS が動かない環境ではただの別タブリンクとして機能する -->
-  <a class="lpChip lpEmbed__open" id="lpOpen"
-     href="https://rankupsports.github.io/basketball-gear-bags/"
-     target="_blank" rel="noopener">全画面表示</a>
-
-  <button class="lpChip lpEmbed__close" id="lpClose" type="button" hidden>閉じる ✕</button>
 </div>
-
-<script>
-(function(){
-  var box   = document.getElementById('lpEmbed');
-  var open  = document.getElementById('lpOpen');
-  var close = document.getElementById('lpClose');
-
-  var req  = box.requestFullscreen || box.webkitRequestFullscreen;
-  var exit = document.exitFullscreen || document.webkitExitFullscreen;
-
-  function isFs(){ return !!(document.fullscreenElement || document.webkitFullscreenElement); }
-  function openTab(){ window.open(open.href, '_blank', 'noopener'); }
-
-  // 全画面 API が使えない環境（iPhone Safari など）では別タブで開く
-  open.addEventListener('click', function(e){
-    if(!req) return;                       // href のまま別タブへ
-    e.preventDefault();
-    var p;
-    try { p = req.call(box); } catch(err){ openTab(); return; }
-    if(p && p.catch) p.catch(openTab);
-  });
-  close.addEventListener('click', function(){ if(exit) exit.call(document); });
-
-  function sync(){
-    var fs = isFs();
-    box.classList.toggle('is-fs', fs);
-    close.hidden = !fs;
-    open.hidden  = fs;
-  }
-  document.addEventListener('fullscreenchange', sync);
-  document.addEventListener('webkitfullscreenchange', sync);
-  sync();
-})();
-</script>
