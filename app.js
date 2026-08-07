@@ -534,19 +534,21 @@
     const elCount = $('#rvwCount');
     const elDist = $('#rvwDist');
     const elList = $('#rvwList');
+    const elFilter = $('#rvwFilter');
+    const elSort = $('#rvwSort');
 
-    const render = (items, total) => {
-      items = items || [];
-      const n = total || items.length;
+    const state = { all: [], total: 0 };
 
-      // 平均（返ってきた items から算出）
+    // サマリー＋分布は全レビュー基準（フィルターの影響を受けない）
+    const renderSummary = () => {
+      const items = state.all;
+      const n = state.total || items.length;
       const rated = items.filter((r) => r.rating);
       const avg = rated.length ? rated.reduce((s, r) => s + r.rating, 0) / rated.length : 0;
       elAvgStars.textContent = starStr(avg);
       elAvg.textContent = avg ? avg.toFixed(1) : '–';
       elCount.textContent = n ? `${n}件のレビュー` : 'まだレビューはありません';
 
-      // 分布バー（5→1）。割合は総数に対する比。
       const counts = { 5: 0, 4: 0, 3: 0, 2: 0, 1: 0 };
       rated.forEach((r) => { const k = Math.round(r.rating); if (counts[k] != null) counts[k]++; });
       const denom = rated.length || 1;
@@ -559,13 +561,29 @@
             <span class="rvw__distNum">${c}</span>
           </div>`;
       }).join('');
+    };
 
-      // 一覧
-      if (!items.length) {
-        elList.innerHTML = '<p class="rvw__empty">最初のレビューを書いてみませんか？</p>';
+    // 一覧はフィルター（評価）＋並び替えを適用
+    const renderList = () => {
+      const f = elFilter ? elFilter.value : 'all';
+      const sort = elSort ? elSort.value : 'relevant';
+      let list = state.all.slice();
+      if (f !== 'all') list = list.filter((r) => Math.round(r.rating) === +f);
+
+      const ts = (r) => { const t = new Date(r.date).getTime(); return isNaN(t) ? 0 : t; };
+      if (sort === 'newest') list.sort((a, b) => ts(b) - ts(a));
+      else if (sort === 'oldest') list.sort((a, b) => ts(a) - ts(b));
+      else if (sort === 'high') list.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+      else if (sort === 'low') list.sort((a, b) => (a.rating || 0) - (b.rating || 0));
+      // relevant は取得順のまま
+
+      if (!list.length) {
+        elList.innerHTML = state.all.length
+          ? '<p class="rvw__empty">この条件に合うレビューはありません。</p>'
+          : '<p class="rvw__empty">最初のレビューを書いてみませんか？</p>';
         return;
       }
-      elList.innerHTML = items.map((r) => `<article class="rvw__item">
+      elList.innerHTML = list.map((r) => `<article class="rvw__item">
           <div class="rvw__head">
             <span class="rvw__author">${esc(r.author)}</span>
             ${r.date ? `<span class="rvw__dot">・</span><span>${esc(fmtDate(r.date))}</span>` : ''}
@@ -575,6 +593,17 @@
           <p class="rvw__itemBody">${esc(r.body)}</p>
         </article>`).join('');
     };
+
+    const render = (items, total) => {
+      state.all = items || [];
+      state.total = total || state.all.length;
+      renderSummary();
+      renderList();
+    };
+
+    if (elFilter) elFilter.addEventListener('change', renderList);
+    if (elSort) elSort.addEventListener('change', renderList);
+
     // フォーム送信後に一覧を更新できるよう公開
     window.__reloadReviews = () => fetch(rvwWrap.dataset.src, { mode: 'cors' })
       .then((r) => r.json()).then(({ items, total }) => render(items, total)).catch(() => {});
@@ -582,7 +611,7 @@
     fetch(rvwWrap.dataset.src, { mode: 'cors' })
       .then((r) => r.json())
       .then(({ items, total }) => render(items, total))
-      .catch(() => { elCount.textContent = 'まだレビューはありません'; render([], 0); });
+      .catch(() => { render([], 0); });
   }
 
   /* =========================================================

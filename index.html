@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=League+Spartan:wght@500;700&family=M+PLUS+1p:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Bowlby+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Montserrat:wght@400;500;700&family=Libre+Bodoni:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=Geist+Pixel&family=Jersey+10&family=Jersey+20&family=Encode+Sans+Condensed:wght@700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=82" />
+<link rel="stylesheet" href="styles.css?v=83" />
 </head>
 <body>
 
@@ -650,6 +650,30 @@
       </div>
       <div class="rvw__dist" id="rvwDist" aria-hidden="true"></div>
     </div>
+
+    <!-- フィルター（評価）＋並び替え -->
+    <div class="rvw__controls">
+      <label class="rvw__ctrl">評価でフィルター：
+        <select id="rvwFilter">
+          <option value="all">すべての評価</option>
+          <option value="5">5つ星</option>
+          <option value="4">4つ星</option>
+          <option value="3">3つ星</option>
+          <option value="2">2つ星</option>
+          <option value="1">1つ星</option>
+        </select>
+      </label>
+      <label class="rvw__ctrl">並び替え：
+        <select id="rvwSort">
+          <option value="relevant">関連度順</option>
+          <option value="newest">新しい順</option>
+          <option value="oldest">古い順</option>
+          <option value="high">評価が高い順</option>
+          <option value="low">評価が低い順</option>
+        </select>
+      </label>
+    </div>
+
     <div class="rvw__list" id="rvwList"></div>
   </div>
 
@@ -982,6 +1006,6 @@
   }
 })();
 </script>
-<script src="app.js?v=18"></script>
+<script src="app.js?v=19"></script>
 </body>
 </html>
