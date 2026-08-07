@@ -12,7 +12,10 @@
      ※ もっと小さく収めたいときは PC 980×620 でも成立します（下限 420px）。
 
      ■ 動き
-       枠の中で LP をそのままスクロールして見られる（全画面表示は廃止）。
+       ・枠の中で LP をそのままスクロールして見られる（全画面表示は廃止）。
+       ・スクロールすると枠の地色が LP の背景色に追従して変わる。
+         LP 側（index.html の bgFade）が現在の色を postMessage で送るので、
+         それを受けて枠の背景に流し込んでいる。
 
      メモ
        - loading="lazy" なので、レビュー位置まで実際にスクロールされるまで
@@ -25,22 +28,25 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <style>
+  *{ box-sizing: border-box; }
   html, body { margin: 0; padding: 0; height: 100%; background: transparent; }
 
   .lpEmbed {
     position: relative;
     height: 100%;
     min-height: 420px;
+    padding: 12px;                            /* ここが LP の色に染まるフチになる */
     border-radius: 14px;
     overflow: hidden;
-    background: #ffffff;                      /* 読み込み中の地色 */
+    background: #ffffff;                      /* 読み込み中の地色（LP から色が届くまで） */
     box-shadow: 0 10px 30px rgba(0, 0, 0, .14);
   }
   /* 枠の中でそのままスクロールできる（pointer-events は触らない） */
-  .lpEmbed iframe { display: block; width: 100%; height: 100%; border: 0; }
+  .lpEmbed iframe { display: block; width: 100%; height: 100%; border: 0; border-radius: 8px; }
 
   @media (max-width: 600px) {
-    .lpEmbed { border-radius: 10px; box-shadow: 0 6px 18px rgba(0, 0, 0, .12); }
+    .lpEmbed { border-radius: 10px; padding: 8px; box-shadow: 0 6px 18px rgba(0, 0, 0, .12); }
+    .lpEmbed iframe { border-radius: 6px; }
   }
 </style>
 
@@ -53,3 +59,20 @@
     referrerpolicy="no-referrer-when-downgrade"
     scrolling="yes"></iframe>
 </div>
+
+<script>
+(function(){
+  var box = document.getElementById('lpEmbed');
+  var LP_ORIGIN = 'https://rankupsports.github.io';
+  // rgb(0,0,0) 形式だけを通す（受け取った文字列をそのまま style に入れないため）
+  var RGB = /^rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)$/;
+
+  window.addEventListener('message', function(e){
+    if (e.origin !== LP_ORIGIN) return;        // 送り主は LP だけ
+    var d = e.data;
+    if (!d || d.type !== 'rus-bg' || typeof d.color !== 'string') return;
+    if (!RGB.test(d.color)) return;
+    box.style.backgroundColor = d.color;
+  });
+})();
+</script>

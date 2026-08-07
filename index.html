@@ -592,45 +592,6 @@
 </section>
 
 <!-- ============================================================
-     RINA SEZAKI — キャスト紹介。背景色は指定の #B9FF61 で固定。
-     説明文:Zen Maru Gothic / 名前(瀬崎理奈)・紹介文:M PLUS 1p /
-     見出し(RINA SEZAKI):Space Grotesk。
-     ============================================================ -->
-<section class="rinaSec">
-  <div class="rinaSec__hero">
-    <img class="rinaSec__photo" src="assets/cast-portrait.jpg" alt="瀬崎理奈" />
-    <img class="rinaSec__label" src="assets/cast-joybasketballschool.svg" alt="JOY BASKETBALL SCHOOL" />
-    <img class="rinaSec__script" src="assets/cast-rina-sezaki.svg" alt="Rina Sezaki" />
-    <img class="rinaSec__heart" src="assets/cast-heart-badge.svg" alt="" aria-hidden="true" />
-  </div>
-
-  <p class="rinaSec__quote">
-    こういうバッグ、意外となかったよね。<br />
-    最初、バスケ用って気づかなかった（笑）<br />
-    練習日だけ使うには、ちょっともったいない。
-  </p>
-
-  <div class="rinaSec__profile">
-    <div class="rinaSec__action"><img src="assets/cast-action.jpg" alt="" /></div>
-    <div class="rinaSec__info">
-      <div class="rinaSec__face"><img src="assets/cast-face.jpg" alt="瀬崎理奈" /></div>
-      <h3 class="rinaSec__name">RINA SEZAKI<span>瀬崎理奈</span></h3>
-      <p class="rinaSec__bio">元WJBL選手で、現在は「Joy basketball school」のコーチとして活動。福岡県を拠点に、スクールやオンラインレッスンを通じて、これまでの経験を活かした実践的な指導を行っている。バスケットボールの楽しさを伝えながら、子どもたち一人ひとりのレベルや目標に寄り添い、スキルアップをサポートしている。</p>
-      <div class="rinaSec__social">
-        <a href="https://www.instagram.com/j.o.y__basketball/" target="_blank" rel="noopener noreferrer"
-           aria-label="Joy basketball school の Instagram（別タブで開く）">
-          <img src="assets/cast-icon-insta.svg" alt="Instagram" />
-        </a>
-        <a href="https://joy-basketballschool.com/" target="_blank" rel="noopener noreferrer"
-           aria-label="Joy basketball school 公式サイト（別タブで開く）">
-          <img src="assets/cast-icon-net.svg" alt="Website" />
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================
      REVIEW FORM — Wix 風の投稿フォーム。送信すると Velo の
      POST /_functions/reviews 経由で Wix にレビューが作成される
      （サイト設定によっては承認待ちになる）。
@@ -734,6 +695,45 @@
      読み込み時にフォームが一瞬見えてしまうことがない（JS 無効なら開いたまま）。 */
   document.getElementById('reviews').classList.add('has-js');
 </script>
+
+<!-- ============================================================
+     RINA SEZAKI — キャスト紹介。背景色は指定の #B9FF61 で固定。
+     説明文:Zen Maru Gothic / 名前(瀬崎理奈)・紹介文:M PLUS 1p /
+     見出し(RINA SEZAKI):Space Grotesk。
+     ============================================================ -->
+<section class="rinaSec">
+  <div class="rinaSec__hero">
+    <img class="rinaSec__photo" src="assets/cast-portrait.jpg" alt="瀬崎理奈" />
+    <img class="rinaSec__label" src="assets/cast-joybasketballschool.svg" alt="JOY BASKETBALL SCHOOL" />
+    <img class="rinaSec__script" src="assets/cast-rina-sezaki.svg" alt="Rina Sezaki" />
+    <img class="rinaSec__heart" src="assets/cast-heart-badge.svg" alt="" aria-hidden="true" />
+  </div>
+
+  <p class="rinaSec__quote">
+    こういうバッグ、意外となかったよね。<br />
+    最初、バスケ用って気づかなかった（笑）<br />
+    練習日だけ使うには、ちょっともったいない。
+  </p>
+
+  <div class="rinaSec__profile">
+    <div class="rinaSec__action"><img src="assets/cast-action.jpg" alt="" /></div>
+    <div class="rinaSec__info">
+      <div class="rinaSec__face"><img src="assets/cast-face.jpg" alt="瀬崎理奈" /></div>
+      <h3 class="rinaSec__name">RINA SEZAKI<span>瀬崎理奈</span></h3>
+      <p class="rinaSec__bio">元WJBL選手で、現在は「Joy basketball school」のコーチとして活動。福岡県を拠点に、スクールやオンラインレッスンを通じて、これまでの経験を活かした実践的な指導を行っている。バスケットボールの楽しさを伝えながら、子どもたち一人ひとりのレベルや目標に寄り添い、スキルアップをサポートしている。</p>
+      <div class="rinaSec__social">
+        <a href="https://www.instagram.com/j.o.y__basketball/" target="_blank" rel="noopener noreferrer"
+           aria-label="Joy basketball school の Instagram（別タブで開く）">
+          <img src="assets/cast-icon-insta.svg" alt="Instagram" />
+        </a>
+        <a href="https://joy-basketballschool.com/" target="_blank" rel="noopener noreferrer"
+           aria-label="Joy basketball school 公式サイト（別タブで開く）">
+          <img src="assets/cast-icon-net.svg" alt="Website" />
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ============================================================
      block05 : ONLINE SHOP （レシート風カート / 背景 #F4E06D）
@@ -922,7 +922,7 @@
   var mix=function(a,b,t){return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t];};
   var smooth=function(t){return t*t*(3-2*t);};
 
-  var WHITE=[255,255,255], stops=[];
+  var WHITE=[255,255,255], stops=[], lastSent='';
   function build(){
     stops=[];
     [].forEach.call(document.querySelectorAll('section'), function(s){
@@ -948,7 +948,14 @@
     // 近いほうの境界だけで混ぜる（境界でどちらの式も 0.5 になり連続する）
     if(prev && dTop<FD && dTop<=dBot)      rgb=mix(prev.rgb, cur.rgb, smooth(0.5*(1+dTop/FD)));
     else if(next && dBot<FD)               rgb=mix(cur.rgb, next.rgb, smooth(0.5*(1-dBot/FD)));
-    layer.style.backgroundColor='rgb('+Math.round(rgb[0])+','+Math.round(rgb[1])+','+Math.round(rgb[2])+')';
+    var css='rgb('+Math.round(rgb[0])+','+Math.round(rgb[1])+','+Math.round(rgb[2])+')';
+    layer.style.backgroundColor=css;
+    // 埋め込まれているときは、今の背景色を親（embed のラッパー）へ知らせる。
+    // ラッパー側は枠の地色をこれに追従させる（embed/index.html を参照）。
+    if(css!==lastSent && window.parent!==window){
+      lastSent=css;
+      try{ window.parent.postMessage({type:'rus-bg',color:css},'*'); }catch(e){}
+    }
   }
   function onScroll(){ if(!raf) raf=requestAnimationFrame(paint); }
   function rebuild(){ build(); paint(); }
