@@ -96,16 +96,60 @@
   /* =========================================================
      LEAD の浮遊アイコン — 画面の縁を不規則に巡回する
      ========================================================= */
-  // 参照サイトの lead__icon と同じ挙動：172px 級のアイコンが画面の縁を
-  // 35s で無限に周回する（leadIcon キーフレーム）。参照は絵文字なので、
-  // こちらもバスケットボールの絵文字にして同じ質感にそろえる。
+  /* 指示②: ボールは1個。上は TOP、下は Block02、左右は画面の端にぶつかると
+     折り返しながら跳ね返る（＝このセクションの矩形の中で反射する）。
+     参照サイトのアイコンと同じくバスケットボールの絵文字を使う。 */
   const LEAD_ICON = '🏀';
-  const orbit = (host, n) => {
+  const SPEED = 96;            // px/秒。ゆっくり漂う速さ
+  const bounceBall = (host) => {
     if (!host) return;
-    host.innerHTML = Array.from({ length: n }, (_, i) =>
-      `<div class="lead__icon" style="--dl:${-i * (35 / n)}s"><span class="lead__emo">${LEAD_ICON}</span></div>`).join('');
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    host.innerHTML = `<div class="lead__ball"><span class="lead__emo">${LEAD_ICON}</span></div>`;
+    const el = host.firstElementChild;
+    let W = 0, H = 0, S = 0, x = 0, y = 0, ang = 0, last = 0, raf = null, started = false;
+    // 斜めに走らせる。上下と左右で速さを変えて、同じ軌跡をなぞらないようにする
+    let vx = SPEED * 0.78, vy = SPEED * 0.62;
+    const measure = () => {
+      const r = host.getBoundingClientRect();
+      W = r.width; H = r.height; S = el.offsetWidth || 100;
+      x = Math.max(0, Math.min(x, W - S));
+      y = Math.max(0, Math.min(y, H - S));
+    };
+    const step = (t) => {
+      if (!last) last = t;
+      const dt = Math.min(.05, (t - last) / 1000);   // タブ復帰時に飛ばない
+      last = t;
+      // 縦の跳ね返り面は「セクションの上下（＝TOP と Block02 の境）」だが、
+      // このセクションは画面より遥かに高いので、見えている範囲までに切り詰める。
+      // こうするとボールは常に画面内にいて、TOP / Block02 の境が見えている
+      // ときはその境で跳ね返る。
+      const r = host.getBoundingClientRect();
+      // 下限はセクションの下端（Block02 との境）を絶対に越えない
+      const hi = Math.min(H - S, Math.min(H, innerHeight - r.top) - S);
+      const lo = Math.min(Math.max(0, -r.top), Math.max(0, hi));
+      x += vx * dt; y += vy * dt;
+      if (x <= 0)     { x = 0;     vx = Math.abs(vx); }   // 左（画面の端）
+      if (x >= W - S) { x = W - S; vx = -Math.abs(vx); }  // 右（画面の端）
+      if (y <= lo)    { y = lo;    vy = Math.abs(vy); }   // 上（TOP との境／画面上端）
+      if (y >= hi)    { y = hi;    vy = -Math.abs(vy); }  // 下（Block02 との境／画面下端）
+      ang += vx * dt * .6;                                 // 転がっているように回す
+      el.style.transform = `translate3d(${x}px,${y}px,0) rotate(${ang}deg)`;
+      raf = requestAnimationFrame(step);
+    };
+    const start = () => { if (raf) return; last = 0; raf = requestAnimationFrame(step); };
+    const stop = () => { if (raf) { cancelAnimationFrame(raf); raf = null; } };
+    measure();
+    x = W * .18; y = H * .12;                    // 左上あたりから走り出す
+    addEventListener('resize', measure);
+    // 画面に入っているときだけ動かす
+    new IntersectionObserver(es => {
+      es.forEach(e => {
+        if (!started && e.isIntersecting) { started = true; measure(); }
+        e.isIntersecting ? start() : stop();
+      });
+    }, { rootMargin: '96px' }).observe(host);
   };
-  orbit($('#leadIcons'), 3);   // lead（intro）の周回
+  bounceBall($('#leadIcons'));
 
   /* =========================================================
      ハート — 参照サイトの実装をそのまま採取
