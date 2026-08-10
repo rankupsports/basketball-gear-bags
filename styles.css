@@ -519,6 +519,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .rinaSec__hero{position:relative;max-width:794px;margin:0 auto;border-radius:var(--radius);overflow:visible}
 .rinaSec__photo{width:100%;aspect-ratio:.617;object-fit:cover;object-position:50% 50%;
   border-radius:var(--radius);display:block;box-shadow:0 16px 34px rgba(0,0,0,.18)}
+/* 依頼により写真を一旦グレーの仮置きに（block05 の「準備中」枠と同じ地色） */
+.rinaSec__photo--soon{background:#E9E9E9}
 .rinaSec__label{position:absolute;top:2.4%;left:50%;transform:translateX(-50%);
   width:63.8%;height:auto;opacity:.9}
 /* スクリプトロゴは中央・大きく（FIX 指示①） */
@@ -1390,41 +1392,50 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .shop__sub span::before{left:0}
 .shop__sub span::after{right:0}
 
-/* ---- バッグ2点（写真・ドット・商品名行を各カラムに）----
-   実測: 写真は各 36.75%、写真間 7.86%、左右余白 9.26% で合計 100%。
-   余白と gap を cqw にすれば写真幅は自動で 36.75% になる。 */
-.shop__gallery{
+/* ---- 商品 6点（2カラム×3段 / レイアウト調整指示0810.pdf）----
+   レシート紙幅に対する実測: 写真 37.34%、写真間 8.07%、左右余白 9.19%、
+   写真の縦横比 1.227。段間はコンプ実測 7.6–10.3% の中間をとる。 */
+.shop__grid{
   /* minmax(0,1fr): 商品名が nowrap で min-content 下限を作るため、
      1fr だけだと左右のカラム幅がずれる（写真の大きさも変わってしまう）。 */
-  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7.86cqw;
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  column-gap:8.07cqw;row-gap:max(20px,9cqw);
   /* サブ見出しと商品画像の間に少し隙間（狭い画面でも効くよう下限 26px） */
   margin-top:max(26px,5cqw);
 }
 .shop__prod{margin:0}
 .shop__box{
   background:var(--shop-box);border-radius:1.4cqw;overflow:hidden;
-  aspect-ratio:1.218;display:flex;align-items:center;justify-content:center;
+  aspect-ratio:1.227;display:flex;align-items:center;justify-content:center;
 }
 .shop__img{width:100%;height:100%;object-fit:contain;display:block}
+/* 準備中の2点は写真なしのグレー枠のまま */
+.shop__box--soon{}
 
-/* ---- ROPE STRAP（写真1枚を中央、色は3行）----
-   実測: 写真 36.60% を中央、行のまとまりは 49.3% を中央。 */
-.shop__prod--rope{margin-top:6.41cqw}
-.shop__prod--rope .shop__box{width:36.6cqw;margin:0 auto}
-/* ロープ側はドットが写真から少し離れる（実測 1.69% / バッグ側は 0.87%） */
-.shop__prod--rope .shop__dots{margin-top:max(10px,1.69cqw)}
-.shop__prod--rope .shop__list{width:49.3cqw;margin:3.78cqw auto 0}
-
-/* ---- カラードット（4色 / 写真は3色）----
-   実測: 直径 1.846% / 間隔 1.88% / 写真下端から 0.87% */
-.shop__dots{display:flex;justify-content:center;gap:max(8px,1.88cqw);margin-top:max(10px,.87cqw)}
-.shop__dot{
-  width:max(15px,1.846cqw);aspect-ratio:1;border-radius:50%;padding:0;cursor:pointer;
-  background:var(--c);border:0;outline:0;
-  transition:transform .15s ease, box-shadow .15s ease;
+/* ---- ロープのカルーセル（ロープ写真→着用写真8枚）---- */
+.shop__box--car{position:relative}
+.shop__box--car .shop__img{position:absolute;inset:0;opacity:0;transition:opacity .3s ease}
+.shop__box--car .shop__img.is-show{opacity:1}
+.shop__arw{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:2;
+  width:max(18px,3.1cqw);aspect-ratio:1;padding:0;border:0;background:none;
+  color:#fff;cursor:pointer;opacity:.92;
+  filter:drop-shadow(0 1px 2px rgba(0,0,0,.35));
+  transition:opacity .15s ease, transform .15s ease;
 }
-.shop__dot:hover,.shop__dot:focus-visible{transform:scale(1.14);box-shadow:0 0 0 2px #fff,0 0 0 4px rgba(35,70,139,.4)}
-.shop__dot.is-on{transform:scale(1.08)}
+.shop__arw svg{width:100%;height:100%;fill:none;stroke:currentColor;stroke-width:1.6;
+  stroke-linecap:round;stroke-linejoin:round;display:block}
+.shop__arw--prev{left:1.1cqw}
+.shop__arw--next{right:1.1cqw}
+.shop__arw:hover,.shop__arw:focus-visible{opacity:1;transform:translateY(-50%) scale(1.12)}
+
+/* ---- カルーセルのドット（実測: 直径 1.34% / 中心間 3.85% / 写真下 1.75%）----
+   現在位置はレシートの黄色、他はグレー。表示のみでコンプ通り押せない。 */
+.shop__cdots{display:flex;justify-content:center;align-items:center;
+  gap:max(4px,2.51cqw);margin-top:max(6px,1.75cqw)}
+.shop__cdots i{width:max(5px,1.34cqw);aspect-ratio:1;border-radius:50%;
+  background:#DDD;display:block}
+.shop__cdots i.on{background:#E8D36C}
 
 /* ---- 商品名（中央寄せ・名前のみ / 05.pdf）---- */
 .shop__name{
@@ -1433,12 +1444,24 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   font-size:max(clamp(14px,2.5vw,19px),1.641cqw);line-height:1.15;letter-spacing:.06em;
   color:var(--shop-ink);
 }
-.shop__gallery .shop__name{margin-top:3.4cqw}
-.shop__ropeList{list-style:none;margin:max(14px,3.4cqw) auto 0;padding:0}
-.shop__ropeList .shop__name{line-height:2.1}
+/* 写真（またはドット）下から商品名まで 3.79% / 名前→価格行 2.57%（実測） */
+.shop__grid .shop__name{margin-top:max(10px,3.79cqw);
+  display:flex;align-items:center;justify-content:center;gap:max(5px,1.5cqw)}
+/* ドットのあるロープ側は、ドット下からの間隔（実測 4.28%） */
+.shop__cdots + .shop__name{margin-top:max(11px,4.28cqw)}
+/* 商品名の前に付く色玉（黒/グレー/ピンク/ブルー） */
+.shop__sw{flex:0 0 auto;width:max(9px,1.85cqw);aspect-ratio:1;border-radius:50%;
+  background:var(--c);display:block}
+/* 価格行: 点線リーダー → 金額（右揃え） */
+.shop__pline{display:flex;align-items:center;gap:max(6px,1.6cqw);
+  margin:max(7px,2.57cqw) 0 0}
+.shop__yen{flex:0 0 auto;
+  font-family:var(--f-geist);font-weight:400;
+  font-size:max(clamp(14px,2.5vw,19px),1.641cqw);line-height:1;letter-spacing:.06em;
+  color:var(--shop-ink);white-space:nowrap}
 
 /* ---- BUY NOW（紺色ボタン / 05.pdf。block03 と同じ #27498D）---- */
-.shop__buyWrap{display:flex;justify-content:center;margin-top:max(20px,4cqw)}
+.shop__buyWrap{display:flex;justify-content:center;margin-top:max(24px,13cqw)}
 .shop__buy{
   display:inline-flex;align-items:center;justify-content:center;
   min-width:max(150px,14cqw);
@@ -1451,8 +1474,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 }
 .shop__buy:hover{transform:translateY(-2px);box-shadow:4px 8px 15px rgba(35,70,139,.4)}
 
-/* ---- バッグ2点と ROPE STRAP の間の点線区切り（05.pdf）---- */
-.shop__sep{border-top:2px dotted rgba(35,70,139,.35);width:100%;height:0;margin:max(22px,4.5cqw) 0 0}
+/* 点線区切り（.shop__sep）はコンプから無くなったため未使用 */
 
 /* ---- 商品名の行（名前 … リーダー … Add）----
    指示②: 文字を大きく。実測は 1文字あたり 1.0141%（＝約 1.69cqw）。 */
@@ -1503,13 +1525,16 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    px 下限が効いてカラムに収まらないので、そこだけ折り返しを許して
    間隔を詰める（2カラムと写真サイズはコンプ通り保つ）。 */
 @media (max-width:1520px){
-  .shop__gallery .shop__li{gap:.6em;flex-wrap:wrap}
-  .shop__gallery .shop__pn{white-space:normal;min-width:0}
-  .shop__gallery .shop__leader{min-width:1.5em}
+  .shop__grid .shop__li{gap:.6em;flex-wrap:wrap}
+  .shop__grid .shop__pn{white-space:normal;min-width:0}
+  .shop__grid .shop__leader{min-width:1.5em}
 }
 @media (max-width:460px){
   .shop__pn{font-size:12px;letter-spacing:0}
   .shop__title{letter-spacing:.04em}
+  /* 狭い画面は商品名が2カラムに収まらないので、名前と価格を小さく */
+  .shop__grid .shop__name,.shop__yen{font-size:12px;letter-spacing:.02em}
+  .shop__grid .shop__name{gap:4px}
 }
 
 /* ============================================================

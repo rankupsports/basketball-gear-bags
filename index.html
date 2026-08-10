@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=League+Spartan:wght@500;700&family=M+PLUS+1p:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Bowlby+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Montserrat:wght@400;500;700&family=Libre+Bodoni:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=Geist+Pixel&family=Jersey+10&family=Jersey+20&family=Encode+Sans+Condensed:wght@700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=88" />
+<link rel="stylesheet" href="styles.css?v=89" />
 </head>
 <body>
 
@@ -709,7 +709,9 @@
      ============================================================ -->
 <section class="rinaSec">
   <div class="rinaSec__hero">
-    <img class="rinaSec__photo" src="assets/cast-portrait.jpg" alt="瀬崎理奈" />
+    <!-- 依頼により写真は一旦グレーの仮置き。戻すときは下の div を
+         <img class="rinaSec__photo" src="assets/cast-portrait.jpg" alt="瀬崎理奈" /> に差し替える。 -->
+    <div class="rinaSec__photo rinaSec__photo--soon" role="img" aria-label="写真は準備中"></div>
     <img class="rinaSec__label" src="assets/cast-joybasketballschool.svg" alt="JOY BASKETBALL SCHOOL" />
     <img class="rinaSec__script" src="assets/cast-rina-sezaki.svg" alt="Rina Sezaki" />
     <img class="rinaSec__heart" src="assets/cast-heart-badge.svg" alt="" aria-hidden="true" />
@@ -750,50 +752,97 @@
       <h2 class="shop__title">ONLINE SHOP</h2>
       <p class="shop__sub"><span>Select your favorite color too!</span></p>
 
-      <!-- バッグ2点：写真 + カラードット + 商品名行を各カラムに収める（block05.pdf 準拠） -->
-      <div class="shop__gallery">
+      <!-- レイアウト調整指示0810.pdf: 2カラム×3段。バッグ2点は「準備中」の
+           グレー枠、ロープ4色はカルーセル（ロープ写真→着用写真8枚）。
+           価格行は 名前 → 点線リーダー → 金額。 -->
+      <div class="shop__grid">
         <figure class="shop__prod">
-          <div class="shop__box"><img class="shop__img" src="assets/block05/ball_blue.jpg" alt="Drawstring Ball Bag" /></div>
-          <div class="shop__dots" role="group" aria-label="Rope color">
-            <button type="button" class="shop__dot" style="--c:#282828" data-img="assets/block05/ball_black.jpg" aria-label="Black"></button>
-            <button type="button" class="shop__dot" style="--c:#BDC0CB" data-img="assets/block05/ball_gray.jpg" aria-label="Gray"></button>
-            <button type="button" class="shop__dot" style="--c:#FF3E97" data-img="assets/block05/ball_pink.jpg" aria-label="Pink"></button>
-            <button type="button" class="shop__dot is-on" style="--c:#00DEFF" data-img="assets/block05/ball_blue.jpg" aria-label="Blue"></button>
-          </div>
+          <div class="shop__box shop__box--soon" role="img" aria-label="準備中"></div>
           <p class="shop__name">DRAWSTRING BALL BAG</p>
+          <p class="shop__pline"><span class="shop__leader" aria-hidden="true"></span><span class="shop__yen">￥5,499</span></p>
         </figure>
         <figure class="shop__prod">
-          <div class="shop__box"><img class="shop__img" src="assets/block05/shoe_pink.jpg" alt="Shoe Barrel Bag" /></div>
-          <div class="shop__dots" role="group" aria-label="Rope color">
-            <button type="button" class="shop__dot" style="--c:#282828" data-img="assets/block05/shoe_black.jpg" aria-label="Black"></button>
-            <button type="button" class="shop__dot" style="--c:#BDC0CB" data-img="assets/block05/shoe_gray.jpg" aria-label="Gray"></button>
-            <button type="button" class="shop__dot is-on" style="--c:#FF3E97" data-img="assets/block05/shoe_pink.jpg" aria-label="Pink"></button>
-            <button type="button" class="shop__dot" style="--c:#00DEFF" data-img="assets/block05/shoe_blue.jpg" aria-label="Blue"></button>
-          </div>
+          <div class="shop__box shop__box--soon" role="img" aria-label="準備中"></div>
           <p class="shop__name">SHOE BARREL BAG</p>
+          <p class="shop__pline"><span class="shop__leader" aria-hidden="true"></span><span class="shop__yen">￥5,499</span></p>
+        </figure>
+
+        <figure class="shop__prod">
+          <div class="shop__box shop__box--car" id="ropeBlack">
+            <img class="shop__img is-show" src="assets/block05/rope_black.jpg" alt="ROPE STRAP - Black" />
+            <img class="shop__img" data-src="assets/block05/rope/black-1.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/rope/black-2.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/rope/black-3.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/rope/black-4.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/rope/black-5.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/rope/black-6.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/rope/black-7.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/rope/black-8.jpg" alt="" />
+            <button type="button" class="shop__arw shop__arw--prev" data-car="prev" aria-controls="ropeBlack" aria-label="前の写真"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 7 12l8 8"/></svg></button>
+            <button type="button" class="shop__arw shop__arw--next" data-car="next" aria-controls="ropeBlack" aria-label="次の写真"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4l8 8-8 8"/></svg></button>
+          </div>
+          <span class="shop__cdots" id="ropeBlackDots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+          <p class="shop__name"><span class="shop__sw" style="--c:#282828"></span>ROPE STRAP - Black</p>
+          <p class="shop__pline"><span class="shop__leader" aria-hidden="true"></span><span class="shop__yen">￥1,299</span></p>
+        </figure>
+
+        <figure class="shop__prod">
+          <div class="shop__box shop__box--car" id="ropeGray">
+            <img class="shop__img is-show" src="assets/block05/rope_gray.jpg" alt="ROPE STRAP - Gray" />
+            <img class="shop__img" data-src="assets/block05/rope/gray-1.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/rope/gray-2.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/rope/gray-3.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/rope/gray-4.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/rope/gray-5.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/rope/gray-6.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/rope/gray-7.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/rope/gray-8.jpg" alt="" />
+            <button type="button" class="shop__arw shop__arw--prev" data-car="prev" aria-controls="ropeGray" aria-label="前の写真"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 7 12l8 8"/></svg></button>
+            <button type="button" class="shop__arw shop__arw--next" data-car="next" aria-controls="ropeGray" aria-label="次の写真"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4l8 8-8 8"/></svg></button>
+          </div>
+          <span class="shop__cdots" id="ropeGrayDots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+          <p class="shop__name"><span class="shop__sw" style="--c:#BDC0CB"></span>ROPE STRAP - Gray</p>
+          <p class="shop__pline"><span class="shop__leader" aria-hidden="true"></span><span class="shop__yen">￥1,299</span></p>
+        </figure>
+
+        <figure class="shop__prod">
+          <div class="shop__box shop__box--car" id="ropePink">
+            <img class="shop__img is-show" src="assets/block05/rope_pink.jpg" alt="ROPE STRAP - Pink" />
+            <img class="shop__img" data-src="assets/block05/rope/pink-1.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/rope/pink-2.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/rope/pink-3.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/rope/pink-4.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/rope/pink-5.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/rope/pink-6.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/rope/pink-7.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/rope/pink-8.jpg" alt="" />
+            <button type="button" class="shop__arw shop__arw--prev" data-car="prev" aria-controls="ropePink" aria-label="前の写真"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 7 12l8 8"/></svg></button>
+            <button type="button" class="shop__arw shop__arw--next" data-car="next" aria-controls="ropePink" aria-label="次の写真"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4l8 8-8 8"/></svg></button>
+          </div>
+          <span class="shop__cdots" id="ropePinkDots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+          <p class="shop__name"><span class="shop__sw" style="--c:#FF3E97"></span>ROPE STRAP - Pink</p>
+          <p class="shop__pline"><span class="shop__leader" aria-hidden="true"></span><span class="shop__yen">￥1,299</span></p>
+        </figure>
+
+        <figure class="shop__prod">
+          <div class="shop__box shop__box--car" id="ropeBlue">
+            <img class="shop__img is-show" src="assets/block05/rope_blue.jpg" alt="ROPE STRAP - Blue" />
+            <img class="shop__img" data-src="assets/block05/rope/blue-1.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/rope/blue-2.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/rope/blue-3.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/rope/blue-4.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/rope/blue-5.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/rope/blue-6.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/rope/blue-7.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/rope/blue-8.jpg" alt="" />
+            <button type="button" class="shop__arw shop__arw--prev" data-car="prev" aria-controls="ropeBlue" aria-label="前の写真"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 7 12l8 8"/></svg></button>
+            <button type="button" class="shop__arw shop__arw--next" data-car="next" aria-controls="ropeBlue" aria-label="次の写真"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4l8 8-8 8"/></svg></button>
+          </div>
+          <span class="shop__cdots" id="ropeBlueDots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+          <p class="shop__name"><span class="shop__sw" style="--c:#00DEFF"></span>ROPE STRAP - Blue</p>
+          <p class="shop__pline"><span class="shop__leader" aria-hidden="true"></span><span class="shop__yen">￥1,299</span></p>
         </figure>
       </div>
-
-      <div class="shop__buyWrap"><a class="shop__buy ig__buy" href="https://www.rankup-sports.com/product-page/basketball-gear-bags">BUY NOW</a></div>
-
-      <div class="shop__sep" aria-hidden="true"></div>
-
-      <!-- ROPE STRAP：写真は中央・1枚。色は4行（黒ロープ追加 / 05.pdf） -->
-      <figure class="shop__prod shop__prod--rope">
-        <div class="shop__box"><img class="shop__img" src="assets/block05/rope_gray.jpg" alt="Rope Strap" /></div>
-        <div class="shop__dots" role="group" aria-label="Rope color">
-          <button type="button" class="shop__dot" style="--c:#282828" data-img="assets/block05/rope_black.jpg" aria-label="Black"></button>
-          <button type="button" class="shop__dot is-on" style="--c:#BDC0CB" data-img="assets/block05/rope_gray.jpg" aria-label="Gray"></button>
-          <button type="button" class="shop__dot" style="--c:#FF3E97" data-img="assets/block05/rope_pink.jpg" aria-label="Pink"></button>
-          <button type="button" class="shop__dot" style="--c:#00DEFF" data-img="assets/block05/rope_blue.jpg" aria-label="Blue"></button>
-        </div>
-        <ul class="shop__ropeList">
-          <li class="shop__name">ROPE STRAP - Gray</li>
-          <li class="shop__name">ROPE STRAP - Pink</li>
-          <li class="shop__name">ROPE STRAP - Blue</li>
-          <li class="shop__name">ROPE STRAP - Black</li>
-        </ul>
-      </figure>
 
       <div class="shop__buyWrap"><a class="shop__buy ig__buy" href="https://www.rankup-sports.com/product-page/basketball-gear-bags">BUY NOW</a></div>
 
@@ -888,16 +937,31 @@
 })();
 </script>
 <script>
-/* ONLINE SHOP: カラードットで商品写真を差し替え（写真は3色 / 黒は写真なし） */
+/* ONLINE SHOP: ロープ4色のカルーセル（レイアウト調整指示0810.pdf）。
+   先頭はロープ単体の写真、続いて支給の着用写真8枚（コンプの①→②の順）。
+   ← → で巡回し、ドットは現在位置の表示のみ（コンプ通り、押せない）。 */
 (function(){
-  document.querySelectorAll('.shop__prod').forEach(function(prod){
-    var img=prod.querySelector('.shop__img');
-    prod.querySelectorAll('.shop__dot').forEach(function(dot){
-      dot.addEventListener('click', function(){
-        prod.querySelectorAll('.shop__dot').forEach(function(d){d.classList.remove('is-on');});
-        dot.classList.add('is-on');
-        var src=dot.getAttribute('data-img');
-        if(src && img) img.src=src;
+  document.querySelectorAll('.shop__box--car').forEach(function(car){
+    var dots=document.getElementById(car.id+'Dots');
+    var slides=car.querySelectorAll('.shop__img');
+    var pips=dots?dots.querySelectorAll('i'):[];
+    if(slides.length<2) return;
+    var i=0;
+    // 重ねて置いてあるので loading="lazy" が効かない。表示分と両隣だけ読む。
+    function load(n){
+      var el=slides[(n+slides.length)%slides.length];
+      if(el && el.dataset.src){ el.src=el.dataset.src; delete el.dataset.src; }
+    }
+    function go(n){
+      i=(n+slides.length)%slides.length;
+      load(i); load(i+1); load(i-1);
+      for(var k=0;k<slides.length;k++) slides[k].classList.toggle('is-show',k===i);
+      for(var m=0;m<pips.length;m++) pips[m].classList.toggle('on',m===i);
+    }
+    load(1); load(-1);
+    car.querySelectorAll('.shop__arw').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        go(i + (btn.dataset.car==='next' ? 1 : -1));
       });
     });
   });
