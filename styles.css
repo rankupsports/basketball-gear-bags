@@ -473,9 +473,17 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    ③: 日本語商品名は英名の 0.70 倍（コンプ実測 14.7pt→10.3pt）。 */
 .igIntro__rule{display:block;width:clamp(15px,3.7vw,24px);height:1.5px;border-radius:2px;
   background:#111;margin-top:clamp(7px,1.7vw,11px)}
+/* 埋め込み枠（スマホで幅 320px→中身 304px）だと「シューズバレルバッグ」が
+   折り返して最後の1文字だけ2行目に落ちるので、日本語名は必ず1行にする。
+   304px でも 2列ぶん（8字+10字+隙間）がカード内に収まることを実測済み。 */
 .igIntro__jp{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:700;
   font-size:clamp(12px,2.4vw,15px);line-height:1.4;color:#111;
-  margin-top:clamp(17px,4.1vw,27px)}
+  white-space:nowrap;margin-top:clamp(17px,4.1vw,27px)}
+/* さらに狭い枠では字と余白を少しだけ詰めて、1行のまま収める */
+@media (max-width:319.98px){
+  .igIntro__products{gap:12px;padding-left:12px;padding-right:12px}
+  .igIntro__jp{font-size:11px}
+}
 /* ①の詰めは円の直後だけに効かせる（.igIntro__name の margin-top）ので、
    矢印アイコンは Block01.pdf のコンプに無くなったぶん削除した。 */
 .igIntro__div{align-self:stretch;width:2px;background:rgba(0,0,0,.12);border-radius:2px}
