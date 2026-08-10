@@ -97,13 +97,13 @@
      LEAD の浮遊アイコン — 画面の縁を不規則に巡回する
      ========================================================= */
   // 参照サイトの lead__icon と同じ挙動：172px 級のアイコンが画面の縁を
-  // 35s で無限に周回する（leadIcon キーフレーム）。emoji ではなく画像。
-  // ball-icon.svg は暫定。バスケットボールの PNG に差し替える場合はこのパスを変更。
-  const LEAD_ICON = 'assets/ball-icon.svg';
+  // 35s で無限に周回する（leadIcon キーフレーム）。参照は絵文字なので、
+  // こちらもバスケットボールの絵文字にして同じ質感にそろえる。
+  const LEAD_ICON = '🏀';
   const orbit = (host, n) => {
     if (!host) return;
     host.innerHTML = Array.from({ length: n }, (_, i) =>
-      `<div class="lead__icon" style="--dl:${-i * (35 / n)}s"><img src="${LEAD_ICON}" alt="" /></div>`).join('');
+      `<div class="lead__icon" style="--dl:${-i * (35 / n)}s"><span class="lead__emo">${LEAD_ICON}</span></div>`).join('');
   };
   orbit($('#leadIcons'), 3);   // lead（intro）の周回
 
