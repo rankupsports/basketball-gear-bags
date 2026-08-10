@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=League+Spartan:wght@500;700&family=M+PLUS+1p:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Bowlby+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Montserrat:wght@400;500;700&family=Libre+Bodoni:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=Geist+Pixel&family=Jersey+10&family=Jersey+20&family=Encode+Sans+Condensed:wght@700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=91" />
+<link rel="stylesheet" href="styles.css?v=93" />
 </head>
 <body>
 
@@ -119,6 +119,10 @@
       バスケットボールを好きになれるように。
     </p>
 
+    <!-- Block01追加指示0810.pdf「ブロック01 だけ追加」: ハートをタップさせる
+         手書きの Tap! を添える。テキストがカードの外に出るので、カードを
+         はみ出しを許すラッパーで包んでいる。 -->
+    <div class="igCardWrap">
     <div class="igCard">
       <!-- 「ここの動画部分!」= 支給の Block01_Movie.mp4 に差し替え。
            1080x1920 で story.mp4(720x1280) と同じ 0.5625 なので枠はそのまま。 -->
@@ -140,6 +144,8 @@
         <img class="igCard__icon igCard__icon--like" src="assets/icon-heart.svg" alt="いいね（タップでハートが飛ぶ）" role="button" tabindex="0" aria-pressed="false" />
         <img class="igCard__icon" src="assets/icon-share.svg" alt="シェア" />
       </div>
+    </div>
+      <img class="igCard__tap" src="assets/tap-hint.svg" alt="" aria-hidden="true" />
     </div>
 
     <div class="igIntro__products">
