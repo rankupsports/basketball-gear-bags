@@ -1426,7 +1426,9 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 /* ---- ロープのカルーセル（ロープ写真→着用写真8枚）----
    支給写真の地色が白なので、枠の地色も同じ白にして
    contain の余白（左右の帯）が出ないようにする。 */
-.shop__box--car{position:relative;background:#FBFBFB}
+/* 写真の地色・レシートの紙と同じ純白。ここが少しでも暗いと
+   写真エリアの縁が薄いグレーの帯に見える。 */
+.shop__box--car{position:relative;background:#fff}
 /* 画像は枠と同じ比率で書き出してあるので cover でも切れない。
    contain だと丸め誤差で 0.02px ほど隙間ができ、枠の縁がうっすら見えるため。 */
 .shop__box--car .shop__img{position:absolute;inset:0;object-fit:cover;
