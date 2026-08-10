@@ -142,11 +142,34 @@
       el.style.transform = `translate3d(${x}px,${y}px,0) rotate(${ang}deg)`;
       raf = requestAnimationFrame(step);
     };
-    const start = () => { if (raf) return; last = 0; raf = requestAnimationFrame(step); };
+    // スマホはセクションが画面の何倍も高く、読み込み直後に走らせると
+    // 本文までスクロールしたころにはボールが通り過ぎている。
+    // 本文が画面に入るまで待って、本文の後ろを横切る位置から走り出す。
+    const copy = $$('.igIntro__text');                       // リード文の段落
+    const waitForCopy = matchMedia('(max-width:820px)').matches && copy.length > 0;
+    let ready = !waitForCopy;
+    const startAtCopy = () => {
+      if (ready) return;
+      ready = true;
+      measure();
+      const h = host.getBoundingClientRect();
+      const top = copy[0].getBoundingClientRect().top - h.top;
+      const bot = copy[copy.length - 1].getBoundingClientRect().bottom - h.top;
+      x = Math.max(0, Math.min(W - S, W * .06));            // 左端から
+      y = Math.max(0, Math.min(H - S, top + (bot - top - S) * .2));
+      vx = Math.abs(vx); vy = Math.abs(vy);                  // 右下へ＝本文を斜めに横切る
+    };
+    const start = () => { if (raf || !ready) return; last = 0; raf = requestAnimationFrame(step); };
     const stop = () => { if (raf) { cancelAnimationFrame(raf); raf = null; } };
     measure();
     x = W * .18; y = H * .12;                    // 左上あたりから走り出す
     addEventListener('resize', measure);
+    if (waitForCopy) {
+      // 1行目がきちんと画面に入ったら＝本文を読み始めるところで走り出す
+      new IntersectionObserver((es, o) => {
+        if (es.some(e => e.isIntersecting)) { o.disconnect(); startAtCopy(); start(); }
+      }, { threshold: 1 }).observe(copy[0]);
+    }
     // 画面に入っているときだけ動かす
     new IntersectionObserver(es => {
       es.forEach(e => {
