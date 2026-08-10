@@ -451,7 +451,11 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .igIntro__products{width:100%;background:#fff;border-radius:var(--radius);
   box-shadow:0 12px 30px rgba(0,0,0,.18);
   display:flex;align-items:flex-start;justify-content:center;
-  gap:clamp(16px,5vw,52px);padding:clamp(24px,5vw,39px) clamp(16px,4vw,31px)}
+  gap:clamp(16px,5vw,52px);
+  /* レイアウト調整指示0810_b.pdf ①「この塊ちょい上に」:
+     カード上端から円までを 0.247→0.142（円の直径比）に詰める。
+     下は矢印が戻るぶん 0.105 に。上下は円と同じ clamp 比率で連動させる。 */
+  padding:clamp(12px,3.1vw,21px) clamp(16px,4vw,31px) clamp(9px,2.3vw,16px)}
 /* Block01.pdf ①: 円と商品名の間をもう若干詰める（16→10px 相当）。
    間隔は要素ごとに違うので gap ではなく各要素の margin-top で持つ。 */
 .igIntro__item{display:flex;flex-direction:column;align-items:center;gap:0;text-align:center}
@@ -478,7 +482,13 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    304px でも 2列ぶん（8字+10字+隙間）がカード内に収まることを実測済み。 */
 .igIntro__jp{font-family:"Zen Kaku Gothic New",sans-serif;font-weight:700;
   font-size:clamp(12px,2.4vw,15px);line-height:1.4;color:#111;
-  white-space:nowrap;margin-top:clamp(17px,4.1vw,27px)}
+  /* ②「ラインとの隙間が空きすぎているので上に移動」:
+     横ライン→日本語名を 0.216→0.134（円の直径比）に詰める */
+  white-space:nowrap;margin-top:clamp(9px,2.4vw,16px)}
+/* ③「矢印わすれてたかも！」: 日本語名の下に下向き矢印を戻す。
+   コンプ実測で幅は円の直径の 0.391 倍（旧 0.176 倍より大きい）。 */
+.igIntro__arrow{width:clamp(34px,8.6vw,59px);height:auto;
+  margin-top:clamp(8px,2.1vw,14px)}
 /* さらに狭い枠では字と余白を少しだけ詰めて、1行のまま収める */
 @media (max-width:319.98px){
   .igIntro__products{gap:12px;padding-left:12px;padding-right:12px}
