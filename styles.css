@@ -664,9 +664,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    上は TOP、下は Block02、左右は画面の端にあたる。 */
 .lead__ball{position:absolute;top:0;left:0;width:clamp(72px,20vw,172px);aspect-ratio:1;
   opacity:.9;will-change:transform}
-/* 絵文字は字面が font-size とほぼ同寸なので、枠と同じ大きさを指定する */
-.lead__emo{display:block;width:100%;line-height:1;text-align:center;
-  font-size:clamp(72px,20vw,172px);
+/* 絵柄は支給写真（背景を抜いたもの）。枠いっぱいに置く */
+.lead__emo{display:block;width:100%;height:100%;object-fit:contain;
   filter:drop-shadow(0 6px 14px rgba(0,0,0,.2))}
 .lead__cont{position:relative;z-index:1;max-width:760px;margin-inline:auto;text-align:center}
 .lead__label{font-family:var(--f-dot);font-size:clamp(12px,3vw,15px);letter-spacing:.2em;color:var(--white)}

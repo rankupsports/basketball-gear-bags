@@ -98,15 +98,15 @@
      ========================================================= */
   /* 指示②: ボールは1個。上は TOP、下は Block02、左右は画面の端にぶつかると
      折り返しながら跳ね返る（＝このセクションの矩形の中で反射する）。
-     参照サイトのアイコンと同じくバスケットボールの絵文字を使う。
+     絵柄は支給のバスケットボール写真（背景を抜いたもの）。
      跳ね返る面はセクションの矩形そのもの。スクロール位置は見ないので、
      ボールは画面を追いかけず、勝手に走り回る。 */
-  const LEAD_ICON = '🏀';
+  const LEAD_ICON = 'assets/ball.webp';   // 支給のバスケットボール写真（背景抜き）
   const SPEED = 340;           // px/秒
   const bounceBall = (host) => {
     if (!host) return;
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    host.innerHTML = `<div class="lead__ball"><span class="lead__emo">${LEAD_ICON}</span></div>`;
+    host.innerHTML = `<div class="lead__ball"><img class="lead__emo" src="${LEAD_ICON}" alt="" width="400" height="400" decoding="async"></div>`;
     const el = host.firstElementChild;
     let W = 0, H = 0, S = 0, x = 0, y = 0, ang = 0, last = 0, raf = null, started = false;
     // 斜めに走らせる。上下と左右で速さを変えて、同じ軌跡をなぞらないようにする
