@@ -1009,25 +1009,26 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    従来は 600px に 13.2px（=2.20%）で相対的に小さかったため 17.2px に。
    吹き出しは SVG 画像なので、幅・高さ・余白を em 化して文字と一緒に拡大する
    （495px の bub-c が 17.2px 時 645px になるのでカラムを 660px に広げる）。 */
-.b03__chat{margin:86px auto 0;width:660px;--chatW:660px}  /* 左右 auto で中央 */
-/* 赤字校正 ③: 文字を一段太く・少し大きく（可読性UP）。
-   本文が大きくなった分、吹き出しも SVG のアスペクト比を保ったまま拡大する。
+/* ---- Block02調整指示0810.pdf「ブロック02 追加要素（元03）」/「ブロック03 も同様に」 ----
+   ステージ先頭の人物カット。写真は準備中なのでグレーの四角、
+   比率は瀬崎さんのヒーロー写真と同じ .617、幅は HERO カードと同じ 482px。
+   ハートは瀬崎さんと同じ形・同じ動き（rinaHeartBeat）。 */
+:is(.b03,.b04) :is(.b03__cast,.b04__cast){position:relative;width:482px;margin:0 auto 128px}
+:is(.b03,.b04) :is(.b03__castPh,.b04__castPh){width:100%;aspect-ratio:.617;
+  background:#E9E9E9;border-radius:14px;box-shadow:0 16px 34px rgba(0,0,0,.18)}
+:is(.b03,.b04) :is(.b03__castHeart,.b04__castHeart){position:absolute;bottom:-7.9%;left:50%;
+  width:19%;height:auto;transform:translateX(-50%);
+  filter:drop-shadow(0 6px 14px rgba(0,0,0,.25));
+  transform-origin:bottom center;
+  animation:rinaHeartBeat 2s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){
+  :is(.b03,.b04) :is(.b03__castHeart,.b04__castHeart){animation:none}
+}
 
-   指示04: ブロック全体が 1.655 倍になるため、吹き出しの文字が参考サイトの
-   サイズ（実測 ≒22px 相当）で表示されるようステージ座標を 0.825 倍にする。
-   16px x 0.825 = 13.2px → 13.2 x 1.655 = 21.9px（画面上は 16px → 22px に拡大）。
-   吹き出し画像も同じ 0.825 倍にして、文字と枠の収まりを元のまま保つ。 */
-.b03 .bub{position:relative;margin:0;font-family:var(--f-zkaku);font-weight:700;
-  font-size:17.2px;line-height:1.5;letter-spacing:.01em;white-space:nowrap;
-  background-repeat:no-repeat;background-size:100% 100%;display:flex;align-items:center}
-.b03 .bub--l{color:#111}                    /* 左・白・しっぽ左下 */
-.b03 .bub--r{color:#fff;margin-left:auto}   /* 右・青・しっぽ右下 */
-/* 寸法は元の px（13.2px 基準）を em 換算。文字サイズを変えても収まりは同じ。 */
-.b03 .bub--a{width:33.485em;height:4.924em;background-image:url('assets/block03/block03_bub-a.svg');padding:0 1.894em .909em 2.121em}
-.b03 .bub--b{width:28.864em;height:6.212em;white-space:normal;line-height:1.5;background-image:url('assets/block03/block03_bub-b.svg');padding:0 1.515em .833em 1.515em}
-.b03 .bub--c{width:37.5em;height:4.924em;background-image:url('assets/block03/block03_bub-c.svg');padding:0 1.591em .909em 1.894em}
-.b03 .bub--d{width:31.591em;height:4.621em;background-image:url('assets/block03/block03_bub-d.svg');padding:0 2.121em .833em 1.894em}
-.b03__chat .bub + .bub{margin-top:2.348em}
+/* Block02調整指示0810.pdf: 吹き出しは文言を一新し、HERO カードの上に移動。
+   旧テキスト専用に作られた固定サイズの SVG 吹き出しでは新しい文言が収まらないので、
+   ブロック04 と同じ CSS 実装（角丸＋しっぽ）に統一した。改行はコンプ通り <br>。 */
+.b03__chat{margin:0 auto 96px;width:660px;--chatW:660px;display:flex;flex-direction:column}
 
 /* =============== 2×2 グリッド（下部・小カード） =============== */
 .b03__grid{margin:200px auto 0;width:848px;display:grid;grid-template-columns:repeat(2,1fr);column-gap:32px;row-gap:34px}
@@ -1104,25 +1105,21 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 /* block03 と同じく参考サイト比率に合わせて本文を拡大（13.2→17.2px）。
    余白・角丸・しっぽ・折り返し幅も em 化して収まりを保ち、
    最長の nowrap 行（436px→568px）が入るようカラムを 580px に広げる。 */
-.b04__chat{margin:86px auto 0;width:580px;--chatW:580px;display:flex;flex-direction:column}
-.b04 .bub{position:relative;margin:0;width:max-content;max-width:100%;
+.b04__chat{margin:0 auto 96px;width:580px;--chatW:580px;display:flex;flex-direction:column}
+/* 吹き出し本体は block03/04 共通（block03 も SVG からこの CSS 実装に統一） */
+:is(.b03,.b04) .bub{position:relative;margin:0;width:max-content;max-width:100%;
   font-family:var(--f-zkaku);font-weight:700;font-size:17.2px;line-height:1.6;letter-spacing:.01em;
   padding:.758em 1.364em;border-radius:1.364em}
-/* 指示05-①: 吹き出しの間隔を block03 に合わせる。
-   block03 は SVG 内にしっぽを含むので見た目の間隔＝margin-top(31px)。
-   block04 はしっぽが ::after で箱の下 6px にはみ出すため、
-   同じ 31px を空けるには 31+6=37px が必要。 */
-.b04 .bub + .bub{margin-top:2.803em}
-.b04 .bub--l{align-self:flex-start;background:#fff;color:#111}      /* 左・白・しっぽ左下 */
-.b04 .bub--r{align-self:flex-end;background:var(--b3blue);color:#fff} /* 右・青・しっぽ右下 */
-.b04 .bub--l::after{content:"";position:absolute;bottom:-.455em;left:1.288em;
+/* 指示05-①: 吹き出しの間隔。しっぽが ::after で箱の下 6px にはみ出すぶんを足す。 */
+:is(.b03,.b04) .bub + .bub{margin-top:2.803em}
+:is(.b03,.b04) .bub--l{align-self:flex-start;background:#fff;color:#111}      /* 左・白・しっぽ左下 */
+:is(.b03,.b04) .bub--r{align-self:flex-end;background:var(--b3blue);color:#fff} /* 右・青・しっぽ右下 */
+:is(.b03,.b04) .bub--l::after{content:"";position:absolute;bottom:-.455em;left:1.288em;
   border:.53em solid transparent;border-top-color:#fff;border-bottom:0}
-.b04 .bub--r::after{content:"";position:absolute;bottom:-.455em;right:1.288em;
+:is(.b03,.b04) .bub--r::after{content:"";position:absolute;bottom:-.455em;right:1.288em;
   border:.53em solid transparent;border-top-color:var(--b3blue);border-bottom:0}
-/* 行数を確定稿に合わせる: 1 行は折り返さない、複数行は幅を指定して折り返す */
-.b04 .bub--nowrap{white-space:nowrap}
-.b04 .bub--w3{width:25.682em}   /* 3 行に折り返す白吹き出し */
-.b04 .bub--w2{width:26.288em}   /* 2 行に折り返す青吹き出し */
+/* 改行はコンプ通り <br> で入れるので、自動の折り返しは止める */
+:is(.b03,.b04) .bub--nowrap{white-space:nowrap}
 
 /* ===== 絵文字あしらい（参考サイト FISHS EDDY の look チャット）=====
    参考実測: カラム 630px に対し絵文字行は 280x91px
@@ -1141,10 +1138,9 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    絵文字行を挟むので順番は nth-child ではなく各要素の --d で指定する。 */
 .b03 .bub,.b04 .bub,.bubEmo{opacity:0;transform:scale(0);
   transition:opacity .34s ease, transform .46s cubic-bezier(.34,1.4,.5,1)}
-.b03 .bub--l{transform-origin:1.818em 100%}
-.b03 .bub--r{transform-origin:calc(100% - 1.818em) 100%}
-.b04 .bub--l{transform-origin:1.288em 100%}
-.b04 .bub--r{transform-origin:calc(100% - 1.288em) 100%}
+/* しっぽ（●）を軸にポップイン。block03/04 とも同じ位置にしっぽがある。 */
+:is(.b03,.b04) .bub--l{transform-origin:1.288em 100%}
+:is(.b03,.b04) .bub--r{transform-origin:calc(100% - 1.288em) 100%}
 .bubEmo{transform-origin:0 100%}
 .b03__chat.is-in .bub,.b04__chat.is-in .bub,
 .b03__chat.is-in .bubEmo,.b04__chat.is-in .bubEmo{opacity:1;transform:scale(1);
@@ -1414,8 +1410,10 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 /* 準備中の2点は写真なしのグレー枠のまま */
 .shop__box--soon{}
 
-/* ---- ロープのカルーセル（ロープ写真→着用写真8枚）---- */
-.shop__box--car{position:relative}
+/* ---- ロープのカルーセル（ロープ写真→着用写真8枚）----
+   支給写真の地色が白なので、枠の地色も同じ白にして
+   contain の余白（左右の帯）が出ないようにする。 */
+.shop__box--car{position:relative;background:#FBFBFB}
 .shop__box--car .shop__img{position:absolute;inset:0;opacity:0;transition:opacity .3s ease}
 .shop__box--car .shop__img.is-show{opacity:1}
 .shop__arw{

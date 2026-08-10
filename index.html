@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=League+Spartan:wght@500;700&family=M+PLUS+1p:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Bowlby+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Montserrat:wght@400;500;700&family=Libre+Bodoni:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=Geist+Pixel&family=Jersey+10&family=Jersey+20&family=Encode+Sans+Condensed:wght@700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=90" />
+<link rel="stylesheet" href="styles.css?v=91" />
 </head>
 <body>
 
@@ -224,6 +224,28 @@
  <div class="b03__scale">
   <div class="b03__stage">
 
+    <!-- ---- Block02調整指示0810.pdf「ブロック02 追加要素（元03）」 ----
+         先頭に人物カット＋ハート。写真は準備中なので一旦グレーの四角、
+         比率は瀬崎さんのヒーロー写真と同じ .617、ハートも同じ動き。 -->
+    <div class="b03__cast">
+      <div class="b03__castPh" role="img" aria-label="写真は準備中"></div>
+      <img class="b03__castHeart" src="assets/cast-heart-badge.svg" alt="" aria-hidden="true" />
+    </div>
+
+    <!-- ---- チャット吹き出し（内容を一新。指示どおり HERO カードの上へ移動） ---- -->
+    <div class="b03__chat">
+      <p class="bub bub--r bub--nowrap">バスケットボールがすっぽり入る巾着バッグ!</p>
+      <p class="bub bub--l bub--nowrap" style="--d:.16s">今日はどっちのデザインにしよう？<br />気分でくるっと裏返せば、リバーシブルで楽しめます♪</p>
+      <!-- 「吹き出しの合間のアニメーション素材を準備中」とのことなので、
+           支給までは既存の絵文字あしらいを置いたままにする。 -->
+      <p class="bubEmo" style="--d:.32s" aria-hidden="true">😍😍😍</p>
+      <p class="bub bub--r bub--nowrap" style="--d:.48s">お気に入りのストラップロープを付けたり、<br />カラビナでリュックにぶら下げたり</p>
+      <p class="bub bub--l bub--nowrap" style="--d:.64s">自分らしくアレンジできるのもポイント！</p>
+      <p class="bubEmo" style="--d:.8s" aria-hidden="true">😍😍😍</p>
+      <p class="bub bub--r bub--nowrap" style="--d:.96s">前ポケットにはスマホや小物を入れて、<br />必要なものはサッと取り出せる♪</p>
+      <p class="bub bub--l bub--nowrap" style="--d:1.12s">練習も試合も、お気に入りのボールと一緒に出かけよう!</p>
+    </div>
+
     <!-- ---- HERO カード ---- -->
     <article class="ig ig--hero">
       <header class="ig__bar">
@@ -279,18 +301,6 @@
 
       <div class="ig__buyWrap"><a class="ig__buy" href="https://www.rankup-sports.com/product-page/basketball-gear-bags">BUY NOW</a></div>
     </article>
-
-    <!-- ---- チャット吹き出し（cropped SVG を背景、本文は live text） ---- -->
-    <div class="b03__chat">
-      <p class="bub bub--l bub--a">バスケットボールがすっぽり収まる巾着タイプのボールバッグ。</p>
-      <p class="bub bub--r bub--b" style="--d:.16s">裏返せばデザインが変わるリバーシブル仕様で、<br />気分やコーデに合わせて2通りのスタイルを楽しめます！</p>
-      <!-- 参考サイト(FISHS EDDY)の絵文字あしらい。3個1行・カラム幅比 44%（高さ14.4%）。
-           指示①: 絵文字はブロックごとに1種類。ブロック03は😍、ブロック04は❤️。 -->
-      <p class="bubEmo" style="--d:.32s" aria-hidden="true">😍😍😍</p>
-      <p class="bub bub--l bub--c" style="--d:.48s">お好みのストラップロープを取り付けて、自分らしくアレンジすることも!</p>
-      <p class="bub bub--r bub--d" style="--d:.64s">お気に入りのボールを入れて、練習や試合に持っていこう！</p>
-      <p class="bubEmo" style="--d:.8s" aria-hidden="true">😍😍😍</p>
-    </div>
 
     <!-- ---- 2×2 グリッド（ユーザー投稿カード） ---- -->
     <div class="b03__grid">
@@ -415,6 +425,25 @@
  <div class="b04__scale">
   <div class="b04__stage">
 
+    <!-- ---- Block02調整指示0810.pdf「ブロック03 も同様に」 ----
+         ブロック02と同じく、先頭に人物カット（準備中のグレー）＋ハート。 -->
+    <div class="b04__cast">
+      <div class="b04__castPh" role="img" aria-label="写真は準備中"></div>
+      <img class="b04__castHeart" src="assets/cast-heart-badge.svg" alt="" aria-hidden="true" />
+    </div>
+
+    <!-- ---- チャット吹き出し（内容を一新。HERO カードの上へ移動） ---- -->
+    <div class="b04__chat">
+      <p class="bub bub--r bub--nowrap">バッシュはメイン収納へ</p>
+      <p class="bub bub--l bub--nowrap" style="--d:.16s">水筒やペットボトルはサイドポケットへ♪</p>
+      <p class="bubEmo" style="--d:.32s" aria-hidden="true">❤️❤️❤️</p>
+      <p class="bub bub--r bub--nowrap" style="--d:.48s">汗をかいたバッシュと飲み物を分けて収納できるから、<br />衛生的にも気分的にもなんだかうれしい！</p>
+      <p class="bub bub--l bub--nowrap" style="--d:.64s">フロントポケットにはハンドタオルや絆創膏など、<br />よく使う小物をまとめて収納♪</p>
+      <p class="bubEmo" style="--d:.8s" aria-hidden="true">❤️❤️❤️</p>
+      <p class="bub bub--r bub--nowrap" style="--d:.96s">お気に入りのロープストラップを付ければ、<br />自分だけのスタイルにアレンジできるのもポイント！</p>
+      <p class="bub bub--l bub--nowrap" style="--d:1.12s">必要なものをひとつにまとめて、今日もバスケへ出かけよう！</p>
+    </div>
+
     <!-- ---- HERO カード ---- -->
     <article class="ig ig--hero">
       <header class="ig__bar">
@@ -469,18 +498,6 @@
 
       <div class="ig__buyWrap"><a class="ig__buy" href="https://www.rankup-sports.com/product-page/basketball-gear-bags">BUY NOW</a></div>
     </article>
-
-    <!-- ---- チャット吹き出し（CSS 実装 / 右青→左白→右青→左白） ---- -->
-    <div class="b04__chat">
-      <p class="bub bub--r bub--nowrap">バスケットシューズをすっぽり収納できるシューズバッグ。</p>
-      <p class="bub bub--l bub--w3" style="--d:.16s">サイドポケットには水筒、フロントポケットにはハンドタオルや絆創膏など、練習や試合で使う小物をまとめて収納できます！</p>
-      <!-- 参考サイト(FISHS EDDY)の絵文字あしらい。3個1行・カラム幅比 44%（高さ14.4%）。
-           指示①: ブロック04の絵文字は❤️にそろえる。 -->
-      <p class="bubEmo" style="--d:.32s" aria-hidden="true">❤️❤️❤️</p>
-      <p class="bub bub--r bub--w2" style="--d:.48s">お好みのロープストラップを付けて、自分らしくアレンジできるのもポイント！</p>
-      <p class="bub bub--l bub--nowrap" style="--d:.64s">必要なアイテムをひとつにまとめて、練習や試合に持っていこう！</p>
-      <p class="bubEmo" style="--d:.8s" aria-hidden="true">❤️❤️❤️</p>
-    </div>
 
     <!-- ---- 2×2 グリッド ---- -->
     <div class="b04__grid">
@@ -771,7 +788,7 @@
 
         <figure class="shop__prod">
           <div class="shop__box shop__box--car" id="ropeBlack">
-            <img class="shop__img is-show" src="assets/block05/rope_black.jpg" alt="ROPE STRAP - Black" />
+            <img class="shop__img is-show" src="assets/block05/rope/black-0.jpg" alt="ROPE STRAP - Black" />
             <img class="shop__img" data-src="assets/block05/rope/black-1.jpg" alt="" />
             <img class="shop__img" data-src="assets/block05/rope/black-2.jpg" alt="" />
             <img class="shop__img" data-src="assets/block05/rope/black-3.jpg" alt="" />
@@ -790,7 +807,7 @@
 
         <figure class="shop__prod">
           <div class="shop__box shop__box--car" id="ropeGray">
-            <img class="shop__img is-show" src="assets/block05/rope_gray.jpg" alt="ROPE STRAP - Gray" />
+            <img class="shop__img is-show" src="assets/block05/rope/gray-0.jpg" alt="ROPE STRAP - Gray" />
             <img class="shop__img" data-src="assets/block05/rope/gray-1.jpg" alt="" />
             <img class="shop__img" data-src="assets/block05/rope/gray-2.jpg" alt="" />
             <img class="shop__img" data-src="assets/block05/rope/gray-3.jpg" alt="" />
@@ -809,7 +826,7 @@
 
         <figure class="shop__prod">
           <div class="shop__box shop__box--car" id="ropePink">
-            <img class="shop__img is-show" src="assets/block05/rope_pink.jpg" alt="ROPE STRAP - Pink" />
+            <img class="shop__img is-show" src="assets/block05/rope/pink-0.jpg" alt="ROPE STRAP - Pink" />
             <img class="shop__img" data-src="assets/block05/rope/pink-1.jpg" alt="" />
             <img class="shop__img" data-src="assets/block05/rope/pink-2.jpg" alt="" />
             <img class="shop__img" data-src="assets/block05/rope/pink-3.jpg" alt="" />
@@ -828,7 +845,7 @@
 
         <figure class="shop__prod">
           <div class="shop__box shop__box--car" id="ropeBlue">
-            <img class="shop__img is-show" src="assets/block05/rope_blue.jpg" alt="ROPE STRAP - Blue" />
+            <img class="shop__img is-show" src="assets/block05/rope/blue-0.jpg" alt="ROPE STRAP - Blue" />
             <img class="shop__img" data-src="assets/block05/rope/blue-1.jpg" alt="" />
             <img class="shop__img" data-src="assets/block05/rope/blue-2.jpg" alt="" />
             <img class="shop__img" data-src="assets/block05/rope/blue-3.jpg" alt="" />
