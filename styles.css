@@ -1427,7 +1427,10 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    支給写真の地色が白なので、枠の地色も同じ白にして
    contain の余白（左右の帯）が出ないようにする。 */
 .shop__box--car{position:relative;background:#FBFBFB}
-.shop__box--car .shop__img{position:absolute;inset:0;opacity:0;transition:opacity .3s ease}
+/* 画像は枠と同じ比率で書き出してあるので cover でも切れない。
+   contain だと丸め誤差で 0.02px ほど隙間ができ、枠の縁がうっすら見えるため。 */
+.shop__box--car .shop__img{position:absolute;inset:0;object-fit:cover;
+  opacity:0;transition:opacity .3s ease}
 .shop__box--car .shop__img.is-show{opacity:1}
 .shop__arw{
   position:absolute;top:50%;transform:translateY(-50%);z-index:2;
