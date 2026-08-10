@@ -102,20 +102,30 @@
      跳ね返る面はセクションの矩形そのもの。スクロール位置は見ないので、
      ボールは画面を追いかけず、勝手に走り回る。 */
   const LEAD_ICON = 'assets/ball.webp';   // 支給のバスケットボール写真（背景抜き）
-  const SPEED = 340;           // px/秒
+  /* 速さは px/秒 で持つが、そのままだと画面が狭いスマホでは
+     「1秒で画面を横切る割合」が大きくなり、PC より慌ただしく見える。
+     基準幅での速さを決めて、幅に比例させて体感をそろえる。 */
+  const SPEED = 340;           // px/秒（幅 SPEED_REF のとき）
+  const SPEED_REF = 1265;      // 速さの基準にする幅
+  const SPEED_MIN = 90;        // 極端に狭い画面で止まって見えない下限
   const bounceBall = (host) => {
     if (!host) return;
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     host.innerHTML = `<div class="lead__ball"><img class="lead__emo" src="${LEAD_ICON}" alt="" width="400" height="400" decoding="async"></div>`;
     const el = host.firstElementChild;
     let W = 0, H = 0, S = 0, x = 0, y = 0, ang = 0, last = 0, raf = null, started = false;
-    // 斜めに走らせる。上下と左右で速さを変えて、同じ軌跡をなぞらないようにする
-    let vx = SPEED * 0.78, vy = SPEED * 0.62;
+    // 斜めに走らせる。上下と左右で速さを変えて、同じ軌跡をなぞらないようにする。
+    // ここでは向きだけを決め、大きさ（速さ）は measure で画面幅に合わせる。
+    let vx = 0.78, vy = 0.62;
     const measure = () => {
       const r = host.getBoundingClientRect();
       W = r.width; H = r.height; S = el.offsetWidth || 100;
       x = Math.max(0, Math.min(x, W - S));
       y = Math.max(0, Math.min(y, H - S));
+      // 向きは保ったまま、幅に見合った速さに合わせ直す
+      const sp = Math.max(SPEED_MIN, SPEED * W / SPEED_REF);
+      const n = Math.hypot(vx, vy) || 1;
+      vx = vx / n * sp; vy = vy / n * sp;
     };
     const step = (t) => {
       if (!last) last = t;
@@ -127,7 +137,8 @@
       if (x >= W - S) { x = W - S; vx = -Math.abs(vx); }  // 右（画面の端）
       if (y <= 0)     { y = 0;     vy = Math.abs(vy); }   // 上（TOP との境）
       if (y >= hi)    { y = hi;    vy = -Math.abs(vy); }  // 下（Block02 との境）
-      ang += vx * dt * .6;                                 // 転がっているように回す
+      ang += vx * dt * .6 * (172 / (S || 172));            // 転がっているように回す
+                                                           // （小さい球ほどよく回る＝転がり方をそろえる）
       el.style.transform = `translate3d(${x}px,${y}px,0) rotate(${ang}deg)`;
       raf = requestAnimationFrame(step);
     };
