@@ -781,8 +781,19 @@
            グレー枠、ロープ4色はカルーセル（ロープ写真→着用写真8枚）。
            価格行は 名前 → 点線リーダー → 金額。 -->
       <div class="shop__grid">
+        <!-- Block05調整指示0810.pdf: ボールバッグは写真5枚のカルーセル（白背景）。
+             並びはコンプの矢印どおり front_b → back_b → front_c → back_c → ball。 -->
         <figure class="shop__prod">
-          <div class="shop__box shop__box--soon" role="img" aria-label="準備中"></div>
+          <div class="shop__box shop__box--car" id="ballBag">
+            <img class="shop__img is-show" src="assets/block05/ball/ball-1.jpg" alt="Drawstring Ball Bag" />
+            <img class="shop__img" data-src="assets/block05/ball/ball-2.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/ball/ball-3.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/ball/ball-4.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/ball/ball-5.jpg" alt="" />
+            <button type="button" class="shop__arw shop__arw--prev" data-car="prev" aria-controls="ballBag" aria-label="前の写真"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 7 12l8 8"/></svg></button>
+            <button type="button" class="shop__arw shop__arw--next" data-car="next" aria-controls="ballBag" aria-label="次の写真"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4l8 8-8 8"/></svg></button>
+          </div>
+          <span class="shop__cdots" id="ballBagDots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></span>
           <p class="shop__name">DRAWSTRING BALL BAG</p>
           <p class="shop__pline"><span class="shop__leader" aria-hidden="true"></span><span class="shop__yen">￥5,499</span></p>
         </figure>
