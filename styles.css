@@ -897,10 +897,10 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    --stageW 比にすると、PC でステージが最大 1.655 倍まで拡大されるぶんも
    掛かってしまい、1920px 幅で約106px＝メインタイトルより大きくなる。
    35px なら 980px 幅で約35px、1920px 幅でも約58px に収まる。 */
-/* 下の余白は 128px（ステージ内で使っている余白リズム。--s 基準だと
-   31px しか空かず、次の動画と詰まって見える）。 */
+/* 下の余白 80px。--s 基準の 31px では動画と詰まり、128px では空きすぎたので
+   その間に取る。 */
 :is(.b03,.b04) .pTtl{--s:35px;
-  width:100%;text-align:center;margin:0 auto 128px}
+  width:100%;text-align:center;margin:0 auto 80px}
 /* Archivo Black は 400 しか無いので、h3 の既定 bold で合成太字にならないよう明示 */
 :is(.b03,.b04) .pTtl__en{margin:0;font-family:var(--f-archivo);font-weight:400;
   font-size:var(--s);line-height:1.02;letter-spacing:-.005em}
