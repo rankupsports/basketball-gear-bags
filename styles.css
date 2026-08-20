@@ -501,6 +501,10 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 @media (max-width:600px){
   /* カードが 338px まで縮むので、比率をそろえて少し小さく */
   .igIntro__products{grid-template-columns:1fr;border-radius:12px}
+  /* 縦積みだと 369px x2 で背が高くなりすぎるので、横に伸ばして下をトリミング。
+     object-position を上寄せにして、人物の上半身とバッグを残す。 */
+  .prodCard{aspect-ratio:4/3}
+  .prodCard__ph{object-position:50% 0}
   .prodCard__num{top:max(10px,6.25cqw);left:max(10px,5.4cqw);width:max(20px,7.3cqw)}
   .prodCard__body{left:max(10px,5.4cqw);right:max(10px,5.4cqw);bottom:max(10px,4.85cqw)}
   .prodCard__en{font-size:max(17px,8.1cqw)}
