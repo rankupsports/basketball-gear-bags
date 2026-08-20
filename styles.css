@@ -458,11 +458,11 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    カードは .igIntro__cont（最大 610px）の外に出してセクション幅を使う。
    610px だとパネルが 305px＝支給デザインの3分の1で、PC でも小さく見えるため。
    980px ならパネル 490px。max() の下限はスマホ用に残してある。 */
-/* 角丸は共通の --radius(25px) より大きめの 36px。980px の大きな面なので
-   25px だと角が立って見える。 */
+/* 角丸は共通の --radius(25px) より大きめの 48px。980px の大きな面では
+   これくらいないと角が立って見える。 */
 .igIntro__products{width:100%;max-width:980px;margin:0 auto;
   display:grid;grid-template-columns:1fr 1fr;
-  border-radius:36px;overflow:hidden;background:#fff;
+  border-radius:48px;overflow:hidden;background:#fff;
   box-shadow:0 12px 30px rgba(0,0,0,.18)}
 
 .prodCard{position:relative;display:block;overflow:hidden;
@@ -496,11 +496,17 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .prodCard--onDark .prodCard__en{-webkit-text-stroke:max(2px,.55cqw) #fff;
   paint-order:stroke fill}
 
-/* パネルが 300px を切ると VIEW PRODUCT が収まらないので縦積みに切り替える
-   （埋め込み枠のスマホ 320px でもボタンが潰れない） */
+/* スマホでも横並びのまま。ただしパネルが 144〜169px まで縮むので、
+   支給比率どおりでは文字が 5px 以下になって読めない。この幅に収まる下限まで
+   落として、横並びを優先する（実測: パネル 144px でも VIEW PRODUCT が収まる）。 */
 @media (max-width:600px){
-  /* 幅が 338px まで縮むので、36px だと角が丸すぎる */
-  .igIntro__products{grid-template-columns:1fr;border-radius:24px}
+  /* カードが 338px まで縮むので、48px だと角が丸すぎる */
+  .igIntro__products{border-radius:28px}
+  .prodCard__num{top:max(10px,6.25cqw);left:max(10px,5.4cqw);width:max(20px,7.3cqw)}
+  .prodCard__body{left:max(10px,5.4cqw);right:max(10px,5.4cqw);bottom:max(10px,4.85cqw)}
+  .prodCard__en{font-size:max(17px,8.1cqw)}
+  .prodCard__jp{font-size:max(9.5px,3cqw);margin-top:max(3px,2.7cqw)}
+  .prodCard__btn{width:max(100px,31cqw);margin-top:max(6px,3.2cqw)}
 }
 @media (prefers-reduced-motion:reduce){
   .prodCard__ph{transition:none}
