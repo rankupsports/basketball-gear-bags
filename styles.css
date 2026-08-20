@@ -478,12 +478,9 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .prodCard__body{position:absolute;left:max(14px,5.4cqw);right:max(14px,5.4cqw);
   bottom:max(14px,4.85cqw);
   display:flex;flex-direction:column;align-items:flex-start}
-/* Archivo Black は 400 しか無いので合成太字を避けて明示。
-   商品名には白い縁を付ける。paint-order:stroke fill で縁を字の外側に描くので、
-   Archivo Black の太い字面が細らない。 */
+/* Archivo Black は 400 しか無いので合成太字を避けて明示 */
 .prodCard__en{font-family:var(--f-archivo);font-weight:400;
-  font-size:max(19px,8.1cqw);line-height:1.02;letter-spacing:-.01em;
-  -webkit-text-stroke:max(2px,.55cqw) #fff;paint-order:stroke fill}
+  font-size:max(19px,8.1cqw);line-height:1.02;letter-spacing:-.01em}
 .prodCard__jp{font-family:var(--f-noto);font-weight:700;
   font-size:max(11px,3cqw);line-height:1.4;letter-spacing:.02em;
   margin-top:max(4px,2.7cqw)}
@@ -492,8 +489,12 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 /* 01 は写真が淡い水色なので白抜き（明るいところでも読めるよう軽く影を敷く） */
 .prodCard--onLight{color:#fff}
 .prodCard--onLight :is(.prodCard__en,.prodCard__jp){text-shadow:0 2px 14px rgba(0,0,0,.3)}
-/* 02 は写真が白背景なので黒 */
+/* 02 は写真が白背景なので黒。商品名は白い縁を付けて写真から浮かせる。
+   paint-order:stroke fill で縁を字の外側に描くので、Archivo Black の
+   太い字面が細らない。01 は元から白文字なので縁は付けない。 */
 .prodCard--onDark{color:#111}
+.prodCard--onDark .prodCard__en{-webkit-text-stroke:max(2px,.55cqw) #fff;
+  paint-order:stroke fill}
 
 /* パネルが 300px を切ると VIEW PRODUCT が収まらないので縦積みに切り替える
    （埋め込み枠のスマホ 320px でもボタンが潰れない） */
