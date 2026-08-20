@@ -511,10 +511,9 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 /* Instagram モックをレビューの直前に単独で置くためのセクション。
    もとの居場所（.igIntro__cont）と同じ max-width:610px にそろえてある。
    --sec-bg は直後のレビュー(#fff)と同じ白。手前のブロック04(#683F90)からの
-   クロスフェードがここで白まで到達するので、レビューとの境目が出ない。
-   下の余白は .rvf の padding-top に任せる。 */
+   クロスフェードがここで白まで到達するので、レビューとの境目が出ない。 */
 .mockSec{--sec-bg:#fff;background:transparent;
-  padding:clamp(24px,5vw,48px) var(--pad) 0}
+  padding:clamp(24px,5vw,48px) var(--pad) clamp(48px,8vw,88px)}
 .mockSec__cont{width:100%;max-width:610px;margin:0 auto}
 /* 単独セクションでは上マージンぶんの隙間は不要（padding で取っている） */
 .mockSec .igIntro__mock{margin-top:0}
@@ -1273,7 +1272,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 /* ============================================================
    REVIEW FORM — Wix 風の投稿フォーム（白地・角丸カード）
    ============================================================ */
-.rvf{--sec-bg:#fff;background:#fff;color:#23468B;padding:clamp(20px,4vw,40px) 20px clamp(40px,7vw,80px)}
+/* 下は次のセクション（瀬崎さん）との間を広めに取る */
+.rvf{--sec-bg:#fff;background:#fff;color:#23468B;padding:clamp(20px,4vw,40px) 20px clamp(72px,11vw,132px)}
 .rvf__inner{
   position:relative;
   max-width:680px;margin:0 auto;

@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=League+Spartan:wght@500;700&family=M+PLUS+1p:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Bowlby+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Montserrat:wght@400;500;700&family=Libre+Bodoni:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=Geist+Pixel&family=Jersey+10&family=Jersey+20&family=Encode+Sans+Condensed:wght@700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=102" />
+<link rel="stylesheet" href="styles.css?v=103" />
 </head>
 <body>
 
@@ -185,7 +185,6 @@
            （354.6x438.8pt = カード比 482/598 と同じ）を実測して焼き込み済み。
            ムービーは 1080x1800 なので枠より縦長 → cover で中央。 -->
       <div class="ig__photo ig__photo--car" id="b03Car">
-        <img data-src="assets/block03/lineup/ball01.jpg" alt="ブルーロープの Drawstring Ball Bag を提げてコートを歩く" />
         <img data-src="assets/block03/lineup/ball02.jpg" alt="ブルーロープの Drawstring Ball Bag を真上から。巾着を締めたところ" />
         <img data-src="assets/block03/lineup/ball03.jpg" alt="バスケットボールがすっぽり収まった Drawstring Ball Bag" />
         <img data-src="assets/block03/lineup/ball04.jpg" alt="ブルーとホワイトのロープで肩にかけたスタイリング" />
@@ -197,7 +196,8 @@
       <div class="ig__actions">
         <img class="ig__act ig__act--like" src="assets/block03/block03_hearts.svg" alt="いいね" />
         <img class="ig__act ig__act--cmt" src="assets/block03/block03_hukidasi.svg" alt="コメント" />
-        <span class="ig__dots" id="b03Dots"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+        <!-- ドットの個数は JS が枚数から作る -->
+        <span class="ig__dots" id="b03Dots"></span>
         <span class="ig__nav">
           <button type="button" class="ig__navBtn" data-car="prev" aria-controls="b03Car" aria-label="前の写真">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
@@ -383,9 +383,6 @@
            写真枠(354.6x438.8 = カード比 482/598)の交差から解析的に求めて焼き込み。
            ムービーは 1080x1800 なので枠より縦長 → cover で中央。 -->
       <div class="ig__photo ig__photo--car" id="b04Car">
-        <video class="is-show" src="assets/block04/lineup/shoebag.mp4"
-               muted loop playsinline preload="metadata"
-               aria-label="Rankup sports Shoe Barrel Bag のムービー"></video>
         <img data-src="assets/block04/lineup/shoe01.jpg" alt="ピンクロープの Shoe Barrel Bag を手に提げてコートに立つ" />
         <img data-src="assets/block04/lineup/shoe02.jpg" alt="ピンクロープの Shoe Barrel Bag を肩にかけたスタイリング" />
         <img data-src="assets/block04/lineup/shoe03.jpg" alt="ピンクロープで斜めがけしたうしろ姿" />
@@ -398,7 +395,8 @@
       <div class="ig__actions">
         <img class="ig__act ig__act--like" src="assets/block03/block03_hearts.svg" alt="いいね" />
         <img class="ig__act ig__act--cmt" src="assets/block03/block03_hukidasi.svg" alt="コメント" />
-        <span class="ig__dots" id="b04Dots"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+        <!-- ドットの個数は JS が枚数から作る -->
+        <span class="ig__dots" id="b04Dots"></span>
         <span class="ig__nav">
           <button type="button" class="ig__navBtn" data-car="prev" aria-controls="b04Car" aria-label="前の写真">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
@@ -902,15 +900,19 @@
 </script>
 <script>
 /* HERO の写真カルーセル（Block03素材差し替え指示.pdf / Block04素材_0803.pdf）。
-   どちらも「先にムービー」でムービーが先頭。← → で巡回し、ドットは現在位置の
+   ← → で巡回し、ドットは現在位置の
    表示のみ（コンプ通り、押せない）。 */
 (function(){
   [['b03Car','b03Dots'],['b04Car','b04Dots']].forEach(function(ids){
     var car=document.getElementById(ids[0]), dots=document.getElementById(ids[1]);
     if(!car||!dots) return;
     var slides=car.querySelectorAll('img,video');
-    var pips=dots.querySelectorAll('i');
     if(slides.length<2) return;
+    // ドットは枚数に合わせて作り直す。HTML 側に個数を書いておくと、
+    // 写真やムービーを増減したときに必ずズレるので JS で同期させる。
+    dots.textContent='';
+    for(var d=0;d<slides.length;d++) dots.appendChild(document.createElement('i'));
+    var pips=dots.querySelectorAll('i');
     var i=0;
     // 重ねて置いてあり全部ビューポート内なので loading="lazy" では一斉に飛ぶ。
     // 表示する分と隣だけを読む。
@@ -934,7 +936,9 @@
       for(var m=0;m<pips.length;m++) pips[m].classList.toggle('on',m===i);
       playState();
     }
-    load(1); load(-1); playState();
+    // 先頭を表示状態にしてから始める（HTML 側の is-show に頼らない。
+    // 先頭の要素を差し替えたときに、どこにも is-show が無く真っ白になるのを防ぐ）
+    go(0);
     document.querySelectorAll('.ig__navBtn[aria-controls="'+ids[0]+'"]').forEach(function(btn){
       btn.addEventListener('click', function(){
         go(i + (btn.dataset.car==='next' ? 1 : -1));
