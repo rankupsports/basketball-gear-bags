@@ -1075,7 +1075,9 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 /* Block02調整指示0810.pdf: 吹き出しは文言を一新し、HERO カードの上に移動。
    旧テキスト専用に作られた固定サイズの SVG 吹き出しでは新しい文言が収まらないので、
    ブロック04 と同じ CSS 実装（角丸＋しっぽ）に統一した。改行はコンプ通り <br>。 */
-.b03__chat{margin:0 auto 96px;width:660px;--chatW:660px;display:flex;flex-direction:column}
+/* 下の余白は「BUY NOWのモック→ブロック04の見出し」と同じ 316px にそろえる
+   （= ブロック03のステージ下 184px ＋ ブロック04のステージ上 132px）。 */
+.b03__chat{margin:0 auto 316px;width:660px;--chatW:660px;display:flex;flex-direction:column}
 
 /* =============== 2×2 グリッド（下部・小カード） =============== */
 .b03__grid{margin:200px auto 0;width:848px;display:grid;grid-template-columns:repeat(2,1fr);column-gap:32px;row-gap:34px}
