@@ -87,7 +87,7 @@
 
 
 *,*::before,*::after{box-sizing:border-box}
-html{scroll-behavior:smooth;background:var(--white)}
+html{scroll-behavior:smooth !important;background:var(--white)}
 /* 背景色は .bgFade（固定レイヤー）が受け持つので body は透明にする。
    ベース色は html 側に残してあるので、JS が動かない場合も白地になる。 */
 body{margin:0;font-family:var(--f-body);color:var(--ink);background:transparent;overflow-x:hidden;-webkit-font-smoothing:antialiased}
@@ -335,11 +335,11 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    白帯(BASKETBALL GEAR BAGS / Rankup sports)の下から画面下端まで写真が占める。
    境界は既存の min-width:760px（タブレット以上）に合わせる。 */
 @media (max-width:759.98px){
-  .mv{display:flex;flex-direction:column;min-height:100svh}
-  .mv__cont{flex:1 1 auto;display:flex}
-  .mv__phBox{flex:1 1 auto;display:flex}
+  .mv{display:block;min-height:0;}
+  .mv__cont{display:block;}
+  .mv__phBox{display:block;}
   .mv__ph--pc{display:none}
-  .mv__ph--sp{display:block;flex:1 1 auto;width:100%;aspect-ratio:auto;min-height:0}
+  .mv__ph--sp{display:block;width:100%;aspect-ratio:9/16;}
   /* 全画面なので is-show の relative は使わず、全枚数を重ねる */
   .mv__ph--sp .mv__phImg,
   .mv__ph--sp .mv__phImg.is-show{position:absolute}
