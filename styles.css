@@ -892,19 +892,21 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 
 /* =============== 商品名の見出し（支給PNG）===============
    英字（Archivo Black）＋日本語＋下に細い縦線。
-   ステージは 968px 固定の px 設計を transform で縮小しているので、
-   サイズは vw ではなく --stageW からの比率で出す。モバイルは
-   --stageW が 530px に変わるので、そのまま同じ比率で縮む。 */
-:is(.b03,.b04) .pTtl{--s:calc(var(--stageW) * .066);
-  width:100%;text-align:center;margin:0 auto calc(var(--s) * .7)}
+   ステージは 968px 固定の px 設計を transform で拡大縮小しているので、
+   サイズは他の要素と同じ「設計 px」で持つ（vw も --stageW 比も不可）。
+   --stageW 比にすると、PC でステージが最大 1.655 倍まで拡大されるぶんも
+   掛かってしまい、1920px 幅で約106px＝メインタイトルより大きくなる。
+   35px なら 980px 幅で約35px、1920px 幅でも約58px に収まる。 */
+:is(.b03,.b04) .pTtl{--s:35px;
+  width:100%;text-align:center;margin:0 auto calc(var(--s) * .9)}
 /* Archivo Black は 400 しか無いので、h3 の既定 bold で合成太字にならないよう明示 */
 :is(.b03,.b04) .pTtl__en{margin:0;font-family:var(--f-archivo);font-weight:400;
   font-size:var(--s);line-height:1.02;letter-spacing:-.005em}
 :is(.b03,.b04) .pTtl__jp{margin:calc(var(--s) * .3) 0 0;
   font-family:var(--f-zkaku);font-weight:700;
   font-size:calc(var(--s) * .375);letter-spacing:.1em;line-height:1.4}
-:is(.b03,.b04) .pTtl__line{display:block;width:1.5px;
-  height:calc(var(--s) * 1.25);margin:calc(var(--s) * .6) auto 0;
+:is(.b03,.b04) .pTtl__line{display:block;width:1px;
+  height:calc(var(--s) * .7);margin:calc(var(--s) * .5) auto 0;
   background:currentColor}
 /* 紫地のブロック04は白抜き（.b04 の既定 color:#111 では読めない） */
 .b04 .pTtl{color:#fff}
