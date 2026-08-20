@@ -897,8 +897,10 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    --stageW 比にすると、PC でステージが最大 1.655 倍まで拡大されるぶんも
    掛かってしまい、1920px 幅で約106px＝メインタイトルより大きくなる。
    35px なら 980px 幅で約35px、1920px 幅でも約58px に収まる。 */
+/* 下の余白は 128px（ステージ内で使っている余白リズム。--s 基準だと
+   31px しか空かず、次の動画と詰まって見える）。 */
 :is(.b03,.b04) .pTtl{--s:35px;
-  width:100%;text-align:center;margin:0 auto calc(var(--s) * .9)}
+  width:100%;text-align:center;margin:0 auto 128px}
 /* Archivo Black は 400 しか無いので、h3 の既定 bold で合成太字にならないよう明示 */
 :is(.b03,.b04) .pTtl__en{margin:0;font-family:var(--f-archivo);font-weight:400;
   font-size:var(--s);line-height:1.02;letter-spacing:-.005em}
@@ -1075,9 +1077,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 /* Block02調整指示0810.pdf: 吹き出しは文言を一新し、HERO カードの上に移動。
    旧テキスト専用に作られた固定サイズの SVG 吹き出しでは新しい文言が収まらないので、
    ブロック04 と同じ CSS 実装（角丸＋しっぽ）に統一した。改行はコンプ通り <br>。 */
-/* 下の余白は「BUY NOWのモック→ブロック04の見出し」と同じ 316px にそろえる
-   （= ブロック03のステージ下 184px ＋ ブロック04のステージ上 132px）。 */
-.b03__chat{margin:0 auto 316px;width:660px;--chatW:660px;display:flex;flex-direction:column}
+/* 見出しがステージ先頭に移ったので、下は HERO カードとの間隔（元の 96px）に戻す。 */
+.b03__chat{margin:0 auto 96px;width:660px;--chatW:660px;display:flex;flex-direction:column}
 
 /* =============== 2×2 グリッド（下部・小カード） =============== */
 .b03__grid{margin:200px auto 0;width:848px;display:grid;grid-template-columns:repeat(2,1fr);column-gap:32px;row-gap:34px}
