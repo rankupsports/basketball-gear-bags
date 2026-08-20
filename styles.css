@@ -458,9 +458,11 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    カードは .igIntro__cont（最大 610px）の外に出してセクション幅を使う。
    610px だとパネルが 305px＝支給デザインの3分の1で、PC でも小さく見えるため。
    980px ならパネル 490px。max() の下限はスマホ用に残してある。 */
+/* 角丸は共通の --radius(25px) より大きめの 36px。980px の大きな面なので
+   25px だと角が立って見える。 */
 .igIntro__products{width:100%;max-width:980px;margin:0 auto;
   display:grid;grid-template-columns:1fr 1fr;
-  border-radius:var(--radius);overflow:hidden;background:#fff;
+  border-radius:36px;overflow:hidden;background:#fff;
   box-shadow:0 12px 30px rgba(0,0,0,.18)}
 
 .prodCard{position:relative;display:block;overflow:hidden;
@@ -476,9 +478,12 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .prodCard__body{position:absolute;left:max(14px,5.4cqw);right:max(14px,5.4cqw);
   bottom:max(14px,4.85cqw);
   display:flex;flex-direction:column;align-items:flex-start}
-/* Archivo Black は 400 しか無いので合成太字を避けて明示 */
+/* Archivo Black は 400 しか無いので合成太字を避けて明示。
+   商品名には白い縁を付ける。paint-order:stroke fill で縁を字の外側に描くので、
+   Archivo Black の太い字面が細らない。 */
 .prodCard__en{font-family:var(--f-archivo);font-weight:400;
-  font-size:max(19px,8.1cqw);line-height:1.02;letter-spacing:-.01em}
+  font-size:max(19px,8.1cqw);line-height:1.02;letter-spacing:-.01em;
+  -webkit-text-stroke:max(2px,.55cqw) #fff;paint-order:stroke fill}
 .prodCard__jp{font-family:var(--f-noto);font-weight:700;
   font-size:max(11px,3cqw);line-height:1.4;letter-spacing:.02em;
   margin-top:max(4px,2.7cqw)}
@@ -493,7 +498,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 /* パネルが 300px を切ると VIEW PRODUCT が収まらないので縦積みに切り替える
    （埋め込み枠のスマホ 320px でもボタンが潰れない） */
 @media (max-width:600px){
-  .igIntro__products{grid-template-columns:1fr}
+  /* 幅が 338px まで縮むので、36px だと角が丸すぎる */
+  .igIntro__products{grid-template-columns:1fr;border-radius:24px}
 }
 @media (prefers-reduced-motion:reduce){
   .prodCard__ph{transition:none}
