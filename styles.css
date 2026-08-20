@@ -285,7 +285,9 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .mv{position:relative;background:var(--white)}
 /* 参照の白帯は 255px・上余白 65px。こちらは固定ヘッダー(92px)の分だけ上を確保しつつ、
    文字サイズと行間を詰めて参照の高さ感に寄せる。 */
-.mv__header{background:var(--white);text-align:center;padding:104px var(--pad) clamp(20px,4vw,34px)}
+/* 上は固定ヘッダー(104px)のぶんを空けていたが、そのヘッダーを削除したので
+   下と同じ余白にそろえる。 */
+.mv__header{background:var(--white);text-align:center;padding:clamp(20px,4vw,34px) var(--pad)}
 /* 大見出しは Archivo Black（極太グロテスク）。幅いっぱいに置く。 */
 .mv__ttl{font-family:var(--f-archivo);font-size:clamp(24px,5.9vw,78px);
   line-height:1.06;letter-spacing:.005em;text-transform:uppercase}

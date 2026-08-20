@@ -803,6 +803,43 @@
   }
 
   /* =========================================================
+     CAST MOVIE — ブロック03/04 先頭の人物カット
+     autoplay 属性だけに任せると、絵が1枚も出ないことがある:
+       ・クロスオリジン iframe（Wix の埋め込みなど）で自動再生が許可されない
+       ・iOS の省電力モード / データセーバー
+     いずれも play() が reject されるだけで、preload="metadata" だと
+     フレームが1枚も描かれず「何も表示されない」状態になる。
+     そこで画面に入ったら play() を試し、断られたらフレームだけ描かせる。
+     ========================================================= */
+  const castVids = $$('.b03__castPh, .b04__castPh').filter(el => el.tagName === 'VIDEO');
+  if (castVids.length) {
+    const paintFirstFrame = (v) => {
+      v.preload = 'auto';
+      const seek = () => { try { if (!v.currentTime) v.currentTime = 0.05; } catch (e) {} };
+      if (v.readyState >= 2) seek();
+      else v.addEventListener('loadeddata', seek, { once: true });
+    };
+    const kick = (v) => {
+      const p = v.play();
+      if (p && p.catch) p.catch(() => paintFirstFrame(v));
+    };
+
+    // 画面に入ったら再生を試す（毎回試すので、一度断られても復帰できる）
+    const vio = new IntersectionObserver(es => {
+      es.forEach(en => { if (en.isIntersecting) kick(en.target); });
+    }, { threshold: 0.15 });
+    castVids.forEach(v => vio.observe(v));
+
+    // 自動再生が禁止されている環境向け。最初の操作をきっかけに走らせる。
+    const onFirstInput = () => {
+      castVids.forEach(kick);
+      ['pointerdown', 'touchstart', 'keydown'].forEach(t => removeEventListener(t, onFirstInput));
+    };
+    ['pointerdown', 'touchstart', 'keydown'].forEach(t =>
+      addEventListener(t, onFirstInput, { passive: true }));
+  }
+
+  /* =========================================================
      LIGHTBOX — Instagram モックの写真をクリックで拡大
      タイルは背景画像なので、url() を取り出して <img> に流し込む。
      閉じるのは ✕ ／ 写真の外側クリック ／ Esc。
