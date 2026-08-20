@@ -7,8 +7,8 @@
 <meta name="description" content="部活帰りも、寄り道も。Rankup sports 2026 SUMMER コレクション特設サイト。" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=League+Spartan:wght@500;700&family=M+PLUS+1p:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Bowlby+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Montserrat:wght@400;500;700&family=Libre+Bodoni:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=Geist+Pixel&family=Jersey+10&family=Jersey+20&family=Encode+Sans+Condensed:wght@700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=108" />
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=League+Spartan:wght@500;700&family=M+PLUS+1p:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Bowlby+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Montserrat:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Libre+Bodoni:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=Geist+Pixel&family=Jersey+10&family=Jersey+20&family=Encode+Sans+Condensed:wght@700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css?v=109" />
 </head>
 <body>
 
@@ -109,23 +109,36 @@
          絶対配置要素としてこのカラムに残っていたため、まとめて取り除いた。
          復活させるときは git 履歴（Comment out igCardWrap and igCard divs の親）から戻す。 -->
 
+    <!-- 支給デザイン(sanple-image.jpg)に置き換え。
+         各パネル＝支給写真の全面敷き＋左上に番号SVG＋左下に商品名と VIEW PRODUCT。
+         リンク先(#block03 / #block04)は従来どおりで、動きは変えていない。
+         01 は写真が淡い水色なので白抜き、02 は白背景なので黒。 -->
     <div class="igIntro__products">
-      <a class="igIntro__item reveal" href="#block03">
-        <span class="igIntro__ring"><span class="igIntro__ph" style="background-image:url('assets/product-ball-bag.png')" role="img" aria-label="Drawstring Ball Bag"></span></span>
-        <span class="igIntro__name">Drawstring<br />Ball Bag</span>
-        <!-- Block01.pdf ②隙間に横ライン ③日本語商品名追加 -->
-        <span class="igIntro__rule" aria-hidden="true"></span>
-        <span class="igIntro__jp">ボール巾着バッグ</span>
-        <img class="igIntro__arrow" src="assets/icon-arrow-down.svg" alt="" />
+      <a class="prodCard prodCard--onLight reveal" href="#block03">
+        <img class="prodCard__ph" src="assets/block01/photo-ballbag.jpg"
+             alt="ピンクのロープを付けた Drawstring Ball Bag を提げたスタイリング"
+             width="1260" height="1400" />
+        <img class="prodCard__num" src="assets/block01/num-01.svg" alt="" aria-hidden="true"
+             width="49" height="52" />
+        <span class="prodCard__body">
+          <span class="prodCard__en">Drawstring<br />Ball Bag</span>
+          <span class="prodCard__jp">ボール巾着バッグ</span>
+          <img class="prodCard__btn" src="assets/block01/btn-view-white.svg"
+               alt="VIEW PRODUCT" width="195" height="50" />
+        </span>
       </a>
-      <span class="igIntro__div" aria-hidden="true"></span>
-      <a class="igIntro__item reveal" style="--d:.12s" href="#block04">
-        <span class="igIntro__ring"><span class="igIntro__ph" style="background-image:url('assets/product-shoe-bag.png')" role="img" aria-label="ShoeBarrelbag"></span></span>
-        <span class="igIntro__name">ShoeBarrelbag</span>
-        <!-- Block01.pdf ②隙間に横ライン ③日本語商品名追加 -->
-        <span class="igIntro__rule" aria-hidden="true"></span>
-        <span class="igIntro__jp">シューズバレルバッグ</span>
-        <img class="igIntro__arrow" src="assets/icon-arrow-down.svg" alt="" />
+      <a class="prodCard prodCard--onDark reveal" style="--d:.12s" href="#block04">
+        <img class="prodCard__ph" src="assets/block01/photo-shoebag.jpg"
+             alt="ブルーのロープを付けた Shoe Barrel Bag を肩にかけたスタイリング"
+             width="1260" height="1400" />
+        <img class="prodCard__num" src="assets/block01/num-02.svg" alt="" aria-hidden="true"
+             width="51" height="52" />
+        <span class="prodCard__body">
+          <span class="prodCard__en">Shoe<br />Barrel Bag</span>
+          <span class="prodCard__jp">シューズバレルバッグ</span>
+          <img class="prodCard__btn" src="assets/block01/btn-view-black.svg"
+               alt="VIEW PRODUCT" width="194" height="50" />
+        </span>
       </a>
     </div>
   </div>
