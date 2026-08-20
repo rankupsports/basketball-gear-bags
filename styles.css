@@ -1026,8 +1026,11 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    比率は瀬崎さんのヒーロー写真と同じ .617、幅は HERO カードと同じ 482px。
    ハートは瀬崎さんと同じ形・同じ動き（rinaHeartBeat）。 */
 :is(.b03,.b04) :is(.b03__cast,.b04__cast){position:relative;width:482px;margin:0 auto 128px}
-:is(.b03,.b04) :is(.b03__castPh,.b04__castPh){width:100%;aspect-ratio:.617;
+/* 03/04 とも支給ムービー（444x720 = .617 で枠と同比）。
+   グレーは読み込み中の地色として残す。 */
+:is(.b03,.b04) :is(.b03__castPh,.b04__castPh){display:block;width:100%;aspect-ratio:.617;
   background:#E9E9E9;border-radius:14px;box-shadow:0 16px 34px rgba(0,0,0,.18)}
+:is(.b03,.b04) video:is(.b03__castPh,.b04__castPh){object-fit:cover}
 :is(.b03,.b04) :is(.b03__castHeart,.b04__castHeart){position:absolute;bottom:-7.9%;left:50%;
   width:19%;height:auto;transform:translateX(-50%);
   filter:drop-shadow(0 6px 14px rgba(0,0,0,.25));
