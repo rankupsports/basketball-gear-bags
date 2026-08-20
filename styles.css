@@ -454,9 +454,12 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 /* ---- 商品2点カード（支給デザイン sanple-image.jpg に置き換え） ----
    パネルごとに支給写真を全面に敷き、左上に番号SVG、左下に商品名（Archivo Black）と
    VIEW PRODUCT ボタン。サイズは支給デザインの実測比（パネル幅 928px 基準）を
-   cqw で持つ。ただしこの LP のカラムは最大 610px＝パネル 305px で支給デザインの
-   3分の1しかないため、そのままでは字が読めなくなる。max() で下限を付けている。 */
-.igIntro__products{width:100%;display:grid;grid-template-columns:1fr 1fr;
+   cqw で持つ。
+   カードは .igIntro__cont（最大 610px）の外に出してセクション幅を使う。
+   610px だとパネルが 305px＝支給デザインの3分の1で、PC でも小さく見えるため。
+   980px ならパネル 490px。max() の下限はスマホ用に残してある。 */
+.igIntro__products{width:100%;max-width:980px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;
   border-radius:var(--radius);overflow:hidden;background:#fff;
   box-shadow:0 12px 30px rgba(0,0,0,.18)}
 
