@@ -1627,3 +1627,42 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 @media (prefers-reduced-motion:reduce){
   .wixM__panel,.wixM__ov{transition:none}
 }
+
+/* =============== 写真の拡大表示（ライトボックス） ===============
+   ブロック01 Instagram モックの3x3グリッドをクリックすると、その写真だけを
+   ふわっと拡大する。レイヤーは position:fixed なので背面がスクロールしても
+   写真は動かない（背面のスクロール自体も html 側で止めている）。
+   z-index は BUY NOW のポップアップ(200)より上。 */
+.rinaSec__mockGrid .ph{cursor:zoom-in}
+
+.lb{position:fixed;inset:0;z-index:300;
+  display:flex;align-items:center;justify-content:center;
+  padding:clamp(16px,4vw,48px);background:rgba(0,0,0,.82);
+  opacity:0;visibility:hidden;
+  /* visibility は補間せず、閉じるときだけフェード後に遅らせて切る。
+     開いた瞬間から確実に見えて、クリックも受けられる状態にするため。 */
+  transition:opacity .3s ease,visibility 0s linear .3s}
+.lb.is-open{opacity:1;visibility:visible;
+  transition:opacity .3s ease,visibility 0s linear 0s}
+
+/* 拡大側は contain。タイルは cover で正方形に切っているので、
+   拡大時だけ写真全体が見える。 */
+.lb__img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;
+  border-radius:10px;box-shadow:0 24px 60px rgba(0,0,0,.5);cursor:default;
+  transform:scale(.94);transition:transform .3s cubic-bezier(.2,.9,.25,1)}
+.lb.is-open .lb__img{transform:scale(1)}
+
+.lb__close{position:absolute;top:clamp(10px,2.4vw,22px);right:clamp(10px,2.4vw,22px);
+  width:44px;height:44px;padding:0;display:grid;place-items:center;
+  border:0;border-radius:50%;background:rgba(255,255,255,.16);color:#fff;
+  cursor:pointer;-webkit-tap-highlight-color:transparent;
+  transition:background .2s ease}
+.lb__close svg{width:20px;height:20px}
+.lb__close:hover,.lb__close:focus-visible{background:rgba(255,255,255,.3)}
+
+/* 拡大中は背面をスクロールさせない */
+html.is-lbOpen,html.is-lbOpen body{overflow:hidden}
+
+@media (prefers-reduced-motion:reduce){
+  .lb,.lb__img,.lb__close{transition:none}
+}

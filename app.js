@@ -801,4 +801,50 @@
       }
     });
   }
+
+  /* =========================================================
+     LIGHTBOX — Instagram モックの写真をクリックで拡大
+     タイルは背景画像なので、url() を取り出して <img> に流し込む。
+     閉じるのは ✕ ／ 写真の外側クリック ／ Esc。
+     ========================================================= */
+  const lb = $('#lightbox');
+  const lbImg = $('#lbImg');
+  if (lb && lbImg) {
+    const tiles = $$('.rinaSec__mockGrid .ph');
+    let lastFocus = null;
+
+    const openLb = (tile) => {
+      const bg = tile.style.backgroundImage || getComputedStyle(tile).backgroundImage;
+      const src = (/url\(["']?(.*?)["']?\)/.exec(bg) || [])[1];
+      if (!src) return;
+      lbImg.src = src;
+      lbImg.alt = tile.getAttribute('aria-label') || '';
+      lastFocus = document.activeElement;
+      lb.classList.add('is-open');
+      lb.setAttribute('aria-hidden', 'false');
+      document.documentElement.classList.add('is-lbOpen');
+      const close = $('#lbClose', lb);
+      if (close) close.focus();
+    };
+
+    const closeLb = () => {
+      if (!lb.classList.contains('is-open')) return;
+      lb.classList.remove('is-open');
+      lb.setAttribute('aria-hidden', 'true');
+      document.documentElement.classList.remove('is-lbOpen');
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    };
+
+    tiles.forEach(tile => {
+      tile.setAttribute('tabindex', '0');
+      tile.addEventListener('click', () => openLb(tile));
+      tile.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openLb(tile); }
+      });
+    });
+
+    // 写真そのもの以外（背景・✕）を押したら閉じる
+    lb.addEventListener('click', e => { if (e.target !== lbImg) closeLb(); });
+    addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
+  }
 })();

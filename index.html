@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=League+Spartan:wght@500;700&family=M+PLUS+1p:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Bowlby+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Montserrat:wght@400;500;700&family=Libre+Bodoni:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=Geist+Pixel&family=Jersey+10&family=Jersey+20&family=Encode+Sans+Condensed:wght@700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=99" />
+<link rel="stylesheet" href="styles.css?v=100" />
 </head>
 <body>
 
@@ -1117,6 +1117,19 @@
   }
 })();
 </script>
-<script src="app.js?v=31"></script>
+
+<!-- ============ 写真の拡大表示（ライトボックス） ============
+     ブロック01 Instagram モックの3x3グリッドをクリックすると、
+     その写真がふわっとフェードで拡大表示される。position:fixed の
+     レイヤーなので、背面がスクロールしても写真は動かない。
+     閉じる: ✕ ／ 写真の外側をクリック ／ Esc キー -->
+<div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="写真の拡大表示" aria-hidden="true">
+  <button class="lb__close" id="lbClose" type="button" aria-label="閉じる">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+  </button>
+  <img class="lb__img" id="lbImg" src="" alt="" />
+</div>
+
+<script src="app.js?v=32"></script>
 </body>
 </html>
