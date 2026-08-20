@@ -496,12 +496,12 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .prodCard--onDark .prodCard__en{-webkit-text-stroke:max(2px,.55cqw) #fff;
   paint-order:stroke fill}
 
-/* スマホでも横並びのまま。ただしパネルが 144〜169px まで縮むので、
-   支給比率どおりでは文字が 5px 以下になって読めない。この幅に収まる下限まで
-   落として、横並びを優先する（実測: パネル 144px でも VIEW PRODUCT が収まる）。 */
+/* スマホは縦積み。横並びだとパネルが 142〜169px まで縮み、支給比率どおりでは
+   日本語が 5px 以下になってしまう（縦積みなら 288〜338px 使える）。
+   下限は縦積みだとほぼ効かないが、さらに狭い枠のための保険として残す。 */
 @media (max-width:600px){
   /* カードが 338px まで縮むので、48px だと角が丸すぎる */
-  .igIntro__products{border-radius:28px}
+  .igIntro__products{grid-template-columns:1fr;border-radius:28px}
   .prodCard__num{top:max(10px,6.25cqw);left:max(10px,5.4cqw);width:max(20px,7.3cqw)}
   .prodCard__body{left:max(10px,5.4cqw);right:max(10px,5.4cqw);bottom:max(10px,4.85cqw)}
   .prodCard__en{font-size:max(17px,8.1cqw)}
