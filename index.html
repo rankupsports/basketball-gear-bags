@@ -25,32 +25,10 @@
   </div>
 </div>
 
-<!-- ============ FIXED HEADER ============ 
-<header class="head" id="head">
-  <!-- 支給の SVG ロゴに差し替え（それまでは font で組んだ2段の擬似ロゴだった）。
-       ブロック03のプロフィール行と同じ height:22px でそろえている。 -->
-  <!--
-  <a class="head__mark" href="#top">
-    <img src="assets/logo-rankup-black.svg" alt="Rankup sports" width="514" height="91" />
-  </a>
-  <button class="navBtn" id="navBtn" aria-label="メニュー" aria-expanded="false"><span></span><span></span><span></span></button>
-</header>
-
-<nav class="navDrawer" id="navDrawer" aria-hidden="true">
-  <div class="navDrawer__inner">
-    <img class="navDrawer__logo" src="assets/logo-rankup-black.svg" alt="Rankup sports" />
-    <ul>
-      -->
-      <!-- メニュー.pdf: リンク先はPDF指定のURL。外部はそのまま新規タブ。 
-      <li><a href="https://rankupsports.github.io/basketball-gear-bags/">TOP PAGE</a></li>
-      <li><a href="https://www.rankup-sports.com/product-page/basketball-gear-bags" target="_blank" rel="noopener">PRODUCT PAGE</a></li>
-      <li><a href="https://www.instagram.com/rusports_2024/" target="_blank" rel="noopener">INSTAGRAM</a></li>
-      <li><a href="https://www.rankup-sports.com/" target="_blank" rel="noopener">OFFICIAL SITE</a></li>
-    </ul>
-  </div>
-</nav> -->
---> 
-      -->
+<!-- 固定ヘッダーとナビ（.head / .navDrawer）は不要になったので削除。
+     コメントの入れ子が壊れて閉じ記号が本文に2つ漏れていたため、
+     コメントアウトではなくブロックごと取り除いた。
+     app.js 側は要素が無くても動くようにガード済み。 -->
 <!-- ============================================================
      1) MV — 上部に白い帯（コピー＋ロゴ）、その下に写真。写真は
      shakeMv で微振動しつづけ、左端をライムのハートが一列で昇っていく
@@ -126,34 +104,10 @@
       バスケットボールを好きになれるように。
     </p>
 
-    <!-- Block01追加指示0810.pdf「ブロック01 だけ追加」: ハートをタップさせる
-         手書きの Tap! を添える。テキストがカードの外に出るので、カードを
-         はみ出しを許すラッパーで包んでいる。 -->
-    <!--<div class="igCardWrap">
-    <div class="igCard">
-      <!-- 「ここの動画部分!」= 支給の Block01_Movie.mp4 に差し替え。
-           1080x1920 で story.mp4(720x1280) と同じ 0.5625 なので枠はそのまま。 -->
-      <video class="igCard__video" src="assets/block01-movie.mp4" muted loop autoplay playsinline preload="metadata"></video>
-      <span class="igCard__scrim" aria-hidden="true"></span>
-
-     <!-- <header class="igCard__top">
-        <span class="igCard__avatar"><img src="assets/icon-avatar.svg" alt="" /></span>
-        <span class="igCard__dots" aria-hidden="true">•••</span>
-        <span class="igCard__close" aria-hidden="true">&times;</span>
-      </header>
-
-      <p class="igCard__brand"><b>Rankup</b> sports</p>
-
-      <div class="igCard__hearts" id="igCardHearts" aria-hidden="true"></div>
-
-      <div class="igCard__reply">
-        <span class="igCard__msg">Send message</span>
-        <img class="igCard__icon igCard__icon--like" src="assets/icon-heart.svg" alt="いいね（タップでハートが飛ぶ）" role="button" tabindex="0" aria-pressed="false" />
-        <img class="igCard__icon" src="assets/icon-share.svg" alt="シェア" />
-      </div> -->
-   <!-- </div>
-      <img class="igCard__tap" src="assets/tap-hint.svg" alt="" aria-hidden="true" />
-    </div> -->
+    <!-- イントロリール（.igCardWrap / .igCard 一式）は不要になったので削除。
+         コメントの入れ子が壊れて video と scrim だけが生き残り、338x1298 の
+         絶対配置要素としてこのカラムに残っていたため、まとめて取り除いた。
+         復活させるときは git 履歴（Comment out igCardWrap and igCard divs の親）から戻す。 -->
 
     <div class="igIntro__products">
       <a class="igIntro__item reveal" href="#block03">
@@ -1169,6 +1123,6 @@
   }
 })();
 </script>
-<script src="app.js?v=30"></script>
+<script src="app.js?v=31"></script>
 </body>
 </html>

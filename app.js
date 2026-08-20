@@ -81,17 +81,23 @@
   /* =========================================================
      NAV
      ========================================================= */
+  /* 固定ヘッダーとナビは index.html でコメントアウトされていることがあるので、
+     要素が無いときは黙って何もしない。ここで例外を投げると、以降の初期化
+     （吹き出しの出現アニメーション・カルーセル・背景色など）が全部止まる。 */
   const navBtn = $('#navBtn');
   const drawer = $('#navDrawer');
   const setNav = (open) => {
+    if (!navBtn || !drawer) return;
     drawer.classList.toggle('is-open', open);
     drawer.setAttribute('aria-hidden', String(!open));
     navBtn.setAttribute('aria-expanded', String(open));
     document.body.style.overflow = open ? 'hidden' : '';
   };
-  navBtn.addEventListener('click', () => setNav(!drawer.classList.contains('is-open')));
-  $$('a', drawer).forEach(a => a.addEventListener('click', () => setNav(false)));
-  addEventListener('keydown', e => { if (e.key === 'Escape') setNav(false); });
+  if (navBtn && drawer) {
+    navBtn.addEventListener('click', () => setNav(!drawer.classList.contains('is-open')));
+    $$('a', drawer).forEach(a => a.addEventListener('click', () => setNav(false)));
+    addEventListener('keydown', e => { if (e.key === 'Escape') setNav(false); });
+  }
 
   /* =========================================================
      LEAD の浮遊アイコン — 画面の縁を不規則に巡回する
@@ -546,12 +552,15 @@
      ========================================================= */
   const head = $('#head');
   let lastY = 0;
-  addEventListener('scroll', () => {
-    const y = scrollY;
-    head.classList.toggle('is-solid', y > 80);
-    head.classList.toggle('is-hidden', y > 320 && y > lastY && !drawer.classList.contains('is-open'));
-    lastY = y;
-  }, { passive: true });
+  if (head) {
+    addEventListener('scroll', () => {
+      const y = scrollY;
+      head.classList.toggle('is-solid', y > 80);
+      head.classList.toggle('is-hidden',
+        y > 320 && y > lastY && !(drawer && drawer.classList.contains('is-open')));
+      lastY = y;
+    }, { passive: true });
+  }
 
   /* =========================================================
      カラーベッド — 参照サイトと同じく、スクロール量に応じて背面色を
