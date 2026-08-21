@@ -1853,3 +1853,11 @@ html.is-embed .wixM__frame{height:calc(var(--emH,100%) - 92px)}
   :is(.b03,.b04) .spec__tbl{font-size:13.7px}
   :is(.b03,.b04) .spec__row{padding:9px 0}
 }
+
+/* 埋め込み時はスクロールバーを出さない。コンポーネントの枠の中に出ると
+   LP のデザインの一部のように見えてしまうため。スクロール自体は殺さない
+   （枠より中身が高いときに末尾まで届かなくなるので scrolling="no" は使わない）。
+   単体表示（html.is-embed が付かない）では従来どおり出す。 */
+html.is-embed{scrollbar-width:none;-ms-overflow-style:none}
+html.is-embed::-webkit-scrollbar,
+html.is-embed body::-webkit-scrollbar{width:0;height:0;display:none}

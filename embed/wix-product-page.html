@@ -1,42 +1,45 @@
 <!-- ============================================================
      BASKETBALL GEAR BAGS 特設LP — 商品ページ埋め込み用コード
      貼り先: www.rankup-sports.com/product-page/basketball-gear-bags
-             「レビュー」ブロックのすぐ上
      貼り方: Wix エディタ → 追加(+) → 埋め込み＆ソーシャル
              → 「HTML コードを埋め込む」を配置 → 「コードを入力」
              → 下の <meta> 以降をすべて貼り付け
 
-     サイズ（エディタ側で枠のサイズを指定してください。中身は枠いっぱいに追従します）
-       PC       : 幅 980px（= サイト幅いっぱい） × 高さ 820px
-       モバイル : 幅 320px（= モバイル canvas いっぱい） × 高さ 560px
-     ※ もっと小さく収めたいときは PC 980×620 でも成立します（下限 420px）。
+     ■ 枠のサイズ（エディタ側で指定。中身は枠いっぱいに追従します）
+       PC       : 幅 980px × 高さ 25,900px 以上   （LP の実測 25,659px）
+       モバイル : 幅 320px × 高さ 27,300px 以上   （LP の実測 27,121px）
+       ※ 枠が中身より低いと、その差分だけ末尾が枠の外に出ます。
+          スクロールバーは隠しているので「切れている」ことが見えません。
 
      ■ 動き
-       ・枠の中で LP をそのままスクロールして見られる（全画面表示は廃止）。
-       ・スクロールすると枠の地色が LP の背景色に追従して変わる。
-         LP 側（index.html の bgFade）が現在の色を postMessage で送るので、
-         それを受けて枠の背景に流し込んでいる。
-
-     メモ
-       - loading="lazy" なので、レビュー位置まで実際にスクロールされるまで
-         LP 内の動画（合計 60MB 超）は読み込まれません。
-       - LP 内の BUY NOW はリンクを切ってあるので、商品ページ → LP → 商品ページ の
-         ループにはなりません。復活させるときは LP 側 index.html の BUY_LINK を戻します。
-       - PC では iframe 上にカーソルがあるとホイールが LP 側に効きます。気になる場合は
-         枠の高さを 620px 前後に抑えると、脇から商品ページをスクロールしやすくなります。
+       ・スクロールバーは出ません（LP 側 styles.css の html.is-embed で消しています。
+         scrolling="no" は使っていないので、枠が足りないときも指やホイールで
+         末尾まで送れます）。
+       ・スクロールすると枠の地色が LP の背景色に追従します。LP 側（index.html の
+         bgFade）が現在の色を postMessage で送るので、それを受けて
+         html / body / .lpEmbed の3つに流し込んでいます。
+       ・受け取った色は最上位ページ（商品ページ本体）にも中継しています。
+         商品ページ側の余白まで染めたい場合は、別途
+         Wix 管理画面 → 設定 → カスタムコード に
+         embed/wix-page-bg-custom-code.html を貼ってください
+         （このHTML埋め込みからは親ページを操作できません）。
      ============================================================ -->
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <style>
   *{ box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; height: 100%; background: transparent; }
+  /* 色が届くまでの地色。届いたら JS が同じ色で上書きする */
+  html, body { margin: 0; padding: 0; height: 100%; background: #ffffff; }
+  /* ラッパー自身のスクロールバーも出さない（本来スクロールしないが保険） */
+  html { scrollbar-width: none; -ms-overflow-style: none; }
+  html::-webkit-scrollbar { width: 0; height: 0; display: none; }
 
   .lpEmbed {
     position: relative;
     height: 100%;
     min-height: 420px;
-    padding: 12px;                            /* ここが LP の色に染まるフチになる */
-    border-radius: 14px;
+    padding: 0px;                             /* ここが LP の色に染まるフチになる */
+    border-radius: 0px;
     overflow: hidden;
     background: #ffffff;                      /* 読み込み中の地色（LP から色が届くまで） */
     box-shadow: 0 10px 30px rgba(0, 0, 0, .14);
@@ -62,7 +65,9 @@
 
 <script>
 (function(){
-  var box = document.getElementById('lpEmbed');
+  var box  = document.getElementById('lpEmbed');
+  var html = document.documentElement;
+  var body = document.body;
   var LP_ORIGIN = 'https://rankupsports.github.io';
   // rgb(0,0,0) 形式だけを通す（受け取った文字列をそのまま style に入れないため）
   var RGB = /^rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)$/;
@@ -72,7 +77,16 @@
     var d = e.data;
     if (!d || d.type !== 'rus-bg' || typeof d.color !== 'string') return;
     if (!RGB.test(d.color)) return;
-    box.style.backgroundColor = d.color;
+
+    // 枠・この文書の地色を LP の今の背景色にそろえる
+    box.style.backgroundColor  = d.color;
+    body.style.backgroundColor = d.color;
+    html.style.backgroundColor = d.color;
+
+    // 商品ページ本体にも中継（受け取る側はカスタムコードで用意する）
+    try {
+      if (window.parent && window.parent !== window) window.parent.postMessage(d, '*');
+    } catch (err) {}
   });
 })();
 </script>
