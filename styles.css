@@ -464,8 +464,11 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    610px だとパネルが 305px＝支給デザインの3分の1で、PC でも小さく見えるため。
    980px ならパネル 490px。max() の下限はスマホ用に残してある。 */
 /* 角丸 16px。支給デザインの実測（カード幅の約1.6%）に合わせた値。 */
+/* 列数は画面幅の決め打ちではなく、カードの実幅で決める。
+   280px ×2 = 560px 入るなら横2列、入らなければ1列。
+   ブラウザの拡大表示などで実効幅が変わっても、入るかぎり横並びを保つ。 */
 .igIntro__products{width:100%;max-width:980px;margin:0 auto;
-  display:grid;grid-template-columns:1fr 1fr;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
   border-radius:16px;overflow:hidden;background:#fff;
   box-shadow:0 12px 30px rgba(0,0,0,.18)}
 
@@ -499,12 +502,12 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    日本語が 5px 以下になってしまう（縦積みなら 288〜338px 使える）。
    下限は縦積みだとほぼ効かないが、さらに狭い枠のための保険として残す。 */
 @media (max-width:600px){
-  /* カードが 338px まで縮むので、比率をそろえて少し小さく */
-  .igIntro__products{grid-template-columns:1fr;border-radius:12px}
-  /* 縦積みだと 369px x2 で背が高くなりすぎるので、横に伸ばして下をトリミング。
-     object-position を上寄せにして、人物の上半身とバッグを残す。 */
-  .prodCard{aspect-ratio:4/3}
-  .prodCard__ph{object-position:50% 0}
+  /* 列数は auto-fit に任せる（ここでは角丸だけ。338px なので 16px は丸すぎる） */
+  .igIntro__products{border-radius:12px}
+  /* 4/3 に縮めると写真の上 55% しか出ず、下寄りにあるバッグが切れていた。
+     写真と同じ比率（1260:1700）にすればトリミングがゼロになり、顔もバッグも
+     絶対に切れない。これが「切らずに取れる最大の縦幅」でもある。
+     .prodCard の既定値と同じなので、ここでの上書きは無し。 */
   .prodCard__num{top:max(10px,6.7cqw);left:max(10px,7.1cqw);width:max(20px,6.7cqw)}
   .prodCard__body{left:max(10px,7.1cqw);right:max(10px,7.1cqw);bottom:max(10px,7.3cqw)}
   .prodCard__en{font-size:max(17px,8cqw)}
