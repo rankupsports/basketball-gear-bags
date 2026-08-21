@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=League+Spartan:wght@500;700&family=M+PLUS+1p:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Bowlby+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Montserrat:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Libre+Bodoni:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=Geist+Pixel&family=Jersey+10&family=Jersey+20&family=Encode+Sans+Condensed:wght@700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=126" />
+<link rel="stylesheet" href="styles.css?v=127" />
 </head>
 <body>
 
@@ -173,8 +173,8 @@
          chat-01 / chat-02 のグレーは「PHOTO」の仮置き素材。 -->
     <div class="b03__chat">
       <p class="bub bub--r bub--nowrap">バスケットボールがすっぽり入る巾着バッグ!</p>
-      <img class="bubPh" src="assets/block03/chat-01.jpg" alt="写真は準備中"
-           width="735" height="570" style="--d:.16s" loading="lazy" />
+      <img class="bubPh" src="assets/block03/chat-01.jpg" alt="開いた Drawstring Ball Bag を両手で持つモデル"
+           width="740" height="870" style="--d:.16s" loading="lazy" />
       <p class="bub bub--l bub--nowrap" style="--d:.32s">今日はどっちのデザインにしよう？<br />気分でくるっと裏返せば、リバーシブルで楽しめます♪</p>
       <p class="bub bub--r bub--nowrap" style="--d:.48s">お気に入りのストラップロープを付けたり、<br />カラビナでリュックにぶら下げたり</p>
       <img class="bubPh bubPh--sm" src="assets/block03/chat-02.jpg"
@@ -383,7 +383,7 @@
     </div>
 
     <!-- ---- チャット吹き出し（内容を一新。HERO カードの上へ移動） ---- -->
-    <!-- 吹き出し.pdf（2ページ目）の順序どおり。chat-02 のグレーは「PHOTO」の仮置き素材。 -->
+    <!-- 吹き出し.pdf（2ページ目）の順序どおり。 -->
     <div class="b04__chat">
       <p class="bub bub--r bub--nowrap">バッシュはメイン収納へ</p>
       <img class="bubPh" src="assets/block04/chat-01.jpg"
@@ -391,8 +391,8 @@
            width="735" height="570" style="--d:.16s" loading="lazy" />
       <p class="bub bub--l bub--nowrap" style="--d:.32s">水筒やペットボトルはサイドポケットへ♪</p>
       <p class="bub bub--r bub--nowrap" style="--d:.48s">汗をかいたバッシュと飲み物を分けて収納できるから、<br />衛生的にも気分的にもなんだかうれしい！</p>
-      <img class="bubPh" src="assets/block04/chat-02.jpg" alt="写真は準備中"
-           width="735" height="570" style="--d:.64s" loading="lazy" />
+      <img class="bubPh" src="assets/block04/chat-02.jpg" alt="Shoe Barrel Bag のフロントポケットに絆創膏を入れるところ"
+           width="740" height="574" style="--d:.64s" loading="lazy" />
       <p class="bub bub--l bub--nowrap" style="--d:.8s">フロントポケットにはハンドタオルや絆創膏など、<br />よく使う小物をまとめて収納♪</p>
       <img class="bubPh bubPh--r" src="assets/block04/chat-03.jpg"
            alt="ブルーのロープを付けた Shoe Barrel Bag を肩にかけたスタイリング"
@@ -1016,6 +1016,65 @@
 })();
 </script>
 <script>
+/* ============ 埋め込み表示中の「実際に見えている範囲」の検出 ============
+   Wix の HTML コンポーネントは中身の高さで iframe を作るため、LP は iframe の
+   中で一切スクロールしない（window.pageYOffset が常に 0、innerHeight が文書の
+   高さ）。その状態だと下の背景色アニメーションはページ中央の色を1回計算した
+   まま固まり、position:fixed のライトボックスや BUY NOW も 2 万 px 先の中央に
+   置かれて画面に出てこない。
+
+   IntersectionObserver の暗黙のルートは「最上位フレームのビューポート」なので、
+   親が別オリジンでも intersectionRect から「いま画面に映っている範囲」を
+   LP 側の座標で取り出せる。これを pageYOffset / innerHeight の代わりに使う。
+   ・window.RUS_VP = {top, h} … JS 用
+   ・--emT / --emH  … CSS 用（html.is-embed の position:fixed 置き換えに使う） */
+(function(){
+  var win;
+  try{ win = window.top !== window.self; }catch(e){ win = true; }  // 別オリジンでも埋め込みと判る
+  if(!win) return;                                  // 単体表示のときは何もしない
+  if(!('IntersectionObserver' in window)) return;    // 非対応ブラウザは従来動作のまま
+
+  var root = document.documentElement;
+  var VP = window.RUS_VP = {top:null, h:0};
+  var target = document.body;
+  root.classList.add('is-embed');
+
+  var lastT = -1, lastH = -1, poll = 0, onScreen = false;
+
+  function apply(e){
+    var r = e.intersectionRect;
+    if(r.height <= 0) return;
+    // intersectionRect はフレームのビューポート座標。内部スクロール量を足すと文書座標。
+    var t = Math.max(0, Math.round(r.top + window.pageYOffset));
+    var h = Math.round(r.height);
+    if(t === lastT && h === lastH) return;
+    lastT = t; lastH = h;
+    VP.top = t; VP.h = h;
+    root.style.setProperty('--emT', t + 'px');
+    root.style.setProperty('--emH', h + 'px');
+    if(window.RUS_ON_VP) window.RUS_ON_VP();
+  }
+
+  // 交差率は「見えている高さ ÷ 要素の高さ」なので、文書が長いとページ中ほどでは
+  // まったく変化せず threshold では発火しない。そこで画面に入っている間だけ
+  // 毎フレーム observe() を貼り直す（observe() は必ず1回通知が返る仕様）。
+  var live = new IntersectionObserver(function(es){ apply(es[es.length-1]); });
+  function loop(){
+    poll = 0;
+    if(!onScreen) return;
+    live.unobserve(target); live.observe(target);
+    poll = requestAnimationFrame(loop);
+  }
+  var gate = new IntersectionObserver(function(es){
+    onScreen = es[es.length-1].isIntersecting;
+    if(onScreen && !poll) poll = requestAnimationFrame(loop);
+    else if(!onScreen && poll){ cancelAnimationFrame(poll); poll = 0; }
+  }, {threshold:0});
+  gate.observe(target);
+  live.observe(target);
+})();
+</script>
+<script>
 /* 背景色のスクロール連動クロスフェード。
    --sec-bg を宣言したセクションを上から順に「色の区間」として拾い、
    境界の前後 FD だけで隣の色へ smoothstep 補間する。
@@ -1058,7 +1117,11 @@
   function paint(){
     raf=0;
     if(!stops.length) return;
-    var vh=window.innerHeight, ref=window.pageYOffset+vh*0.5, FD=vh*0.45;
+    // 埋め込み時は iframe が文書の高さで作られるため window の値は使えない。
+    // 上の検出モジュールが出す「実際に見えている範囲」を基準にする。
+    var VP=window.RUS_VP, emb=!!(VP&&VP.top!==null);
+    var vh=emb?VP.h:window.innerHeight, sy=emb?VP.top:window.pageYOffset;
+    var ref=sy+vh*0.5, FD=vh*0.45;
     var i=0;
     while(i<stops.length-1 && ref>=stops[i].bottom) i++;
     var cur=stops[i], prev=stops[i-1], next=stops[i+1];
@@ -1068,14 +1131,19 @@
     else if(next && dBot<FD)               rgb=mix(cur.rgb, next.rgb, smooth(0.5*(1-dBot/FD)));
     var css='rgb('+Math.round(rgb[0])+','+Math.round(rgb[1])+','+Math.round(rgb[2])+')';
     layer.style.backgroundColor=css;
-    // 埋め込まれているときは、今の背景色を親（embed のラッパー）へ知らせる。
-    // ラッパー側は枠の地色をこれに追従させる（embed/index.html を参照）。
+    // 埋め込まれているときは、今の背景色を親へ知らせる。
+    // ・親 = Wix の HTML コンポーネント（embed/index.html）… 枠の地色を追従させる
+    // ・最上位 = 商品ページ本体 … セクションの地色を追従させたいとき用（任意）
     if(css!==lastSent && window.parent!==window){
       lastSent=css;
-      try{ window.parent.postMessage({type:'rus-bg',color:css},'*'); }catch(e){}
+      var msg={type:'rus-bg',color:css};
+      try{ window.parent.postMessage(msg,'*'); }catch(e){}
+      try{ if(window.top&&window.top!==window.parent) window.top.postMessage(msg,'*'); }catch(e){}
     }
   }
   function onScroll(){ if(!raf) raf=requestAnimationFrame(paint); }
+  // 埋め込み時は上の検出モジュールが毎フレームここを叩く
+  window.RUS_ON_VP=onScroll;
   function rebuild(){ build(); paint(); }
 
   rebuild();

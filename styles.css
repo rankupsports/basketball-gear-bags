@@ -1736,3 +1736,20 @@ html.is-lbOpen,html.is-lbOpen body{overflow:hidden}
 @media (prefers-reduced-motion:reduce){
   .lb,.lb__img,.lb__close{transition:none}
 }
+
+/* ============================================================
+   埋め込み表示（Wix の HTML コンポーネント内）
+   コンポーネントの iframe は「中身の高さ」で作られるので、この文書の
+   ビューポート＝文書全体になる。すると position:fixed が画面ではなく
+   文書全体に対して効き、ライトボックスや BUY NOW のシートが
+   数千 px 先の中央に置かれて画面に出てこない。
+   JS（index.html の検出モジュール）が出す「実際に見えている範囲」
+   --emT / --emH に置き直して、画面内に来るようにする。
+   ※ .bgFade は文書全体を1色で塗るのが正しいので fixed のままにする。
+   ============================================================ */
+html.is-embed :is(.noise,.loader,.wixM,.lb){
+  position:absolute;top:var(--emT,0px);bottom:auto;left:0;right:0;
+  height:var(--emH,100%)}
+/* 公式ページのボトムシートも、見えている範囲に収まる高さにする */
+html.is-embed .wixM__panel{max-height:calc(var(--emH,100%) - 20px)}
+html.is-embed .wixM__frame{height:calc(var(--emH,100%) - 92px)}

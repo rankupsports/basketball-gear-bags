@@ -1,0 +1,40 @@
+<!-- ============================================================
+     Wix 商品ページ本体（rankup-sports.com 側）の地色を
+     LP の背景色アニメーションに追従させるための任意コード。
+
+     貼る場所: Wix 管理画面 → 設定 → カスタムコード → 「+ カスタムコードを追加」
+       ・コードを追加する場所: 本文 - 終了前 (Body - end)
+       ・適用するページ: 商品ページ（BASKETBALL GEAR BAGS）だけでよい
+
+     LP（github.io）→ 最上位ページへ postMessage されてくる色を受けて、
+     LP を囲んでいる Wix セクションの背景色に流し込む。
+     ※ これは「LP の外側（左右の余白など）」を染めるための補助。
+        LP 自体の背景アニメーションはこのコード無しで動く。
+     ============================================================ -->
+<script>
+(function(){
+  var LP_ORIGIN = 'https://rankupsports.github.io';
+  // rgb(0,0,0) 形式だけを通す（受け取った文字列をそのまま style に入れないため）
+  var RGB = /^rgb\(\s*\d{1,3}\s*,\s*\d{1,3}\s*,\s*\d{1,3}\s*\)$/;
+  var target = null;
+
+  function findTarget(){
+    var f = document.querySelector('iframe[src*="filesusr.com/html/"]');
+    if(!f) return null;
+    var el = f;
+    while(el && el.tagName !== 'SECTION') el = el.parentElement;
+    return el || f.parentElement;
+  }
+
+  window.addEventListener('message', function(e){
+    if(e.origin !== LP_ORIGIN) return;              // 送り主は LP だけ
+    var d = e.data;
+    if(!d || d.type !== 'rus-bg' || typeof d.color !== 'string') return;
+    if(!RGB.test(d.color)) return;
+    if(!target) target = findTarget();
+    if(!target) return;
+    target.style.transition = 'background-color .25s linear';
+    target.style.backgroundColor = d.color;
+  });
+})();
+</script>
