@@ -1202,15 +1202,18 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .b03__chat .bubEmo{margin-top:.34em;margin-bottom:.34em}
 .b04__chat .bubEmo{align-self:flex-start;margin-top:.34em;margin-bottom:.34em}
 
-/* ===== 写真へのリアクション絵文字（単体）=====
-   3個並びの .bubEmo とはサイズが違う。大きさと位置は指示スクリーンショットの
-   赤丸から実測し、PC の --k=1.655 で割って設計 px に戻した値。
-     ブロック03（緑）… 直径 43px / 中心 265px  → chat-02 の右下あたり
-     ブロック04（紫）… 直径 37px / 中心 451px  → chat-03 の右寄り下
-   写真の margin-bottom:30px に食い込ませて、写真と吹き出しの隙間に置く。 */
+/* ===== 写真へのリアクション絵文字 =====
+   既存の .bubEmo（3個で 44.4% を埋める大きさ）とはサイズが違う。1個ぶんの
+   大きさと位置は指示スクリーンショットの赤丸から実測し、PC の --k=1.655 で
+   割って設計 px に戻した値。それを3個並べ、赤丸の中心に群の中心を合わせる。
+     ブロック03（緑）… 1個 43px / 中心 265px(40.2%)  → chat-02 の下
+     ブロック04（紫）… 1個 37px / 中心 451px(77.7%)  → chat-03 の下
+   下の余白は吹き出し同士の間隔にそろえる（2.803em → PC 48px / スマホは
+   .bub の font-size が違うので 03=38px・04=43px）。上は写真の margin-bottom
+   30px がそのまま隙間になる。 */
 .bubEmo--one{letter-spacing:0;font-size:calc(var(--chatW,600px) * .065)}
-.b03__chat .bubEmo--one{align-self:flex-start;margin:-14px 0 4px 36.5%}
-.b04__chat .bubEmo--one{align-self:flex-end;margin:-14px 18.1% 4px 0}
+.b03__chat .bubEmo--one{align-self:flex-start;margin:0 0 48px 27.6%}
+.b04__chat .bubEmo--one{align-self:flex-end;margin:0 9.15% 48px 0}
 .b04__chat .bubEmo--r{transform-origin:100% 100%}
 
 /* ===== 吹き出しの合間に入る写真（吹き出し.pdf）=====
@@ -1260,6 +1263,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   .b03__chat{width:515px;--chatW:515px}
   /* モバイルも 04 と同じ表示幅に。56% x 510px = 285.6px → 515px カラムで 55.5% */
   .b03__chat .bubPh{width:55.5%}
+  .b03__chat .bubEmo--one{margin-bottom:38px}
+  .b04__chat .bubEmo--one{margin-bottom:43px}
   .b03 .bub{font-size:13.6px}
   .b04__chat{width:510px;--chatW:510px}
   .b04 .bub{font-size:15.2px}
@@ -1789,20 +1794,22 @@ html.is-embed .wixM__frame{height:calc(var(--emH,100%) - 92px)}
   /* base.svg の歯 1山。660 x 73/1655 = 29.1 / 660 x 24.8/1655 = 9.9 */
   --zigW:29.1px;
   --zigH:9.9px;
-  --zigT:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2073%2024.8'%3E%3Cpath%20d='M0%200V24.8H73V0L36.5%2024.8Z'/%3E%3C/svg%3E");
-  --zigB:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2073%2024.8'%3E%3Cpath%20d='M0%2024.8V0H73V24.8L36.5%200Z'/%3E%3C/svg%3E");
+  --zigT:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2073%2074.4'%3E%3Cpath%20d='M0%200V74.4H73V0L36.5%2024.8Z'/%3E%3C/svg%3E");
+  --zigB:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2073%2074.4'%3E%3Cpath%20d='M0%200H73V74.4L36.5%2049.6%200%2074.4Z'/%3E%3C/svg%3E");
   width:660px;margin:0 auto 96px;
   padding:calc(var(--zigH) + 52px) 49.5px calc(var(--zigH) + 57px);
   background:#fff;color:#111;text-align:center;
-  /* 上端・下端はギザギザを敷き詰め、中央は塗りつぶし。1px 重ねて継ぎ目を消す */
+  /* 上端・下端にギザギザを敷き詰め、中央は塗りつぶし。歯のタイルは深さの3倍を
+     用意して内側 2/3 を塗りにしてあるので、中央レイヤーの境目は必ず歯レイヤーの
+     塗りの中に入る。1px 重ねの逃げが要らないぶん、谷を横切る線が出ない。 */
   -webkit-mask-image:var(--zigT),var(--zigB),linear-gradient(#000,#000);
   mask-image:var(--zigT),var(--zigB),linear-gradient(#000,#000);
-  -webkit-mask-size:var(--zigW) var(--zigH),var(--zigW) var(--zigH),
-    100% calc(100% - var(--zigH) * 2 + 2px);
-  mask-size:var(--zigW) var(--zigH),var(--zigW) var(--zigH),
-    100% calc(100% - var(--zigH) * 2 + 2px);
-  -webkit-mask-position:top left,bottom left,left calc(var(--zigH) - 1px);
-  mask-position:top left,bottom left,left calc(var(--zigH) - 1px);
+  -webkit-mask-size:var(--zigW) calc(var(--zigH) * 3),var(--zigW) calc(var(--zigH) * 3),
+    100% calc(100% - var(--zigH) * 4);
+  mask-size:var(--zigW) calc(var(--zigH) * 3),var(--zigW) calc(var(--zigH) * 3),
+    100% calc(100% - var(--zigH) * 4);
+  -webkit-mask-position:top left,bottom left,left calc(var(--zigH) * 2);
+  mask-position:top left,bottom left,left calc(var(--zigH) * 2);
   -webkit-mask-repeat:repeat-x,repeat-x,no-repeat;
   mask-repeat:repeat-x,repeat-x,no-repeat}
 
