@@ -504,13 +504,13 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 @media (max-width:600px){
   /* 列数は auto-fit に任せる（ここでは角丸だけ。338px なので 16px は丸すぎる） */
   .igIntro__products{border-radius:12px}
-  /* 商品ギリギリまで縦を詰める。写真の縦位置を実測すると
-       頭の上端 2〜3% / 顔 10〜24% / 商品の下端は画素走査で 84%（写真1のコード先端）
-     なので、上端から 86% までを残せば顔もバッグもコードも切れない（余裕2%）。
-     これが「顔と商品を切らずに縮められる限界」で、下の 14% だけ落とせる。
-     4/3 まで詰めると上 55% しか出ずバッグが消えるので、そこまでは詰められない。 */
-  .prodCard{aspect-ratio:1260/1462}
-  .prodCard__ph{object-position:50% 0}
+  /* 商品を切らない範囲で縦を最小まで詰める。画素走査による商品の占める範囲は
+       ballbag  : ピンクのロープ 9%〜72% / バッグ＋巾着コード 〜84%
+       shoebag  : ピンクのロープ 13%〜78% / バッグ 〜約80%
+     つまり商品は 9%〜84%。表示帯を 8.1%〜86.2% にして、上（帽子）と下だけ落とす。
+     ロープを高く持っているので、商品を残すかぎりこれ以上は詰められない。 */
+  .prodCard{aspect-ratio:1260/1326}
+  .prodCard__ph{object-position:50% 37%}
   .prodCard__num{top:max(10px,6.7cqw);left:max(10px,7.1cqw);width:max(20px,6.7cqw)}
   .prodCard__body{left:max(10px,7.1cqw);right:max(10px,7.1cqw);bottom:max(10px,7.3cqw)}
   .prodCard__en{font-size:max(17px,8cqw)}
