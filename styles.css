@@ -1204,13 +1204,15 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 
 /* ===== 写真へのリアクション絵文字 =====
    既存の .bubEmo（3個で 44.4% を埋める大きさ・字間 -.345em）とは別サイズ。
-   3個並べて右端そろえ（.bub--r / .bubPh--r と同じ端）。
+   3個並べる。03（😍）は左端そろえ、04（❤️）は右端そろえ
+   （それぞれ .bub--l / .bub--r と同じ端）。
    下の余白は吹き出し同士の間隔にそろえる（2.803em → PC 48px / スマホは
    .bub の font-size が違うので 03=38px・04=43px）。上は写真の margin-bottom
    30px がそのまま隙間になる。 */
 /* 1個ぶんは .065（指示スクショの赤丸実測）から「もう少し大きく」で .08 へ */
 .bubEmo--one{letter-spacing:0;font-size:calc(var(--chatW,600px) * .08)}
-:is(.b03__chat,.b04__chat) .bubEmo--one{align-self:flex-end;margin:0 0 48px}
+.b03__chat .bubEmo--one{align-self:flex-start;margin:0 0 48px}
+.b04__chat .bubEmo--one{align-self:flex-end;margin:0 0 48px}
 :is(.b03__chat,.b04__chat) .bubEmo--r{transform-origin:100% 100%}
 
 /* ===== 吹き出しの合間に入る写真（吹き出し.pdf）=====
