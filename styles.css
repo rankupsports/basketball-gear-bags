@@ -1202,6 +1202,17 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .b03__chat .bubEmo{margin-top:.34em;margin-bottom:.34em}
 .b04__chat .bubEmo{align-self:flex-start;margin-top:.34em;margin-bottom:.34em}
 
+/* ===== 写真へのリアクション絵文字（単体）=====
+   3個並びの .bubEmo とはサイズが違う。大きさと位置は指示スクリーンショットの
+   赤丸から実測し、PC の --k=1.655 で割って設計 px に戻した値。
+     ブロック03（緑）… 直径 43px / 中心 265px  → chat-02 の右下あたり
+     ブロック04（紫）… 直径 37px / 中心 451px  → chat-03 の右寄り下
+   写真の margin-bottom:30px に食い込ませて、写真と吹き出しの隙間に置く。 */
+.bubEmo--one{letter-spacing:0;font-size:calc(var(--chatW,600px) * .065)}
+.b03__chat .bubEmo--one{align-self:flex-start;margin:-14px 0 4px 36.5%}
+.b04__chat .bubEmo--one{align-self:flex-end;margin:-14px 18.1% 4px 0}
+.b04__chat .bubEmo--r{transform-origin:100% 100%}
+
 /* ===== 吹き出しの合間に入る写真（吹き出し.pdf）=====
    PDF のチャットカラム 1012pt を 660px に換算して実測。
    横位置は既定が左（.bub--l と同じ端）、右寄せは .bubPh--r。
