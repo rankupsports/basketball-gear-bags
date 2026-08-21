@@ -1768,3 +1768,84 @@ html.is-embed :is(.noise,.loader,.wixM,.lb){
 /* 公式ページのボトムシートも、見えている範囲に収まる高さにする */
 html.is-embed .wixM__panel{max-height:calc(var(--emH,100%) - 20px)}
 html.is-embed .wixM__frame{height:calc(var(--emH,100%) - 92px)}
+
+/* ============================================================
+   SPEC — レシート風の伝票（base.svg / spec-*-sample_0.png）
+   上下がギザギザ、左右は直線。中身の高さで縦に伸びるので base.svg を
+   まるごと引き伸ばすと歯が縦長に崩れる。そこで base.svg の歯1山ぶん
+   （幅 73 / 深さ 24.8）だけを SVG にして mask で敷き詰め、山の数が
+   base.svg と同じ 1655/73 = 22.7 山になるよう受け皿の幅から px で決める
+   （ステージの中なので vw も --stageW 比も使えない）。
+
+   中の寸法は spec-ballbag-sample_0.png / spec-shoes-sample_0.png の
+   実測値（受け皿幅 1600px）を、この受け皿の幅 660px に換算したもの。
+     左右の余白   118/1600      = 7.5%
+     縦の区切り   525.5/1600    → 行の内側で 29.8%
+     罫線の色     rgb(136,136,136)
+     見出し       Archivo Black。サンプルは商品名だけ字を詰めて幅を
+                  合わせていたが、Rope Strap の実測 104px に揃えて
+                  660px 換算の 42px で統一した
+     写真         支給 PNG を等倍配置（1378/1600 等）＝ ほぼ内寸いっぱい
+   ============================================================ */
+:is(.b03,.b04) .spec{
+  /* base.svg の歯 1山。660 x 73/1655 = 29.1 / 660 x 24.8/1655 = 9.9 */
+  --zigW:29.1px;
+  --zigH:9.9px;
+  --zigT:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2073%2024.8'%3E%3Cpath%20d='M0%200V24.8H73V0L36.5%2024.8Z'/%3E%3C/svg%3E");
+  --zigB:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2073%2024.8'%3E%3Cpath%20d='M0%2024.8V0H73V24.8L36.5%200Z'/%3E%3C/svg%3E");
+  width:660px;margin:0 auto 96px;
+  padding:calc(var(--zigH) + 52px) 49.5px calc(var(--zigH) + 57px);
+  background:#fff;color:#111;text-align:center;
+  /* 上端・下端はギザギザを敷き詰め、中央は塗りつぶし。1px 重ねて継ぎ目を消す */
+  -webkit-mask-image:var(--zigT),var(--zigB),linear-gradient(#000,#000);
+  mask-image:var(--zigT),var(--zigB),linear-gradient(#000,#000);
+  -webkit-mask-size:var(--zigW) var(--zigH),var(--zigW) var(--zigH),
+    100% calc(100% - var(--zigH) * 2 + 2px);
+  mask-size:var(--zigW) var(--zigH),var(--zigW) var(--zigH),
+    100% calc(100% - var(--zigH) * 2 + 2px);
+  -webkit-mask-position:top left,bottom left,left calc(var(--zigH) - 1px);
+  mask-position:top left,bottom left,left calc(var(--zigH) - 1px);
+  -webkit-mask-repeat:repeat-x,repeat-x,no-repeat;
+  mask-repeat:repeat-x,repeat-x,no-repeat}
+
+:is(.b03,.b04) .spec__ttl{margin:0;font-family:var(--f-archivo);font-weight:400;
+  font-size:48px;line-height:1.04;letter-spacing:-.005em}
+/* サンプルは商品名を字数に応じて詰めている（Drawstring だけ小さい） */
+.b03 .spec__ttl:not(.spec__ttl--2nd){font-size:39px}
+/* 最後の罫線から次の見出しまで 255/1600 → 105px */
+:is(.b03,.b04) .spec__ttl--2nd{margin-top:105px}
+:is(.b03,.b04) .spec__jp{margin:12px 0 0;font-family:var(--f-noto);font-weight:500;
+  font-size:13.5px;line-height:1.4;letter-spacing:.1em}
+:is(.b03,.b04) .spec__ph{display:block;width:100%;height:auto;margin:52px auto 0}
+:is(.b03,.b04) .spec__ph--rope{margin-top:57px}
+:is(.b03,.b04) .spec__lbl{margin:55px 0 0;text-align:left;
+  font-family:var(--f-noto);font-weight:700;font-size:15.5px;
+  line-height:1.2;letter-spacing:.04em}
+:is(.b03,.b04) .spec__tbl{margin:12px 0 0;text-align:left;
+  border-bottom:1px solid #888;
+  font-family:var(--f-noto);font-weight:400;font-size:17.5px;line-height:1.5}
+:is(.b03,.b04) .spec__row{position:relative;display:grid;
+  grid-template-columns:29.8% 1fr;align-items:center;
+  padding:12px 0;border-top:1px solid #888}
+:is(.b03,.b04) .spec__row dt{padding-left:14px}
+:is(.b03,.b04) .spec__row dd{margin:0;padding-left:41.7px}
+/* 縦の区切りは行いっぱいではなく文字の高さぶんだけ（サンプル実測 45/1600） */
+:is(.b03,.b04) .spec__row::before{content:"";position:absolute;left:29.8%;top:50%;
+  width:1px;height:1.15em;margin-top:-.575em;background:#888}
+
+@media (max-width:600px){
+  /* 受け皿が 660→515px なので、文字と余白も 515/660 = 0.78 倍にする */
+  :is(.b03,.b04) .spec{--zigW:22.7px;--zigH:7.7px;width:515px;
+    padding:calc(var(--zigH) + 41px) 38.6px calc(var(--zigH) + 45px)}
+  :is(.b03,.b04) .spec__ttl{font-size:37.4px}
+  .b03 .spec__ttl:not(.spec__ttl--2nd){font-size:30.4px}
+  :is(.b03,.b04) .spec__row dt{padding-left:10.9px}
+  :is(.b03,.b04) .spec__row dd{padding-left:32.5px}
+  :is(.b03,.b04) .spec__ttl--2nd{margin-top:82px}
+  :is(.b03,.b04) .spec__jp{font-size:10.5px}
+  :is(.b03,.b04) .spec__ph{margin-top:41px}
+  :is(.b03,.b04) .spec__ph--rope{margin-top:44px}
+  :is(.b03,.b04) .spec__lbl{margin-top:43px;font-size:12.1px}
+  :is(.b03,.b04) .spec__tbl{font-size:13.7px}
+  :is(.b03,.b04) .spec__row{padding:9px 0}
+}

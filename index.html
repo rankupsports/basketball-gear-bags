@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=League+Spartan:wght@500;700&family=M+PLUS+1p:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Bowlby+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Montserrat:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Libre+Bodoni:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=Geist+Pixel&family=Jersey+10&family=Jersey+20&family=Encode+Sans+Condensed:wght@700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=132" />
+<link rel="stylesheet" href="styles.css?v=134" />
 </head>
 <body>
 
@@ -187,6 +187,37 @@
            width="572" height="645" style="--d:1.12s" loading="lazy" />
       <p class="bub bub--r bub--nowrap" style="--d:1.28s">前ポケットにはスマホや小物を入れて、<br />必要なものはサッと取り出せる♪</p>
       <p class="bub bub--l bub--nowrap" style="--d:1.44s">練習も試合も、お気に入りのボールと一緒に出かけよう!</p>
+    </div>
+
+    <!-- ---- スペック（レシート風の伝票）--------------------------------
+         枠の形は base.svg（1655x2326・上下がギザギザ／左右は直線）。
+         中身の高さで縦に伸びるので base.svg をまるごと引き伸ばすと歯が
+         縦長に崩れる。そこで歯1山ぶん（幅73 / 深さ24.8）だけを SVG に
+         切り出して mask で敷き詰め、山の数は base.svg と同じ
+         1655/73 = 22.7 山になるよう受け皿の幅から px で決めている。
+         中の寸法は spec-ballbag-sample_0.png（受け皿幅 1600px）の実測値を
+         この受け皿の幅 660px に換算した値。 -->
+    <div class="spec reveal">
+      <h4 class="spec__ttl">Drawstring Ball Bag</h4>
+      <p class="spec__jp">ボール巾着バッグ</p>
+      <img class="spec__ph" src="assets/block03/spec-ballbag.jpg"
+           alt="Drawstring Ball Bag の寸法図。幅400mm、高さ265mm"
+           width="1378" height="1496" loading="lazy" />
+      <p class="spec__lbl">SPECIFICATION</p>
+      <dl class="spec__tbl">
+        <div class="spec__row"><dt>材質</dt><dd>本体ナイロン、ロープポリエステル</dd></div>
+        <div class="spec__row"><dt>サイズ</dt><dd>W400mm　H265mm</dd></div>
+      </dl>
+      <h4 class="spec__ttl spec__ttl--2nd">Rope Strap</h4>
+      <p class="spec__jp">ロープストラップ</p>
+      <img class="spec__ph spec__ph--rope" src="assets/spec-rope.jpg"
+           alt="ロープストラップ4色。Black、Gray、Pink、Blue"
+           width="1368" height="474" loading="lazy" />
+      <p class="spec__lbl">SPECIFICATION</p>
+      <dl class="spec__tbl">
+        <div class="spec__row"><dt>材質</dt><dd>ポリエステル</dd></div>
+        <div class="spec__row"><dt>サイズ</dt><dd>W1600mm</dd></div>
+      </dl>
     </div>
 
     <!-- ---- HERO カード ---- -->
@@ -401,6 +432,31 @@
       <p class="bubEmo bubEmo--one bubEmo--r" style="--d:1.12s" role="img" aria-label="ハート">❤️</p>
       <p class="bub bub--r bub--nowrap" style="--d:1.28s">お気に入りのロープストラップを付ければ、<br />自分だけのスタイルにアレンジできるのもポイント！</p>
       <p class="bub bub--l bub--nowrap" style="--d:1.44s">必要なものをひとつにまとめて、今日もバスケへ出かけよう！</p>
+    </div>
+
+    <!-- ---- スペック（レシート風の伝票）。作りはブロック03 と同じ。
+         中の寸法は spec-shoes-sample_0.png の実測値。 -->
+    <div class="spec reveal">
+      <h4 class="spec__ttl">Shoes Barrel Bag</h4>
+      <p class="spec__jp">シューズバレルバッグ</p>
+      <img class="spec__ph" src="assets/block04/spec-shoes.jpg"
+           alt="Shoes Barrel Bag の寸法図。幅350mm、奥行200mm、高さ240mm"
+           width="1420" height="998" loading="lazy" />
+      <p class="spec__lbl">SPECIFICATION</p>
+      <dl class="spec__tbl">
+        <div class="spec__row"><dt>材質</dt><dd>本体ナイロン、ロープポリエステル</dd></div>
+        <div class="spec__row"><dt>サイズ</dt><dd>W350mm　D200mm　H240mm</dd></div>
+      </dl>
+      <h4 class="spec__ttl spec__ttl--2nd">Rope Strap</h4>
+      <p class="spec__jp">ロープストラップ</p>
+      <img class="spec__ph spec__ph--rope" src="assets/spec-rope.jpg"
+           alt="ロープストラップ4色。Black、Gray、Pink、Blue"
+           width="1368" height="474" loading="lazy" />
+      <p class="spec__lbl">SPECIFICATION</p>
+      <dl class="spec__tbl">
+        <div class="spec__row"><dt>材質</dt><dd>ポリエステル</dd></div>
+        <div class="spec__row"><dt>サイズ</dt><dd>W1600mm</dd></div>
+      </dl>
     </div>
 
     <!-- ---- HERO カード ---- -->
