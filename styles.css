@@ -1203,18 +1203,15 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .b04__chat .bubEmo{align-self:flex-start;margin-top:.34em;margin-bottom:.34em}
 
 /* ===== 写真へのリアクション絵文字 =====
-   既存の .bubEmo（3個で 44.4% を埋める大きさ）とはサイズが違う。1個ぶんの
-   大きさと位置は指示スクリーンショットの赤丸から実測し、PC の --k=1.655 で
-   割って設計 px に戻した値。それを3個並べ、赤丸の中心に群の中心を合わせる。
-     ブロック03（緑）… 1個 43px / 中心 265px(40.2%)  → chat-02 の下
-     ブロック04（紫）… 1個 37px / 中心 451px(77.7%)  → chat-03 の下
+   既存の .bubEmo（3個で 44.4% を埋める大きさ・字間 -.345em）とは別サイズ。
+   3個並べて右端そろえ（.bub--r / .bubPh--r と同じ端）。
    下の余白は吹き出し同士の間隔にそろえる（2.803em → PC 48px / スマホは
    .bub の font-size が違うので 03=38px・04=43px）。上は写真の margin-bottom
    30px がそのまま隙間になる。 */
-.bubEmo--one{letter-spacing:0;font-size:calc(var(--chatW,600px) * .065)}
-.b03__chat .bubEmo--one{align-self:flex-start;margin:0 0 48px 27.6%}
-.b04__chat .bubEmo--one{align-self:flex-end;margin:0 9.15% 48px 0}
-.b04__chat .bubEmo--r{transform-origin:100% 100%}
+/* 1個ぶんは .065（指示スクショの赤丸実測）から「もう少し大きく」で .08 へ */
+.bubEmo--one{letter-spacing:0;font-size:calc(var(--chatW,600px) * .08)}
+:is(.b03__chat,.b04__chat) .bubEmo--one{align-self:flex-end;margin:0 0 48px}
+:is(.b03__chat,.b04__chat) .bubEmo--r{transform-origin:100% 100%}
 
 /* ===== 吹き出しの合間に入る写真（吹き出し.pdf）=====
    PDF のチャットカラム 1012pt を 660px に換算して実測。
