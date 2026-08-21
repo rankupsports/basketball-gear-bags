@@ -344,7 +344,11 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   .mv__cont{display:block;}
   .mv__phBox{display:block;}
   .mv__ph--pc{display:none}
-  .mv__ph--sp{display:block;width:100%;aspect-ratio:9/16;}
+  /* 9/16 だと 375px 幅で 667px＝ほぼ1画面ぶんになり、直後のポエム(.igIntro__cont)が
+     折り返しの下に隠れる。高さを画面の 58% に抑えて、続きが見えるようにする。
+     埋め込み iframe だと vh がフレームの高さ（数千px）になるので上限を付ける。
+     横長素材を低い枠に入れるぶん、左右の切り落ちも 32%→45% に緩む。 */
+  .mv__ph--sp{display:block;width:100%;aspect-ratio:auto;height:min(58vh,520px)}
   /* 全画面なので is-show の relative は使わず、全枚数を重ねる */
   .mv__ph--sp .mv__phImg,
   .mv__ph--sp .mv__phImg.is-show{position:absolute}
