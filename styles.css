@@ -113,7 +113,9 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    座標は app.js の ITEMS[].crop。
    ------------------------------------------------------------- */
 .ph{
-  background-image:url("assets/cora.png");
+  /* スプライト元だった assets/cora.png は、全ての .ph が自前の背景を
+     持つようになり一度も読まれなくなったので削除した。
+     読み込み前の下地は下の background-color が受け持つ。 */
   background-repeat:no-repeat;
   background-size:var(--bs,cover);
   background-position:var(--bp,50% 50%);
