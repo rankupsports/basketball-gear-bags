@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=League+Spartan:wght@500;700&family=M+PLUS+1p:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Bowlby+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Montserrat:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Libre+Bodoni:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=Geist+Pixel&family=Jersey+10&family=Jersey+20&family=Encode+Sans+Condensed:wght@700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=125" />
+<link rel="stylesheet" href="styles.css?v=126" />
 </head>
 <body>
 
@@ -168,15 +168,24 @@
     </div>
 
     <!-- ---- チャット吹き出し（内容を一新。指示どおり HERO カードの上へ移動） ---- -->
+    <!-- 吹き出し.pdf（1ページ目）の順序どおり。吹き出しの合間に支給写真が3枚入る。
+         幅と左右寄せは PDF の実測（チャットカラム 1012pt 基準）を 660px に換算した値。
+         chat-01 / chat-02 のグレーは「PHOTO」の仮置き素材。 -->
     <div class="b03__chat">
       <p class="bub bub--r bub--nowrap">バスケットボールがすっぽり入る巾着バッグ!</p>
-      <p class="bub bub--l bub--nowrap" style="--d:.16s">今日はどっちのデザインにしよう？<br />気分でくるっと裏返せば、リバーシブルで楽しめます♪</p>
-      <!-- 吹き出しの合間に置いていた絵文字（.bubEmo）は削除。アニメーション素材が
-           支給されたらここに入れる。CSS 側の .bubEmo は残してある。 -->
-      <p class="bub bub--r bub--nowrap" style="--d:.32s">お気に入りのストラップロープを付けたり、<br />カラビナでリュックにぶら下げたり</p>
-      <p class="bub bub--l bub--nowrap" style="--d:.48s">自分らしくアレンジできるのもポイント！</p>
-      <p class="bub bub--r bub--nowrap" style="--d:.64s">前ポケットにはスマホや小物を入れて、<br />必要なものはサッと取り出せる♪</p>
-      <p class="bub bub--l bub--nowrap" style="--d:.8s">練習も試合も、お気に入りのボールと一緒に出かけよう!</p>
+      <img class="bubPh" src="assets/block03/chat-01.jpg" alt="写真は準備中"
+           width="735" height="570" style="--d:.16s" loading="lazy" />
+      <p class="bub bub--l bub--nowrap" style="--d:.32s">今日はどっちのデザインにしよう？<br />気分でくるっと裏返せば、リバーシブルで楽しめます♪</p>
+      <p class="bub bub--r bub--nowrap" style="--d:.48s">お気に入りのストラップロープを付けたり、<br />カラビナでリュックにぶら下げたり</p>
+      <img class="bubPh bubPh--sm" src="assets/block03/chat-02.jpg"
+           alt="ブルーとピンクのロープを付けた Drawstring Ball Bag を2つ持って"
+           width="572" height="645" style="--d:.64s" loading="lazy" />
+      <p class="bub bub--l bub--nowrap" style="--d:.8s">自分らしくアレンジできるのもポイント！</p>
+      <img class="bubPh bubPh--r" src="assets/block03/chat-03.jpg"
+           alt="Drawstring Ball Bag の前ポケットにスマホを入れるところ"
+           width="735" height="570" style="--d:.96s" loading="lazy" />
+      <p class="bub bub--r bub--nowrap" style="--d:1.12s">前ポケットにはスマホや小物を入れて、<br />必要なものはサッと取り出せる♪</p>
+      <p class="bub bub--l bub--nowrap" style="--d:1.28s">練習も試合も、お気に入りのボールと一緒に出かけよう!</p>
     </div>
 
     <!-- ---- HERO カード ---- -->
@@ -374,13 +383,22 @@
     </div>
 
     <!-- ---- チャット吹き出し（内容を一新。HERO カードの上へ移動） ---- -->
+    <!-- 吹き出し.pdf（2ページ目）の順序どおり。chat-02 のグレーは「PHOTO」の仮置き素材。 -->
     <div class="b04__chat">
       <p class="bub bub--r bub--nowrap">バッシュはメイン収納へ</p>
-      <p class="bub bub--l bub--nowrap" style="--d:.16s">水筒やペットボトルはサイドポケットへ♪</p>
-      <p class="bub bub--r bub--nowrap" style="--d:.32s">汗をかいたバッシュと飲み物を分けて収納できるから、<br />衛生的にも気分的にもなんだかうれしい！</p>
-      <p class="bub bub--l bub--nowrap" style="--d:.48s">フロントポケットにはハンドタオルや絆創膏など、<br />よく使う小物をまとめて収納♪</p>
-      <p class="bub bub--r bub--nowrap" style="--d:.64s">お気に入りのロープストラップを付ければ、<br />自分だけのスタイルにアレンジできるのもポイント！</p>
-      <p class="bub bub--l bub--nowrap" style="--d:.8s">必要なものをひとつにまとめて、今日もバスケへ出かけよう！</p>
+      <img class="bubPh" src="assets/block04/chat-01.jpg"
+           alt="Shoe Barrel Bag のサイドポケットに水筒を入れるところ"
+           width="735" height="570" style="--d:.16s" loading="lazy" />
+      <p class="bub bub--l bub--nowrap" style="--d:.32s">水筒やペットボトルはサイドポケットへ♪</p>
+      <p class="bub bub--r bub--nowrap" style="--d:.48s">汗をかいたバッシュと飲み物を分けて収納できるから、<br />衛生的にも気分的にもなんだかうれしい！</p>
+      <img class="bubPh" src="assets/block04/chat-02.jpg" alt="写真は準備中"
+           width="735" height="570" style="--d:.64s" loading="lazy" />
+      <p class="bub bub--l bub--nowrap" style="--d:.8s">フロントポケットにはハンドタオルや絆創膏など、<br />よく使う小物をまとめて収納♪</p>
+      <img class="bubPh bubPh--r" src="assets/block04/chat-03.jpg"
+           alt="ブルーのロープを付けた Shoe Barrel Bag を肩にかけたスタイリング"
+           width="666" height="684" style="--d:.96s" loading="lazy" />
+      <p class="bub bub--r bub--nowrap" style="--d:1.12s">お気に入りのロープストラップを付ければ、<br />自分だけのスタイルにアレンジできるのもポイント！</p>
+      <p class="bub bub--l bub--nowrap" style="--d:1.28s">必要なものをひとつにまとめて、今日もバスケへ出かけよう！</p>
     </div>
 
     <!-- ---- HERO カード ---- -->

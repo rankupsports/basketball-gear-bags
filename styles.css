@@ -868,7 +868,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   html{scroll-behavior:auto}
   .ttlPop,.ttlPopQ,.reveal,.post,
   .b03__chat .bub,.b04__chat .bub,
-  .b03__chat .bubEmo,.b04__chat .bubEmo{opacity:1!important;transform:none!important}
+  .b03__chat .bubEmo,.b04__chat .bubEmo,
+  .b03__chat .bubPh,.b04__chat .bubPh{opacity:1!important;transform:none!important}
 }
 
 /* ============================================================
@@ -1201,17 +1202,32 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 .b03__chat .bubEmo{margin-top:.34em;margin-bottom:.34em}
 .b04__chat .bubEmo{align-self:flex-start;margin-top:.34em;margin-bottom:.34em}
 
+/* ===== 吹き出しの合間に入る写真（吹き出し.pdf）=====
+   PDF のチャットカラム 1012pt を 660px に換算して実測。
+   横位置は既定が左（.bub--l と同じ端）、右寄せは .bubPh--r。
+   幅はカラム比で持つ（ブロック03のカラムは660px、04は580pxで違うため）。
+   PDF 実測は横長カットが 56%、縦長の2つ持ちカットだけ 42%。
+   角丸と上下の余白も PDF 実測値。 */
+:is(.b03,.b04) .bubPh{display:block;align-self:flex-start;
+  width:56%;height:auto;border-radius:12px;margin:20px 0 30px}
+:is(.b03,.b04) .bubPh--sm{width:42%}
+:is(.b03,.b04) .bubPh--r{align-self:flex-end}
+
 /* ===== チャット吹き出しのポップイン（ブロック03_吹き出しモーション.mp4）=====
    ●（吹き出しの尻尾）を軸に scale 0→1 / opacity 0→1。ビューに入ったら上から順に。
    絵文字行を挟むので順番は nth-child ではなく各要素の --d で指定する。 */
-.b03 .bub,.b04 .bub,.bubEmo{opacity:0;transform:scale(0);
+.b03 .bub,.b04 .bub,.bubEmo,:is(.b03,.b04) .bubPh{opacity:0;transform:scale(0);
   transition:opacity .34s ease, transform .46s cubic-bezier(.34,1.4,.5,1)}
 /* しっぽ（●）を軸にポップイン。block03/04 とも同じ位置にしっぽがある。 */
 :is(.b03,.b04) .bub--l{transform-origin:1.288em 100%}
 :is(.b03,.b04) .bub--r{transform-origin:calc(100% - 1.288em) 100%}
 .bubEmo{transform-origin:0 100%}
+/* 写真は吹き出しと違ってしっぽが無いので、寄せている側の下端を軸にする */
+:is(.b03,.b04) .bubPh{transform-origin:0 100%}
+:is(.b03,.b04) .bubPh--r{transform-origin:100% 100%}
 .b03__chat.is-in .bub,.b04__chat.is-in .bub,
-.b03__chat.is-in .bubEmo,.b04__chat.is-in .bubEmo{opacity:1;transform:scale(1);
+.b03__chat.is-in .bubEmo,.b04__chat.is-in .bubEmo,
+.b03__chat.is-in .bubPh,.b04__chat.is-in .bubPh{opacity:1;transform:scale(1);
   transition-delay:var(--d,0s)}
 
 /* ---- 2×2 グリッド（block03 と同じ） ---- */
