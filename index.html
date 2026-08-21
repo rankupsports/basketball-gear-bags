@@ -47,15 +47,12 @@
       <!-- ヒーローは PC・スマホとも支給ムービー（写真の切り替えから差し替え）。
            app.js の写真切り替え（3.8秒ごと）は img が2枚未満だと何もしないので、
            そのまま残してある。写真に戻すときは img を並べ直せば復活する。
-           素材 1920x1080 は PC 枠(1920:1079)とほぼ一致するのでフルで出る。
-           表示は CSS の出し分けなので、実際に再生されるのは片方だけ。 -->
+           素材 1920x1080 は PC 枠(1920:1079)ともスマホ枠(16:9)ともほぼ一致するので、
+           video は1つだけ置き、枠の比率だけ CSS で切り替える。
+           以前は PC 用とスマホ用に同じ src の video を2つ置いていたため、
+           40MB の同じファイルを2本同時に読み込んでいた（スマホで再生が
+           始まらない原因）。 -->
       <div class="mv__ph mv__ph--pc" id="mvPh">
-        <video class="mv__phMov" src="assets/top-movie.mp4"
-               muted loop autoplay playsinline preload="metadata"
-               aria-label="Rankup sports 2026 SUMMER コレクションのムービー"></video>
-      </div>
-      <!-- スマホ枠は 9/16 なので、同じ素材を cover で中央だけ出す -->
-      <div class="mv__ph mv__ph--sp" id="mvPhSp">
         <video class="mv__phMov" src="assets/top-movie.mp4"
                muted loop autoplay playsinline preload="metadata"
                aria-label="Rankup sports 2026 SUMMER コレクションのムービー"></video>
@@ -1318,6 +1315,6 @@
   <img class="lb__img" id="lbImg" src="" alt="" />
 </div>
 
-<script src="app.js?v=35"></script>
+<script src="app.js?v=36"></script>
 </body>
 </html>

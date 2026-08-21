@@ -483,10 +483,10 @@
 
   /* =========================================================
      HERO — 透明度で写真をクロスフェード
-     PC(#mvPh 横長) と スマホ(#mvPhSp 縦長) の2セットを同じ間隔で回す。
-     表示は CSS で出し分けるので、非表示側が回っていても実害はない。
+     枠は #mvPh の1つだけ（スマホ用の別セットは廃止）。
+     img が2枚未満なら何もしないので、ムービー1本の今は実質何もしない。
      ========================================================= */
-  ['#mvPh', '#mvPhSp'].forEach(sel => {
+  ['#mvPh'].forEach(sel => {
     const box = $(sel);
     if (!box) return;
     const imgs = $$('.mv__phImg', box);
@@ -829,6 +829,14 @@
       es.forEach(en => { if (en.isIntersecting) kick(en.target); });
     }, { threshold: 0.15 });
     castVids.forEach(v => vio.observe(v));
+
+    // IO が media の準備前に走ったときの取りこぼし対策。再生できる状態に
+    // なった時点でもう一度試す（top-movie.mp4 は 13Mbps あるので回線が細いと
+    // ここまで来るのに時間がかかる）。
+    castVids.forEach(v => {
+      ['loadeddata', 'canplay'].forEach(t =>
+        v.addEventListener(t, () => { if (v.paused) kick(v); }));
+    });
 
     // 自動再生が禁止されている環境向け。最初の操作をきっかけに走らせる。
     const onFirstInput = () => {
