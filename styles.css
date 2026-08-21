@@ -344,11 +344,10 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   .mv__cont{display:block;}
   .mv__phBox{display:block;}
   .mv__ph--pc{display:none}
-  /* 9/16 だと 375px 幅で 667px＝ほぼ1画面ぶんになり、直後のポエム(.igIntro__cont)が
-     折り返しの下に隠れる。高さを画面の 58% に抑えて、続きが見えるようにする。
-     埋め込み iframe だと vh がフレームの高さ（数千px）になるので上限を付ける。
-     横長素材を低い枠に入れるぶん、左右の切り落ちも 32%→45% に緩む。 */
-  .mv__ph--sp{display:block;width:100%;aspect-ratio:auto;height:min(58vh,520px)}
+  /* 枠を素材と同じ 16/9 にして、PC と同じく左右を切らずに全幅を出す。
+     .mv__ph の min-height（420px）が効くと縦に引き伸ばされて再び左右が切れるので、
+     ここで解除する。縦が短くなるぶん、直後のポエムもよく見える。 */
+  .mv__ph--sp{display:block;width:100%;aspect-ratio:16/9;height:auto;min-height:0}
   /* 全画面なので is-show の relative は使わず、全枚数を重ねる */
   .mv__ph--sp .mv__phImg,
   .mv__ph--sp .mv__phImg.is-show{position:absolute}
