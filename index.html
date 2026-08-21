@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=League+Spartan:wght@500;700&family=M+PLUS+1p:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Bowlby+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Montserrat:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Libre+Bodoni:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=Geist+Pixel&family=Jersey+10&family=Jersey+20&family=Encode+Sans+Condensed:wght@700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=117" />
+<link rel="stylesheet" href="styles.css?v=118" />
 </head>
 <body>
 
@@ -44,32 +44,26 @@
   <div class="mv__cont">
     <div class="mv__hearts" id="mvHearts" aria-hidden="true"></div>
     <div class="mv__phBox">
-      <!-- hero の写真は透明度で切り替わる（app.js の HERO / 3.8秒ごと）。
-           枚数は自由で、増減しても JS 側の変更は不要。
-           すまほ版トップ.pdf ①②: スマホでは縦長素材を全画面で1枚ずつ見せる。
-           PC は従来の横長、スマホは縦長の別セットを CSS で出し分ける
-           （非表示側は lazy なので読み込まれない）。 -->
-      <div class="mv__ph mv__ph--pc" id="mvPh"
-           role="img" aria-label="Rankup sports 2026 SUMMER コレクション">
-        <img class="mv__phImg is-show" src="assets/hero-top-01.jpg" alt="Rankup sports 2026 SUMMER コレクション" />
-        <img class="mv__phImg" src="assets/hero-top-02.jpg" alt="" aria-hidden="true" loading="lazy" />
-        <img class="mv__phImg" src="assets/hero-top-03.jpg" alt="" aria-hidden="true" loading="lazy" />
+      <!-- ヒーローは PC・スマホとも支給ムービー（写真の切り替えから差し替え）。
+           app.js の写真切り替え（3.8秒ごと）は img が2枚未満だと何もしないので、
+           そのまま残してある。写真に戻すときは img を並べ直せば復活する。
+           素材 1920x1080 は PC 枠(1920:1079)とほぼ一致するのでフルで出る。
+           表示は CSS の出し分けなので、実際に再生されるのは片方だけ。 -->
+      <div class="mv__ph mv__ph--pc" id="mvPh">
+        <video class="mv__phMov" src="assets/top-movie.mp4"
+               muted loop autoplay playsinline preload="metadata"
+               aria-label="Rankup sports 2026 SUMMER コレクションのムービー"></video>
       </div>
-      <div class="mv__ph mv__ph--sp" id="mvPhSp" role="img" aria-label="Rankup sports 2026 SUMMER コレクション">
-        <img class="mv__phImg is-show" src="assets/hero-m-1.jpg" alt="Rankup sports 2026 SUMMER コレクション" />
-        <img class="mv__phImg" src="assets/hero-m-2.jpg" alt="" aria-hidden="true" loading="lazy" />
-        <img class="mv__phImg" src="assets/hero-m-3.jpg" alt="" aria-hidden="true" loading="lazy" />
-        <img class="mv__phImg" src="assets/hero-m-3b.jpg" alt="" aria-hidden="true" loading="lazy" />
-        <img class="mv__phImg" src="assets/hero-m-4.jpg" alt="" aria-hidden="true" loading="lazy" />
-        <img class="mv__phImg" src="assets/hero-m-5.jpg" alt="" aria-hidden="true" loading="lazy" />
+      <!-- スマホ枠は 9/16 なので、同じ素材を cover で中央だけ出す -->
+      <div class="mv__ph mv__ph--sp" id="mvPhSp">
+        <video class="mv__phMov" src="assets/top-movie.mp4"
+               muted loop autoplay playsinline preload="metadata"
+               aria-label="Rankup sports 2026 SUMMER コレクションのムービー"></video>
       </div>
       <div class="mv__frame" id="mvFrame" aria-hidden="true"></div>
 
-      <!-- hero 写真に重ねるキャッチコピー。支給の GIF(TOP.gif) に差し替え。
-           GIF に「RANKUP SPORTS」まで含まれるので、下のテキストは廃止。 -->
-      <div class="mv__overlay">
-        <img class="mv__catch" src="assets/catch-typical-bag.gif" alt="Not Your Typical Sports Bag! RANKUP SPORTS" width="1920" height="527" />
-      </div>
+      <!-- hero に重ねていたキャッチ（.mv__overlay / catch-typical-bag.gif）は削除。
+           CSS は残してあるので、戻すときは div を並べ直せばよい。 -->
     </div>
   </div>
 </section>
@@ -1169,6 +1163,6 @@
   <img class="lb__img" id="lbImg" src="" alt="" />
 </div>
 
-<script src="app.js?v=33"></script>
+<script src="app.js?v=34"></script>
 </body>
 </html>

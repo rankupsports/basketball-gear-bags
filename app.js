@@ -811,7 +811,7 @@
      フレームが1枚も描かれず「何も表示されない」状態になる。
      そこで画面に入ったら play() を試し、断られたらフレームだけ描かせる。
      ========================================================= */
-  const castVids = $$('.b03__castPh, .b04__castPh').filter(el => el.tagName === 'VIDEO');
+  const castVids = $$('.b03__castPh, .b04__castPh, .mv__phMov').filter(el => el.tagName === 'VIDEO');
   if (castVids.length) {
     const paintFirstFrame = (v) => {
       v.preload = 'auto';
