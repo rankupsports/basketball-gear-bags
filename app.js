@@ -15,7 +15,7 @@
      crop = [background-position-x%, -y%, background-size%]
      ---------------------------------------------------------------- */
   const ITEMS = {
-    barrel:   { name: 'SHOE BARREL BAG',     yen: '¥6,600', crop: [32, 62, 300] },
+    barrel:   { name: 'SHOES BARREL BAG',     yen: '¥6,600', crop: [32, 62, 300] },
     rope:     { name: 'ROPE STRAP',          yen: '¥2,420', crop: [ 2, 84, 300] },
     ropeBlue: { name: 'ROPE STRAP (BLUE)',   yen: '¥2,420', crop: [ 2, 78, 340] },
     ropePink: { name: 'ROPE STRAP (PINK)',   yen: '¥2,420', crop: [ 2, 96, 340] },
