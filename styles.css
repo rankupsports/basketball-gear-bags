@@ -1507,8 +1507,6 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   aspect-ratio:1.227;display:flex;align-items:center;justify-content:center;
 }
 .shop__img{width:100%;height:100%;object-fit:contain;display:block}
-/* 準備中の2点は写真なしのグレー枠のまま */
-.shop__box--soon{}
 
 /* ---- ロープのカルーセル（ロープ写真→着用写真8枚）----
    支給写真の地色が白なので、枠の地色も同じ白にして

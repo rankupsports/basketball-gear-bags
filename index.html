@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Big+Shoulders:wght@600;800&family=Bowlby+One+SC&family=Caprasimo&family=Dancing+Script:wght@600;700&family=Golos+Text:wght@400;500;700;900&family=DotGothic16&family=Jacquarda+Bastarda+9&family=Permanent+Marker&family=Roboto:wght@300;400;500;700;900&family=Zen+Maru+Gothic:wght@400;500;700&family=League+Spartan:wght@500;700&family=M+PLUS+1p:wght@400;500;700&family=Space+Grotesk:wght@500;700&family=Bowlby+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Montserrat:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&family=Libre+Bodoni:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=Geist+Pixel&family=Jersey+10&family=Jersey+20&family=Encode+Sans+Condensed:wght@700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=134" />
+<link rel="stylesheet" href="styles.css?v=135" />
 </head>
 <body>
 
@@ -862,7 +862,18 @@
           <p class="shop__pline"><span class="shop__leader" aria-hidden="true"></span><span class="shop__yen">￥5,499</span></p>
         </figure>
         <figure class="shop__prod">
-          <div class="shop__box shop__box--soon" role="img" aria-label="準備中"></div>
+          <!-- 「準備中」だった枠を DRAWSTRING BALL BAG と同じカルーセルに。
+               JS は .shop__box--car / .shop__img / .shop__arw / #<id>Dots を
+               総称で拾うので、id を合わせるだけで同じ動作になる。写真は4枚。 -->
+          <div class="shop__box shop__box--car" id="shoesBag">
+            <img class="shop__img is-show" src="assets/block05/shoes/shoes-1_0.jpg" alt="Shoes Barrel Bag" />
+            <img class="shop__img" data-src="assets/block05/shoes/shoes-2_0.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/shoes/shoes-3_0.jpg" alt="" />
+            <img class="shop__img" data-src="assets/block05/shoes/shoes-4_0.jpg" alt="" />
+            <button type="button" class="shop__arw shop__arw--prev" data-car="prev" aria-controls="shoesBag" aria-label="前の写真"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 4 7 12l8 8"/></svg></button>
+            <button type="button" class="shop__arw shop__arw--next" data-car="next" aria-controls="shoesBag" aria-label="次の写真"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4l8 8-8 8"/></svg></button>
+          </div>
+          <span class="shop__cdots" id="shoesBagDots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></span>
           <p class="shop__name">SHOES BARREL BAG</p>
           <p class="shop__pline"><span class="shop__leader" aria-hidden="true"></span><span class="shop__yen">￥5,499</span></p>
         </figure>
