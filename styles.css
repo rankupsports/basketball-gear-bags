@@ -1205,12 +1205,12 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 /* ===== 吹き出しの合間に入る写真（吹き出し.pdf）=====
    PDF のチャットカラム 1012pt を 660px に換算して実測。
    横位置は既定が左（.bub--l と同じ端）、右寄せは .bubPh--r。
-   幅はカラム比で持つ（ブロック03のカラムは660px、04は580pxで違うため）。
-   PDF 実測では縦長の2つ持ちカットだけ 42% だったが、chat-01 と同じ大きさに
-   揃える指示があったため全て 56% に統一している。
+   幅はブロック03が 42%（chat-02 に合わせる指示。3枚とも同じ幅）、
+   ブロック04 は PDF 実測どおり 56%。
    角丸と上下の余白も PDF 実測値。 */
 :is(.b03,.b04) .bubPh{display:block;align-self:flex-start;
   width:56%;height:auto;border-radius:12px;margin:20px 0 30px}
+.b03__chat .bubPh{width:42%}
 :is(.b03,.b04) .bubPh--r{align-self:flex-end}
 
 /* ===== チャット吹き出しのポップイン（ブロック03_吹き出しモーション.mp4）=====
