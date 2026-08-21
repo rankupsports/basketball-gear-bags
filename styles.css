@@ -1210,7 +1210,9 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
    角丸と上下の余白も PDF 実測値。 */
 :is(.b03,.b04) .bubPh{display:block;align-self:flex-start;
   width:56%;height:auto;border-radius:12px;margin:20px 0 30px}
-.b03__chat .bubPh{width:42%}
+/* ブロック03 の3枚は、ブロック04 の写真と同じ表示幅に合わせる指示。
+   04 は 56% x 580px = 324.8px なので、660px カラムでは 49.2%。 */
+.b03__chat .bubPh{width:49.2%}
 :is(.b03,.b04) .bubPh--r{align-self:flex-end}
 
 /* ===== チャット吹き出しのポップイン（ブロック03_吹き出しモーション.mp4）=====
@@ -1245,6 +1247,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
      （bub-c 37.5em が 510px に収まる 13.6px / block04 は 15.2px）。
      モバイルは元々カラムに対する文字比が大きいので、これで参考サイト相当。 */
   .b03__chat{width:515px;--chatW:515px}
+  /* モバイルも 04 と同じ表示幅に。56% x 510px = 285.6px → 515px カラムで 55.5% */
+  .b03__chat .bubPh{width:55.5%}
   .b03 .bub{font-size:13.6px}
   .b04__chat{width:510px;--chatW:510px}
   .b04 .bub{font-size:15.2px}
