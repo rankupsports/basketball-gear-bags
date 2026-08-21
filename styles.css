@@ -470,36 +470,31 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   box-shadow:0 12px 30px rgba(0,0,0,.18)}
 
 .prodCard{position:relative;display:block;overflow:hidden;
-  aspect-ratio:928/1015;                 /* 支給デザインのパネル比 */
+  aspect-ratio:1260/1700;                /* 支給写真＝支給サンプルのパネル比 */
   container-type:inline-size;            /* 内側の cqw の基準 */
   -webkit-tap-highlight-color:transparent}
 .prodCard__ph{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
   transition:transform .5s cubic-bezier(.2,.9,.25,1)}
 .prodCard:hover .prodCard__ph{transform:scale(1.03)}
 
-.prodCard__num{position:absolute;top:max(12px,6.25cqw);left:max(14px,5.4cqw);
-  width:max(26px,7.3cqw);height:auto}
-.prodCard__body{position:absolute;left:max(14px,5.4cqw);right:max(14px,5.4cqw);
-  bottom:max(14px,4.85cqw);
+/* 位置・サイズは支給サンプル（パネル幅 928px 基準）の実測比 */
+.prodCard__num{position:absolute;top:max(12px,6.7cqw);left:max(14px,7.1cqw);
+  width:max(24px,6.7cqw);height:auto}
+.prodCard__body{position:absolute;left:max(14px,7.1cqw);right:max(14px,7.1cqw);
+  bottom:max(14px,7.3cqw);
   display:flex;flex-direction:column;align-items:flex-start}
 /* Archivo Black は 400 しか無いので合成太字を避けて明示 */
 .prodCard__en{font-family:var(--f-archivo);font-weight:400;
-  font-size:max(19px,8.1cqw);line-height:1.02;letter-spacing:-.01em}
+  font-size:max(19px,8cqw);line-height:1.02;letter-spacing:-.01em}
 .prodCard__jp{font-family:var(--f-noto);font-weight:700;
-  font-size:max(11px,3cqw);line-height:1.4;letter-spacing:.02em;
-  margin-top:max(4px,2.7cqw)}
-.prodCard__btn{width:max(104px,31cqw);height:auto;margin-top:max(8px,3.2cqw)}
+  font-size:max(11px,2.9cqw);line-height:1.4;letter-spacing:.02em;
+  margin-top:max(4px,2.2cqw)}
+.prodCard__btn{width:max(104px,30.4cqw);height:auto;margin-top:max(8px,5.5cqw)}
 
-/* 01 は写真が淡い水色なので白抜き（明るいところでも読めるよう軽く影を敷く） */
+/* 支給サンプルでは両パネルとも白抜き（番号・ボタンSVGも白）。
+   写真の明るい部分でも読めるよう、文字にだけ軽く影を敷く。 */
 .prodCard--onLight{color:#fff}
 .prodCard--onLight :is(.prodCard__en,.prodCard__jp){text-shadow:0 2px 14px rgba(0,0,0,.3)}
-/* 02 は写真が白背景なので黒。商品名は白い縁を付けて写真から浮かせる。
-   paint-order:stroke fill で縁を字の外側に描くので、Archivo Black の
-   太い字面が細らない。01 は元から白文字なので縁は付けない。 */
-.prodCard--onDark{color:#111}
-.prodCard--onDark .prodCard__en{-webkit-text-stroke:max(2px,.55cqw) #fff;
-  paint-order:stroke fill}
-
 /* スマホは縦積み。横並びだとパネルが 142〜169px まで縮み、支給比率どおりでは
    日本語が 5px 以下になってしまう（縦積みなら 288〜338px 使える）。
    下限は縦積みだとほぼ効かないが、さらに狭い枠のための保険として残す。 */
@@ -510,11 +505,11 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
      object-position を上寄せにして、人物の上半身とバッグを残す。 */
   .prodCard{aspect-ratio:4/3}
   .prodCard__ph{object-position:50% 0}
-  .prodCard__num{top:max(10px,6.25cqw);left:max(10px,5.4cqw);width:max(20px,7.3cqw)}
-  .prodCard__body{left:max(10px,5.4cqw);right:max(10px,5.4cqw);bottom:max(10px,4.85cqw)}
-  .prodCard__en{font-size:max(17px,8.1cqw)}
-  .prodCard__jp{font-size:max(9.5px,3cqw);margin-top:max(3px,2.7cqw)}
-  .prodCard__btn{width:max(100px,31cqw);margin-top:max(6px,3.2cqw)}
+  .prodCard__num{top:max(10px,6.7cqw);left:max(10px,7.1cqw);width:max(20px,6.7cqw)}
+  .prodCard__body{left:max(10px,7.1cqw);right:max(10px,7.1cqw);bottom:max(10px,7.3cqw)}
+  .prodCard__en{font-size:max(17px,8cqw)}
+  .prodCard__jp{font-size:max(9.5px,2.9cqw);margin-top:max(3px,2.2cqw)}
+  .prodCard__btn{width:max(100px,30.4cqw);margin-top:max(6px,5.5cqw)}
 }
 @media (prefers-reduced-motion:reduce){
   .prodCard__ph{transition:none}
