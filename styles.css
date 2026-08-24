@@ -1130,8 +1130,8 @@ letter-spacing:.1em;line-height:1.4}
 :is(.b03,.b04) .ig--mini .ig__prod{padding:42px 15px 17px}
 :is(.b03,.b04) .ig--mini .ig__prod li{margin-bottom:16px}
 :is(.b03,.b04) .ig--mini .ig__prod li:last-child{margin-bottom:0}
-:is(.b03,.b04) .ig--mini .ig__pName{font-size:13px}
-:is(.b03,.b04) .ig--mini .ig__price{font-size:13px}
+:is(.b03,.b04) .ig--mini .ig__pName{font-size:14px}
+:is(.b03,.b04) .ig--mini .ig__price{font-size:14px}
 :is(.b03,.b04) .ig--mini .ig__lead{transform:translateY(-2px)}
 
 /* ============================================================
