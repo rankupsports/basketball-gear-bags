@@ -1023,8 +1023,8 @@ letter-spacing:.1em;line-height:1.4}
 :is(.b03,.b04) .ig--hero .ig__prod{padding:50px 26px 20px}
 :is(.b03,.b04) .ig--hero .ig__prod li{margin-bottom:16px}
 :is(.b03,.b04) .ig--hero .ig__prod li:last-child{margin-bottom:0}
-:is(.b03,.b04) .ig--hero .ig__pName{font-size:16px}
-:is(.b03,.b04) .ig--hero .ig__price{font-size:16px}
+:is(.b03,.b04) .ig--hero .ig__pName{font-size:18px}
+:is(.b03,.b04) .ig--hero .ig__price{font-size:18px}
 
 /* ---- BUY NOW ----
    レイアウト調整指示0731.pdf:「ブロック０３．０４の Add を消して、↑のタイプに
@@ -1130,8 +1130,8 @@ letter-spacing:.1em;line-height:1.4}
 :is(.b03,.b04) .ig--mini .ig__prod{padding:42px 15px 17px}
 :is(.b03,.b04) .ig--mini .ig__prod li{margin-bottom:16px}
 :is(.b03,.b04) .ig--mini .ig__prod li:last-child{margin-bottom:0}
-:is(.b03,.b04) .ig--mini .ig__pName{font-size:14px}
-:is(.b03,.b04) .ig--mini .ig__price{font-size:14px}
+:is(.b03,.b04) .ig--mini .ig__pName{font-size:16px}
+:is(.b03,.b04) .ig--mini .ig__price{font-size:16px}
 :is(.b03,.b04) .ig--mini .ig__lead{transform:translateY(-2px)}
 
 /* ============================================================
