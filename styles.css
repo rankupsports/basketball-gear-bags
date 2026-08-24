@@ -1865,5 +1865,5 @@ html.is-embed::-webkit-scrollbar,
 html.is-embed body::-webkit-scrollbar{width:0;height:0;display:none}
 .b03__chat .bub,
   .b04__chat .bub {
-    font-size: clamp(14px, 2.5vw, 24px) !important;
+    font-size: clamp(16px, 2.5vw, 24px) !important;
   }
