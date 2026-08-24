@@ -921,7 +921,9 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   font-size:var(--s);line-height:1.02;letter-spacing:-.005em}
 :is(.b03,.b04) .pTtl__jp{margin:calc(var(--s) * .3) 0 0;
   font-family:var(--f-zkaku);font-weight:700;
-  font-size:calc(var(--s) * .375);letter-spacing:.1em;line-height:1.4}
+  /* font-size: calc(var(--s) * 0.375); */
+  font-size: clamp(14px, 2.5vw, 18px);
+letter-spacing:.1em;line-height:1.4}
 :is(.b03,.b04) .pTtl__line{display:block;width:1px;
   height:calc(var(--s) * .7);margin:calc(var(--s) * .5) auto 0;
   background:currentColor}
