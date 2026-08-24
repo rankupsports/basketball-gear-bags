@@ -1264,7 +1264,7 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
   .b04__chat{width:510px;--chatW:510px}
   .b04 .bub{font-size:15.2px}
   .b03__grid,.b04__grid{width:482px;grid-template-columns:1fr;margin-top:150px}
-  .b03__chat,.b04__chat {padding: 0 20px !important;}
+  .b03__chat,.b04__chat {padding: 0 40px !important;}
 }
 
 
