@@ -1123,37 +1123,17 @@
   // まったく変化せず threshold では発火しない。そこで画面に入っている間だけ
   // 毎フレーム observe() を貼り直す（observe() は必ず1回通知が返る仕様）。
   var live = new IntersectionObserver(function(es){ apply(es[es.length-1]); });
-  // function loop() {
-      //   poll = 0;
-      //   if (!onScreen) return;
-      //   live.unobserve(target); live.observe(target);
-      //   poll = requestAnimationFrame(loop);
-      // }
-      // var gate = new IntersectionObserver(function (es) {
-      //   onScreen = es[es.length - 1].isIntersecting;
-      //   if (onScreen && !poll) poll = requestAnimationFrame(loop);
-      //   else if (!onScreen && poll) { cancelAnimationFrame(poll); poll = 0; }
-      // }, { threshold: 0 });
-      // gate.observe(target);
-      // live.observe(target);
-
-      function loop() {
+  function loop() {
         poll = 0;
         if (!onScreen) return;
-
-        live.unobserve(target);
-        live.observe(target);
+        live.unobserve(target); live.observe(target);
+        poll = requestAnimationFrame(loop);
       }
-
       var gate = new IntersectionObserver(function (es) {
         onScreen = es[es.length - 1].isIntersecting;
-
-        if (onScreen) {
-          live.unobserve(target);
-          live.observe(target);
-        }
+        if (onScreen && !poll) poll = requestAnimationFrame(loop);
+        else if (!onScreen && poll) { cancelAnimationFrame(poll); poll = 0; }
       }, { threshold: 0 });
-
       gate.observe(target);
       live.observe(target);
 })();
