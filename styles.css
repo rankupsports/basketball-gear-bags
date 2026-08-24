@@ -1184,7 +1184,8 @@ button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
 :is(.b03,.b04) .bub--r::after{content:"";position:absolute;bottom:-.455em;right:1.288em;
   border:.53em solid transparent;border-top-color:var(--b3blue);border-bottom:0}
 /* 改行はコンプ通り <br> で入れるので、自動の折り返しは止める */
-:is(.b03,.b04) .bub--nowrap{white-space:nowrap}
+
+/* :is(.b03,.b04) .bub--nowrap{white-space:nowrap}*/
 
 /* ===== 絵文字あしらい（参考サイト FISHS EDDY の look チャット）=====
    参考実測: カラム 630px に対し絵文字行は 280x91px
