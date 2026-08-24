@@ -1863,3 +1863,7 @@ html.is-embed .wixM__frame{height:calc(var(--emH,100%) - 92px)}
 html.is-embed{scrollbar-width:none;-ms-overflow-style:none}
 html.is-embed::-webkit-scrollbar,
 html.is-embed body::-webkit-scrollbar{width:0;height:0;display:none}
+.b03__chat .bub,
+  .b04__chat .bub {
+    font-size: clamp(14px, 2.5vw, 24px);
+  }
