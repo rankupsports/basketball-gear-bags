@@ -1267,9 +1267,6 @@ letter-spacing:.1em;line-height:1.4}
   .b04__chat{width:510px;--chatW:510px}
   .b04 .bub{font-size:15.2px}
   .b03__grid,.b04__grid{width:482px;grid-template-columns:1fr;margin-top:150px}
-  .b03__chat,.b04__chat {padding: 0 20px !important;}
-  .b03__chat .bub,
-  .b04__chat .bub {font-size: clamp(14px, 2.5vw, 16px) !important;}
 }
 
 
@@ -1867,3 +1864,4 @@ html.is-embed body::-webkit-scrollbar{width:0;height:0;display:none}
   .b04__chat .bub {
     font-size: clamp(16px, 2.5vw, 24px) !important;
   }
+.b03__chat,.b04__chat {padding: 0 20px !important;}
