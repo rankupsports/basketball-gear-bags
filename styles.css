@@ -1845,11 +1845,11 @@ html.is-embed .wixM__frame{height:calc(var(--emH,100%) - 92px)}
   :is(.b03,.b04) .spec__row dt{padding-left:10.9px}
   :is(.b03,.b04) .spec__row dd{padding-left:32.5px}
   :is(.b03,.b04) .spec__ttl--2nd{margin-top:82px}
-  :is(.b03,.b04) .spec__jp{font-size:13px}
+  :is(.b03,.b04) .spec__jp{font-size:14px}
   :is(.b03,.b04) .spec__ph{margin-top:41px}
   :is(.b03,.b04) .spec__ph--rope{margin-top:44px}
   :is(.b03,.b04) .spec__lbl{margin-top:43px;font-size:12.1px}
-  :is(.b03,.b04) .spec__tbl{font-size:13.7px}
+  :is(.b03,.b04) .spec__tbl{font-size:15px}
   :is(.b03,.b04) .spec__row{padding:9px 0}
 }
 
