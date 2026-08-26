@@ -1,0 +1,4745 @@
+/* =========================================================
+   RANKUP SPORTS 2026 SUMMER — campaign LP
+
+   レイアウト・順序・配色・アニメーションは
+   niko and ... / FISHS EDDY 2024SS 特設ページを実測して再現。
+
+   ■ セクション順
+     mv → sideCont[ side / lead / looks ] → sns(ALL ITEMS)
+        → staff → sns(FOLLOW US) → shop
+   ■ 配色（実測）
+     #ccff63 ライム        looks の sticky カラーベッド
+     #8e909d グレーパープル lead（introduction）
+     #1780e7 ブルー        チャット右吹き出し
+     #f4f4f4 ライトグレー   チャット左吹き出し
+   ■ メトリクス（実測）
+     投稿カード 480px / radius 25px / 下35px
+     スライダー 480x535 (96/107)  カード内枠 430px (左右25px)
+     アクション アイコン25px / 上15px   クレジット 上40px / 行38px
+     チャット   幅630px / 顔35px / 吹き出し radius 50px / 18px / 8px 18px
+     サイド縦組 20px / Jacquarda Bastarda 9
+   ========================================================= */
+:root {
+  --lime: #ccff63;
+  --grey: #8e909d;
+  --blue: #1780e7;
+  --f4: #f4f4f4;
+  --ink: #000;
+  --white: #fff;
+
+  --f-disp: "Caprasimo", serif;
+  --f-body: "Golos Text", "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  --f-dot: "DotGothic16", sans-serif;
+  --f-jac: "Jacquarda Bastarda 9", serif;
+  --f-rob: "Roboto", sans-serif;
+  --f-script: "Dancing Script", cursive;
+  --f-marker: "Permanent Marker", cursive;
+  --f-archivo: "Archivo Black", sans-serif;
+  --f-noto: "Noto Sans JP", "Noto Sans", "Hiragino Kaku Gothic ProN", sans-serif;
+  --f-bowlby: "Bowlby One", "Bowlby One SC", cursive;
+  --f-shoulders: "Big Shoulders", sans-serif;
+  --f-zen: "Zen Maru Gothic", "Hiragino Kaku Gothic ProN", sans-serif;
+  --f-league: "League Spartan", sans-serif;
+  --f-mplus: "M PLUS 1p", "Hiragino Kaku Gothic ProN", sans-serif;
+  --f-grotesk: "Space Grotesk", sans-serif;
+  --f-bodoni: "Libre Bodoni", serif;
+  --f-cormorant: "Cormorant Garamond", serif;
+  --f-geist: "Geist Pixel", "Geist", monospace;
+  --f-jersey10: "Jersey 10", sans-serif;
+  --f-jersey20: "Jersey 20", sans-serif;
+  --f-encode: "Encode Sans Condensed", sans-serif;
+
+  --pad: clamp(18px, 5vw, 40px);
+  --card: 480px;
+  --cardPad: 25px;
+  --radius: 25px;
+}
+
+/* ============================================================
+   ① 七色のリング（Block02素材_0804.pdf / 全ページ共通）
+   「入り抜き線みたいになっていたり、太すぎる・写真に沿って形に
+   なってない」→ コンプ3種を実測して不変量を出した。
+
+     Block02 アバター    外径191.4pt 帯3.58pt / カード859.0pt = 0.417%
+     Block03 p1 アバター 外径 48.5pt 帯1.50pt / カード354.6pt = 0.423%
+     Block03 p2 アバター 外径 49.1pt 帯1.53pt / カード359.5pt = 0.426%
+
+   つまり帯は「外径に対する比」ではなく【カード幅の約0.42%】で一定
+   （デザインデータ上の線の太さが一定）。外径のほうは 13.3〜22.3% と
+   場所ごとに違うので、帯だけをこの基準でそろえる。
+   padding の % は自分ではなく親の幅基準なので使わない。
+   コンプはリングと写真の間に白い隙間が無く、円に密着している。
+
+   そして「入り抜き線みたいに」の正体は conic-gradient。円錐グラデは
+   巻き戻る位置に継ぎ目ができて、線に始点と終点があるように見える。
+   コンプのリングを1度刻みで測ると【127度の軸に対して鏡像対称】
+   （左右の色差 平均1.16/255）で、これは linear-gradient を円環に
+   かけた形。継ぎ目が生まれないので一本の均一な線に見える。
+   停止色も同じ実測から取っている。
+
+   停止位置には補正が要る。linear-gradient の勾配線は正方形の対角投影
+   （127度なら |sin|+|cos| = 1.400 x 幅）まで伸びるのに、リングは内接円
+   =幅ぶんしか通らない。素の 0-100% だと円周上に両端が現れず、黄と紫が
+   出ないまま全体がピンク寄りになるので、円が通る 14.3-85.7% に写像する。
+   ============================================================ */
+:root {
+  --ring7: linear-gradient(127deg, #f9e940 14.3%, #fbc73f 22.9%, #fcb33e 28.6%, #fd983d 35.7%, #fc7b43 44.3%, #f46558 54.3%, #ee5468 62.9%, #e84476 71.4%, #d23e82 77.1%, #7d35a3 85.7%);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth !important;
+  background: var(--white);
+}
+/* 背景色は .bgFade（固定レイヤー）が受け持つので body は透明にする。
+   ベース色は html 側に残してあるので、JS が動かない場合も白地になる。 */
+body {
+  margin: 0;
+  font-family: var(--f-body);
+  color: var(--ink);
+  background: transparent;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ============================================================
+   スクロール連動の背景クロスフェード
+   画面全体に敷いた1枚の固定レイヤーの色を、スクロール位置に応じて
+   隣のセクション色へ補間する。セクション境界の前後だけで混ぜるので、
+   各セクションの中ほどでは指定色そのままになる。
+   参加するセクションは CSS で --sec-bg を宣言したものだけ（JS が読む）。
+   ============================================================ */
+.bgFade {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--white);
+}
+img {
+  max-width: 100%;
+  display: block;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+ul,
+ol,
+dl,
+dd {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+button {
+  font: inherit;
+  color: inherit;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+/* ---------- 写真スロット -------------------------------------
+   キービジュアルが1枚しかないため、全ての写真はその1枚を
+   background-position / -size で切り出したもの（スプライト方式）。
+   座標は app.js の ITEMS[].crop。
+   ------------------------------------------------------------- */
+.ph {
+  /* スプライト元だった assets/cora.png は、全ての .ph が自前の背景を
+     持つようになり一度も読まれなくなったので削除した。
+     読み込み前の下地は下の background-color が受け持つ。 */
+  background-repeat: no-repeat;
+  background-size: var(--bs, cover);
+  background-position: var(--bp, 50% 50%);
+  background-color: var(--f4);
+}
+
+/* =========================================================
+   参照サイトから採取したキーフレーム
+   ========================================================= */
+@keyframes ttlPop {
+  0% {
+    transform: translate3d(0, 20%, 0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+    transform: translate3d(0, -2%, 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+@keyframes ttlPopQ {
+  0% {
+    transform: translate3d(0, 20%, 0) rotate(10deg);
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+    transform: translate3d(0, -5%, 0) rotate(0deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) rotate(0deg);
+  }
+}
+@keyframes shakeMv {
+  0%,
+  55%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  5% {
+    transform: translate3d(0, -3%, 0);
+  }
+  10% {
+    transform: translate3d(0.5%, 3%, 0);
+  }
+  15% {
+    transform: translate3d(-0.5%, -3%, 0);
+  }
+  20% {
+    transform: translate3d(0, 3%, 0);
+  }
+  25% {
+    transform: translate3d(0, -3%, 0);
+  }
+  30% {
+    transform: translate3d(0.5%, 3%, 0);
+  }
+  35% {
+    transform: translate3d(-0.3%, 0, 0);
+  }
+  40% {
+    transform: translate3d(0.5%, 3%, 0);
+  }
+  45% {
+    transform: translate3d(-0.5%, -3%, 0);
+  }
+  50% {
+    transform: translate3d(0, 3%, 0);
+  }
+}
+@keyframes shake {
+  0%,
+  55%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  5% {
+    transform: translate3d(0, -7%, 0);
+  }
+  10% {
+    transform: translate3d(5%, 7%, 0);
+  }
+  15% {
+    transform: translate3d(-5%, -7%, 0);
+  }
+  20% {
+    transform: translate3d(0, 7%, 0);
+  }
+  25% {
+    transform: translate3d(0, -7%, 0);
+  }
+  30% {
+    transform: translate3d(5%, 7%, 0);
+  }
+  35% {
+    transform: translate3d(-5%, 0, 0);
+  }
+  40% {
+    transform: translate3d(5%, 7%, 0);
+  }
+  45% {
+    transform: translate3d(-5%, -7%, 0);
+  }
+  50% {
+    transform: translate3d(0, 7%, 0);
+  }
+}
+/* 参照サイトの heart キーフレームをそのまま採取。下から昇りきり、
+   序盤でフェードイン→中盤まで保持→終盤3分の1でフェードアウト。 */
+@keyframes heartFloat {
+  0% {
+    transform: translate3d(0, 100%, 0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  55% {
+    opacity: 1;
+  }
+  65% {
+    opacity: 0;
+  }
+  100% {
+    transform: translate3d(0, -20%, 0);
+    opacity: 0;
+  }
+}
+/* hero の♡（FISHS EDDY TOP 実測）。ラッパーが hero と同じ高さなので
+   translateY の % ＝ hero 高さに対する割合になり、下端の外から上端の外まで
+   きっちり昇りきる。透明度は7割まで保ってから上でゆっくり抜く
+   （実測: 上から12%地点で ≒0.45）。 */
+@keyframes mvHeartRise {
+  0% {
+    transform: translate3d(0, 9%, 0);
+    opacity: 0;
+  }
+  6% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(0, -100%, 0);
+    opacity: 0;
+  }
+}
+/* いいねボタンの popHeart（0.2倍から弾け、1.08倍でわずかにオーバーシュート） */
+@keyframes popHeart {
+  0% {
+    transform: scale(0.2) translate3d(0, 10%, 0);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.08) translate3d(0, -3%, 0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+.ttlPop,
+.ttlPopQ {
+  display: block;
+  opacity: 0;
+}
+.ttlPop.is-in {
+  animation: ttlPop 0.75s cubic-bezier(0.2, 0.9, 0.25, 1) both;
+  animation-delay: var(--d, 0s);
+}
+.ttlPopQ.is-in {
+  animation: ttlPopQ 0.8s cubic-bezier(0.2, 0.9, 0.25, 1) both;
+  animation-delay: var(--d, 0s);
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+  transition-delay: var(--d, 0s);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- ハートのビジュアル（参照サイトと同じ角ばったSVG） ----------
+   四隅フレーム: 各45度回転で内向きに配置
+   フロート  : 下から昇る heartFloat を stagger ディレイで無限ループ    */
+.hsvg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  fill: currentColor;
+}
+.hsvg path,
+.hsvg polyline {
+  fill: currentColor;
+  stroke: none;
+  stroke-width: 0;
+}
+
+.frameHeart {
+  position: absolute;
+  width: clamp(14px, 2.4vw, 20px);
+  aspect-ratio: 42.04/35.49;
+  color: inherit;
+}
+.frameHeart--1 {
+  top: 14px;
+  left: 14px;
+  transform: rotate(-135deg);
+}
+.frameHeart--2 {
+  top: 14px;
+  right: 14px;
+  transform: rotate(135deg);
+}
+.frameHeart--3 {
+  bottom: 14px;
+  left: 14px;
+  transform: rotate(-45deg);
+}
+.frameHeart--4 {
+  bottom: 14px;
+  right: 14px;
+  transform: rotate(45deg);
+}
+
+.floatHeart {
+  position: absolute;
+  bottom: 0;
+  width: var(--s, 26px);
+  aspect-ratio: 42.04/35.49;
+  color: inherit;
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: heartFloat var(--dur, 3000ms) ease-out var(--dl, 0ms) infinite;
+}
+.floatHeart--pop {
+  animation:
+    popHeart 0.45s ease-out var(--dl, 0ms) both,
+    heartFloat var(--dur, 1100ms) ease-out var(--dl, 0ms) forwards;
+}
+
+/* hero 専用の昇る♡。.floatHeart は「いいね」ボタンのポップにも使われていて
+   あちらは数十pxだけ跳ねるのが正しいので、hero は別クラスにしてある。
+   ラッパー(.mvHeart)は hero と同じ高さの縦一列、♡ 本体はその下端に置く。
+   実測(designer mock): 左 6.90% / 幅 4.60% の一列、サイズ・x とも全個体で同一。 */
+.mvHeart {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: var(--s, 26px);
+  color: inherit;
+  pointer-events: none;
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: mvHeartRise var(--dur, 9000ms) linear var(--dl, 0ms) infinite;
+}
+.mvHeart__i {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  aspect-ratio: 42.04/35.49;
+  display: block;
+}
+
+/* フィルムグレイン。以前は fixed + mix-blend-mode:multiply + 無限アニメ + z-index:150
+   （ヘッダーより上）だったため、スクロール中に固定ヘッダーが二重残像化＋白ちらつき
+   （特にモバイル/iOS）を起こしていた。blend-mode とアニメを外し、ヘッダーより下の
+   z-index に置いて、粒状感だけ薄く残す。 */
+.noise {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.12;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.5'/%3E%3C/svg%3E");
+}
+
+/* =========================================================
+   LOADER / HEADER / NAV
+   ========================================================= */
+/* 指示①: 白背景に黒ロゴ（旧: ライム背景 + PACK LIGHT の文字） */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  background: var(--white);
+  transition:
+    opacity 0.5s ease,
+    visibility 0.5s ease;
+}
+.loader.is-done {
+  opacity: 0;
+  visibility: hidden;
+}
+.loader__inner {
+  text-align: center;
+  color: var(--ink);
+}
+.loader__logo {
+  display: block;
+  width: min(74vw, 440px);
+  height: auto;
+}
+.loader__bar {
+  width: min(60vw, 260px);
+  height: 4px;
+  margin: 24px auto 0;
+  background: rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+.loader__bar i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--ink);
+  animation: load 1.15s ease forwards;
+}
+@keyframes load {
+  to {
+    width: 100%;
+  }
+}
+
+/* 参照サイトの header--fixed に合わせる：高さ92px・白背景・z-95、
+   隠すときは自身の高さぶん(-100%)だけ上へスライドさせる。 */
+.head {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 130;
+  height: 92px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--pad);
+  background: transparent;
+  transition:
+    transform 0.4s cubic-bezier(0.22, 0.61, 0.36, 1),
+    background 0.3s ease;
+  /* 固定ヘッダーを安定した GPU レイヤーに載せ、スクロール中の二重残像を防ぐ */
+  will-change: transform;
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+/* 最上部ではハンバーガーだけ（白帯に溶け込む）。スクロールしたら白背景とロゴを出す。 */
+.head.is-solid {
+  background: var(--white);
+}
+.head.is-hidden {
+  transform: translateY(-100%) translateZ(0);
+}
+/* ブランド表記は支給の SVG ロゴ。ブロック03のプロフィール行(.ig__brand)と
+   同じ height:22px にそろえ、幅は比率まかせ（514:91）。 */
+.head__mark {
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.head.is-solid .head__mark {
+  opacity: 1;
+}
+.head__mark img {
+  display: block;
+  height: 22px;
+  width: auto;
+}
+
+/* 丸背景なしの細い3本線（モックアップに合わせる） */
+/* メニュー.pdf ①: ハンバーガーを少し大きく（参考サイトくらい） */
+.navBtn {
+  width: auto;
+  height: 50px;
+  border-radius: 0;
+  background: transparent;
+  display: grid;
+  align-content: center;
+  justify-items: end;
+  gap: 10px;
+}
+.navBtn span {
+  display: block;
+  width: clamp(40px, 10.5vw, 54px);
+  height: 3px;
+  background: var(--ink);
+  transition:
+    transform 0.3s,
+    opacity 0.3s;
+}
+.navBtn[aria-expanded="true"] {
+  background: transparent;
+}
+.navBtn[aria-expanded="true"] span:nth-child(1) {
+  transform: translateY(13px) rotate(45deg);
+}
+.navBtn[aria-expanded="true"] span:nth-child(2) {
+  opacity: 0;
+}
+.navBtn[aria-expanded="true"] span:nth-child(3) {
+  transform: translateY(-13px) rotate(-45deg);
+}
+
+/* メニュー.pdf ②: 白背景・Rankup sports ロゴ・黒の下線メニュー（中央） */
+.navDrawer {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  background: var(--white);
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: var(--pad);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.35s ease,
+    visibility 0.35s ease;
+}
+.navDrawer.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+.navDrawer__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(30px, 7vw, 56px);
+}
+.navDrawer__logo {
+  width: min(230px, 52vw);
+  height: auto;
+  opacity: 0.4;
+}
+.navDrawer ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(18px, 4.6vw, 30px);
+}
+/* メニューのフォントは見出し「BASKETBALLGEAR BAGS」と同じ Bowlby One */
+.navDrawer a {
+  font-family: var(--f-bowlby);
+  font-weight: 400;
+  font-size: clamp(21px, 5.6vw, 38px);
+  line-height: 1.1;
+  letter-spacing: 0.01em;
+  color: #111;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+  text-decoration-thickness: 2px;
+}
+.navDrawer a:hover {
+  color: var(--blue);
+  text-decoration-color: var(--blue);
+}
+
+/* =========================================================
+   1) MV — 白い帯 + 写真
+   ========================================================= */
+.mv {
+  position: relative;
+  background: var(--white);
+}
+/* 参照の白帯は 255px・上余白 65px。こちらは固定ヘッダー(92px)の分だけ上を確保しつつ、
+   文字サイズと行間を詰めて参照の高さ感に寄せる。 */
+/* 上は固定ヘッダー(104px)のぶんを空けていたが、そのヘッダーを削除したので
+   下と同じ余白にそろえる。 */
+.mv__header {
+  background: var(--white);
+  text-align: center;
+  padding: clamp(20px, 4vw, 34px) var(--pad);
+}
+/* 大見出しは Archivo Black（極太グロテスク）。幅いっぱいに置く。 */
+.mv__ttl {
+  font-family: var(--f-archivo);
+  font-size: clamp(24px, 5.9vw, 78px);
+  line-height: 1.06;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+}
+/* Rankup sports ロゴ：デザイナー支給の SVG から抽出したベクター画像 */
+.mv__brand {
+  display: inline-block;
+  margin-top: 0.5em;
+  width: clamp(160px, 26vw, 360px);
+  height: auto;
+}
+
+/* container-type は ♡ のサイズを hero 実幅(cqw)で決めるため。
+   スクロールバー分ずれる vw は使わない。 */
+.mv__cont {
+  position: relative;
+  background: var(--lime);
+  container-type: inline-size;
+}
+.mv__hearts {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 2;
+  color: var(--lime);
+}
+/* hero 写真は画面いっぱい（フルブリード・全幅 × ビューポート高） */
+.mv__phBox {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: 0;
+  container-type: inline-size;
+}
+/* hero は2枚の写真を重ね、透明度でクロスフェード（揺れなし） */
+/* モックアップに合わせ、写真はフル幅・元の比率(1920x1079)のまま見せる。
+   画面が細いときだけ min-height で高さを確保し、cover で寄せる。 */
+.mv__ph {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1920/1079;
+  min-height: min(56vh, 420px);
+}
+.mv__phImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1.1s ease;
+}
+.mv__phImg.is-show {
+  opacity: 1;
+  position: relative;
+}
+/* スマホヒーローのムービー。枠(9/16)より素材(16/9)が横長なので cover で中央を出す */
+.mv__phMov {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.mv__frame {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  color: var(--lime);
+  z-index: 3;
+}
+
+/* hero 写真の上部に重ねる見出し。参照サイトに合わせ、背景と同じライム色で上寄せ。
+   scrim(暗幕)は使わず、上端だけ軽く暗くしてライム文字の可読性を確保する。
+   ボックスは写真とぴったり同じ大きさ（phBox の padding 分だけ内側）。 */
+.mv__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  pointer-events: none;
+  padding: var(--pad);
+  /* 指示②: FIX 版の実測に合わせたロックアップ幅。FIX ではキャッチが
+     hero 幅の 67.07%、RANKUP SPORTS が 21.94% を占める。両者を同じ
+     --lockup から導出し、どの画面幅でも比率を保つ。基準は vw ではなく
+     hero(.mv__phBox) の実幅(cqw)＝スクロールバー分のズレを避けるため。 */
+  --lockup: clamp(300px, 67.07cqw, 1500px);
+}
+/* キャッチコピー：デザイナー支給のベクター SVG（Not Your Typical Sports Bag !）。
+   暗幕は使わず、影だけで写真から分離する。viewBox 比率(1327.1x342.6)を維持。 */
+.mv__catch {
+  width: var(--lockup);
+  height: auto;
+  filter: drop-shadow(0 3px 14px rgba(0, 0, 0, 0.45)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+}
+/* 緑のブランド名：キャッチ幅の 32.7%（=21.9/67.1）になる係数 */
+.mv__over-brand {
+  margin: 0.6em 0 0;
+  font-family: var(--f-shoulders);
+  font-weight: 800;
+  color: var(--lime);
+  font-size: calc(var(--lockup) * 0.0373);
+  letter-spacing: 0.2em;
+  line-height: 1;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+}
+/* スマホ用の別 video は廃止（同じ 40MB を2本読んでいたため）。枠は1つで、
+   下のメディアクエリで比率だけ切り替える。 */
+
+/* ① 最初にスマホで開いたとき写真が画面いっぱいに。
+   ② 分割せず縦長を1枚ずつ（PC の横長とは別セット）。
+   白帯(BASKETBALL GEAR BAGS / Rankup sports)の下から画面下端まで写真が占める。
+   境界は既存の min-width:760px（タブレット以上）に合わせる。 */
+@media (max-width: 759.98px) {
+  .mv {
+    display: block;
+    min-height: 0;
+  }
+  .mv__cont {
+    display: block;
+  }
+  .mv__phBox {
+    display: block;
+  }
+  /* 枠を素材と同じ 16/9 にして、PC と同じく左右を切らずに全幅を出す。
+     .mv__ph の min-height（420px）が効くと縦に引き伸ばされて左右が切れるので解除。 */
+  .mv__ph--pc {
+    width: 100%;
+    aspect-ratio: 16/9;
+    height: auto;
+    min-height: 0;
+  }
+  /* 縦長全画面ではキャッチが大きすぎるので、hero 幅基準の比率を少し下げる。
+     すまほ版トップ02.pdf ②: ロゴ(キャッチ+RANKUP SPORTS)の位置を上げる
+     → 下寄せ(flex-end/12svh)をやめ、写真の縦中央に。 */
+  /* モバイルはキャッチをもう少し大きく（左右パディングも詰めて max-width の上限を広げる） */
+  .mv__overlay {
+    --lockup: clamp(300px, 104cqw, 680px);
+    justify-content: center;
+    padding: var(--pad) 8px 0;
+  }
+  /* ③ ドロップシャドウを消す（スマホの hero のみ）。 */
+  .mv__catch {
+    filter: none;
+  }
+  .mv__over-brand {
+    text-shadow: none;
+  }
+}
+
+/* =========================================================
+   INTRO REEL — hero 直下。背景 #898B98 固定。
+   ポエム(Zen Maru Gothic) → IG リール風モックアップ → 商品2点。
+   ========================================================= */
+/* 背景色は --sec-bg として宣言し、描画は .bgFade に任せる（クロスフェード対象） */
+/* position:relative は跳ね返るボール(.lead__icons)の基準 */
+.igIntro {
+  --sec-bg: #898b98;
+  background: transparent;
+  position: relative;
+  padding: clamp(48px, 10vw, 96px) var(--pad) clamp(56px, 11vw, 110px);
+}
+/* 指示02: 参考サイト（フィッシュエディ）の実測比率に合わせて再調整。
+   ①本文     1文字=表示幅の 1.149% ≒ 23.4px 相当 → 上限 24px
+   ②動画      500px → 560px（もう少し大きく）
+   ③商品カード 動画幅の 1.09 倍（参考サイトの2枚組カード実測）→ 610px
+   カラムは商品カード(610px)が収まる幅にする。 */
+.igIntro__cont {
+  width: 100%;
+  max-width: 610px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1; /* 巡回アイコンより前に出す */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.igIntro__text {
+  font-family: var(--f-zen);
+  color: #fff;
+  text-align: center;
+  /* 上限 24px が参考サイトの文字サイズ（デザイナー表示幅 ≒2174px で 23.4px）に相当。
+     最小 14px はスマホで <br> の改行位置が崩れないようにするための下限。 */
+  font-size: clamp(14px, 3.4vw, 24px);
+  line-height: 2;
+  letter-spacing: 0.03em;
+  margin: 0 0 clamp(22px, 5vw, 34px);
+}
+.igIntro__text:last-of-type {
+  margin-bottom: clamp(40px, 8vw, 56px);
+}
+
+/* ---- IG ストーリー風カード（動画＋UI） ----
+   指示② でカード幅を 500px → 560px にさらに拡大。内部 UI を px 固定のままだと
+   相対的に小さく見えてしまうため、コンテナ幅基準(cqw)で記述して
+   340px 時点の見た目の比率を保ったままスケールさせる。 */
+/* Block01追加指示0810.pdf: Tap! はカードの右外にはみ出すので、
+   カード自身（overflow:hidden）ではなくラッパーを基準に置く。 */
+.igCardWrap {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  margin: 0 auto clamp(28px, 6vw, 40px);
+}
+.igCard {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9/16;
+  container-type: inline-size;
+  background: #000;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.25);
+}
+/* コンプ実測（カード幅比）: 左 81.58% / 幅 46.58% / 上 79.31%。
+   矢印の先がハート（右から 17.6%）の真上に来る位置。 */
+.igCard__tap {
+  position: absolute;
+  left: 81.58%;
+  top: 79.31%;
+  width: 46.58%;
+  height: auto;
+  pointer-events: none;
+  z-index: 4;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.35));
+}
+/* 右に置く余白が無い幅では、少し小さくしてハートの左上に寄せる
+   （矢印の先はハートの 22px 左・25px 上。画面内に収まり、返信行にも重ならない） */
+@media (max-width: 820px) {
+  .igCard__tap {
+    left: 76%;
+    top: 80%;
+    width: 28%;
+  }
+}
+.igCard__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.igCard__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.45), transparent 22%, transparent 60%, rgba(0, 0, 0, 0.6));
+}
+
+.igCard__top {
+  position: absolute;
+  top: 5.29cqw;
+  left: 4.12cqw;
+  right: 4.12cqw;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 2.94cqw;
+  color: #fff;
+}
+.igCard__avatar {
+  flex: 0 0 auto;
+  width: 10cqw;
+  height: 10cqw;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  padding: max(1px, 0.42cqw);
+  background: var(--ring7);
+}
+.igCard__avatar img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: #fff;
+  padding: 1.47cqw;
+}
+.igCard__dots {
+  margin-left: auto;
+  font-size: 5.29cqw;
+  letter-spacing: 0.05em;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+}
+.igCard__close {
+  font-size: 6.47cqw;
+  line-height: 1;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.55);
+}
+
+.igCard__brand {
+  position: absolute;
+  left: 4.71cqw;
+  bottom: 20.59cqw;
+  z-index: 2;
+  margin: 0;
+  color: #fff;
+  font-family: var(--f-rob);
+  font-weight: 300;
+  font-size: 5.88cqw;
+  letter-spacing: 0.005em;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+}
+.igCard__brand b {
+  font-weight: 800;
+}
+
+.igCard__reply {
+  position: absolute;
+  left: 3.53cqw;
+  right: 3.53cqw;
+  bottom: 4.12cqw;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 3.53cqw;
+}
+.igCard__msg {
+  flex: 1;
+  min-width: 0;
+  height: 11.76cqw;
+  display: flex;
+  align-items: center;
+  padding: 0 4.71cqw;
+  border: 0.44cqw solid rgba(255, 255, 255, 0.7);
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.85);
+  font-family: var(--f-rob);
+  font-size: 3.82cqw;
+}
+.igCard__icon {
+  width: 7.06cqw;
+  height: 7.06cqw;
+  flex: 0 0 auto;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.5));
+}
+/* SNS 風フレームのハート♡をタップ → hero(#mvHearts) と同じ角ばった♡が
+   カード下から上へ昇る。オーバーレイは動画/スクリムの上・本文(z:3)の下。 */
+.igCard__hearts {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+  color: var(--lime);
+}
+.igCard__icon--like {
+  cursor: pointer;
+}
+.igCard__icon--like.is-pop {
+  animation: igLikePop 0.45s cubic-bezier(0.2, 0.9, 0.25, 1);
+}
+@keyframes igLikePop {
+  0% {
+    transform: scale(1);
+  }
+  35% {
+    transform: scale(1.35);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+/* hero の mvHeartRise を単発(both)で再利用。ラッパーはカード全高、
+   ♡本体は下端に置くので translateY の % がカード高さ基準で昇りきる。 */
+.riseHeart {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: var(--s, 26px);
+  color: inherit;
+  opacity: 0;
+  will-change: transform, opacity;
+  animation: mvHeartRise var(--dur, 2600ms) linear var(--dl, 0ms) both;
+}
+.riseHeart > .hsvg {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 42.04/35.49;
+}
+/* ブロック03/04 の投稿カード写真枠に重ねる汎用オーバーレイ（同ギミック） */
+.riseHearts {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  overflow: hidden;
+  pointer-events: none;
+  color: var(--lime);
+}
+.is-likeTap {
+  cursor: pointer;
+}
+.is-likeTap.is-pop {
+  animation: igLikePop 0.45s cubic-bezier(0.2, 0.9, 0.25, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .igCard__icon--like.is-pop,
+  .is-likeTap.is-pop {
+    animation: none;
+  }
+  .riseHeart {
+    animation-duration: 1200ms;
+  }
+}
+
+/* ---- 商品2点カード（支給デザイン sanple-image.jpg に置き換え） ----
+   パネルごとに支給写真を全面に敷き、左上に番号SVG、左下に商品名（Archivo Black）と
+   VIEW PRODUCT ボタン。サイズは支給デザインの実測比（パネル幅 928px 基準）を
+   cqw で持つ。
+   カードは .igIntro__cont（最大 610px）の外に出してセクション幅を使う。
+   610px だとパネルが 305px＝支給デザインの3分の1で、PC でも小さく見えるため。
+   980px ならパネル 490px。max() の下限はスマホ用に残してある。 */
+/* 角丸 16px。支給デザインの実測（カード幅の約1.6%）に合わせた値。 */
+/* 列数は画面幅の決め打ちではなく、カードの実幅で決める。
+   280px ×2 = 560px 入るなら横2列、入らなければ1列。
+   ブラウザの拡大表示などで実効幅が変わっても、入るかぎり横並びを保つ。 */
+.igIntro__products {
+  width: 100%;
+  max-width: 980px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  border-radius: 16px;
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
+}
+
+.prodCard {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  aspect-ratio: 1260/1700; /* 支給写真＝支給サンプルのパネル比 */
+  container-type: inline-size; /* 内側の cqw の基準 */
+  -webkit-tap-highlight-color: transparent;
+}
+.prodCard__ph {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.25, 1);
+}
+.prodCard:hover .prodCard__ph {
+  transform: scale(1.03);
+}
+
+/* 位置・サイズは支給サンプル（パネル幅 928px 基準）の実測比 */
+.prodCard__num {
+  position: absolute;
+  top: max(12px, 6.7cqw);
+  left: max(14px, 7.1cqw);
+  width: max(24px, 6.7cqw);
+  height: auto;
+}
+.prodCard__body {
+  position: absolute;
+  left: max(14px, 7.1cqw);
+  right: max(14px, 7.1cqw);
+  bottom: max(14px, 7.3cqw);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+/* Archivo Black は 400 しか無いので合成太字を避けて明示 */
+.prodCard__en {
+  font-family: var(--f-archivo);
+  font-weight: 400;
+  font-size: max(19px, 8cqw);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+}
+.prodCard__jp {
+  font-family: var(--f-noto);
+  font-weight: 700;
+  font-size: max(11px, 2.9cqw);
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  margin-top: max(4px, 2.2cqw);
+}
+.prodCard__btn {
+  width: max(104px, 30.4cqw);
+  height: auto;
+  margin-top: max(8px, 5.5cqw);
+}
+
+/* 支給サンプルでは両パネルとも白抜き（番号・ボタンSVGも白）。
+   写真の明るい部分でも読めるよう、文字にだけ軽く影を敷く。 */
+.prodCard--onLight {
+  color: #fff;
+}
+.prodCard--onLight :is(.prodCard__en, .prodCard__jp) {
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.3);
+}
+/* スマホは縦積み。横並びだとパネルが 142〜169px まで縮み、支給比率どおりでは
+   日本語が 5px 以下になってしまう（縦積みなら 288〜338px 使える）。
+   下限は縦積みだとほぼ効かないが、さらに狭い枠のための保険として残す。 */
+@media (max-width: 600px) {
+  /* 列数は auto-fit に任せる（ここでは角丸だけ。338px なので 16px は丸すぎる） */
+  .igIntro__products {
+    border-radius: 12px;
+  }
+  /* 商品を切らない範囲で縦を最小まで詰める。画素走査による商品の占める範囲は
+       ballbag  : ピンクのロープ 9%〜72% / バッグ＋巾着コード 〜84%
+       shoebag  : ピンクのロープ 13%〜78% / バッグ 〜約80%
+     つまり商品は 9%〜84%。表示帯を 8.1%〜86.2% にして、上（帽子）と下だけ落とす。
+     ロープを高く持っているので、商品を残すかぎりこれ以上は詰められない。 */
+  .prodCard {
+    aspect-ratio: 1260/1326;
+  }
+  .prodCard__ph {
+    object-position: 50% 37%;
+  }
+  .prodCard__num {
+    top: max(10px, 6.7cqw);
+    left: max(10px, 7.1cqw);
+    width: max(20px, 6.7cqw);
+  }
+  .prodCard__body {
+    left: max(10px, 7.1cqw);
+    right: max(10px, 7.1cqw);
+    bottom: max(10px, 7.3cqw);
+  }
+  .prodCard__en {
+    font-size: max(17px, 8cqw);
+  }
+  .prodCard__jp {
+    font-size: max(9.5px, 2.9cqw);
+    margin-top: max(3px, 2.2cqw);
+  }
+  .prodCard__btn {
+    width: max(100px, 30.4cqw);
+    margin-top: max(6px, 5.5cqw);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .prodCard__ph {
+    transition: none;
+  }
+  .prodCard:hover .prodCard__ph {
+    transform: none;
+  }
+}
+
+/* Instagram モック。幅を明示しないと親のフレックスで潰れるので 100%。
+   （もとはブロック01のカラム内にあり、上マージンでカードとの間隔を取っていた） */
+.igIntro__mock {
+  width: 100%;
+  margin-top: clamp(28px, 6vw, 40px);
+}
+
+/* Instagram モックをレビューの直前に単独で置くためのセクション。
+   もとの居場所（.igIntro__cont）と同じ max-width:610px にそろえてある。
+   --sec-bg は直後のレビュー(#fff)と同じ白。手前のブロック04(#683F90)からの
+   クロスフェードがここで白まで到達するので、レビューとの境目が出ない。 */
+.mockSec {
+  --sec-bg: #fff;
+  background: transparent;
+  padding: clamp(24px, 5vw, 48px) var(--pad) clamp(48px, 8vw, 88px);
+}
+.mockSec__cont {
+  width: 100%;
+  max-width: 610px;
+  margin: 0 auto;
+}
+/* 単独セクションでは上マージンぶんの隙間は不要（padding で取っている） */
+.mockSec .igIntro__mock {
+  margin-top: 0;
+}
+
+/* =========================================================
+   RINA SEZAKI — キャスト紹介。背景色 #B9FF61 固定。
+
+   指示03-②: 参考サイト（フィッシュエディ）の表示幅間に合わせて
+   ブロック全体を 1.655 倍に拡大（実測: 当方 26.07% → 参考 43.14%）。
+   基準行幅 570px → 943px。写真・カードもこれに比例させる。
+   本文（ひとことコメント）はブロック01と同じ 24px。
+   カード内部は元デザイン(FIX)比率を保つためコンテナ幅基準(cqw)で記述する。
+   ========================================================= */
+.rinaSec {
+  --sec-bg: #b9ff61;
+  background: transparent;
+  padding: clamp(32px, 7vw, 64px) var(--pad) clamp(48px, 9vw, 80px);
+}
+
+/* ---- ヒーロー写真（ラベル・ロゴ・ハートバッジを重ねる）
+   縦横比・重ね位置は FIX の実測値（写真 968x1570）に合わせる。 ---- */
+.rinaSec__hero {
+  position: relative;
+  max-width: 794px;
+  margin: 0 auto;
+  border-radius: var(--radius);
+  overflow: visible;
+}
+.rinaSec__photo {
+  width: 100%;
+  aspect-ratio: 0.617;
+  object-fit: cover;
+  object-position: 50% 50%;
+  border-radius: var(--radius);
+  display: block;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.18);
+}
+/* 依頼により写真を一旦グレーの仮置きに（block05 の「準備中」枠と同じ地色） */
+.rinaSec__photo--soon {
+  background: #e9e9e9;
+}
+.rinaSec__label {
+  position: absolute;
+  top: 2.4%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 63.8%;
+  height: auto;
+  opacity: 0.9;
+}
+/* スクリプトロゴは中央・大きく（FIX 指示①） */
+.rinaSec__script {
+  position: absolute;
+  left: 50%;
+  bottom: 5.5%;
+  transform: translateX(-50%);
+  width: 82%;
+  height: auto;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.25));
+}
+.rinaSec__heart {
+  position: absolute;
+  bottom: -7.9%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 19%;
+  height: auto;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.25));
+  /* 吹き出しアニメ.mp4: 尾(下端)を軸に縦へ軽くスカッシュするビートを2連発 →
+     約1.3秒の間(ま) → ループ。動画実測 = 高さ 71→67px(約7%縮み)・幅は不変・
+     ビート間隔約0.5秒。translateX(-50%) は各キーフレームで維持し中央固定。 */
+  transform-origin: bottom center;
+  animation: rinaHeartBeat 2s ease-in-out infinite;
+}
+@keyframes rinaHeartBeat {
+  0% {
+    transform: translateX(-50%) scaleY(1);
+  }
+  8% {
+    transform: translateX(-50%) scaleY(0.92);
+  } /* ① ビート1(縮み) */
+  16% {
+    transform: translateX(-50%) scaleY(1);
+  } /*    戻り */
+  28% {
+    transform: translateX(-50%) scaleY(0.92);
+  } /* ② ビート2(縮み) */
+  36% {
+    transform: translateX(-50%) scaleY(1);
+  } /*    戻り */
+  100% {
+    transform: translateX(-50%) scaleY(1);
+  } /*    間(ま)＝約1.3秒 */
+}
+@media (prefers-reduced-motion: reduce) {
+  .rinaSec__heart {
+    animation: none;
+  }
+}
+
+/* ---- ひとことコメント（Zen Maru Gothic）／行間は FIX 実測の 1.31 ---- */
+/* 指示03-②: フォントはブロック01（.igIntro__text）と同じ 24px 上限にそろえる
+   指示04-①: 位置をもう少し下に（上マージン 113→164px）、行間も広げる
+   （実測: 写真下端からの距離 x1.47、行送り x1.39 → line-height 1.31→1.82） */
+.rinaSec__quote {
+  max-width: 861px;
+  margin: clamp(48px, 9vw, 164px) auto clamp(40px, 8vw, 99px);
+  font-family: var(--f-zen);
+  text-align: center;
+  color: #1a1a1a;
+  font-size: clamp(14px, 3.56vw, 24px);
+  line-height: 1.82;
+  letter-spacing: 0;
+}
+
+/* ---- 全身写真 + プロフィールカード ----
+   比率・字送りは支給デザイン(Block02_FIX)の実測値。
+   行幅 570px を基準に、余白は % 指定でそのまま縮小する。 */
+.rinaSec__profile {
+  max-width: 943px;
+  margin: 0 auto;
+  display: flex;
+  gap: 8.7%;
+  align-items: flex-start;
+  container-type: inline-size;
+}
+.rinaSec__action {
+  flex: 0 0 40.4%;
+}
+.rinaSec__action img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+/* 右カラムは、傾いた写真カードの分だけ下げてから始まる */
+.rinaSec__info {
+  flex: 1;
+  min-width: 0;
+  padding-top: 5.5%;
+}
+/* 文字・角丸は行幅 570px 基準の比率を cqw で保持（570px 時の見た目のまま拡大） */
+.rinaSec__face {
+  width: 100%;
+  aspect-ratio: 0.935;
+  border-radius: max(14px, 3.16cqw);
+  overflow: hidden;
+  margin: 0 0 11.7%;
+  transform: rotate(3.25deg);
+}
+.rinaSec__face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 0%;
+  display: block;
+}
+/* 依頼により写真を一旦グレーの仮置きに（ヒーロー側と同じ地色） */
+.rinaSec__face--soon {
+  background: #e9e9e9;
+}
+.rinaSec__name {
+  margin: 0;
+  padding-bottom: 4.1%;
+  border-bottom: 1.5px solid #fff;
+  display: flex;
+  align-items: baseline;
+  gap: 6.2%;
+  flex-wrap: wrap;
+  font-family: var(--f-grotesk);
+  font-weight: 700;
+  font-size: 3.86cqw;
+  letter-spacing: 0.03em;
+  color: #111;
+}
+.rinaSec__name span {
+  font-family: var(--f-mplus);
+  font-weight: 500;
+  font-size: 3.33cqw;
+  letter-spacing: 0.02em;
+  color: #111;
+}
+/* 指示04-②: 紹介文のフォントを若干小さく（2.72cqw → 2.45cqw ≒ -10%） */
+.rinaSec__bio {
+  margin: 6.5% 0 6.3%;
+  font-family: var(--f-mplus);
+  font-size: max(9.5px, 2.45cqw);
+  line-height: 1.67;
+  color: #1f1f1f;
+}
+.rinaSec__social {
+  display: flex;
+  gap: 8.6%;
+  align-items: center;
+}
+/* アイコンは外部リンク（Instagram / 公式サイト）。inline 由来の余白を出さないよう block に。 */
+.rinaSec__social a {
+  position: relative;
+  display: block;
+  line-height: 0;
+  transition:
+    opacity 0.2s ease,
+    transform 0.15s ease;
+}
+.rinaSec__social a:hover,
+.rinaSec__social a:focus-visible {
+  opacity: 0.7;
+  transform: translateY(-1px);
+}
+/* スマホではアイコン実寸が 16px ほどでタップしづらいので、レイアウトを
+   変えずに当たり判定だけ 40px 確保する（見た目は変わらない）。 */
+.rinaSec__social a::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: max(100%, 40px);
+  height: max(100%, 40px);
+}
+.rinaSec__social img {
+  width: 4.74cqw;
+  height: auto;
+  display: block;
+}
+
+/* ---- Instagram プロフィール風モックアップ ---- */
+/* グリッドは FIX と同じくカード幅いっぱいなので、カード自体には
+   左右パディングを持たせず、各行が個別に内側の余白を持つ。 */
+/* カード幅 480px → 794px。内部は 480px 基準の比率を cqw で保持する。 */
+.rinaSec__mock {
+  max-width: 794px;
+  margin: clamp(40px, 8vw, 99px) auto 0;
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.18);
+  padding: 0 0 max(20px, 5.42cqw);
+  overflow: hidden;
+  container-type: inline-size;
+}
+
+.rinaSec__mockTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2.08cqw;
+  padding: max(14px, 3.75cqw) 4% 2.92cqw;
+  margin-bottom: 3.33cqw;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+/* 円形の RANKUP SPORTS ロゴとバスケマーク（支給 SVG） */
+.rinaSec__mockLogo {
+  flex: 0 0 auto;
+  width: max(24px, 7.29cqw);
+  height: auto;
+}
+.rinaSec__mockTitle {
+  flex: 1;
+  text-align: center;
+  font-family: var(--f-bowlby);
+  font-weight: 400;
+  font-size: max(12px, 2.92cqw);
+  letter-spacing: 0.06em;
+  line-height: 1.25;
+}
+.rinaSec__mockBall {
+  flex: 0 0 auto;
+  width: max(18px, 5.21cqw);
+  height: auto;
+}
+
+.rinaSec__mockProfile {
+  display: flex;
+  align-items: center;
+  gap: 4.58cqw;
+  padding: 0 10%;
+  margin-bottom: 3.33cqw;
+}
+/* Instagram 風グラデーションリング付きアバター（block03/04 と同配色）。
+   中身は白背景の商品カット（product-ball-bag.png）を中央に。 */
+.rinaSec__mockPic {
+  flex: 0 0 auto;
+  width: 22.29cqw;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  padding: max(1px, 0.42cqw);
+  background: var(--ring7);
+  display: grid;
+  place-items: center;
+}
+.rinaSec__mockPicIn {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background-color: var(--white);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+/* ② 中身は写真なので円いっぱいに敷く */
+.rinaSec__mockPicIn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.rinaSec__mockNames {
+  min-width: 0;
+}
+/* ブランド名は支給の元ロゴデータ（黒）を使う */
+.rinaSec__mockBrand {
+  display: block;
+  width: 26.04cqw;
+  height: auto;
+  margin: 0 0 1.04cqw;
+}
+/* 字間を FIX と同じだけ広げ、色は黒 */
+.rinaSec__mockTag {
+  margin: 0;
+  font-family: var(--f-rob);
+  font-size: 2.56cqw;
+  line-height: 1.46;
+  letter-spacing: 0.208em;
+  color: #000;
+}
+
+.rinaSec__mockBtns {
+  display: flex;
+  gap: 2.08cqw;
+  padding: 0 12%;
+  margin-bottom: 3.75cqw;
+}
+.rinaSec__mockBtns img {
+  flex: 1;
+  height: max(26px, 6.25cqw);
+  width: 100%;
+  object-fit: contain;
+  background: #efefef;
+  border-radius: 8px;
+  padding: max(5px, 1.25cqw) 0;
+}
+
+/* Black を足して6個になった。円の径(12.5cqw)はコンプ実測値なので変えず、
+   横 padding を詰めて収める。6*12.5 + 5*1.67 = 83.35 なので左右 8.33% で
+   ちょうど宣言どおりの gap になる（5個時は 14.4% / 実効 gap 2.18cqw）。 */
+.rinaSec__mockHighlights {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.67cqw;
+  padding: 0 8.33%;
+  margin-bottom: 4.17cqw;
+}
+.rinaSec__mockHighlights .ph {
+  flex: 0 0 auto;
+  width: max(46px, 12.5cqw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-size: cover;
+}
+
+.rinaSec__mockGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1%;
+}
+.rinaSec__mockGrid .ph {
+  aspect-ratio: 1;
+  background-size: cover;
+}
+
+/* =========================================================
+   2) SIDE CONT
+   ========================================================= */
+.sideCont {
+  position: relative;
+}
+.side {
+  display: none;
+}
+@media (min-width: 960px) {
+  .side {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+  }
+  .side__txt {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    font-family: var(--f-jac);
+    font-size: 20px;
+    letter-spacing: 0.1em;
+    color: var(--white);
+    writing-mode: vertical-rl;
+  }
+  .side__txt--1 {
+    float: left;
+    margin-left: 18px;
+  }
+  .side__txt--2 {
+    float: right;
+    margin-right: 18px;
+    transform: rotate(180deg);
+  }
+}
+
+/* ---- 2-1) LEAD ---- */
+.lead {
+  position: relative;
+  background: var(--grey);
+  overflow: hidden;
+  padding: clamp(72px, 16vw, 150px) var(--pad);
+}
+/* 巡回アイコンはセクションの中だけを回る（外にはみ出して横スクロールを
+   作らないよう overflow:hidden）。本文より後ろに敷く。 */
+.lead__icons {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+/* 指示②: セクションの矩形の中を跳ね返るボール（位置は JS が毎フレーム更新）。
+   上は TOP、下は Block02、左右は画面の端にあたる。 */
+.lead__ball {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: clamp(72px, 20vw, 172px);
+  aspect-ratio: 1;
+  opacity: 0.9;
+  will-change: transform;
+}
+/* 絵柄は支給写真（背景を抜いたもの）。枠いっぱいに置く */
+.lead__emo {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.2));
+}
+.lead__cont {
+  position: relative;
+  z-index: 1;
+  max-width: 760px;
+  margin-inline: auto;
+  text-align: center;
+}
+.lead__label {
+  font-family: var(--f-dot);
+  font-size: clamp(12px, 3vw, 15px);
+  letter-spacing: 0.2em;
+  color: var(--white);
+}
+.lead__head {
+  margin-top: 0.3em;
+  font-family: var(--f-disp);
+  font-size: clamp(28px, 7.6vw, 54px);
+  line-height: 1.1;
+  color: var(--white);
+}
+.lead__text {
+  margin-top: 1.8em;
+  font-size: clamp(13px, 3.3vw, 15px);
+  line-height: 2.1;
+  text-align: left;
+}
+
+.cast {
+  margin-top: clamp(36px, 8vw, 64px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(14px, 4vw, 30px);
+}
+.cast__ph {
+  aspect-ratio: 3/4;
+  overflow: hidden;
+  border: 3px solid var(--white);
+}
+.cast__item:nth-child(1) .cast__ph {
+  transform: rotate(-2deg);
+  --bs: 260%;
+  --bp: 50% 24%;
+}
+.cast__item:nth-child(2) .cast__ph {
+  transform: rotate(2deg);
+  --bs: 200%;
+  --bp: 46% 72%;
+}
+.cast__name {
+  margin-top: 1em;
+  font-family: var(--f-disp);
+  font-size: clamp(19px, 5vw, 30px);
+  color: var(--white);
+}
+.cast__role {
+  font-family: var(--f-rob);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+}
+
+/* ---- 2-2) LOOKS ---- */
+.looks {
+  position: relative;
+}
+.looks__bg {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  margin-bottom: -100vh;
+  z-index: 0;
+  background: var(--lime);
+  transition: background 0.8s ease;
+}
+.looks__cont {
+  position: relative;
+  z-index: 1;
+}
+
+.look {
+  padding: clamp(48px, 11vw, 96px) 0;
+}
+.look__head {
+  max-width: 760px;
+  margin-inline: auto;
+  padding-inline: var(--pad);
+  text-align: center;
+}
+.look__no {
+  display: inline-block;
+  background: var(--ink);
+  color: var(--white);
+  font-family: var(--f-rob);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  padding: 0.5em 1.1em;
+}
+.look__title {
+  margin-top: 0.6em;
+  font-family: var(--f-disp);
+  font-size: clamp(24px, 6.4vw, 44px);
+  line-height: 1.15;
+}
+.look__lead {
+  margin-top: 1.3em;
+  font-size: clamp(12.5px, 3.2vw, 14.5px);
+  line-height: 2;
+  text-align: left;
+}
+.look--alt .look__head {
+  color: var(--white);
+}
+.look--alt .look__no {
+  background: var(--white);
+  color: var(--blue);
+}
+.look__items {
+  margin-top: clamp(40px, 9vw, 72px);
+  display: grid;
+  gap: clamp(56px, 12vw, 110px);
+  justify-items: center;
+  padding-inline: var(--pad);
+}
+
+/* ---------- 投稿カード ---------- */
+.post {
+  width: min(var(--card), 100%);
+  background: var(--white);
+  border-radius: var(--radius);
+  padding-bottom: 35px;
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(38px);
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+}
+.post.is-in {
+  opacity: 1;
+  transform: none;
+}
+.post__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px var(--cardPad);
+}
+.post__avatar {
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  border-radius: 50%;
+  overflow: hidden;
+  --bs: 600%;
+  --bp: 50% 26%;
+}
+.post__who {
+  line-height: 1.3;
+}
+.post__name {
+  font-family: var(--f-rob);
+  font-weight: 700;
+  font-size: 14px;
+}
+.post__place {
+  font-family: var(--f-rob);
+  font-size: 11px;
+  opacity: 0.55;
+}
+.post__dots {
+  margin-left: auto;
+  letter-spacing: 0.1em;
+  opacity: 0.5;
+}
+
+.slider {
+  position: relative;
+  background: var(--f4);
+}
+.slider__box {
+  position: relative;
+  aspect-ratio: 96/107;
+  overflow: hidden;
+}
+.slider__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.55s ease;
+}
+.slider__slide.is-now {
+  opacity: 1;
+}
+.slider__arrow {
+  position: absolute;
+  bottom: 10px;
+  z-index: 3;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.88);
+  display: grid;
+  place-items: center;
+  font-size: 17px;
+  line-height: 1;
+}
+.slider__arrow--prev {
+  right: 54px;
+}
+.slider__arrow--next {
+  right: 10px;
+}
+.slider__dots {
+  position: absolute;
+  left: 50%;
+  bottom: 20px;
+  translate: -50% 0;
+  z-index: 3;
+  display: flex;
+  gap: 6px;
+}
+.slider__dots button {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+}
+.slider__dots button.is-now {
+  background: var(--blue);
+}
+
+.post__nav {
+  position: relative;
+  margin: 15px var(--cardPad) 0;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.post__nav svg {
+  width: 25px;
+  height: 25px;
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.post__like.is-liked svg {
+  fill: var(--blue);
+  stroke: var(--blue);
+}
+.post__popHeart {
+  position: absolute;
+  left: 2px;
+  bottom: 0;
+  width: 25px;
+  height: 0;
+  pointer-events: none;
+  color: var(--blue);
+}
+.post__likes {
+  margin-left: auto;
+  font-family: var(--f-rob);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  opacity: 0.7;
+}
+
+.post__credit {
+  margin: 40px var(--cardPad) 0;
+}
+.post__creditName {
+  font-family: var(--f-rob);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+}
+.credits {
+  margin-top: 10px;
+}
+.credits__item {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+.credits__link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 38px;
+  padding: 6px 0;
+}
+.credits__thumb {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.credits__name {
+  font-family: var(--f-rob);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  min-width: 0;
+}
+.credits__yen {
+  font-family: var(--f-rob);
+  font-weight: 700;
+  font-size: 11px;
+  white-space: nowrap;
+}
+.credits__buy {
+  flex: 0 0 auto;
+  background: var(--blue);
+  color: var(--white);
+  font-family: var(--f-rob);
+  font-weight: 700;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  padding: 0.45em 1em;
+  border-radius: 2px;
+}
+.credits__link--soon {
+  pointer-events: none;
+}
+.credits__link--soon .credits__buy {
+  background: var(--ink);
+  opacity: 0.45;
+}
+
+/* ---------- チャット 630px ---------- */
+.chat {
+  width: min(630px, 100%);
+  margin: clamp(22px, 5vw, 34px) auto 0;
+  display: grid;
+  gap: 10px;
+}
+.chat__row {
+  display: flex;
+  align-items: flex-end;
+  gap: 9px;
+  max-width: 84%;
+}
+.chat__row--r {
+  margin-left: auto;
+  flex-direction: row-reverse;
+}
+.chat__face {
+  width: 35px;
+  height: 35px;
+  flex: 0 0 35px;
+  border-radius: 50%;
+  overflow: hidden;
+  --bs: 600%;
+  --bp: 50% 26%;
+}
+.chat__msg {
+  background: var(--f4);
+  color: var(--ink);
+  border-radius: 50px;
+  padding: 8px 18px;
+  font-family: var(--f-rob);
+  font-size: clamp(13px, 3.2vw, 15px);
+  line-height: 1.5;
+}
+.chat__row--r .chat__msg {
+  background: var(--blue);
+  color: var(--white);
+}
+.chat__ph {
+  width: 110px;
+  flex: 0 0 110px;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 14px;
+  --bs: 200%;
+  --bp: 50% 60%;
+}
+
+/* ---------- ALL ITEMS グリッド ---------- */
+.allitems {
+  padding: clamp(48px, 11vw, 90px) var(--pad);
+}
+.allitems__title {
+  text-align: center;
+  font-family: var(--f-disp);
+  font-size: clamp(24px, 6.4vw, 44px);
+}
+.allitems__grid {
+  max-width: 900px;
+  margin: clamp(28px, 7vw, 48px) auto 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: clamp(12px, 3vw, 20px);
+}
+/* background-color で指定すること。shorthand だと .ph の background-image が消える */
+.allitems__ph {
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 6px;
+  background-color: var(--white);
+}
+.allitems__name {
+  margin-top: 0.5em;
+  font-family: var(--f-rob);
+  font-size: 10px;
+  letter-spacing: 0.05em;
+  line-height: 1.5;
+}
+.allitems__yen {
+  font-family: var(--f-rob);
+  font-weight: 700;
+  font-size: 11px;
+  margin-top: 0.2em;
+}
+.allitems__buy {
+  display: inline-block;
+  margin-top: 0.5em;
+  background: var(--ink);
+  color: var(--white);
+  font-family: var(--f-rob);
+  font-weight: 700;
+  font-size: 9px;
+  letter-spacing: 0.18em;
+  padding: 0.42em 1em;
+}
+
+/* ---------- STORY ---------- */
+.story {
+  max-width: 760px;
+  margin-inline: auto;
+  padding: clamp(56px, 13vw, 110px) var(--pad);
+  text-align: center;
+}
+.story__title {
+  font-family: var(--f-disp);
+  font-size: clamp(28px, 7.6vw, 52px);
+}
+.story__text {
+  margin-top: 1.4em;
+  font-size: clamp(12.5px, 3.2vw, 14.5px);
+  line-height: 2.1;
+  text-align: left;
+}
+
+/* =========================================================
+   3/5) SNS ブロック — 全幅の大きなリンク
+   ========================================================= */
+/* looksBg（sticky カラーベッド）は margin-bottom:-100vh の分だけ .looks の
+   下＝この ALL ITEMS 領域へ最大 100vh はみ出す。非配置のままだと配置済みの
+   ベッド(z-index:0)に上書きされ、ピンクでグリッドが隠れてしまうため、
+   セクションを重ね順で前面に出す。 */
+/* 参照はブロック間を 150px のリズムで刻み、SNS の写真は縦長カード(353x585 ≒ 3:5)。 */
+.sns {
+  position: relative;
+  z-index: 1;
+  background: var(--white);
+  padding: clamp(56px, 15vw, 150px) var(--pad);
+}
+.sns__link {
+  position: relative;
+  display: block;
+  max-width: 380px;
+  margin-inline: auto;
+  aspect-ratio: 3/5;
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+.sns__ph {
+  position: absolute;
+  inset: 0;
+  --bs: 130%;
+  --bp: 50% 40%;
+}
+.sns__ph::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.35);
+}
+.sns__label {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 1;
+  font-family: var(--f-disp);
+  color: var(--white);
+  font-size: clamp(24px, 5.4vw, 44px);
+}
+.sns--shop .allitems__grid {
+  margin-top: clamp(28px, 7vw, 48px);
+}
+.sns__list {
+  margin: clamp(24px, 6vw, 40px) auto 0;
+  display: flex;
+  justify-content: center;
+  gap: 1.4em;
+  flex-wrap: wrap;
+}
+.sns__list a {
+  font-family: var(--f-disp);
+  font-size: clamp(15px, 3.8vw, 22px);
+}
+.sns__list a:hover {
+  color: var(--blue);
+}
+
+/* =========================================================
+   4) STAFF — sticky ステージ + スクロール連動の写真切替
+   ========================================================= */
+.staff {
+  position: relative;
+  background: var(--ink);
+  color: var(--white);
+}
+.staff__fix {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+.staff__phs {
+  position: absolute;
+  inset: 0;
+}
+.staff__ph {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition:
+    opacity 0.7s ease,
+    transform 1.4s ease;
+  transform: scale(1.07);
+}
+.staff__ph.is-show {
+  opacity: 1;
+  transform: scale(1);
+}
+.staff__phs::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.34), rgba(0, 0, 0, 0.62) 45%, rgba(0, 0, 0, 0.34));
+}
+.staff__frame {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  color: var(--white);
+  z-index: 2;
+}
+.staff__hearts {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  color: var(--lime);
+}
+.staff__cap {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 0 var(--pad);
+  font-family: var(--f-disp);
+  font-size: clamp(24px, 6.4vw, 46px);
+  line-height: 1.25;
+}
+.staff__cap span {
+  display: block;
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+}
+.staff__cap span.is-show {
+  opacity: 1;
+  transform: none;
+}
+
+.staff__txtBox {
+  position: relative;
+  z-index: 2;
+}
+.staff__step {
+  height: 100vh;
+}
+.staff__end {
+  background: var(--ink);
+  text-align: center;
+  padding: clamp(48px, 11vw, 90px) var(--pad);
+}
+.staff__ttl {
+  font-family: var(--f-disp);
+  font-size: clamp(30px, 8vw, 60px);
+  color: var(--lime);
+}
+.staff__text {
+  margin-top: 1.4em;
+  font-size: clamp(12.5px, 3.2vw, 14.5px);
+  line-height: 2.1;
+}
+.staff__heart {
+  position: relative;
+  margin-top: 1.6em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  border: 2px solid var(--white);
+  border-radius: 50px;
+  padding: 0.7em 1.6em;
+  font-family: var(--f-rob);
+  font-weight: 700;
+  font-size: 13px;
+}
+.staff__burst {
+  position: absolute;
+  left: 50%;
+  bottom: 100%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  color: var(--lime);
+}
+.staff__heart svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+}
+.staff__heart[aria-pressed="true"] {
+  background: var(--blue);
+  border-color: var(--blue);
+}
+.staff__heart[aria-pressed="true"] svg {
+  fill: var(--white);
+  animation: shake 0.8s ease;
+}
+.staff__creditTtl {
+  margin-top: 3em;
+  font-family: var(--f-disp);
+  font-size: clamp(22px, 5.6vw, 36px);
+}
+.staff__note {
+  margin-top: 0.8em;
+  font-size: 10.5px;
+  opacity: 0.55;
+}
+.staff__credit {
+  margin-top: 2em;
+  display: grid;
+  gap: 1.1em;
+}
+.staff__credit dt {
+  font-family: var(--f-rob);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--lime);
+}
+.staff__credit dd {
+  margin-top: 0.3em;
+  font-size: 13px;
+}
+
+/* =========================================================
+   6) SHOP
+   ========================================================= */
+.shop {
+  background: var(--white);
+  color: var(--ink);
+  padding: clamp(64px, 18vw, 180px) var(--pad) clamp(56px, 15vw, 150px);
+  text-align: center;
+}
+.shop__head {
+  font-family: var(--f-disp);
+  font-size: clamp(22px, 5.6vw, 36px);
+}
+.shop__ph {
+  max-width: 520px;
+  margin: clamp(24px, 6vw, 40px) auto 0;
+  aspect-ratio: 16/9;
+  border-radius: var(--radius);
+  overflow: hidden;
+  --bs: 150%;
+  --bp: 50% 30%;
+}
+.shop__desc {
+  margin-top: 1.4em;
+  font-size: 10.5px;
+  opacity: 0.65;
+}
+.shop__lists {
+  margin-top: 1.4em;
+  display: flex;
+  justify-content: center;
+  gap: clamp(20px, 6vw, 60px);
+  flex-wrap: wrap;
+}
+.shop__list {
+  display: grid;
+  gap: 0.6em;
+  font-size: 12.5px;
+}
+.shop__cta {
+  display: inline-block;
+  margin-top: 1.8em;
+  background: var(--blue);
+  color: var(--white);
+  font-family: var(--f-rob);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  padding: 1em 2.4em;
+}
+.shop__brand {
+  margin-top: 3.2em;
+  padding-top: 2.4em;
+  border-top: 1px solid rgba(0, 0, 0, 0.15);
+}
+.shop__brand h3 {
+  font-family: var(--f-disp);
+  font-size: clamp(18px, 4.6vw, 28px);
+}
+.shop__brand p {
+  margin-top: 1.2em;
+  font-size: 11.5px;
+  line-height: 2.1;
+  opacity: 0.75;
+  text-align: left;
+}
+.shop__links {
+  margin-top: 2.6em;
+  display: flex;
+  justify-content: center;
+  gap: 1.2em;
+  flex-wrap: wrap;
+  font-family: var(--f-rob);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+}
+.shop__copy {
+  margin-top: 2.2em;
+  font-family: var(--f-rob);
+  font-size: 9.5px;
+  opacity: 0.5;
+}
+
+@media (min-width: 760px) {
+  .look__lead,
+  .lead__text,
+  .story__text,
+  .shop__brand p {
+    text-align: center;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+  .ttlPop,
+  .ttlPopQ,
+  .reveal,
+  .post,
+  .b03__chat .bub,
+  .b04__chat .bub,
+  .b03__chat .bubEmo,
+  .b04__chat .bubEmo,
+  .b03__chat .bubPh,
+  .b04__chat .bubPh {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* ============================================================
+   BLOCK 03 — "BASKETBALL GEAR BAGS" Instagram モックの確定稿(FIX)再現
+   参照 Block03_FIX-22.png（原寸 1935×7162 = 2x）を実測し 1x で再構成。
+   フレーム幅 968px の固定レイアウトを、狭い画面では .b03__scale ごと
+   transform: scale() で等比縮小（JS が --k を更新）。
+   色: 背景 #8B8D9A / チャット青・リンク青 #1780e1
+   字: 見出し=Bowlby One / 本文・価格・ユーザー名=Zen Kaku Gothic New 500
+       商品名・Add=Montserrat 400
+   変数は .b03 にスコープし、既存 :root（--blue 等）を汚さない。
+   ============================================================ */
+.b03 {
+  --b3blue: #1780e1;
+  --b3card: #fff;
+  --b3line: rgba(0, 0, 0, 0.1);
+  --f-zkaku: "Zen Kaku Gothic New", sans-serif;
+  --f-mont: "Montserrat", sans-serif;
+  --k: 1;
+  --stageW: 968px; /* レイアウト基準幅（モバイルで狭めて拡大する） */
+  /* 指示①: 背景は瀬崎さんエリアと同じ緑に（旧 #8B8D9A）。
+     描画は .bgFade（クロスフェード対象） */
+  --sec-bg: #b9ff61;
+  background: transparent;
+  overflow: hidden; /* 縮小後にはみ出す 968px 幅を切り取る */
+  font-family: var(--f-zkaku);
+  color: #111;
+}
+/* --stageW の固定レイアウトを --k 倍に縮小。transform-origin を左上に固定し、
+   margin-left で「縮小後の幅」を中央寄せする（flex を使わないので
+   flex-shrink による潰れが起きない）。--k は JS が更新。 */
+.b03__scale {
+  width: var(--stageW);
+  transform: scale(var(--k));
+  transform-origin: top left;
+  margin-left: calc(50% - var(--stageW) / 2 * var(--k));
+}
+.b03__stage {
+  width: var(--stageW);
+  padding: 132px 0 184px;
+}
+
+/* =============== 商品名の見出し（支給PNG）===============
+   英字（Archivo Black）＋日本語＋下に細い縦線。
+   ステージは 968px 固定の px 設計を transform で拡大縮小しているので、
+   サイズは他の要素と同じ「設計 px」で持つ（vw も --stageW 比も不可）。
+   --stageW 比にすると、PC でステージが最大 1.655 倍まで拡大されるぶんも
+   掛かってしまい、1920px 幅で約106px＝メインタイトルより大きくなる。
+   35px なら 980px 幅で約35px、1920px 幅でも約58px に収まる。 */
+/* 下の余白 80px。--s 基準の 31px では動画と詰まり、128px では空きすぎたので
+   その間に取る。 */
+:is(.b03, .b04) .pTtl {
+  --s: 35px;
+  width: 100%;
+  text-align: center;
+  margin: 0 auto 80px;
+}
+/* Archivo Black は 400 しか無いので、h3 の既定 bold で合成太字にならないよう明示 */
+:is(.b03, .b04) .pTtl__en {
+  margin: 0;
+  font-family: var(--f-archivo);
+  font-weight: 400;
+  font-size: var(--s);
+  line-height: 1.02;
+  letter-spacing: -0.005em;
+}
+:is(.b03, .b04) .pTtl__jp {
+  margin: calc(var(--s) * 0.3) 0 0;
+  font-family: var(--f-zkaku);
+  font-weight: 700;
+  /* font-size: calc(var(--s) * 0.375); */
+  font-size: clamp(15px, 2.5vw, 18px) !important;
+  letter-spacing: 0.1em;
+  line-height: 1.4;
+}
+:is(.b03, .b04) .pTtl__line {
+  display: block;
+  width: 1px;
+  height: calc(var(--s) * 0.7);
+  margin: calc(var(--s) * 0.5) auto 0;
+  background: currentColor;
+}
+/* 紫地のブロック04は白抜き（.b04 の既定 color:#111 では読めない） */
+.b04 .pTtl {
+  color: #fff;
+}
+
+/* =============== Instagram カード共通 =============== */
+:is(.b03, .b04) .ig {
+  background: var(--b3card);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+/* ---- 上段バー: ロゴ / BASKETBALL GEAR BAGS / バスケマーク ---- */
+:is(.b03, .b04) .ig__bar {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+}
+:is(.b03, .b04) .ig__barTtl {
+  margin: 0;
+  text-align: center;
+  font-family: var(--f-bowlby);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: 0.01em;
+  color: #000;
+}
+:is(.b03, .b04) .ig__barLogo,
+:is(.b03, .b04) .ig__barBall {
+  display: block;
+  flex: 0 0 auto;
+}
+
+/* ---- プロフィール行 ---- */
+:is(.b03, .b04) .ig__profile {
+  display: flex;
+  align-items: center;
+}
+:is(.b03, .b04) .ig__brand {
+  display: block;
+  height: auto;
+}
+:is(.b03, .b04) .ig__more {
+  margin-left: auto;
+  letter-spacing: 0.12em;
+  color: #111;
+  line-height: 1;
+}
+
+/* Instagram のグラデーションリング付きアバター */
+:is(.b03, .b04) .ig__ava {
+  flex: 0 0 auto;
+  border-radius: 50%;
+  background: var(--ring7);
+  display: grid;
+  place-items: center;
+}
+:is(.b03, .b04) .ig__ava > * {
+  border-radius: 50%;
+  background: #fff;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+:is(.b03, .b04) .ig__ava img {
+  display: block;
+}
+:is(.b03, .b04) .ig__ava--photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 20%;
+}
+/* ② ユーザー枠のアバターはリングだけ（中身はユーザーが入れるので空） */
+:is(.b03, .b04) .ig__ava--blank > * {
+  background: #fff;
+}
+
+:is(.b03, .b04) .ig__names {
+  min-width: 0;
+  line-height: 1.15;
+}
+:is(.b03, .b04) .ig__uname {
+  font-family: var(--f-zkaku);
+  font-weight: 500;
+}
+:is(.b03, .b04) .ig__urole {
+  font-family: var(--f-zkaku);
+  font-weight: 500;
+  color: #111;
+}
+
+/* ---- 写真 ---- */
+:is(.b03, .b04) .ig__photo {
+  width: 100%;
+  overflow: hidden;
+  background: #d9d9d9;
+}
+:is(.b03, .b04) .ig__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ラインナップのカルーセル。9枚を重ねて透明度で入れ替える。
+   マスクは画像側に焼き込み済みなので object-fit:cover のみでコンプ通りになる。 */
+:is(.b03, .b04) .ig__photo--car {
+  position: relative;
+}
+:is(.b03, .b04) .ig__photo--car :is(img, video) {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+:is(.b03, .b04) .ig__photo--car :is(img, video).is-show {
+  opacity: 1;
+}
+
+/* ④ ユーザー投稿枠。写真の代わりにグレー＋説明文。
+   コンプ実測（カード幅 359.5pt = 408px なので ×1.1349）:
+   グレー #D0D0D0 / 本文 19.02pt -> 21.6px / 行送り 33.3pt -> 37.8px = 1.75。 */
+:is(.b03, .b04) .ig__photo--ph {
+  display: grid;
+  place-items: center;
+  background: #d0d0d0;
+  font-family: var(--f-zkaku);
+  color: #111;
+  text-align: center;
+}
+:is(.b03, .b04) .ig__photo--ph p {
+  margin: 0;
+  font-size: 21.6px;
+  line-height: 1.75;
+}
+
+/* ---- アクション行: ハート / コメント / ドット / 矢印 ---- */
+:is(.b03, .b04) .ig__actions {
+  display: flex;
+  align-items: center;
+}
+:is(.b03, .b04) .ig__act {
+  display: block;
+}
+:is(.b03, .b04) .ig__act--cmt {
+  margin-left: 14px;
+}
+:is(.b03, .b04) .ig__dots {
+  display: flex;
+  gap: 6px;
+  margin: 0 auto;
+}
+:is(.b03, .b04) .ig__dots i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #c9c9c9;
+}
+:is(.b03, .b04) .ig__dots i.on {
+  background: var(--b3blue);
+}
+:is(.b03, .b04) .ig__nav {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  color: #111;
+}
+:is(.b03, .b04) .ig__nav svg {
+  display: block;
+}
+/* 矢印はカルーセルの操作ボタン。見た目は元の svg のままにしたいので
+   ボタンの装飾は全部落とす。 */
+:is(.b03, .b04) .ig__navBtn {
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+:is(.b03, .b04) .ig__navBtn:hover {
+  opacity: 0.6;
+}
+:is(.b03, .b04) .ig__navBtn:focus-visible {
+  outline: 2px solid var(--b3blue);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* ---- 商品リスト ---- */
+:is(.b03, .b04) .ig__prod {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+:is(.b03, .b04) .ig__prod li {
+  display: flex;
+  align-items: baseline;
+  white-space: nowrap;
+}
+:is(.b03, .b04) .ig__pName {
+  font-family: var(--f-mont);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: #111;
+}
+:is(.b03, .b04) .ig__lead {
+  flex: 1;
+  margin: 0 8px;
+  border-bottom: 1px dotted #b7b7b7;
+  transform: translateY(-3px);
+}
+:is(.b03, .b04) .ig__price {
+  font-family: var(--f-zkaku);
+  font-weight: 500;
+  color: #111;
+}
+/* =============== HERO カード（上部・大） =============== */
+:is(.b03, .b04) .ig--hero {
+  width: 482px;
+  margin: 0 auto;
+}
+:is(.b03, .b04) .ig--hero .ig__bar {
+  padding: 28px 26px 15px;
+}
+:is(.b03, .b04) .ig--hero .ig__barTtl {
+  font-size: 23px;
+}
+:is(.b03, .b04) .ig--hero .ig__barLogo {
+  width: 40px;
+}
+:is(.b03, .b04) .ig--hero .ig__barBall {
+  width: 34px;
+}
+:is(.b03, .b04) .ig--hero .ig__profile {
+  padding: 18px 26px 34px;
+  border-top: 1px solid var(--b3line);
+  gap: 16px;
+}
+/* 帯 = カード幅 482px × 0.42% = 2.02px */
+:is(.b03, .b04) .ig--hero .ig__ava {
+  width: 64px;
+  height: 64px;
+  padding: 2.02px;
+}
+/* 赤字校正 ①: 崩れて見えたロゴを修正。full logo_b を RU 領域だけに
+   viewBox クロップした block03-ru.svg（外周リング文字なし）を使用。 */
+:is(.b03, .b04) .ig--hero .ig__ava--ru img {
+  width: 66%;
+  height: 66%;
+  object-fit: contain;
+}
+:is(.b03, .b04) .ig--hero .ig__brand {
+  height: 22px;
+}
+:is(.b03, .b04) .ig--hero .ig__more {
+  font-size: 26px;
+}
+:is(.b03, .b04) .ig--hero .ig__photo {
+  height: 598px;
+}
+:is(.b03, .b04) .ig--hero .ig__actions {
+  padding: 23px 26px 0;
+}
+:is(.b03, .b04) .ig--hero .ig__act--like {
+  width: 30px;
+}
+:is(.b03, .b04) .ig--hero .ig__act--cmt {
+  width: 33px;
+}
+:is(.b03, .b04) .ig--hero .ig__nav svg {
+  width: 30px;
+  height: 30px;
+}
+:is(.b03, .b04) .ig--hero .ig__prod {
+  padding: 50px 26px 20px;
+}
+:is(.b03, .b04) .ig--hero .ig__prod li {
+  margin-bottom: 16px;
+}
+:is(.b03, .b04) .ig--hero .ig__prod li:last-child {
+  margin-bottom: 0;
+}
+:is(.b03, .b04) .ig--hero .ig__pName {
+  font-size: 18px;
+}
+:is(.b03, .b04) .ig--hero .ig__price {
+  font-size: 18px;
+}
+
+/* ---- BUY NOW ----
+   レイアウト調整指示0731.pdf:「ブロック０３．０４の Add を消して、↑のタイプに
+   全部変更」。HERO だけでなく MINI も、block04 も同じ型にする。
+   「下に幅少しほしい！」= ボタン下の余白。コンプの2枚を実測して比べたところ
+   ボタン下端〜カード下端は 現状 2.74% → 希望 7.53%（カード幅比）なので
+   14px 相当から 36px 相当へ広げる。
+
+   寸法はすべてカード幅に対する比率で書く（HERO 482px / MINI 408px の
+   どちらでもコンプ比のまま効く）。実測値: ボタン 27.18%×(131:40)
+   上 6.02% / 下 7.47%。横 padding は中央寄せなので置かない
+   （置くと width:% の基準がその分狭まってボタンが小さくなる）。
+   行の Add を外しても価格の位置は動かさないので、Add ぶんの余白は
+   li の padding-right として残す。HERO 57px で価格右端がカード幅の 82.8%、
+   MINI 42px で 86.0% — どちらも Add があった時と同じ位置。 */
+:is(.b03, .b04) .ig--hero .ig__prod li {
+  padding-right: 57px;
+}
+:is(.b03, .b04) .ig--mini .ig__prod li {
+  padding-right: 42px;
+}
+:is(.b03, .b04) .ig__buyWrap {
+  display: flex;
+  justify-content: center;
+  padding: 6.02% 0 7.47%;
+}
+:is(.b03, .b04) .ig__buy {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 27.18%;
+  aspect-ratio: 131/40;
+  background: #27498d;
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--f-encode);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  transition:
+    opacity 0.2s ease,
+    transform 0.12s ease;
+}
+:is(.b03, .b04) .ig--hero .ig__buy {
+  font-size: 23.4px;
+}
+/* MINI は 408/482 = 0.846 倍 */
+:is(.b03, .b04) .ig--mini .ig__buy {
+  font-size: 19.8px;
+}
+:is(.b03, .b04) .ig__buy:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+:is(.b03, .b04) .ig__buy:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: -5px;
+}
+
+/* 指示④: BUY NOW のリンクは一旦停止。見た目は変えず、押せる素振り
+   （カーソル・ホバーの浮き）だけ止める。復活は index.html の
+   is-linkOff / aria-disabled と BUY_LINK=true を戻すだけ。 */
+.ig__buy.is-linkOff {
+  cursor: default;
+  pointer-events: none;
+}
+
+/* =============== チャット吹き出し（4個） ===============
+   cropped SVG（viewBox をパス実寸に切り詰め）を背景に敷き、本文は live text。
+   各 SVG はテキスト量に合わせて幅が作られている。 */
+/* 指示05-②: 吹き出し全体が左に寄って見えるのでステージ中央にそろえる
+   （旧: margin-left 132px → 中心が 432px でステージ中心 484px より 52px 左） */
+/* 吹き出しの文字を参考サイト(FISHS EDDY)の比率にそろえて拡大。
+   参考実測: チャットカラム 630px に対し本文 18px（=2.86%）。
+   従来は 600px に 13.2px（=2.20%）で相対的に小さかったため 17.2px に。
+   吹き出しは SVG 画像なので、幅・高さ・余白を em 化して文字と一緒に拡大する
+   （495px の bub-c が 17.2px 時 645px になるのでカラムを 660px に広げる）。 */
+/* ---- Block02調整指示0810.pdf「ブロック02 追加要素（元03）」/「ブロック03 も同様に」 ----
+   ステージ先頭の人物カット。写真は準備中なのでグレーの四角、
+   比率は瀬崎さんのヒーロー写真と同じ .617、幅は HERO カードと同じ 482px。
+   ハートは瀬崎さんと同じ形・同じ動き（rinaHeartBeat）。 */
+:is(.b03, .b04) :is(.b03__cast, .b04__cast) {
+  position: relative;
+  width: 482px;
+  margin: 0 auto 128px;
+}
+/* 03/04 とも支給ムービー（444x720 = .617 で枠と同比）。
+   グレーは読み込み中の地色として残す。 */
+:is(.b03, .b04) :is(.b03__castPh, .b04__castPh) {
+  display: block;
+  width: 100%;
+  aspect-ratio: 0.617;
+  background: #e9e9e9;
+  border-radius: 14px;
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.18);
+}
+:is(.b03, .b04) video:is(.b03__castPh, .b04__castPh) {
+  object-fit: cover;
+}
+:is(.b03, .b04) :is(.b03__castHeart, .b04__castHeart) {
+  position: absolute;
+  bottom: -7.9%;
+  left: 50%;
+  width: 19%;
+  height: auto;
+  transform: translateX(-50%);
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.25));
+  transform-origin: bottom center;
+  animation: rinaHeartBeat 2s ease-in-out infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(.b03, .b04) :is(.b03__castHeart, .b04__castHeart) {
+    animation: none;
+  }
+}
+
+/* Block02調整指示0810.pdf: 吹き出しは文言を一新し、HERO カードの上に移動。
+   旧テキスト専用に作られた固定サイズの SVG 吹き出しでは新しい文言が収まらないので、
+   ブロック04 と同じ CSS 実装（角丸＋しっぽ）に統一した。改行はコンプ通り <br>。 */
+/* 見出しがステージ先頭に移ったので、下は HERO カードとの間隔（元の 96px）に戻す。 */
+.b03__chat {
+  margin: 0 auto 96px;
+  width: 660px;
+  --chatW: 660px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* =============== 2×2 グリッド（下部・小カード） =============== */
+.b03__grid {
+  margin: 200px auto 0;
+  width: 848px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 32px;
+  row-gap: 34px;
+}
+:is(.b03, .b04) .ig--mini {
+  width: 100%;
+}
+:is(.b03, .b04) .ig--mini .ig__bar {
+  padding: 12px 16px 6px;
+}
+:is(.b03, .b04) .ig--mini .ig__barTtl {
+  font-size: 15px;
+  letter-spacing: 0.02em;
+}
+:is(.b03, .b04) .ig--mini .ig__barLogo {
+  width: 26px;
+}
+:is(.b03, .b04) .ig--mini .ig__barBall {
+  width: 22px;
+}
+/* Block_01-03-04微調整: ① 幅に若干余裕（padding/gap を少し広く） ② 塊ごと少し大きく */
+:is(.b03, .b04) .ig--mini .ig__profile {
+  padding: 9px 16px 8px;
+  gap: 12px;
+}
+/* 虹色リングは padding で見せている。2px だと写真の上で
+   アンチエイリアスに溶けて途切れて見えた。Block02素材_0804.pdf の
+   実測でコンプの帯はカード幅の0.42%なので 408px × 0.42% = 1.71px。
+   細さで途切れるのは太さではなく白い隙間と低コントラストが原因なので、
+   隙間を外して密着させた（① 参照）。 */
+:is(.b03, .b04) .ig--mini .ig__ava {
+  width: 46px;
+  height: 46px;
+  padding: 2px;
+}
+:is(.b03, .b04) .ig--mini .ig__uname {
+  font-size: 17px;
+  font-weight: 700;
+}
+/* コンプ実測 11.57pt ×1.1349 = 13.1px（user.ID の 13.52pt->15.3px が現行
+   15px と一致するので、この縮尺で読める）。 */
+:is(.b03, .b04) .ig--mini .ig__urole {
+  font-size: 14.5px;
+}
+/* ① Block03素材差し替え指示.pdf「ユーザースペース部分も同じ比率で」。
+   403px はほぼ正方形（408/403=1.01）で HERO と比率が違っていた。
+   HERO の写真比 482/598 = 0.806 にそろえる → 408/0.806 = 506px。
+   （コンプのグレー枠実測は 0.773 だが、指示文の「同じ比率」を優先） */
+:is(.b03, .b04) .ig--mini .ig__photo {
+  height: 506px;
+}
+:is(.b03, .b04) .ig--mini .ig__actions {
+  padding: 18px 14px 0;
+}
+:is(.b03, .b04) .ig--mini .ig__act--like {
+  width: 22px;
+}
+:is(.b03, .b04) .ig--mini .ig__act--cmt {
+  width: 24px;
+}
+:is(.b03, .b04) .ig--mini .ig__nav svg {
+  width: 22px;
+  height: 22px;
+}
+:is(.b03, .b04) .ig--mini .ig__nav {
+  gap: 12px;
+}
+/* 赤字校正 ⑤: 文字が小さすぎるので一回り大きく（11→13px）。行間も調整。 */
+:is(.b03, .b04) .ig--mini .ig__prod {
+  padding: 42px 15px 17px;
+}
+:is(.b03, .b04) .ig--mini .ig__prod li {
+  margin-bottom: 16px;
+}
+:is(.b03, .b04) .ig--mini .ig__prod li:last-child {
+  margin-bottom: 0;
+}
+:is(.b03, .b04) .ig--mini .ig__pName {
+  font-size: 16px;
+}
+:is(.b03, .b04) .ig--mini .ig__price {
+  font-size: 16px;
+}
+:is(.b03, .b04) .ig--mini .ig__lead {
+  transform: translateY(-2px);
+}
+
+/* ============================================================
+   BLOCK 04 — BLOCK03 とほぼ同じ構成（カード CSS は :is(.b03,.b04) で共有）。
+   変更点は背景色 #683F90 / 写真 / テキスト（SHOES BARREL BAG 等）。
+   チャット吹き出しは行数が 1/3/2/1 行で異なるため、SVG ではなく
+   CSS（角丸＋しっぽ）で可変に実装する。
+   ============================================================ */
+.b04 {
+  --b3blue: #1780e1;
+  --b3card: #fff;
+  --b3line: rgba(0, 0, 0, 0.1);
+  --f-zkaku: "Zen Kaku Gothic New", sans-serif;
+  --f-mont: "Montserrat", sans-serif;
+  --k: 1;
+  --stageW: 968px;
+  --sec-bg: #683f90; /* 描画は .bgFade（クロスフェード対象） */
+  background: transparent;
+  overflow: hidden;
+  font-family: var(--f-zkaku);
+  color: #111;
+}
+.b04__scale {
+  width: var(--stageW);
+  transform: scale(var(--k));
+  transform-origin: top left;
+  margin-left: calc(50% - var(--stageW) / 2 * var(--k));
+}
+.b04__stage {
+  width: var(--stageW);
+  padding: 132px 0 184px;
+}
+
+/* ---- チャット（CSS 吹き出し） ---- */
+/* block03 と同じ調整: ブロック全体が 1.655 倍になるため、吹き出しの文字が
+   参考サイトのサイズ（≒22px 相当）で表示されるようステージ座標を 0.825 倍にする。
+   16px x 0.825 = 13.2px → 13.2 x 1.655 = 21.9px（画面上は 16px → 22px に拡大）。
+   吹き出しの余白・角丸・しっぽ・折り返し幅も同じ 0.825 倍で、収まりを元のまま保つ。 */
+/* 指示05-②: block03 と同じくステージ中央にそろえる
+   （旧: margin-left 180px → 中心が 408px でステージ中心 484px より 76px 左） */
+/* block03 と同じく参考サイト比率に合わせて本文を拡大（13.2→17.2px）。
+   余白・角丸・しっぽ・折り返し幅も em 化して収まりを保ち、
+   最長の nowrap 行（436px→568px）が入るようカラムを 580px に広げる。 */
+.b04__chat {
+  margin: 0 auto 96px;
+  width: 580px;
+  --chatW: 580px;
+  display: flex;
+  flex-direction: column;
+}
+/* 吹き出し本体は block03/04 共通（block03 も SVG からこの CSS 実装に統一） */
+:is(.b03, .b04) .bub {
+  position: relative;
+  margin: 0;
+  width: max-content;
+  max-width: 100%;
+  font-family: var(--f-zkaku);
+  font-weight: 700;
+  font-size: 17.2px;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+  padding: 0.758em 1.364em;
+  border-radius: 1.364em;
+}
+/* 指示05-①: 吹き出しの間隔。しっぽが ::after で箱の下 6px にはみ出すぶんを足す。 */
+:is(.b03, .b04) .bub + .bub {
+  margin-top: 2.803em;
+}
+:is(.b03, .b04) .bub--l {
+  align-self: flex-start;
+  background: #fff;
+  color: #111;
+} /* 左・白・しっぽ左下 */
+:is(.b03, .b04) .bub--r {
+  align-self: flex-end;
+  background: var(--b3blue);
+  color: #fff;
+} /* 右・青・しっぽ右下 */
+:is(.b03, .b04) .bub--l::after {
+  content: "";
+  position: absolute;
+  bottom: -0.455em;
+  left: 1.288em;
+  border: 0.53em solid transparent;
+  border-top-color: #fff;
+  border-bottom: 0;
+}
+:is(.b03, .b04) .bub--r::after {
+  content: "";
+  position: absolute;
+  bottom: -0.455em;
+  right: 1.288em;
+  border: 0.53em solid transparent;
+  border-top-color: var(--b3blue);
+  border-bottom: 0;
+}
+/* 改行はコンプ通り <br> で入れるので、自動の折り返しは止める */
+
+/* :is(.b03,.b04) .bub--nowrap{white-space:nowrap}*/
+
+/* ===== 絵文字あしらい（参考サイト FISHS EDDY の look チャット）=====
+   参考実測: カラム 630px に対し絵文字行は 280x91px
+   ＝ 横 44.4% / 高さ 14.4%（3個1行・吹き出しなし・左寄せ）。
+   絵文字の字面は実測で font-size とほぼ同寸(1.00em)なので 14.4% を font-size に。
+   送りは 1.39em と広いので、参考どおり3個で 44.4% に収まるよう字間を詰める。 */
+.bubEmo {
+  margin: 0;
+  line-height: 1;
+  white-space: nowrap;
+  letter-spacing: -0.345em;
+  width: max-content;
+  font-size: calc(var(--chatW, 600px) * 0.144);
+}
+/* 絵文字行の上下に同じ空きを取る（下を空けないと次の吹き出しと詰まる。
+   .bub + .bub の余白は「吹き出しの次が吹き出し」のときだけ効くため） */
+.b03__chat .bubEmo {
+  margin-top: 0.34em;
+  margin-bottom: 0.34em;
+}
+.b04__chat .bubEmo {
+  align-self: flex-start;
+  margin-top: 0.34em;
+  margin-bottom: 0.34em;
+}
+
+/* ===== 写真へのリアクション絵文字 =====
+   既存の .bubEmo（3個で 44.4% を埋める大きさ・字間 -.345em）とは別サイズ。
+   3個並べる。03（😍）は左端そろえ、04（❤️）は右端そろえ
+   （それぞれ .bub--l / .bub--r と同じ端）。
+   下の余白は吹き出し同士の間隔にそろえる（2.803em → PC 48px / スマホは
+   .bub の font-size が違うので 03=38px・04=43px）。上は写真の margin-bottom
+   30px がそのまま隙間になる。 */
+/* 1個ぶんは .065（指示スクショの赤丸実測）から「もう少し大きく」で .08 へ */
+.bubEmo--one {
+  letter-spacing: 0;
+  font-size: calc(var(--chatW, 600px) * 0.08);
+}
+.b03__chat .bubEmo--one {
+  align-self: flex-start;
+  margin: 0 0 48px;
+}
+.b04__chat .bubEmo--one {
+  align-self: flex-end;
+  margin: 0 0 48px;
+}
+:is(.b03__chat, .b04__chat) .bubEmo--r {
+  transform-origin: 100% 100%;
+}
+
+/* ===== 吹き出しの合間に入る写真（吹き出し.pdf）=====
+   PDF のチャットカラム 1012pt を 660px に換算して実測。
+   横位置は既定が左（.bub--l と同じ端）、右寄せは .bubPh--r。
+   幅はブロック03が 42%（chat-02 に合わせる指示。3枚とも同じ幅）、
+   ブロック04 は PDF 実測どおり 56%。
+   角丸と上下の余白も PDF 実測値。 */
+:is(.b03, .b04) .bubPh {
+  display: block;
+  align-self: flex-start;
+  width: 56%;
+  height: auto;
+  border-radius: 12px;
+  margin: 20px 0 30px;
+}
+/* ブロック03 の3枚は、ブロック04 の写真と同じ表示幅に合わせる指示。
+   04 は 56% x 580px = 324.8px なので、660px カラムでは 49.2%。 */
+.b03__chat .bubPh {
+  width: 49.2%;
+}
+:is(.b03, .b04) .bubPh--r {
+  align-self: flex-end;
+}
+
+/* ===== チャット吹き出しのポップイン（ブロック03_吹き出しモーション.mp4）=====
+   ●（吹き出しの尻尾）を軸に scale 0→1 / opacity 0→1。ビューに入ったら上から順に。
+   絵文字行を挟むので順番は nth-child ではなく各要素の --d で指定する。 */
+.b03 .bub,
+.b04 .bub,
+.bubEmo,
+:is(.b03, .b04) .bubPh {
+  opacity: 0;
+  transform: scale(0);
+  transition:
+    opacity 0.34s ease,
+    transform 0.46s cubic-bezier(0.34, 1.4, 0.5, 1);
+}
+/* しっぽ（●）を軸にポップイン。block03/04 とも同じ位置にしっぽがある。 */
+:is(.b03, .b04) .bub--l {
+  transform-origin: 1.288em 100%;
+}
+:is(.b03, .b04) .bub--r {
+  transform-origin: calc(100% - 1.288em) 100%;
+}
+.bubEmo {
+  transform-origin: 0 100%;
+}
+/* 写真は吹き出しと違ってしっぽが無いので、寄せている側の下端を軸にする */
+:is(.b03, .b04) .bubPh {
+  transform-origin: 0 100%;
+}
+:is(.b03, .b04) .bubPh--r {
+  transform-origin: 100% 100%;
+}
+.b03__chat.is-in .bub,
+.b04__chat.is-in .bub,
+.b03__chat.is-in .bubEmo,
+.b04__chat.is-in .bubEmo,
+.b03__chat.is-in .bubPh,
+.b04__chat.is-in .bubPh {
+  opacity: 1;
+  transform: scale(1);
+  transition-delay: var(--d, 0s);
+}
+
+/* ---- 2×2 グリッド（block03 と同じ） ---- */
+.b04__grid {
+  margin: 200px auto 0;
+  width: 848px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 32px;
+  row-gap: 34px;
+}
+
+/* ============================================================
+   モバイル: 全体を大きく＋グリッドを1列に。
+   基準幅 --stageW を 968→530px に狭めると、JS が --k を上げるので
+   （390px 幅で約0.40→0.74）素材が約1.8倍に拡大される。
+   グリッドは1カラム、チャット帯はステージ幅に収める。
+   ============================================================ */
+@media (max-width: 600px) {
+  .b03,
+  .b04 {
+    --stageW: 530px;
+  }
+  /* モバイルはステージ幅 530px が上限なので、拡大率を収まる範囲に抑える
+     （bub-c 37.5em が 510px に収まる 13.6px / block04 は 15.2px）。
+     モバイルは元々カラムに対する文字比が大きいので、これで参考サイト相当。 */
+  .b03__chat {
+    width: 515px;
+    --chatW: 515px;
+  }
+  /* モバイルも 04 と同じ表示幅に。56% x 510px = 285.6px → 515px カラムで 55.5% */
+  .b03__chat .bubPh {
+    width: 55.5%;
+  }
+  .b03__chat .bubEmo--one {
+    margin-bottom: 38px;
+  }
+  .b04__chat .bubEmo--one {
+    margin-bottom: 43px;
+  }
+  .b03 .bub {
+    font-size: 15.2px;
+  }
+  .b04__chat {
+    width: 510px;
+    --chatW: 510px;
+  }
+  .b04 .bub {
+    font-size: 15.2px;
+  }
+  .b03__grid,
+  .b04__grid {
+    width: 482px;
+    grid-template-columns: 1fr;
+    margin-top: 150px;
+  }
+}
+
+/* ============================================================
+   REVIEWS 表示 — Wix ネイティブ形式（平均スコア＋星分布＋一覧）
+   ============================================================ */
+.rvw {
+  max-width: 980px;
+  margin: 0 auto clamp(28px, 5vw, 48px);
+  color: #1c2333;
+}
+
+/* サマリー：左に平均、右に分布バー */
+.rvw__summary {
+  display: grid;
+  grid-template-columns: minmax(200px, 300px) 1fr;
+  gap: clamp(24px, 5vw, 56px);
+  align-items: center;
+  padding-bottom: clamp(20px, 3vw, 30px);
+  border-bottom: 1px solid #e6e8ef;
+}
+.rvw__ttl {
+  margin: 0;
+  font-family: var(--f-bodoni);
+  font-weight: 700;
+  font-size: clamp(26px, 4.6vw, 36px);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: #1c2333;
+}
+.rvw__avgStars {
+  margin-top: 0.5em;
+  color: #f4b400;
+  font-size: clamp(22px, 3.4vw, 28px);
+  letter-spacing: 3px;
+  line-height: 1;
+}
+.rvw__avg {
+  margin-left: 0.35em;
+  font-family: var(--f-body);
+  font-weight: 700;
+  font-size: clamp(22px, 3.4vw, 28px);
+  color: #1c2333;
+  vertical-align: middle;
+}
+.rvw__count {
+  margin: 0.7em 0 0;
+  font-family: var(--f-body);
+  font-size: 14px;
+  color: #5a6b90;
+}
+.rvw__writeBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6em;
+  margin-top: 1.1em;
+  border: 1px solid #23468b;
+  border-radius: 6px;
+  padding: 11px 26px;
+  background: #fff;
+  color: #23468b;
+  text-decoration: none;
+  font-family: var(--f-body);
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
+}
+.rvw__writeBtn:hover {
+  background: #23468b;
+  color: #fff;
+}
+.rvw__writeBtn:focus-visible {
+  outline: 2px solid #23468b;
+  outline-offset: 2px;
+}
+/* 開閉の向きを示す三角（開いている時は反転） */
+.rvw__writeCaret {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0.42em 0.36em 0;
+  border-color: #23468b transparent transparent;
+  transition:
+    transform 0.3s ease,
+    border-top-color 0.15s ease;
+}
+.rvw__writeBtn:hover .rvw__writeCaret {
+  border-top-color: #fff;
+}
+.rvf.is-formOpen .rvw__writeCaret {
+  transform: rotate(180deg);
+}
+/* JS が無いとフォームは常時表示なので、開閉ボタン自体を出さない */
+.rvf:not(.has-js) .rvw__writeBtn {
+  display: none;
+}
+
+/* 分布バー */
+.rvw__dist {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.rvw__distRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--f-body);
+  font-size: 13px;
+  color: #5a6b90;
+}
+.rvw__distLabel {
+  flex: 0 0 auto;
+  width: 3.6em;
+  white-space: nowrap;
+}
+.rvw__distBar {
+  flex: 1;
+  height: 8px;
+  border-radius: 999px;
+  background: #e9ebf2;
+  overflow: hidden;
+}
+.rvw__distFill {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: #f4b400;
+  border-radius: 999px;
+  transition: width 0.6s ease;
+}
+.rvw__distNum {
+  flex: 0 0 auto;
+  width: 2.4em;
+  text-align: right;
+  color: #1c2333;
+}
+
+/* フィルター＋並び替え */
+.rvw__controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px 24px;
+  padding: clamp(14px, 2.4vw, 20px) 0;
+  border-bottom: 1px solid #eef0f6;
+}
+.rvw__ctrl {
+  font-family: var(--f-body);
+  font-size: 13px;
+  color: #5a6b90;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.rvw__ctrl select {
+  font-family: var(--f-body);
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #1c2333;
+  border: 1px solid #cfd5e4;
+  border-radius: 8px;
+  background: #fff;
+  padding: 8px 30px 8px 12px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%2323468B' stroke-width='1.6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 11px center;
+}
+.rvw__ctrl select:focus {
+  outline: 0;
+  border-color: #23468b;
+  box-shadow: 0 0 0 3px rgba(35, 70, 139, 0.15);
+}
+
+/* 一覧 */
+.rvw__list {
+  margin-top: clamp(18px, 3vw, 28px);
+}
+.rvw__item {
+  padding: clamp(18px, 3vw, 26px) 0;
+  border-bottom: 1px solid #eef0f6;
+}
+.rvw__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--f-body);
+  font-size: 13px;
+  color: #5a6b90;
+}
+.rvw__author {
+  font-weight: 700;
+  color: #1c2333;
+}
+.rvw__dot {
+  opacity: 0.5;
+}
+.rvw__itemStars {
+  margin-top: 0.5em;
+  color: #f4b400;
+  font-size: 15px;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+.rvw__itemTtl {
+  margin: 0.5em 0 0;
+  font-family: var(--f-body);
+  font-weight: 700;
+  font-size: 16px;
+  color: #1c2333;
+}
+.rvw__itemBody {
+  margin: 0.45em 0 0;
+  font-family: var(--f-body);
+  font-size: 14px;
+  line-height: 1.75;
+  color: #333;
+  white-space: pre-line;
+}
+.rvw__empty {
+  margin: clamp(18px, 3vw, 28px) 0 0;
+  text-align: center;
+  font-family: var(--f-body);
+  font-size: 14px;
+  color: #5a6b90;
+}
+
+@media (max-width: 640px) {
+  .rvw__summary {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    text-align: center;
+  }
+  .rvw__score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* ============================================================
+   REVIEW FORM — Wix 風の投稿フォーム（白地・角丸カード）
+   ============================================================ */
+/* 下は次のセクション（瀬崎さん）との間を広めに取る */
+.rvf {
+  --sec-bg: #fff;
+  background: #fff;
+  color: #23468b;
+  padding: clamp(20px, 4vw, 40px) 20px clamp(72px, 11vw, 132px);
+}
+.rvf__inner {
+  position: relative;
+  max-width: 680px;
+  margin: 0 auto;
+  border: 1px solid #e6e8ef;
+  border-radius: 16px;
+  padding: clamp(24px, 4vw, 40px);
+  box-shadow: 0 14px 34px rgba(35, 70, 139, 0.08);
+  background: #fff;
+}
+
+/* ---- 開閉（「レビューを書く」で開く） ----
+   カード自体を畳むので、閉じている間は padding / border も 0 にする。
+   max-height はフォーム全高より大きい値（実測 ~700px）にしておく。
+   .has-js は index.html が同期的に付ける = JS 無効なら開いたまま。 */
+.rvf.has-js .rvf__inner {
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-width: 0;
+  opacity: 0;
+  overflow: hidden;
+  visibility: hidden;
+  transition:
+    max-height 0.45s cubic-bezier(0.22, 0.9, 0.25, 1),
+    padding 0.45s cubic-bezier(0.22, 0.9, 0.25, 1),
+    border-width 0.45s,
+    opacity 0.28s ease,
+    visibility 0s linear 0.45s;
+}
+.rvf.has-js.is-formOpen .rvf__inner {
+  max-height: 1400px;
+  padding-top: clamp(24px, 4vw, 40px);
+  padding-bottom: clamp(24px, 4vw, 40px);
+  border-width: 1px;
+  opacity: 1;
+  visibility: visible;
+  transition:
+    max-height 0.5s cubic-bezier(0.22, 0.9, 0.25, 1),
+    padding 0.3s ease,
+    border-width 0.3s,
+    opacity 0.35s ease 0.05s,
+    visibility 0s;
+}
+
+/* 右上の閉じるボタン（JS 無効時は効かないので出さない） */
+.rvf__close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 50%;
+  background: #f2f4fa;
+  color: #23468b;
+  font-size: 14px;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.rvf__close:hover {
+  background: #e4e8f4;
+}
+.rvf__close:focus-visible {
+  outline: 2px solid #23468b;
+  outline-offset: 2px;
+}
+.rvf:not(.has-js) .rvf__close {
+  display: none;
+}
+.rvf__ttl {
+  margin: 0;
+  text-align: center;
+  font-family: var(--f-bodoni);
+  font-weight: 700;
+  font-size: clamp(24px, 4.4vw, 34px);
+  letter-spacing: 0.04em;
+}
+.rvf__lead {
+  margin: 0.6em 0 clamp(18px, 3vw, 26px);
+  text-align: center;
+  font-family: var(--f-body);
+  font-size: 14px;
+  color: #5a6b90;
+}
+
+/* 星 */
+.rvf__stars {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  margin-bottom: clamp(16px, 2.6vw, 24px);
+}
+.rvf__star {
+  font-size: 34px;
+  line-height: 1;
+  padding: 2px;
+  background: none;
+  border: 0;
+  cursor: pointer;
+  color: #d3d8e6;
+  transition:
+    color 0.12s ease,
+    transform 0.12s ease;
+}
+.rvf__star:hover {
+  transform: scale(1.12);
+}
+.rvf__star.is-on {
+  color: #f4b400;
+}
+.rvf__star:focus-visible {
+  outline: 2px solid #23468b;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.rvf__row {
+  display: grid;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+@media (min-width: 560px) {
+  .rvf__row--2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.rvf__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+.rvf__row .rvf__field {
+  margin-bottom: 0;
+}
+.rvf__label {
+  font-family: var(--f-body);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: #23468b;
+}
+.rvf__label i {
+  color: #e0117f;
+  font-style: normal;
+}
+.rvf__input {
+  font-family: var(--f-body);
+  font-size: 15px;
+  color: #1c2333;
+  padding: 11px 13px;
+  border: 1px solid #cfd5e4;
+  border-radius: 9px;
+  background: #fff;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.rvf__input:focus {
+  outline: 0;
+  border-color: #23468b;
+  box-shadow: 0 0 0 3px rgba(35, 70, 139, 0.15);
+}
+.rvf__textarea {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.6;
+}
+
+.rvf__submit {
+  margin-top: 6px;
+  width: 100%;
+  background: #23468b;
+  color: #fff;
+  border: 0;
+  border-radius: 999px;
+  cursor: pointer;
+  font-family: var(--f-body);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.03em;
+  padding: 14px 20px;
+  transition:
+    opacity 0.2s ease,
+    transform 0.12s ease;
+}
+.rvf__submit:hover {
+  transform: translateY(-1px);
+}
+.rvf__submit:disabled {
+  opacity: 0.55;
+  cursor: default;
+  transform: none;
+}
+.rvf__msg {
+  margin: 14px 0 0;
+  text-align: center;
+  font-family: var(--f-body);
+  font-size: 13.5px;
+  min-height: 1.2em;
+}
+.rvf__msg.is-ok {
+  color: #1a8f4a;
+}
+.rvf__msg.is-err {
+  color: #d23;
+}
+
+/* ============================================================
+   block05 : ONLINE SHOP （レシート / block05.pdf 準拠）
+
+/* ============================================================
+   block05 : ONLINE SHOP （レシート / block05.pdf 準拠）
+   背景 #F4E06D / 文字 #23468B
+   ONLINE SHOP=Libre Bodoni 700 /
+   Select your favorite color too!=Cormorant Garamond 600 italic /
+   商品名=Geist Pixel / Add=Jersey 10 / Continue=Jersey 20
+   ============================================================ */
+.shop {
+  --shop-ink: #23468b;
+  --shop-box: #e9e9e9;
+  --sec-bg: #f4e06d; /* 描画は .bgFade（クロスフェード対象） */
+  background: transparent;
+  color: var(--shop-ink);
+  padding: clamp(40px, 6vw, 86px) 20px clamp(48px, 7vw, 96px);
+  overflow: hidden;
+}
+
+/* ---- レシート本体（上下ギザギザ） ---- */
+.shop__receipt {
+  --th: 15px; /* ギザギザの高さ（参考実測 ≒15px） */
+  --tw: 26px; /* ギザギザ1山の幅（参考実測 ≒26px / 幅の1.19%） */
+  position: relative;
+  /* 指示06: 参考サイトの実測に合わせて大きく。参考はレシートが
+     表示幅の 76.5%（当方は 600px = 21%）。狭い画面では従来の 600px を下限に。 */
+  max-width: max(600px, 76.5vw);
+  margin: 0 auto;
+  container-type: inline-size; /* 内側の cqw の基準 */
+  background: #fff;
+  filter: drop-shadow(0 24px 46px rgba(35, 70, 139, 0.2));
+  -webkit-mask:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='18'%3E%3Cpath d='M0 18 L17 0 L34 18 Z' fill='%23000'/%3E%3C/svg%3E") top center / var(--tw) var(--th) repeat-x,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='18'%3E%3Cpath d='M0 0 L17 18 L34 0 Z' fill='%23000'/%3E%3C/svg%3E") bottom center / var(--tw) var(--th) repeat-x,
+    linear-gradient(#000, #000) center / 100% calc(100% - 2 * var(--th) + 2px) no-repeat;
+  mask:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='18'%3E%3Cpath d='M0 18 L17 0 L34 18 Z' fill='%23000'/%3E%3C/svg%3E") top center / var(--tw) var(--th) repeat-x,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='18'%3E%3Cpath d='M0 0 L17 18 L34 0 Z' fill='%23000'/%3E%3C/svg%3E") bottom center / var(--tw) var(--th) repeat-x,
+    linear-gradient(#000, #000) center / 100% calc(100% - 2 * var(--th) + 2px) no-repeat;
+}
+/* 左右余白は参考サイト実測の 9.19%（cqw）。上下は従来どおり。 */
+/* ---- 内側の余白 ----
+   block05.pdf 実測（すべてレシート幅に対する % = cqw）:
+   左右 9.26% / 上（見出しインクまで）4.08% ← 指示①「上下に幅欲しい」 */
+/* 下パディングは下ギザギザ（--th 15px 固定）より大きくして、
+   狭い画面でバーコードがギザギザに切られないようにする（cqw は
+   モバイルだと数px しかないため max() で最低 34px を確保）。 */
+.shop__pad {
+  padding: max(40px, 5.2cqw) max(20px, 9.26cqw) max(34px, 2.4cqw);
+}
+
+/* ---- 見出し ----
+   実測: ONLINE SHOP は 1文字あたり 1.4457%、サブは全体で 14.83%。
+   max() で従来の px 値を下限にしているので、狭い画面の見た目は変わらない。 */
+.shop__title {
+  margin: 0;
+  text-align: center;
+  font-family: var(--f-bodoni);
+  font-weight: 700;
+  font-size: max(clamp(30px, 6vw, 44px), 2.012cqw);
+  line-height: 1;
+  letter-spacing: 0.06em;
+  color: var(--shop-ink);
+}
+.shop__sub {
+  margin: 1.25cqw 0 0;
+  text-align: center;
+  font-family: var(--f-cormorant);
+  font-weight: 600;
+  font-style: italic;
+  font-size: max(clamp(16px, 2.8vw, 22px), 1.411cqw);
+  line-height: 1;
+  color: var(--shop-ink);
+}
+.shop__sub span {
+  position: relative;
+  padding: 0 0.95em;
+}
+.shop__sub span::before,
+.shop__sub span::after {
+  content: "-";
+  position: absolute;
+  top: 0;
+}
+.shop__sub span::before {
+  left: 0;
+}
+.shop__sub span::after {
+  right: 0;
+}
+
+/* ---- 商品 6点（2カラム×3段 / レイアウト調整指示0810.pdf）----
+   レシート紙幅に対する実測: 写真 37.34%、写真間 8.07%、左右余白 9.19%、
+   写真の縦横比 1.227。段間はコンプ実測 7.6–10.3% の中間をとる。 */
+.shop__grid {
+  /* minmax(0,1fr): 商品名が nowrap で min-content 下限を作るため、
+     1fr だけだと左右のカラム幅がずれる（写真の大きさも変わってしまう）。 */
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 8.07cqw;
+  row-gap: max(20px, 9cqw);
+  /* サブ見出しと商品画像の間に少し隙間（狭い画面でも効くよう下限 26px） */
+  margin-top: max(26px, 5cqw);
+}
+
+@media (max-width: 768px) {
+  /* SPサイズ */
+  .shop__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
+
+.shop__prod {
+  margin: 0;
+}
+.shop__box {
+  background: var(--shop-box);
+  border-radius: 1.4cqw;
+  overflow: hidden;
+  aspect-ratio: 1.227;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.shop__img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* ---- ロープのカルーセル（ロープ写真→着用写真8枚）----
+   支給写真の地色が白なので、枠の地色も同じ白にして
+   contain の余白（左右の帯）が出ないようにする。 */
+/* 写真の地色・レシートの紙と同じ純白。ここが少しでも暗いと
+   写真エリアの縁が薄いグレーの帯に見える。 */
+.shop__box--car {
+  position: relative;
+  background: #fff;
+}
+/* 画像は枠と同じ比率で書き出してあるので cover でも切れない。
+   contain だと丸め誤差で 0.02px ほど隙間ができ、枠の縁がうっすら見えるため。 */
+.shop__box--car .shop__img {
+  position: absolute;
+  inset: 0;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.shop__box--car .shop__img.is-show {
+  opacity: 1;
+}
+.shop__arw {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  width: max(18px, 3.1cqw);
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #fff;
+  cursor: pointer;
+  opacity: 0.92;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.35));
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+}
+.shop__arw svg {
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  display: block;
+}
+.shop__arw--prev {
+  left: 1.1cqw;
+}
+.shop__arw--next {
+  right: 1.1cqw;
+}
+.shop__arw:hover,
+.shop__arw:focus-visible {
+  opacity: 1;
+  transform: translateY(-50%) scale(1.12);
+}
+
+/* ---- カルーセルのドット（実測: 直径 1.34% / 中心間 3.85% / 写真下 1.75%）----
+   現在位置はレシートの黄色、他はグレー。表示のみでコンプ通り押せない。 */
+.shop__cdots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: max(4px, 2.51cqw);
+  margin-top: max(6px, 1.75cqw);
+}
+.shop__cdots i {
+  width: max(5px, 1.34cqw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #ddd;
+  display: block;
+}
+.shop__cdots i.on {
+  background: #e8d36c;
+}
+
+/* ---- 商品名（中央寄せ・名前のみ / 05.pdf）---- */
+.shop__name {
+  text-align: center;
+  margin: 0;
+  font-family: var(--f-geist);
+  font-weight: 400;
+  font-size: max(clamp(14px, 2.5vw, 19px), 1.641cqw);
+  line-height: 1.15;
+  letter-spacing: 0.06em;
+  color: var(--shop-ink);
+}
+/* 写真（またはドット）下から商品名まで 3.79% / 名前→価格行 2.57%（実測） */
+.shop__grid .shop__name {
+  margin-top: max(10px, 3.79cqw);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: max(5px, 1.5cqw);
+}
+/* ドットのあるロープ側は、ドット下からの間隔（実測 4.28%） */
+.shop__cdots + .shop__name {
+  margin-top: max(11px, 4.28cqw);
+}
+/* 商品名の前に付く色玉（黒/グレー/ピンク/ブルー） */
+.shop__sw {
+  flex: 0 0 auto;
+  width: max(9px, 1.85cqw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--c);
+  display: block;
+}
+/* 価格行: 点線リーダー → 金額（右揃え） */
+.shop__pline {
+  display: flex;
+  align-items: center;
+  gap: max(6px, 1.6cqw);
+  margin: max(7px, 2.57cqw) 0 0;
+}
+.shop__yen {
+  flex: 0 0 auto;
+  font-family: var(--f-geist);
+  font-weight: 400;
+  font-size: max(clamp(14px, 2.5vw, 19px), 1.641cqw);
+  line-height: 1;
+  letter-spacing: 0.06em;
+  color: var(--shop-ink);
+  white-space: nowrap;
+}
+
+/* ---- BUY NOW（紺色ボタン / 05.pdf。block03 と同じ #27498D）---- */
+.shop__buyWrap {
+  display: flex;
+  justify-content: center;
+  margin-top: max(24px, 13cqw);
+}
+.shop__buy {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: max(150px, 14cqw);
+  background: #27498d;
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--f-encode);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.04em;
+  font-size: max(15px, 1.55cqw);
+  padding: 0.85em 1.9em;
+  border-radius: 4px;
+  box-shadow: 4px 5px 11px rgba(35, 70, 139, 0.32);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    opacity 0.2s ease;
+}
+.shop__buy:hover {
+  transform: translateY(-2px);
+  box-shadow: 4px 8px 15px rgba(35, 70, 139, 0.4);
+}
+
+/* 点線区切り（.shop__sep）はコンプから無くなったため未使用 */
+
+/* ---- 商品名の行（名前 … リーダー … Add）----
+   指示②: 文字を大きく。実測は 1文字あたり 1.0141%（＝約 1.69cqw）。 */
+.shop__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.shop__li {
+  display: flex;
+  align-items: center;
+  gap: 1.6cqw;
+  margin: 0;
+  padding: 1.1cqw 0;
+}
+/* バッグ側の行はドットのすぐ下に置く（実測 3.4%） */
+.shop__gallery .shop__li {
+  padding: 0;
+  margin-top: 3.4cqw;
+}
+.shop__pn {
+  flex: 0 0 auto;
+  font-family: var(--f-geist);
+  font-weight: 400;
+  font-size: max(clamp(14px, 2.5vw, 19px), 1.641cqw);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--shop-ink);
+  white-space: nowrap;
+}
+.shop__leader {
+  flex: 1 1 auto;
+  height: 0;
+  border-bottom: 2px dotted rgba(35, 70, 139, 0.5);
+  transform: translateY(-2px);
+}
+.shop__add {
+  flex: 0 0 auto;
+  font-family: var(--f-jersey10);
+  font-weight: 400;
+  /* 実測: ボタンは幅 4.05% / 高さ 2.00%。上下 padding 込みで 1.4em になるので 1.43cqw */
+  font-size: max(clamp(17px, 2.6vw, 22px), 1.43cqw);
+  line-height: 1;
+  letter-spacing: 0.03em;
+  color: #fff;
+  background: var(--shop-ink);
+  text-decoration: none;
+  padding: 0.16em 0.73em 0.24em;
+  border-radius: 3px;
+  transition:
+    transform 0.12s ease,
+    opacity 0.2s ease;
+}
+.shop__add:hover {
+  transform: translateY(-1px);
+  opacity: 0.9;
+}
+
+/* ---- Continue to checkout（実測: 幅 21.08% / 高さ 3.78%）---- */
+.shop__checkoutWrap {
+  display: flex;
+  justify-content: center;
+  margin-top: max(24px, 4.2cqw);
+}
+.shop__checkout {
+  display: inline-block;
+  font-family: var(--f-jersey20);
+  font-weight: 400;
+  /* 実測: ボタンは幅 21.08% / 高さ 3.78%。上下 padding 込みで 2.24em なので 1.688cqw */
+  font-size: max(clamp(19px, 3.4vw, 27px), 1.688cqw);
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: #fff;
+  background: var(--shop-ink);
+  text-decoration: none;
+  padding: 0.62em 2em;
+  border-radius: 6px;
+  box-shadow: 5px 6px 12px rgba(35, 70, 139, 0.35);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.shop__checkout:hover {
+  transform: translateY(-2px);
+  box-shadow: 5px 9px 16px rgba(35, 70, 139, 0.4);
+}
+
+/* ---- ロゴ + バーコード（1枚の SVG に両方入っている。実測はバーコード幅 11.41%）---- */
+.shop__logo {
+  display: block;
+  margin: max(28px, 4.6cqw) auto 0;
+  width: max(150px, 11.41cqw);
+  height: auto;
+}
+
+/* ---- 狭い画面 ----
+   コンプはレシートが広い前提のレイアウト。レシートが狭いと商品名の
+   px 下限が効いてカラムに収まらないので、そこだけ折り返しを許して
+   間隔を詰める（2カラムと写真サイズはコンプ通り保つ）。 */
+@media (max-width: 1520px) {
+  .shop__grid .shop__li {
+    gap: 0.6em;
+    flex-wrap: wrap;
+  }
+  .shop__grid .shop__pn {
+    white-space: normal;
+    min-width: 0;
+  }
+  .shop__grid .shop__leader {
+    min-width: 1.5em;
+  }
+}
+@media (max-width: 460px) {
+  .shop__pn {
+    font-size: 12px;
+    letter-spacing: 0;
+  }
+  .shop__title {
+    letter-spacing: 0.04em;
+  }
+  /* 狭い画面は商品名が2カラムに収まらないので、名前と価格を小さく */
+  .shop__grid .shop__name,
+  .shop__yen {
+    font-size: 12px;
+    letter-spacing: 0.02em;
+  }
+  .shop__grid .shop__name {
+    gap: 4px;
+  }
+}
+
+/* ============================================================
+   block06 : Instagram フォロー導線（Block_06.pdf）背景は白（クロスフェード）
+   ============================================================ */
+.ig06 {
+  --sec-bg: #ffffff;
+  background: transparent;
+  padding: clamp(52px, 11vw, 120px) var(--pad) clamp(60px, 13vw, 140px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.ig06__logo {
+  width: min(300px, 62vw);
+  height: auto;
+  display: block;
+}
+.ig06__all {
+  margin-top: clamp(22px, 4.2vw, 36px);
+  display: inline-flex;
+  align-items: center;
+  gap: 1.1em;
+  background: #111;
+  color: #fff;
+  text-decoration: none;
+  font-family: var(--f-encode);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  font-size: clamp(15px, 2.2vw, 20px);
+  padding: 0.95em 2em;
+  border-radius: 999px;
+  transition:
+    transform 0.15s ease,
+    opacity 0.2s ease;
+}
+.ig06__all:hover {
+  transform: translateY(-2px);
+  opacity: 0.92;
+}
+/* FOLLOW US と同じ白い三角（絵文字化を避けるため CSS で描く） */
+.ig06__arrow {
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0.4em 0 0.4em 0.6em;
+  border-color: transparent transparent transparent #fff;
+}
+.ig06__card {
+  position: relative;
+  container-type: inline-size;
+  margin-top: clamp(34px, 6vw, 64px);
+  display: block;
+  width: min(430px, 86vw);
+  border-radius: 10px;
+  overflow: hidden;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.ig06__card img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.ig06__card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.2);
+}
+/* 画像に焼き込まれた FOLLOW US を ALL ITEMS と同じフォントのボタンで上書き。
+   画像内ボタン実測: 中央X 49% / 中央Y 88.2% / 幅 52.7% を覆うよう少し大きめに。 */
+.ig06__follow {
+  position: absolute;
+  left: 49%;
+  top: 88.2%;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9em;
+  min-width: 58%;
+  white-space: nowrap;
+  pointer-events: none;
+  background: #0a0a0a;
+  color: #fff;
+  border-radius: 999px;
+  padding: 0.52em 1.4em;
+  font-family: var(--f-encode);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  font-size: 5.6cqw;
+}
+
+/* ============================================================
+   BUY NOW → 公式商品ページをそのままポップアップ（ポップアップリンク_0803.pdf）
+   これまでは Wix Headless API で商品ページを再現していたが、指示は
+   「この公式ページリンクがポップアップででてきてほしい」。参考サイト
+   （reservation.baseballrankup.workers.dev）と同じく、ボトムシートに
+   公式ページを iframe で出す。旧コメントの「iframe 埋め込み不可」は誤りで、
+   X-Frame-Options も CSP frame-ancestors も返らず、フレームバスティング
+   もされないことを実機で確認済み。
+   ============================================================ */
+.wixM {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  visibility: hidden;
+  pointer-events: none;
+}
+.wixM__ov {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 15, 20, 0.55);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+/* 下からスライドアップするボトムシート（全画面幅共通） */
+.wixM__panel {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 100%);
+  width: min(1000px, 100%);
+  max-height: 94vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: #fff;
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -14px 44px rgba(0, 0, 0, 0.28);
+  transition: transform 0.5s cubic-bezier(0.22, 0.9, 0.25, 1);
+  will-change: transform;
+}
+.wixM.is-open {
+  visibility: visible;
+  pointer-events: auto;
+}
+.wixM.is-open .wixM__ov {
+  opacity: 1;
+}
+.wixM.is-open .wixM__panel {
+  transform: translate(-50%, 0);
+}
+.wixM__grab {
+  width: 44px;
+  height: 5px;
+  border-radius: 999px;
+  background: #d7d7dd;
+  margin: 12px auto 2px;
+}
+.wixM__close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  z-index: 2;
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 50%;
+  background: #f1f1f4;
+  color: #111;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+.wixM__close:hover {
+  background: #e6e6ec;
+}
+
+/* 公式ページを出す iframe。パネルは中でスクロールさせず iframe に高さを持たせる
+   （公式ページ側が自前でスクロールする）。 */
+.wixM__panel {
+  overflow: hidden;
+}
+.wixM__frame {
+  display: block;
+  width: 100%;
+  height: min(86vh, 900px);
+  border: 0;
+  background: #fff;
+}
+.wixM__note {
+  margin: 0;
+  padding: 9px 16px 12px;
+  font: 12px var(--f-body);
+  color: #9a9aa2;
+  text-align: center;
+}
+.wixM__note a {
+  color: #1780e1;
+}
+
+@media (max-width: 600px) {
+  .wixM__panel {
+    width: 100%;
+  }
+  .wixM__frame {
+    height: 82vh;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wixM__panel,
+  .wixM__ov {
+    transition: none;
+  }
+}
+
+/* =============== 写真の拡大表示（ライトボックス） ===============
+   ブロック01 Instagram モックの3x3グリッドをクリックすると、その写真だけを
+   ふわっと拡大する。レイヤーは position:fixed なので背面がスクロールしても
+   写真は動かない（背面のスクロール自体も html 側で止めている）。
+   z-index は BUY NOW のポップアップ(200)より上。 */
+.rinaSec__mockGrid .ph {
+  cursor: zoom-in;
+}
+
+.lb {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 4vw, 48px);
+  background: rgba(0, 0, 0, 0.82);
+  opacity: 0;
+  visibility: hidden;
+  /* visibility は補間せず、閉じるときだけフェード後に遅らせて切る。
+     開いた瞬間から確実に見えて、クリックも受けられる状態にするため。 */
+  transition:
+    opacity 0.3s ease,
+    visibility 0s linear 0.3s;
+}
+.lb.is-open {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity 0.3s ease,
+    visibility 0s linear 0s;
+}
+
+/* 拡大側は contain。タイルは cover で正方形に切っているので、
+   拡大時だけ写真全体が見える。 */
+.lb__img {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+  cursor: default;
+  transform: scale(0.94);
+  transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.25, 1);
+}
+.lb.is-open .lb__img {
+  transform: scale(1);
+}
+
+.lb__close {
+  position: absolute;
+  top: clamp(10px, 2.4vw, 22px);
+  right: clamp(10px, 2.4vw, 22px);
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.2s ease;
+}
+.lb__close svg {
+  width: 20px;
+  height: 20px;
+}
+.lb__close:hover,
+.lb__close:focus-visible {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* 拡大中は背面をスクロールさせない */
+html.is-lbOpen,
+html.is-lbOpen body {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lb,
+  .lb__img,
+  .lb__close {
+    transition: none;
+  }
+}
+
+/* ============================================================
+   埋め込み表示（Wix の HTML コンポーネント内）
+   コンポーネントの iframe は「中身の高さ」で作られるので、この文書の
+   ビューポート＝文書全体になる。すると position:fixed が画面ではなく
+   文書全体に対して効き、ライトボックスや BUY NOW のシートが
+   数千 px 先の中央に置かれて画面に出てこない。
+   JS（index.html の検出モジュール）が出す「実際に見えている範囲」
+   --emT / --emH に置き直して、画面内に来るようにする。
+   ※ .bgFade は文書全体を1色で塗るのが正しいので fixed のままにする。
+   ============================================================ */
+html.is-embed :is(.noise, .loader, .wixM, .lb) {
+  position: absolute;
+  top: var(--emT, 0px);
+  bottom: auto;
+  left: 0;
+  right: 0;
+  height: var(--emH, 100%);
+}
+/* 公式ページのボトムシートも、見えている範囲に収まる高さにする */
+html.is-embed .wixM__panel {
+  max-height: calc(var(--emH, 100%) - 20px);
+}
+html.is-embed .wixM__frame {
+  height: calc(var(--emH, 100%) - 92px);
+}
+
+/* ============================================================
+   SPEC — レシート風の伝票（base.svg / spec-*-sample_0.png）
+   上下がギザギザ、左右は直線。中身の高さで縦に伸びるので base.svg を
+   まるごと引き伸ばすと歯が縦長に崩れる。そこで base.svg の歯1山ぶん
+   （幅 73 / 深さ 24.8）だけを SVG にして mask で敷き詰め、山の数が
+   base.svg と同じ 1655/73 = 22.7 山になるよう受け皿の幅から px で決める
+   （ステージの中なので vw も --stageW 比も使えない）。
+
+   中の寸法は spec-ballbag-sample_0.png / spec-shoes-sample_0.png の
+   実測値（受け皿幅 1600px）を、この受け皿の幅 660px に換算したもの。
+     左右の余白   118/1600      = 7.5%
+     縦の区切り   525.5/1600    → 行の内側で 29.8%
+     罫線の色     rgb(136,136,136)
+     見出し       Archivo Black。サンプルは商品名だけ字を詰めて幅を
+                  合わせていたが、Rope Strap の実測 104px に揃えて
+                  660px 換算の 42px で統一した
+     写真         支給 PNG を等倍配置（1378/1600 等）＝ ほぼ内寸いっぱい
+   ============================================================ */
+:is(.b03, .b04) .spec {
+  /* base.svg の歯 1山。660 x 73/1655 = 29.1 / 660 x 24.8/1655 = 9.9 */
+  --zigW: 29.1px;
+  --zigH: 9.9px;
+  --zigT: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2073%2074.4'%3E%3Cpath%20d='M0%200V74.4H73V0L36.5%2024.8Z'/%3E%3C/svg%3E");
+  --zigB: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2073%2074.4'%3E%3Cpath%20d='M0%200H73V74.4L36.5%2049.6%200%2074.4Z'/%3E%3C/svg%3E");
+  width: 660px;
+  margin: 0 auto 96px;
+  padding: calc(var(--zigH) + 52px) 49.5px calc(var(--zigH) + 57px);
+  background: #fff;
+  color: #111;
+  text-align: center;
+  /* 上端・下端にギザギザを敷き詰め、中央は塗りつぶし。歯のタイルは深さの3倍を
+     用意して内側 2/3 を塗りにしてあるので、中央レイヤーの境目は必ず歯レイヤーの
+     塗りの中に入る。1px 重ねの逃げが要らないぶん、谷を横切る線が出ない。 */
+  -webkit-mask-image: var(--zigT), var(--zigB), linear-gradient(#000, #000);
+  mask-image: var(--zigT), var(--zigB), linear-gradient(#000, #000);
+  -webkit-mask-size:
+    var(--zigW) calc(var(--zigH) * 3),
+    var(--zigW) calc(var(--zigH) * 3),
+    100% calc(100% - var(--zigH) * 4);
+  mask-size:
+    var(--zigW) calc(var(--zigH) * 3),
+    var(--zigW) calc(var(--zigH) * 3),
+    100% calc(100% - var(--zigH) * 4);
+  -webkit-mask-position:
+    top left,
+    bottom left,
+    left calc(var(--zigH) * 2);
+  mask-position:
+    top left,
+    bottom left,
+    left calc(var(--zigH) * 2);
+  -webkit-mask-repeat: repeat-x, repeat-x, no-repeat;
+  mask-repeat: repeat-x, repeat-x, no-repeat;
+}
+
+:is(.b03, .b04) .spec__ttl {
+  margin: 0;
+  font-family: var(--f-archivo);
+  font-weight: 400;
+  font-size: 48px;
+  line-height: 1.04;
+  letter-spacing: -0.005em;
+}
+/* サンプルは商品名を字数に応じて詰めている（Drawstring だけ小さい） */
+.b03 .spec__ttl:not(.spec__ttl--2nd) {
+  font-size: 39px;
+}
+/* 最後の罫線から次の見出しまで 255/1600 → 105px */
+:is(.b03, .b04) .spec__ttl--2nd {
+  margin-top: 105px;
+}
+:is(.b03, .b04) .spec__jp {
+  margin: 12px 0 0;
+  font-family: var(--f-noto);
+  font-weight: 500;
+  font-size: 13.5px;
+  line-height: 1.4;
+  letter-spacing: 0.1em;
+}
+:is(.b03, .b04) .spec__ph {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin: 52px auto 0;
+}
+:is(.b03, .b04) .spec__ph--rope {
+  margin-top: 57px;
+}
+:is(.b03, .b04) .spec__lbl {
+  margin: 55px 0 0;
+  text-align: left;
+  font-family: var(--f-noto);
+  font-weight: 700;
+  font-size: 15.5px;
+  line-height: 1.2;
+  letter-spacing: 0.04em;
+}
+:is(.b03, .b04) .spec__tbl {
+  margin: 12px 0 0;
+  text-align: left;
+  border-bottom: 1px solid #888;
+  font-family: var(--f-noto);
+  font-weight: 400;
+  font-size: 17.5px;
+  line-height: 1.5;
+}
+:is(.b03, .b04) .spec__row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 29.8% 1fr;
+  align-items: center;
+  padding: 12px 0;
+  border-top: 1px solid #888;
+}
+:is(.b03, .b04) .spec__row dt {
+  padding-left: 14px;
+}
+:is(.b03, .b04) .spec__row dd {
+  margin: 0;
+  padding-left: 41.7px;
+}
+/* 縦の区切りは行いっぱいではなく文字の高さぶんだけ（サンプル実測 45/1600） */
+:is(.b03, .b04) .spec__row::before {
+  content: "";
+  position: absolute;
+  left: 29.8%;
+  top: 50%;
+  width: 1px;
+  height: 1.15em;
+  margin-top: -0.575em;
+  background: #888;
+}
+
+@media (max-width: 600px) {
+  /* 受け皿が 660→515px なので、文字と余白も 515/660 = 0.78 倍にする */
+  :is(.b03, .b04) .spec {
+    --zigW: 22.7px;
+    --zigH: 7.7px;
+    width: 515px;
+    padding: calc(var(--zigH) + 41px) 38.6px calc(var(--zigH) + 45px);
+  }
+  :is(.b03, .b04) .spec__ttl {
+    font-size: 37.4px;
+  }
+  .b03 .spec__ttl:not(.spec__ttl--2nd) {
+    font-size: 30.4px;
+  }
+  :is(.b03, .b04) .spec__row dt {
+    padding-left: 10.9px;
+  }
+  :is(.b03, .b04) .spec__row dd {
+    padding-left: 32.5px;
+  }
+  :is(.b03, .b04) .spec__ttl--2nd {
+    margin-top: 82px;
+  }
+  :is(.b03, .b04) .spec__jp {
+    font-size: 14px;
+  }
+  :is(.b03, .b04) .spec__ph {
+    margin-top: 41px;
+  }
+  :is(.b03, .b04) .spec__ph--rope {
+    margin-top: 44px;
+  }
+  :is(.b03, .b04) .spec__lbl {
+    margin-top: 43px;
+    font-size: 12.1px;
+  }
+  :is(.b03, .b04) .spec__tbl {
+    font-size: 15px;
+  }
+  :is(.b03, .b04) .spec__row {
+    padding: 9px 0;
+  }
+}
+
+/* 埋め込み時はスクロールバーを出さない。コンポーネントの枠の中に出ると
+   LP のデザインの一部のように見えてしまうため。スクロール自体は殺さない
+   （枠より中身が高いときに末尾まで届かなくなるので scrolling="no" は使わない）。
+   単体表示（html.is-embed が付かない）では従来どおり出す。 */
+html.is-embed {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+html.is-embed::-webkit-scrollbar,
+html.is-embed body::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+.b03__chat .bub,
+.b04__chat .bub {
+  font-size: clamp(16px, 3vw, 20px) !important;
+}
+.b03__chat,
+.b04__chat {
+  padding: 0 20px !important;
+}

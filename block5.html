@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RANKUP SPORTS 2026 SUMMER | PACK LIGHT, PLAY LOUD.</title>
+  <meta name="description" content="部活帰りも、寄り道も。Rankup sports 2026 SUMMER コレクション特設サイト。" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Golos+Text:wght@400;700&family=Roboto:wght@400&family=Zen+Maru+Gothic:wght@400&family=M+PLUS+1p:wght@400;500&family=Space+Grotesk:wght@700&family=Bowlby+One&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Montserrat:wght@400&family=Noto+Sans+JP:wght@400;500;700&family=Libre+Bodoni:wght@700&family=Cormorant+Garamond:ital,wght@1,600&family=Geist+Pixel&family=Encode+Sans+Condensed:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="block5.css" />
+</head>
+
+<body>
+
+  <!-- スクロールに応じて色が変わる背景レイヤー（各セクションの背景はこれが描く） -->
+  <div class="bgFade" id="bgFade" aria-hidden="true"></div>
+
+
+  <!-- ============================================================
+     block05 : ONLINE SHOP （レシート風カート / 背景 #F4E06D）
+     ============================================================ -->
+  <section class="shop" id="shop">
+    <div class="shop__receipt">
+      <div class="shop__pad">
+        <h2 class="shop__title">ONLINE SHOP</h2>
+        <p class="shop__sub"><span>Select your favorite color too!</span></p>
+
+        <!-- レイアウト調整指示0810.pdf: 2カラム×3段。バッグ2点は「準備中」の
+           グレー枠、ロープ4色はカルーセル（ロープ写真→着用写真8枚）。
+           価格行は 名前 → 点線リーダー → 金額。 -->
+        <div class="shop__grid">
+          <!-- Block05調整指示0810.pdf: ボールバッグは写真5枚のカルーセル（白背景）。
+             並びはコンプの矢印どおり front_b → back_b → front_c → back_c → ball。 -->
+          <figure class="shop__prod">
+            <div class="shop__box shop__box--car" id="ballBag">
+              <img class="shop__img is-show" src="assets/block05/ball/ball-1.jpg" alt="Drawstring Ball Bag" />
+              <img class="shop__img" data-src="assets/block05/ball/ball-2.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/ball/ball-3.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/ball/ball-4.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/ball/ball-5.jpg" alt="" />
+              <button type="button" class="shop__arw shop__arw--prev" data-car="prev" aria-controls="ballBag" aria-label="前の写真"><svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M15 4 7 12l8 8" />
+                </svg></button>
+              <button type="button" class="shop__arw shop__arw--next" data-car="next" aria-controls="ballBag" aria-label="次の写真"><svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M9 4l8 8-8 8" />
+                </svg></button>
+            </div>
+            <span class="shop__cdots" id="ballBagDots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i></span>
+            <p class="shop__name">DRAWSTRING BALL BAG</p>
+            <p class="shop__pline"><span class="shop__leader" aria-hidden="true"></span><span class="shop__yen">￥5,499</span></p>
+          </figure>
+          <figure class="shop__prod">
+            <!-- 「準備中」だった枠を DRAWSTRING BALL BAG と同じカルーセルに。
+               JS は .shop__box--car / .shop__img / .shop__arw / #<id>Dots を
+               総称で拾うので、id を合わせるだけで同じ動作になる。写真は4枚。 -->
+            <div class="shop__box shop__box--car" id="shoesBag">
+              <img class="shop__img is-show" src="assets/block05/shoes/shoes-1_0.jpg" alt="Shoes Barrel Bag" />
+              <img class="shop__img" data-src="assets/block05/shoes/shoes-2_0.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/shoes/shoes-3_0.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/shoes/shoes-4_0.jpg" alt="" />
+              <button type="button" class="shop__arw shop__arw--prev" data-car="prev" aria-controls="shoesBag" aria-label="前の写真"><svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M15 4 7 12l8 8" />
+                </svg></button>
+              <button type="button" class="shop__arw shop__arw--next" data-car="next" aria-controls="shoesBag" aria-label="次の写真"><svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M9 4l8 8-8 8" />
+                </svg></button>
+            </div>
+            <span class="shop__cdots" id="shoesBagDots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i></span>
+            <p class="shop__name">SHOES BARREL BAG</p>
+            <p class="shop__pline"><span class="shop__leader" aria-hidden="true"></span><span class="shop__yen">￥5,499</span></p>
+          </figure>
+
+          <figure class="shop__prod">
+            <div class="shop__box shop__box--car" id="ropeBlack">
+              <img class="shop__img is-show" src="assets/block05/rope/black-0.jpg" alt="ROPE STRAP - Black" />
+              <img class="shop__img" data-src="assets/block05/rope/black-1.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/rope/black-2.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/rope/black-3.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/rope/black-4.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/rope/black-5.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/rope/black-6.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/rope/black-7.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/rope/black-8.jpg" alt="" />
+              <button type="button" class="shop__arw shop__arw--prev" data-car="prev" aria-controls="ropeBlack" aria-label="前の写真"><svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M15 4 7 12l8 8" />
+                </svg></button>
+              <button type="button" class="shop__arw shop__arw--next" data-car="next" aria-controls="ropeBlack" aria-label="次の写真"><svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M9 4l8 8-8 8" />
+                </svg></button>
+            </div>
+            <span class="shop__cdots" id="ropeBlackDots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            <p class="shop__name"><span class="shop__sw" style="--c:#282828"></span>ROPE STRAP - Black</p>
+            <p class="shop__pline"><span class="shop__leader" aria-hidden="true"></span><span class="shop__yen">￥1,299</span></p>
+          </figure>
+
+          <figure class="shop__prod">
+            <div class="shop__box shop__box--car" id="ropeGray">
+              <img class="shop__img is-show" src="assets/block05/rope/gray-0.jpg" alt="ROPE STRAP - Silver" />
+              <img class="shop__img" data-src="assets/block05/rope/gray-1.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/rope/gray-2.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/rope/gray-3.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/rope/gray-4.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/rope/gray-5.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/rope/gray-6.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/rope/gray-7.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/rope/gray-8.jpg" alt="" />
+              <button type="button" class="shop__arw shop__arw--prev" data-car="prev" aria-controls="ropeGray" aria-label="前の写真"><svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M15 4 7 12l8 8" />
+                </svg></button>
+              <button type="button" class="shop__arw shop__arw--next" data-car="next" aria-controls="ropeGray" aria-label="次の写真"><svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M9 4l8 8-8 8" />
+                </svg></button>
+            </div>
+            <span class="shop__cdots" id="ropeGrayDots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            <p class="shop__name"><span class="shop__sw" style="--c:#BDC0CB"></span>ROPE STRAP - Silver</p>
+            <p class="shop__pline"><span class="shop__leader" aria-hidden="true"></span><span class="shop__yen">￥1,299</span></p>
+          </figure>
+
+          <figure class="shop__prod">
+            <div class="shop__box shop__box--car" id="ropePink">
+              <img class="shop__img is-show" src="assets/block05/rope/pink-0.jpg" alt="ROPE STRAP - Pink" />
+              <img class="shop__img" data-src="assets/block05/rope/pink-1.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/rope/pink-2.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/rope/pink-3.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/rope/pink-4.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/rope/pink-5.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/rope/pink-6.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/rope/pink-7.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/rope/pink-8.jpg" alt="" />
+              <button type="button" class="shop__arw shop__arw--prev" data-car="prev" aria-controls="ropePink" aria-label="前の写真"><svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M15 4 7 12l8 8" />
+                </svg></button>
+              <button type="button" class="shop__arw shop__arw--next" data-car="next" aria-controls="ropePink" aria-label="次の写真"><svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M9 4l8 8-8 8" />
+                </svg></button>
+            </div>
+            <span class="shop__cdots" id="ropePinkDots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            <p class="shop__name"><span class="shop__sw" style="--c:#FF3E97"></span>ROPE STRAP - Pink</p>
+            <p class="shop__pline"><span class="shop__leader" aria-hidden="true"></span><span class="shop__yen">￥1,299</span></p>
+          </figure>
+
+          <figure class="shop__prod">
+            <div class="shop__box shop__box--car" id="ropeBlue">
+              <img class="shop__img is-show" src="assets/block05/rope/blue-0.jpg" alt="ROPE STRAP - LightBlue" />
+              <img class="shop__img" data-src="assets/block05/rope/blue-1.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/rope/blue-2.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/rope/blue-3.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/rope/blue-4.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/rope/blue-5.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/rope/blue-6.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/rope/blue-7.jpg" alt="" />
+              <img class="shop__img" data-src="assets/block05/rope/blue-8.jpg" alt="" />
+              <button type="button" class="shop__arw shop__arw--prev" data-car="prev" aria-controls="ropeBlue" aria-label="前の写真"><svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M15 4 7 12l8 8" />
+                </svg></button>
+              <button type="button" class="shop__arw shop__arw--next" data-car="next" aria-controls="ropeBlue" aria-label="次の写真"><svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M9 4l8 8-8 8" />
+                </svg></button>
+            </div>
+            <span class="shop__cdots" id="ropeBlueDots" aria-hidden="true"><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+            <p class="shop__name"><span class="shop__sw" style="--c:#00DEFF"></span>ROPE STRAP - LightBlue</p>
+            <p class="shop__pline"><span class="shop__leader" aria-hidden="true"></span><span class="shop__yen">￥1,299</span></p>
+          </figure>
+        </div>
+        <!--
+      <div class="shop__buyWrap"><a class="shop__buy ig__buy" href="https://www.rankup-sports.com/product-page/basketball-gear-bags">BUY NOW</a></div>
+      -->
+        <img class="shop__logo" src="assets/block05/shop-logo.svg" alt="Rankup sports" />
+      </div>
+    </div>
+  </section>
+
+
+  <!-- BLOCK 03 / 04 を画面幅に合わせて等比縮小（968px 基準の固定レイアウト） -->
+  <script>
+    (function () {
+      document.querySelectorAll('.b03, .b04').forEach(function (sec) {
+        var scaleEl = sec.querySelector('[class*="__scale"]');
+        var stage = sec.querySelector('[class*="__stage"]');
+        if (!scaleEl || !stage) return;
+        // data-kmax で拡大側の上限を指定（既定 1 = 拡大しない）。
+        // 指示04: block03 のみ 1.655 倍まで拡大して参考サイトの表示サイズに合わせる。
+        var kmax = parseFloat(sec.dataset.kmax || '1');
+        function fit() {
+          // 基準幅はステージの実レイアウト幅（--stageW）。モバイルでは狭くなるので
+          // その分 --k が上がり、全体が大きく表示される。
+          var base = stage.offsetWidth || 968;
+          var k = Math.min(kmax, sec.clientWidth / base);
+          scaleEl.style.setProperty('--k', k);
+          sec.style.height = stage.getBoundingClientRect().height + 'px';
+        }
+        window.addEventListener('resize', fit);
+        window.addEventListener('load', fit);
+        // 画像ロードで stage 高が変わるため、読み込み完了ごとに再計算
+        sec.querySelectorAll('img').forEach(function (img) {
+          if (!img.complete) img.addEventListener('load', fit, { once: true });
+        });
+        fit();
+      });
+    })();
+  </script>
+  <script>
+    /* HERO の写真カルーセル（Block03素材差し替え指示.pdf / Block04素材_0803.pdf）。
+       ← → で巡回し、ドットは現在位置の
+       表示のみ（コンプ通り、押せない）。 */
+    (function () {
+      [['b03Car', 'b03Dots'], ['b04Car', 'b04Dots']].forEach(function (ids) {
+        var car = document.getElementById(ids[0]), dots = document.getElementById(ids[1]);
+        if (!car || !dots) return;
+        var slides = car.querySelectorAll('img,video');
+        if (slides.length < 2) return;
+        // ドットは枚数に合わせて作り直す。HTML 側に個数を書いておくと、
+        // 写真やムービーを増減したときに必ずズレるので JS で同期させる。
+        dots.textContent = '';
+        for (var d = 0; d < slides.length; d++) dots.appendChild(document.createElement('i'));
+        var pips = dots.querySelectorAll('i');
+        var i = 0;
+        // 重ねて置いてあり全部ビューポート内なので loading="lazy" では一斉に飛ぶ。
+        // 表示する分と隣だけを読む。
+        function load(n) {
+          var el = slides[(n + slides.length) % slides.length];
+          if (el && el.dataset.src) { el.src = el.dataset.src; delete el.dataset.src; }
+        }
+        // 見えていないムービーは止めておく（先頭がムービーなので初期表示で再生）。
+        function playState() {
+          for (var k = 0; k < slides.length; k++) {
+            var el = slides[k];
+            if (el.tagName !== 'VIDEO') continue;
+            if (k === i) { var q = el.play(); if (q && q.catch) q.catch(function () { }); }
+            else { el.pause(); }
+          }
+        }
+        function go(n) {
+          i = (n + slides.length) % slides.length;
+          load(i); load(i + 1); load(i - 1);
+          for (var k = 0; k < slides.length; k++) slides[k].classList.toggle('is-show', k === i);
+          for (var m = 0; m < pips.length; m++) pips[m].classList.toggle('on', m === i);
+          playState();
+        }
+        // 先頭を表示状態にしてから始める（HTML 側の is-show に頼らない。
+        // 先頭の要素を差し替えたときに、どこにも is-show が無く真っ白になるのを防ぐ）
+        go(0);
+        document.querySelectorAll('.ig__navBtn[aria-controls="' + ids[0] + '"]').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            go(i + (btn.dataset.car === 'next' ? 1 : -1));
+          });
+        });
+      });
+    })();
+  </script>
+  <script>
+    /* ONLINE SHOP: ロープ4色のカルーセル（レイアウト調整指示0810.pdf）。
+       先頭はロープ単体の写真、続いて支給の着用写真8枚（コンプの①→②の順）。
+       ← → で巡回し、ドットは現在位置の表示のみ（コンプ通り、押せない）。 */
+    (function () {
+      document.querySelectorAll('.shop__box--car').forEach(function (car) {
+        var dots = document.getElementById(car.id + 'Dots');
+        var slides = car.querySelectorAll('.shop__img');
+        var pips = dots ? dots.querySelectorAll('i') : [];
+        if (slides.length < 2) return;
+        var i = 0;
+        // 重ねて置いてあるので loading="lazy" が効かない。表示分と両隣だけ読む。
+        function load(n) {
+          var el = slides[(n + slides.length) % slides.length];
+          if (el && el.dataset.src) { el.src = el.dataset.src; delete el.dataset.src; }
+        }
+        function go(n) {
+          i = (n + slides.length) % slides.length;
+          load(i); load(i + 1); load(i - 1);
+          for (var k = 0; k < slides.length; k++) slides[k].classList.toggle('is-show', k === i);
+          for (var m = 0; m < pips.length; m++) pips[m].classList.toggle('on', m === i);
+        }
+        load(1); load(-1);
+        car.querySelectorAll('.shop__arw').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            go(i + (btn.dataset.car === 'next' ? 1 : -1));
+          });
+        });
+      });
+    })();
+  </script>
+  <script>
+    /* ============ 埋め込み表示中の「実際に見えている範囲」の検出 ============
+       Wix の HTML コンポーネントは中身の高さで iframe を作るため、LP は iframe の
+       中で一切スクロールしない（window.pageYOffset が常に 0、innerHeight が文書の
+       高さ）。その状態だと下の背景色アニメーションはページ中央の色を1回計算した
+       まま固まり、position:fixed のライトボックスや BUY NOW も 2 万 px 先の中央に
+       置かれて画面に出てこない。
+
+       IntersectionObserver の暗黙のルートは「最上位フレームのビューポート」なので、
+       親が別オリジンでも intersectionRect から「いま画面に映っている範囲」を
+       LP 側の座標で取り出せる。これを pageYOffset / innerHeight の代わりに使う。
+       ・window.RUS_VP = {top, h} … JS 用
+       ・--emT / --emH  … CSS 用（html.is-embed の position:fixed 置き換えに使う） */
+    (function () {
+      var win;
+      try { win = window.top !== window.self; } catch (e) { win = true; }  // 別オリジンでも埋め込みと判る
+      if (!win) return;                                  // 単体表示のときは何もしない
+      if (!('IntersectionObserver' in window)) return;    // 非対応ブラウザは従来動作のまま
+
+      var root = document.documentElement;
+      var VP = window.RUS_VP = { top: null, h: 0 };
+      var target = document.body;
+      root.classList.add('is-embed');
+
+      var lastT = -1, lastH = -1, poll = 0, onScreen = false;
+
+      function apply(e) {
+        var r = e.intersectionRect;
+        if (r.height <= 0) return;
+        // intersectionRect はフレームのビューポート座標。内部スクロール量を足すと文書座標。
+        var t = Math.max(0, Math.round(r.top + window.pageYOffset));
+        var h = Math.round(r.height);
+        if (t === lastT && h === lastH) return;
+        lastT = t; lastH = h;
+        VP.top = t; VP.h = h;
+        root.style.setProperty('--emT', t + 'px');
+        root.style.setProperty('--emH', h + 'px');
+        if (window.RUS_ON_VP) window.RUS_ON_VP();
+      }
+
+      // 交差率は「見えている高さ ÷ 要素の高さ」なので、文書が長いとページ中ほどでは
+      // まったく変化せず threshold では発火しない。そこで画面に入っている間だけ
+      // 毎フレーム observe() を貼り直す（observe() は必ず1回通知が返る仕様）。
+      var live = new IntersectionObserver(function (es) { apply(es[es.length - 1]); });
+      function loop() {
+        poll = 0;
+        if (!onScreen) return;
+        live.unobserve(target); live.observe(target);
+        poll = requestAnimationFrame(loop);
+      }
+      var gate = new IntersectionObserver(function (es) {
+        onScreen = es[es.length - 1].isIntersecting;
+        if (onScreen && !poll) poll = requestAnimationFrame(loop);
+        else if (!onScreen && poll) { cancelAnimationFrame(poll); poll = 0; }
+      }, { threshold: 0 });
+      gate.observe(target);
+      live.observe(target);
+    })();
+  </script>
+  <script>
+    /* 背景色のスクロール連動クロスフェード。
+       --sec-bg を宣言したセクションを上から順に「色の区間」として拾い、
+       境界の前後 FD だけで隣の色へ smoothstep 補間する。
+       区間の中ほどでは指定色そのままなので、各セクションの見た目は変わらない。 */
+    (function () {
+      var layer = document.getElementById('bgFade');
+      if (!layer) return;
+
+      var parse = function (c) {
+        c = (c || '').trim();
+        if (c.charAt(0) === '#') {
+          if (c.length === 4) c = '#' + c[1] + c[1] + c[2] + c[2] + c[3] + c[3];
+          if (c.length !== 7) return null;
+          var n = parseInt(c.slice(1), 16);
+          return isNaN(n) ? null : [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+        }
+        var m = c.match(/rgba?\(([^)]+)\)/);
+        if (!m) return null;
+        var p = m[1].split(',').map(parseFloat);
+        return p.length < 3 ? null : [p[0], p[1], p[2]];
+      };
+      var mix = function (a, b, t) { return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, a[2] + (b[2] - a[2]) * t]; };
+      var smooth = function (t) { return t * t * (3 - 2 * t); };
+
+      var WHITE = [255, 255, 255], stops = [], lastSent = '';
+      function build() {
+        stops = [];
+        [].forEach.call(document.querySelectorAll('section'), function (s) {
+          var col = parse(getComputedStyle(s).getPropertyValue('--sec-bg'));
+          if (!col) return;
+          var r = s.getBoundingClientRect(), y = window.pageYOffset;
+          stops.push({ top: r.top + y, bottom: r.bottom + y, rgb: col });
+        });
+        stops.sort(function (a, b) { return a.top - b.top; });
+        // 最初のセクションより上（hero）は白地として扱い、白→1色目も滑らかに繋ぐ
+        if (stops.length) stops.unshift({ top: 0, bottom: stops[0].top, rgb: WHITE });
+      }
+
+      var raf = 0;
+      function paint() {
+        raf = 0;
+        if (!stops.length) return;
+        // 埋め込み時は iframe が文書の高さで作られるため window の値は使えない。
+        // 上の検出モジュールが出す「実際に見えている範囲」を基準にする。
+        var VP = window.RUS_VP, emb = !!(VP && VP.top !== null);
+        var vh = emb ? VP.h : window.innerHeight, sy = emb ? VP.top : window.pageYOffset;
+        var ref = sy + vh * 0.5, FD = vh * 0.45;
+        var i = 0;
+        while (i < stops.length - 1 && ref >= stops[i].bottom) i++;
+        var cur = stops[i], prev = stops[i - 1], next = stops[i + 1];
+        var dTop = ref - cur.top, dBot = cur.bottom - ref, rgb = cur.rgb;
+        // 近いほうの境界だけで混ぜる（境界でどちらの式も 0.5 になり連続する）
+        if (prev && dTop < FD && dTop <= dBot) rgb = mix(prev.rgb, cur.rgb, smooth(0.5 * (1 + dTop / FD)));
+        else if (next && dBot < FD) rgb = mix(cur.rgb, next.rgb, smooth(0.5 * (1 - dBot / FD)));
+        var css = 'rgb(' + Math.round(rgb[0]) + ',' + Math.round(rgb[1]) + ',' + Math.round(rgb[2]) + ')';
+        layer.style.backgroundColor = css;
+        // 埋め込まれているときは、今の背景色を親へ知らせる。
+        // ・親 = Wix の HTML コンポーネント（embed/index.html）… 枠の地色を追従させる
+        // ・最上位 = 商品ページ本体 … セクションの地色を追従させたいとき用（任意）
+        if (css !== lastSent && window.parent !== window) {
+          lastSent = css;
+          var msg = { type: 'rus-bg', color: css };
+          try { window.parent.postMessage(msg, '*'); } catch (e) { }
+          try { if (window.top && window.top !== window.parent) window.top.postMessage(msg, '*'); } catch (e) { }
+        }
+      }
+      function onScroll() { if (!raf) raf = requestAnimationFrame(paint); }
+      // 埋め込み時は上の検出モジュールが毎フレームここを叩く
+      window.RUS_ON_VP = onScroll;
+      function rebuild() { build(); paint(); }
+
+      rebuild();
+      addEventListener('scroll', onScroll, { passive: true });
+      addEventListener('resize', rebuild);
+      addEventListener('load', rebuild);
+      // 画像/動画のロードで各セクションの高さが変わるため、都度作り直す
+      [].forEach.call(document.querySelectorAll('img'), function (im) {
+        if (!im.complete) im.addEventListener('load', rebuild, { once: true });
+      });
+    })();
+  </script>
+
+  <!-- ============ BUY NOW -> 公式商品ページのポップアップ ============
+     ポップアップリンク_0803.pdf:「購入ボタンを押すと、直接①の公式ページが
+     ポップアップされる」「この公式ページリンクがポップアップででてきてほしい」。
+     参考サイト reservation.baseballrankup.workers.dev と同じ作りで、
+     ボトムシートに公式ページを iframe で表示する。
+     ★ 商品を変えるときは下の OFFICIAL_URL だけ差し替える。 -->
+  <div class="wixM" id="wixM" role="dialog" aria-modal="true" aria-label="商品ページ" aria-hidden="true">
+    <div class="wixM__ov" id="wixMov"></div>
+    <div class="wixM__panel">
+      <button class="wixM__close" id="wixMclose" type="button" aria-label="閉じる">&times;</button>
+      <div class="wixM__grab" aria-hidden="true"></div>
+      <iframe class="wixM__frame" id="wixMframe" title="Rankup sports 公式商品ページ" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      <p class="wixM__note">購入・在庫確認は公式ページで行います。<a id="wixMopen" href="#" target="_blank" rel="noopener">別タブで開く</a></p>
+    </div>
+  </div>
+  <script>
+    (function () {
+      var OFFICIAL_URL = 'https://www.rankup-sports.com/product-page/basketball-gear-bags';
+      // 指示④で一旦停止していた BUY NOW を再開。押したときの動きは
+      // ポップアップではなく「同じページの一番上の商品へスクロール」に変更。
+      // 止め直すときは false に戻し、HTML 側に is-linkOff / aria-disabled を付ける。
+      var BUY_LINK = true;
+
+      var modal = document.getElementById('wixM'), frame = document.getElementById('wixMframe');
+      var lastFocus = null;
+      document.getElementById('wixMopen').href = OFFICIAL_URL;
+
+      function openSheet() {
+        lastFocus = document.activeElement;
+        // src は初回だけ入れる。毎回入れ直すと開くたびに読み直しになる。
+        if (!frame.getAttribute('src')) frame.setAttribute('src', OFFICIAL_URL);
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        document.getElementById('wixMclose').focus();
+      }
+      function closeSheet() {
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        if (lastFocus && lastFocus.focus) lastFocus.focus();
+      }
+      document.getElementById('wixMclose').addEventListener('click', closeSheet);
+      document.getElementById('wixMov').addEventListener('click', closeSheet);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && modal.classList.contains('is-open')) closeSheet();
+      });
+
+      // JS が無いときは a[href] のまま公式ページへ飛ぶので、ここで初めて奪う。
+      // このページが公式商品ページの中に埋め込まれて表示されているか。
+      // （公式商品ページ → Wix の HTML 埋め込み → この LP の二重 iframe）
+      var EMBEDDED = (function () { try { return window.top !== window.self; } catch (e) { return true; } })();
+
+      // 埋め込み時は、同じページの一番上にある商品セクションへスクロールで戻す。
+      // 親は別オリジンなので parent.scrollTo() は使えない。空フラグメント付き URL への
+      // トップレベル遷移は「同一ページ内のフラグメント移動」になり、
+      // 再読み込みなしでページ先頭（＝商品ボックス）までスクロールする。
+      // 埋め込み枠に sandbox は付いていないので、クリック起点のこの遷移は許可される。
+      function scrollTopToProduct() {
+        // 将来 Wix 側で受けてスムーススクロールにできるよう、合図も送っておく
+        try { window.parent.postMessage({ type: 'rus-scroll-top' }, '*'); } catch (e) { }
+        try { window.top.location.href = OFFICIAL_URL + '#'; }
+        catch (e) { window.open(OFFICIAL_URL, '_blank', 'noopener'); }
+      }
+
+      // JS が無いときは a[href] のまま公式ページへ飛ぶので、ここで初めて奪う。
+      if (BUY_LINK) {
+        document.querySelectorAll('.ig__buy').forEach(function (b) {
+          b.setAttribute('href', OFFICIAL_URL);
+          b.addEventListener('click', function (e) {
+            e.preventDefault();
+            // 埋め込み＝上の商品へスクロール／単体表示＝従来どおりポップアップ
+            if (EMBEDDED) scrollTopToProduct(); else openSheet();
+          });
+        });
+      }
+    })();
+  </script>
+
+  <!-- ============ 写真の拡大表示（ライトボックス） ============
+     ブロック01 Instagram モックの3x3グリッドをクリックすると、
+     その写真がふわっとフェードで拡大表示される。position:fixed の
+     レイヤーなので、背面がスクロールしても写真は動かない。
+     閉じる: ✕ ／ 写真の外側をクリック ／ Esc キー -->
+  <div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="写真の拡大表示" aria-hidden="true">
+    <button class="lb__close" id="lbClose" type="button" aria-label="閉じる">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <path d="M6 6l12 12M18 6L6 18" />
+      </svg>
+    </button>
+    <img class="lb__img" id="lbImg" src="" alt="" />
+  </div>
+
+  <script src="app.js?v=37"></script>
+</body>
+
+</html>
